@@ -30,3 +30,5 @@ coverage/
 
 # Taskmaster
 .taskmaster/tasks/
+.vercel
+.env*.local
