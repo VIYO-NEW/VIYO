@@ -16,14 +16,15 @@
       "id": "2",
       "title": "Implement Database Schema and Migrations via Drizzle ORM",
       "description": "Implement the R20_DATABASE_SCHEMA_LOCK schema using Drizzle ORM in packages/db. Create all core tables, RLHF tables, pgvector extension, and credential vault columns. Generate and verify migrations against a clean Supabase instance.",
-      "status": "pending",
+      "status": "done",
       "dependencies": [
         "1"
       ],
       "priority": "high",
       "details": "1. Install drizzle-orm and drizzle-kit in packages/db\n2. Configure drizzle.config.ts with Supabase connection string\n3. Define schema files matching R20 exactly: workspaces, workspace_members, profiles, brands, campaigns, emails, sections, email_sections, section_variants\n4. Define RLHF tables: image_scores, email_scores, pattern_entries, pattern_embeddings\n5. Enable pgvector extension for embedding-based retrieval\n6. Define credential_vaults table with AES-256-GCM encrypted columns\n7. Define billing tables: credit_balances, credit_transactions, stripe_customers\n8. Generate migrations with `drizzle-kit generate`\n9. Run migrations against clean Supabase with `drizzle-kit migrate`\n10. Create seed script for development data",
       "testStrategy": "Run migrations against a clean Supabase database. Verify all tables exist with correct columns and types. Run seed script. Query each table to confirm data integrity. Diff generated schema against R20 spec.",
-      "subtasks": []
+      "subtasks": [],
+      "updatedAt": "2026-04-24T17:39:14.272Z"
     },
     {
       "id": "3",
@@ -138,9 +139,9 @@
   ],
   "metadata": {
     "version": "1.0.0",
-    "lastModified": "2026-04-24T17:01:11.354Z",
+    "lastModified": "2026-04-24T17:39:14.273Z",
     "taskCount": 10,
-    "completedCount": 1,
+    "completedCount": 2,
     "tags": [
       "master"
     ]
