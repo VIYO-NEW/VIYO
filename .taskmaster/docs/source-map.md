@@ -87,3 +87,27 @@
 | `apps/worker` | `@viyo/shared` | `createWorkspaceSchema`, `updateWorkspaceSchema`, `createProductSchema`, `updateProductSchema`, `listProductsQuerySchema`, `productParamsSchema`, `AuthContext` |
 | `apps/worker` | `drizzle-orm` | `eq`, `and`, `sql` query operators |
 | `apps/worker` | `zod` | `z` for validation middleware typing |
+
+## Inngest Event System + OpenTelemetry (T5)
+
+| Path | Purpose | Key Exports |
+|:---|:---|:---|
+| `apps/worker/src/instrumentation.ts` | OTel NodeSDK bootstrap (first import) | Side-effect only |
+| `apps/worker/src/inngest/client.ts` | Inngest client singleton with EventSchemas | `inngest` |
+| `apps/worker/src/inngest/index.ts` | Function registry barrel | `inngest`, `allFunctions` |
+| `apps/worker/src/inngest/functions/workspace-provisioning.ts` | workspace.created pipeline | `workspaceProvisioning` |
+| `packages/shared/src/events/index.ts` | Event type map barrel | `ViyoEvents`, all event schemas |
+| `packages/shared/src/events/workspace.ts` | Workspace event schemas | `workspaceCreatedSchema`, `workspaceUpdatedSchema`, `workspaceDeletedSchema` |
+| `packages/shared/src/events/campaign.ts` | Campaign event schemas (stubs) | `campaignConceptsRequestedSchema`, `campaignCreatedSchema` |
+| `packages/shared/src/events/asset.ts` | Asset event schemas (stubs) | `assetImageRequestedSchema`, `assetImageGeneratedSchema` |
+
+## Credential Vault Service (T8)
+
+| Path | Purpose | Key Exports |
+|:---|:---|:---|
+| `packages/shared/src/security/vault.ts` | VaultService class — AES-256-GCM with dual-key | `VaultService`, `scrubSensitiveData`, `SENSITIVE_FIELD_PATTERNS`, `encryptCredential`, `decryptCredential` |
+| `packages/shared/src/security/key-rotation.ts` | Atomic key rotation utility | `rotateVaultKey`, `EncryptedRow`, `RotationResult` |
+| `packages/shared/src/security/index.ts` | Security barrel export | All security exports |
+| `packages/shared/src/schemas/credential.ts` | Zod credential schemas | `createCredentialSchema`, `updateCredentialSchema`, `listCredentialsQuerySchema`, `ESP_PROVIDERS`, `EXTENDED_PROVIDERS` |
+| `apps/worker/src/services/credential.service.ts` | Credential CRUD service with internal-only gate | `createCredential`, `listCredentials`, `getCredential`, `getDecryptedApiKey`, `updateCredential`, `deleteCredential`, `restoreCredential` |
+| `apps/worker/src/routes/v1/credentials.ts` | REST routes for credential CRUD | `credentials` (Hono router) |

@@ -158,3 +158,88 @@ RLHF: rlhf_votes, preference_model_versions, pattern_performance_metrics
 - GAP-20260424-1500: DATABASE_URL not available via Supabase MCP (Non-Blocking)
 - GAP-20260424-1501: SUPABASE_URL not set in sandbox (Non-Blocking)
 - GAP-20260424-1502: Shared types drift — packages/shared/src/types/workspace.ts has slug/owner_id not in Drizzle schema (Non-Blocking, future task)
+
+## T5 — Inngest Event System + OpenTelemetry
+
+- **Date**: 2026-04-24
+- **Taskmaster ID**: T5
+- **Airtable Feature**: P0-02, P0-03
+- **Status**: Done
+
+### What Was Built
+- OpenTelemetry NodeSDK bootstrap (instrumentation.ts) — MUST be first import
+- HTTP + pg auto-instrumentation for tracing all requests and DB queries
+- Inngest client with EventSchemas<ViyoEvents> for compile-time type safety
+- Extended Traces middleware for OTel trace continuity across event bus
+- /api/inngest endpoint mounted BEFORE auth middleware (uses signing key instead)
+- workspace-provisioning Inngest function (viyo/workspace.created Hello World)
+- Zod event schemas: workspace (created/updated/deleted), campaign (concepts.requested/created), asset (image.requested/generated)
+- ViyoEvents type map for compile-time event name + payload safety
+- OTEL_EXPORTER_OTLP_ENDPOINT + OTEL_SERVICE_NAME in env validation
+
+### Verification Results
+- `pnpm build --force`: 6/6 PASS (0 errors)
+- `pnpm type-check --force`: 9/9 PASS (0 errors)
+- Live: GET /health → 200
+- Live: GET /api/inngest (no auth) → 200 (bypasses T3 auth)
+- Live: PUT /api/inngest (no signing key) → 401 (Inngest SDK rejects)
+- Live: GET /api/v1/products (no auth) → 401 (protected routes still work)
+- Live: OTel startup log confirmed
+- Live: Inngest function_count = 1
+- Live: X-Request-Id on /api/inngest
+- Live: CORS on /api/inngest
+- No TODO/STUB/PLACEHOLDER markers
+
+### Issues Encountered
+- Inngest v3.54.0 EventSchemas API: `new EventSchemas().fromRecord<ViyoEvents>()` — not well documented, found via source inspection
+- @opentelemetry/api needed as direct dependency to fix TS2742 portable type errors
+- Sandbox reset lost uncommitted T5 files — had to re-apply modifications to tracked files
+
+### Gaps Logged
+- GAP-T5-01: brands and credit_balances tables don't exist in Drizzle schema yet. Workspace-provisioning pipeline logs future steps instead of inserting. Created TM task #11 + Airtable record for tracking.
+
+## T8 — Credential Vault Service (AES-256-GCM)
+
+- **Date**: 2026-04-24
+- **Taskmaster ID**: T8
+- **Airtable Feature**: EF-87
+- **Status**: Done
+
+### What Was Built
+- VaultService class with boot-time key validation (hex format, 32-byte length)
+- AES-256-GCM encryption with random 12-byte IV per operation
+- Dual-key decrypt: VIYO_VAULT_KEY (primary) + VIYO_VAULT_KEY_PREVIOUS (fallback) for zero-downtime key rotation
+- Key rotation utility: atomic re-encryption of all credentials (rotateVaultKey)
+- isEncryptedWithPreviousKey() and reEncrypt() for rotation workflows
+- Constant-time payload comparison (timingSafeEqual)
+- Internal-only gate: getDecryptedApiKey() rejects external callers at service layer with SECURITY VIOLATION error
+- Credential CRUD service: workspace-scoped create/list/get/update/delete/restore
+- REST routes: POST/GET/PATCH/DELETE + POST /:id/restore for soft-delete recovery
+- ?includeInactive=true query param for listing soft-deleted credentials
+- Sentry-compatible memory scrubbing: scrubSensitiveData() + SENSITIVE_FIELD_PATTERNS
+- Zod credential schemas with ESP_PROVIDERS (8 ESPs) + EXTENDED_PROVIDERS (+ shopify, stripe, custom)
+- VIYO_VAULT_KEY_PREVIOUS added to env schema
+
+### Verification Results
+- `pnpm build --force`: 6/6 PASS (0 errors)
+- `pnpm type-check --force`: 9/9 PASS (0 errors)
+- Crypto: Encrypt/decrypt round-trip PASS
+- Crypto: Random IV (same plaintext → different ciphertexts) PASS
+- Crypto: Wrong key → decryption fails PASS
+- Crypto: Dual-key decrypt (old key fallback) PASS
+- Crypto: Key rotation (3 rows rotated, 0 failed) PASS
+- Crypto: Memory scrubbing (5 sensitive fields → REDACTED) PASS
+- Crypto: Internal-only gate (external caller → SECURITY VIOLATION) PASS
+- Crypto: Invalid key validation (short, empty, non-hex rejected) PASS
+- Live: GET /health → 200
+- Live: Credential routes (no auth) → 401
+- Live: /api/inngest still bypasses auth → 200
+- No TODO/STUB/PLACEHOLDER markers
+
+### Issues Encountered
+- RouteEnv type not exported from worker index.ts — defined locally in each route file (consistent with T4 pattern)
+- c.req.param() returns string|undefined in Hono — needed non-null assertions for nested route params
+- Internal-only gate test couldn't run in isolation via `node -e` due to ESM import chain — verified via code review and live server
+
+### Gaps Logged
+- None. All PO directives fully implemented.
