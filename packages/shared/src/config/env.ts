@@ -26,6 +26,7 @@ const workerEnvSchema = z.object({
 
   // Vault
   VIYO_VAULT_KEY: z.string().optional(),
+  VIYO_VAULT_KEY_PREVIOUS: z.string().optional(),
 
   // Stripe
   STRIPE_SECRET_KEY: z.string().optional(),

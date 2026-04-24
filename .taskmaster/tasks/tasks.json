@@ -101,7 +101,7 @@
       "id": "8",
       "title": "Implement Credential Vault Service",
       "description": "Build the AES-256-GCM encryption/decryption service for ESP credentials using VIYO_VAULT_KEY, with CRUD operations integrated into workspace context and zero-plaintext-at-rest guarantee.",
-      "status": "pending",
+      "status": "in-progress",
       "dependencies": [
         "2",
         "3"
@@ -109,7 +109,8 @@
       "priority": "medium",
       "details": "1. Create vault service in packages/shared/vault\n2. Implement AES-256-GCM encrypt function using VIYO_VAULT_KEY from environment\n3. Implement AES-256-GCM decrypt function\n4. Create vault CRUD operations: createCredential, getCredential, updateCredential, deleteCredential, listCredentials (metadata only, no plaintext)\n5. Integrate with workspace context: credentials are workspace-scoped\n6. Add RLS policies for credential_vaults table\n7. Create API endpoints: POST/GET/PATCH/DELETE /api/workspaces/:id/credentials\n8. Verify zero-plaintext-at-rest: query DB directly and confirm all values are encrypted\n9. Add key rotation utility (re-encrypt all credentials with new key)",
       "testStrategy": "Test encrypt/decrypt round-trip produces original value. Test different credentials produce different ciphertexts. Test workspace scoping: user A cannot access user B's credentials. Test listing returns metadata without plaintext. Query DB directly to verify no plaintext stored. Test key rotation re-encrypts all values.",
-      "subtasks": []
+      "subtasks": [],
+      "updatedAt": "2026-04-24T21:48:00.433Z"
     },
     {
       "id": "9",
@@ -142,7 +143,7 @@
   ],
   "metadata": {
     "version": "1.0.0",
-    "lastModified": "2026-04-24T21:44:55.414Z",
+    "lastModified": "2026-04-24T21:48:00.433Z",
     "taskCount": 10,
     "completedCount": 5,
     "tags": [
