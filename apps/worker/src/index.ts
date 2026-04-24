@@ -1,13 +1,21 @@
+/**
+ * OpenTelemetry MUST be the first import — it patches Node.js modules
+ * before any other imports. See instrumentation.ts for details.
+ */
+import './instrumentation.js';
+
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
+import { serve as serveInngest } from 'inngest/hono';
 import { health } from './routes/health.js';
 import { v1Router } from './routes/v1/index.js';
 import { authMiddleware } from './middleware/auth.js';
 import { requestIdMiddleware } from './middleware/request-id.js';
 import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 import { createRateLimiter } from './middleware/rate-limiter.js';
+import { inngest, allFunctions } from './inngest/index.js';
 
 /**
  * VIYO Worker — Hono API Server
@@ -15,8 +23,11 @@ import { createRateLimiter } from './middleware/rate-limiter.js';
  * Authority: ARCH_LOCK_V3 §3, R18, R21, R22
  *
  * Middleware stack order:
- * request-id → logger → cors → rate-limiter → auth → routes
- * Error handler and notFound handler are registered globally.
+ * request-id → logger → cors → [/api/inngest bypasses auth] → rate-limiter → auth → routes
+ *
+ * The /api/inngest endpoint is mounted BEFORE the rate-limiter and auth
+ * middleware. It uses the Inngest signing key for authentication instead
+ * of the standard T3 Supabase Auth middleware (PO directive).
  */
 const app = new Hono();
 
@@ -45,6 +56,19 @@ app.use(
     allowHeaders: ['Content-Type', 'Authorization', 'X-Request-Id'],
     credentials: true,
   }),
+);
+
+/**
+ * Inngest serve endpoint — BEFORE rate-limiter and auth.
+ * PO directive: /api/inngest bypasses T3 Auth middleware.
+ * Authentication is handled by the Inngest SDK via INNGEST_SIGNING_KEY.
+ * The Inngest SDK validates the signing key on PUT (sync) and POST (invoke).
+ * GET returns the introspection payload (function count, SDK version).
+ */
+app.on(
+  ['GET', 'POST', 'PUT'],
+  '/api/inngest',
+  serveInngest({ client: inngest, functions: allFunctions }),
 );
 
 // 4. Rate Limiter — 100 req/min per IP (in-memory, Upstash-ready)

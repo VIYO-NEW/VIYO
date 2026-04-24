@@ -49,6 +49,10 @@ const workerEnvSchema = z.object({
   UPSTASH_REDIS_REST_URL: z.string().optional(),
   UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
 
+  // OpenTelemetry
+  OTEL_EXPORTER_OTLP_ENDPOINT: z.string().url().optional(),
+  OTEL_SERVICE_NAME: z.string().default('viyo-worker'),
+
   // Deployment
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z
