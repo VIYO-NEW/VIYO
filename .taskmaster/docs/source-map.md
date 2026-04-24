@@ -59,3 +59,31 @@
 | `apps/web/src/stores/auth.ts` | Zustand auth store (Magic Link, signOut, onAuthStateChange) | R22 §2.1 |
 | `apps/admin/src/lib/supabase.ts` | Admin browser Supabase client singleton | R22 §2.2 |
 | `apps/admin/src/stores/auth.ts` | Admin Zustand auth store | R22 §2.1 |
+
+## API Layer Foundation (T4)
+
+| File | Purpose | Authority |
+|:---|:---|:---|
+| `packages/shared/src/config/env.ts` | Zod env validation: getWorkerEnv(), getClientEnv(), fail-fast at boot | R18, ARCH_LOCK_V3 §3 |
+| `packages/shared/src/config/index.ts` | Config barrel export | — |
+| `packages/shared/src/schemas/workspace.ts` | Zod API schemas: createWorkspaceSchema, updateWorkspaceSchema, listWorkspacesQuerySchema | R18, R20 |
+| `packages/shared/src/schemas/product.ts` | Zod API schemas: createProductSchema, updateProductSchema, listProductsQuerySchema, productParamsSchema | R18, R20, R31 |
+| `packages/shared/src/schemas/index.ts` | Schemas barrel export | — |
+| `apps/worker/src/middleware/request-id.ts` | UUID request tracing, X-Request-Id header | R18 §7, R21 |
+| `apps/worker/src/middleware/error-handler.ts` | ApiError class, errorHandler, notFoundHandler — structured JSON errors with requestId | R18 §7, R21 |
+| `apps/worker/src/middleware/rate-limiter.ts` | In-memory sliding window rate limiter (100 req/min), Upstash-ready | R21 §3, R19 |
+| `apps/worker/src/middleware/validate.ts` | Zod validation middleware factory: validateBody, validateQuery, validateParams | R18 §7 |
+| `apps/worker/src/lib/db.ts` | Drizzle DB singleton, graceful null fallback when DATABASE_URL not set | ARCH_LOCK_V3 §4, R20 |
+| `apps/worker/src/routes/health.ts` | Health check with DB connectivity probe (SELECT from workspaces LIMIT 1) | R18 |
+| `apps/worker/src/routes/v1/workspaces.ts` | Workspace CRUD routes: GET, POST, PATCH with RouteEnv typing | R18, R20, R22 |
+| `apps/worker/src/routes/v1/products.ts` | Product CRUD routes: GET list, GET by ID, POST, PATCH, DELETE (soft) with RouteEnv typing | R18, R20, R31 |
+| `apps/worker/src/routes/v1/index.ts` | v1 router aggregator: mounts /workspaces and /products | R18 |
+
+### T4 Cross-Package Imports
+
+| Consumer | Imports From | What |
+|:---|:---|:---|
+| `apps/worker` | `@viyo/db` | `workspaces`, `viyoProducts` table schemas |
+| `apps/worker` | `@viyo/shared` | `createWorkspaceSchema`, `updateWorkspaceSchema`, `createProductSchema`, `updateProductSchema`, `listProductsQuerySchema`, `productParamsSchema`, `AuthContext` |
+| `apps/worker` | `drizzle-orm` | `eq`, `and`, `sql` query operators |
+| `apps/worker` | `zod` | `z` for validation middleware typing |

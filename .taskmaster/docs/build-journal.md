@@ -108,3 +108,53 @@ RLHF: rlhf_votes, preference_model_versions, pattern_performance_metrics
 - packages/shared needed @types/node for node:crypto imports (vault.ts, api-keys.ts)
 - Auth middleware initially used createMiddleware<> generic which caused circular type inference. Fixed by using plain async function with explicit Context/Next types.
 - Airtable record IDs from earlier session were stale; had to re-search for correct P0-05 record ID.
+
+## T4 — API Layer Foundation
+
+- **Date**: 2026-04-24
+- **Taskmaster ID**: T4
+- **Airtable Feature**: P0-06
+- **Status**: Done
+
+### What Was Built
+- Zod environment validation (getWorkerEnv, getClientEnv) with fail-fast at boot
+- Zod request schemas for workspace CRUD (create, update, list query)
+- Zod request schemas for product CRUD (create, update, list query, params)
+- Request ID middleware (UUID per request, X-Request-Id header)
+- Error handler middleware (ApiError class, errorHandler, notFoundHandler)
+- Rate limiter middleware (in-memory sliding window, 100 req/min, Upstash-ready)
+- Zod validation middleware factory (validateBody, validateQuery, validateParams)
+- Drizzle DB singleton with graceful null fallback when DATABASE_URL not set
+- Workspace CRUD routes (GET, POST, PATCH) with auth + validation
+- Product CRUD routes (GET list, GET by ID, POST, PATCH, DELETE soft) with auth + validation
+- v1 router aggregator mounting /workspaces and /products
+- Full middleware stack wired in worker entry: request-id → logger → cors → rate-limiter → auth → routes
+- Health endpoint upgraded with DB connectivity check (SELECT from workspaces LIMIT 1)
+
+### Verification Results
+- `pnpm build --force`: 6/6 PASS (0 errors)
+- `pnpm type-check --force`: 9/9 PASS (0 errors)
+- Cross-package imports (@viyo/db, @viyo/shared): All resolve
+- .env.example: All required vars present
+- Live: GET /health → 200 with degraded status (no DATABASE_URL)
+- Live: GET / → 200 (public root)
+- Live: GET /api/v1/products (no auth) → 401
+- Live: GET /api/v1/workspaces (no auth) → 401
+- Live: CORS preflight → 204 with correct headers
+- Live: Rate limiter → 429 after 100 requests/minute
+- Live: X-Request-Id header on all responses
+- Live: Error handler → structured JSON with requestId
+- Quality Gate 4 (Contamination): PASS on all 7 files
+- No TODO/STUB/PLACEHOLDER markers in any T4 file
+- Zod-Drizzle alignment audit: All API schemas match DB columns
+
+### Issues Encountered
+- Hono strict typing: `c.get('auth')` typed as `never` when Hono instance lacks explicit env type. Fixed by adding RouteEnv type to route files.
+- Hono StatusCode type: `c.json(body, statusCode as StatusCode)` fails because StatusCode includes 101 (non-contentful). Fixed by using ContentfulStatusCode.
+- Missing peer deps: zod and drizzle-orm needed as direct deps in worker (not just transitive via @viyo/shared and @viyo/db).
+- Quality gate padding detector flags JSDoc comment markers (`/**`, `*/`) as repeated lines — false positive for TypeScript source code.
+
+### Gaps Logged
+- GAP-20260424-1500: DATABASE_URL not available via Supabase MCP (Non-Blocking)
+- GAP-20260424-1501: SUPABASE_URL not set in sandbox (Non-Blocking)
+- GAP-20260424-1502: Shared types drift — packages/shared/src/types/workspace.ts has slug/owner_id not in Drizzle schema (Non-Blocking, future task)

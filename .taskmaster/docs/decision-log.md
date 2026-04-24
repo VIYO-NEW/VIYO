@@ -71,3 +71,27 @@ The trigger function handles: (1) COALESCE for null email from partial signups, 
 **Date**: 2026-04-24 | **Status**: Decided by agent | **Context**: Hono's createMiddleware<> caused circular type inference
 
 Using `async function authMiddleware(c: Context, next: Next)` instead of `createMiddleware<AuthEnv>()` to avoid TypeScript circular type inference errors. The AuthEnv interface is exported for route handlers to use with `c.get('auth')`.
+
+## ADR-013: In-Memory Rate Limiter with Upstash Upgrade Path
+
+**Date**: 2026-04-24 | **Status**: Approved | **Context**: T4 API Layer needs rate limiting before Upstash Redis is provisioned (P0-15)
+
+The rate limiter uses an in-memory sliding window (Map keyed by IP) for Phase 0 development. The interface is designed so that swapping to Upstash Redis requires only changing the store backend, not the middleware signature. Default: 100 requests per 60 seconds per IP. Cleanup runs every 5 minutes.
+
+## ADR-014: Drizzle DB Singleton with Graceful Null Fallback
+
+**Date**: 2026-04-24 | **Status**: Approved | **Context**: DATABASE_URL not available in all environments (GAP-20260424-1500)
+
+The `getDb()` function returns `null` when DATABASE_URL is not configured, allowing the worker to boot and serve non-DB endpoints (health, auth rejection). DB-dependent routes check for null and return 503 with a clear error message. This prevents hard crashes in environments without database access.
+
+## ADR-015: Health Endpoint with DB Connectivity Probe
+
+**Date**: 2026-04-24 | **Status**: Approved by PO | **Context**: PO directed health endpoint to verify DB connection is alive
+
+The `/health` endpoint performs `db.select({id: workspaces.id}).from(workspaces).limit(1)` to verify the database connection pool is alive. Response includes `status: "ok" | "degraded"` and `checks.database` with `connected`, `latencyMs`, and `error` fields. When DATABASE_URL is not set, returns `"degraded"` with a descriptive error.
+
+## ADR-016: Zod API Schemas Separate from Drizzle DB Schemas
+
+**Date**: 2026-04-24 | **Status**: Approved | **Context**: API request validation needs different shapes than DB columns
+
+Zod API schemas (in `packages/shared/src/schemas/`) define what the client sends in request bodies and query params. They are intentionally different from Drizzle table definitions: they omit server-generated fields (id, createdAt, updatedAt, workspaceId), include convenience fields (slug for workspace create), and use string types for numeric DB columns (price). The Drizzle schema remains the single source of truth for DB structure.

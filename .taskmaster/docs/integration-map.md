@@ -21,8 +21,10 @@
 | `apps/web` | `@viyo/ui` | TypeScript import + Tailwind preset | Wired (T1) |
 | `apps/admin` | `@viyo/shared` | TypeScript import (types, auth, security) | Wired (T1, T3) |
 | `apps/admin` | `@viyo/ui` | TypeScript import + Tailwind preset | Wired (T1) |
-| `apps/worker` | `@viyo/shared` | TypeScript import (auth middleware) | Wired (T3) |
-| `apps/worker` | `@viyo/db` | Planned (T4) | Not yet |
+| `apps/worker` | `@viyo/shared` | TypeScript import (auth, config, schemas) | Wired (T3, T4) |
+| `apps/worker` | `@viyo/db` | TypeScript import (table schemas for queries) | Wired (T4) |
+| `apps/worker` | `zod` | Validation middleware typing | Wired (T4) |
+| `apps/worker` | `drizzle-orm` | Query operators (eq, and, sql) | Wired (T4) |
 
 ## Auth Flow Wiring (T3)
 
@@ -38,3 +40,29 @@
 | 8 | Worker → Supabase Auth | JWT verification | `supabase.auth.getUser()` |
 | 9 | Worker → workspace_members | Resolve workspace context | service_role SELECT |
 | 10 | RLS → check_workspace_access() | Tenant isolation | SQL function called by every RLS policy |
+
+## API Middleware Stack (T4)
+
+| Order | Middleware | File | Purpose |
+|:---:|:---|:---|:---|
+| 1 | request-id | `apps/worker/src/middleware/request-id.ts` | Attach UUID to every request for tracing |
+| 2 | logger | `hono/logger` (built-in) | HTTP request/response logging |
+| 3 | cors | `hono/cors` (built-in) | CORS for localhost:5173, localhost:5174, app.viyo.new, admin.viyo.new |
+| 4 | rate-limiter | `apps/worker/src/middleware/rate-limiter.ts` | 100 req/min per IP on /api/* paths |
+| 5 | auth | `apps/worker/src/middleware/auth.ts` | JWT + API key dual strategy, skips /health and / |
+| — | error-handler | `apps/worker/src/middleware/error-handler.ts` | Global onError + notFound handlers |
+
+## API Route Map (T4)
+
+| Method | Path | Handler | Auth Required | Validation |
+|:---|:---|:---|:---|:---|
+| GET | `/health` | health.ts | No | — |
+| GET | `/` | index.ts | No | — |
+| GET | `/api/v1/workspaces` | workspaces.ts | Yes | — |
+| POST | `/api/v1/workspaces` | workspaces.ts | Yes | createWorkspaceSchema |
+| PATCH | `/api/v1/workspaces/:id` | workspaces.ts | Yes (owner/admin) | updateWorkspaceSchema |
+| GET | `/api/v1/products` | products.ts | Yes | listProductsQuerySchema |
+| GET | `/api/v1/products/:id` | products.ts | Yes | productParamsSchema |
+| POST | `/api/v1/products` | products.ts | Yes | createProductSchema |
+| PATCH | `/api/v1/products/:id` | products.ts | Yes | updateProductSchema + productParamsSchema |
+| DELETE | `/api/v1/products/:id` | products.ts | Yes | productParamsSchema |
