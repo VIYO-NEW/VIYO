@@ -1,7 +1,8 @@
 /**
  * Identity Domain — R20 §2, R22 Wiring
- * Tables: workspaces, users, api_keys
+ * Tables: workspaces, users, api_keys, workspace_members
  * workspaces is the ROOT TENANT anchor for the entire VIYO system.
+ * workspace_members is the junction table for multi-workspace access (ADR-009).
  */
 import {
   pgTable,
@@ -11,6 +12,7 @@ import {
   jsonb,
   timestamp,
   text,
+  unique,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
@@ -35,7 +37,7 @@ export const workspaces = pgTable('workspaces', {
 /* ──────────────────────────────────────────────
  * USERS — Bridge between auth.users and workspaces
  * R20: tenantScoped = false (special: id references auth.users)
- * R20: workspace_id FK to workspaces.id
+ * R20: workspace_id FK to workspaces.id (default workspace)
  * ────────────────────────────────────────────── */
 export const users = pgTable('users', {
   id: uuid('id').primaryKey(),
@@ -48,6 +50,30 @@ export const users = pgTable('users', {
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
+
+/* ──────────────────────────────────────────────
+ * WORKSPACE_MEMBERS — Multi-workspace access junction table
+ * ADR-009: Enables users to belong to multiple workspaces.
+ * RLS policies use this table for tenant isolation checks.
+ * R22 §5.1: check_workspace_access(auth.uid(), workspace_id)
+ * ────────────────────────────────────────────── */
+export const workspaceMembers = pgTable(
+  'workspace_members',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    workspaceId: uuid('workspace_id')
+      .notNull()
+      .references(() => workspaces.id, { onDelete: 'cascade' }),
+    userId: uuid('user_id').notNull(),
+    role: varchar('role', { length: 50 })
+      .default('member')
+      .notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    uniqueMembership: unique('uq_workspace_user').on(table.workspaceId, table.userId),
+  }),
+);
 
 /* ──────────────────────────────────────────────
  * API_KEYS — Per-workspace API key management

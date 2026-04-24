@@ -30,14 +30,15 @@
       "id": "3",
       "title": "Configure Supabase Auth and Workspace-Scoped RLS Policies",
       "description": "Set up Supabase Auth (email/password + Google OAuth), implement workspace-scoped Row Level Security policies per R22, establish role hierarchy (owner > admin > editor > viewer), and build workspace invitation flow.",
-      "status": "pending",
+      "status": "done",
       "dependencies": [
         "2"
       ],
       "priority": "high",
       "details": "1. Configure Supabase Auth providers (email/password, Google OAuth)\n2. Create auth trigger function: on user signup, create profile row\n3. Implement workspace creation flow: create workspace + add creator as owner\n4. Define RLS policies per R22 for all tables: workspace_members-scoped SELECT/INSERT/UPDATE/DELETE\n5. Implement role hierarchy: owner > admin > editor > viewer with permission checks\n6. Create workspace invitation flow: generate invite, accept invite, assign role\n7. Implement session management and token refresh in packages/shared\n8. Create auth utility functions: getCurrentUser, getWorkspaceRole, requireRole\n9. Test RLS by attempting cross-workspace data access (must fail)",
       "testStrategy": "Test signup flow end-to-end. Test login with email and Google OAuth. Verify workspace creation assigns owner role. Test RLS: user A cannot read user B's workspace data. Test role hierarchy: viewer cannot edit, editor cannot delete members. Test invitation flow.",
-      "subtasks": []
+      "subtasks": [],
+      "updatedAt": "2026-04-24T18:22:15.959Z"
     },
     {
       "id": "4",
@@ -139,9 +140,9 @@
   ],
   "metadata": {
     "version": "1.0.0",
-    "lastModified": "2026-04-24T17:39:14.273Z",
+    "lastModified": "2026-04-24T18:22:15.960Z",
     "taskCount": 10,
-    "completedCount": 2,
+    "completedCount": 3,
     "tags": [
       "master"
     ]

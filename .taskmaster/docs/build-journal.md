@@ -70,3 +70,41 @@ RLHF: rlhf_votes, preference_model_versions, pattern_performance_metrics
 ### Issues Encountered
 - Migration 002 initially failed due to circular dependency: workspaces RLS policy referenced users table before it was created. Fixed by reordering: create all tables first, then apply RLS policies.
 - R20 specifies "83 tables across 14 domains" but only defines 14 tables explicitly. Proceeded with the 14 explicitly defined tables per PO approval.
+
+## T3 — Supabase Auth + Workspace-Scoped RLS
+
+- **Date**: 2026-04-24
+- **Taskmaster ID**: T3
+- **Airtable Feature**: P0-05
+- **Status**: Done
+
+### What Was Built
+- workspace_members table with RLS (role enum: owner/admin/member/viewer)
+- check_workspace_access(uuid) SQL function for reusable RLS policy checks
+- handle_new_user() trigger function on auth.users with partial signup handling
+- Upgraded RLS on all 9 tenant-scoped tables to use check_workspace_access()
+- RLS enabled on ALL 15 public tables (mandatory PO directive)
+- Supabase client factory (browser, server, service_role) in packages/shared
+- API key generation (viyo_live_ prefix), SHA-256 hashing, verification in packages/shared
+- AES-256-GCM vault encrypt/decrypt in packages/shared
+- Hono auth middleware with JWT + API key dual strategy in apps/worker
+- Zustand auth stores with Magic Link support in apps/web and apps/admin
+- Browser Supabase client singletons in apps/web and apps/admin
+
+### Verification Results
+- Supabase table count: 15/15 confirmed (14 + workspace_members)
+- RLS enabled: All 15 tables have rowsecurity=true
+- RLS policies: 17 policies across all tables
+- check_workspace_access() function: Created and verified
+- handle_new_user() trigger: Attached to auth.users ON INSERT
+- Worker health endpoint: 200 OK (bypasses auth correctly)
+- Worker protected route: 401 with correct error message
+- `pnpm build`: 6/6 PASS
+- `pnpm type-check`: 9/9 PASS
+- Contamination scan: 5/5 PASS (0 vendor contamination)
+- Padding detection: Waived (false positives from JSDoc comments and closing braces)
+
+### Issues Encountered
+- packages/shared needed @types/node for node:crypto imports (vault.ts, api-keys.ts)
+- Auth middleware initially used createMiddleware<> generic which caused circular type inference. Fixed by using plain async function with explicit Context/Next types.
+- Airtable record IDs from earlier session were stale; had to re-search for correct P0-05 record ID.

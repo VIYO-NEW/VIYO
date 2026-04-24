@@ -3,15 +3,16 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { health } from './routes/health.js';
+import { authMiddleware } from './middleware/auth.js';
 
 /**
  * VIYO Worker — Hono API Server
  * Deployed on Render at api.viyo.new
- * Authority: ARCH_LOCK_V3 §3, R21
+ * Authority: ARCH_LOCK_V3 §3, R21, R22
  */
 const app = new Hono();
 
-// --- Middleware ---
+// --- Global Middleware ---
 app.use('*', logger());
 app.use(
   '*',
@@ -28,10 +29,13 @@ app.use(
   }),
 );
 
+// Auth middleware — skips public paths internally (/health, /)
+app.use('*', authMiddleware);
+
 // --- Routes ---
 app.route('/health', health);
 
-// Root route
+// Root route (public — exempted by auth middleware)
 app.get('/', (c) => {
   return c.json({ service: 'viyo-worker', version: '0.0.1' });
 });

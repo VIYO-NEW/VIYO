@@ -47,3 +47,27 @@ The initial migration had RLS policies inline with CREATE TABLE statements. The 
 **Date**: 2026-04-24 | **Status**: Decided by agent | **Context**: No direct DATABASE_URL available
 
 Migrations are applied via the Supabase MCP `apply_migration` tool rather than Drizzle's `drizzle-kit push` command, because the Supabase access token provides management API access but not a direct PostgreSQL connection string. The Drizzle schema files serve as the TypeScript source of truth; the SQL migrations are the deployment artifacts.
+
+## ADR-009: workspace_members Table Created in T3
+
+**Date**: 2026-04-24 | **Status**: Approved by PO | **Context**: R22 requires workspace-scoped auth but R20 does not define workspace_members
+
+The workspace_members table was created in T3 (Auth task) rather than T2 (Schema task) because R20 does not define it. This table is required for the `check_workspace_access()` function and all tenant-scoped RLS policies. Schema: id (UUID PK), workspace_id (FK → workspaces), user_id (FK → auth.users), role (owner/admin/member/viewer), invited_by, invited_at, created_at, updated_at.
+
+## ADR-010: check_workspace_access() Function for RLS
+
+**Date**: 2026-04-24 | **Status**: Approved by PO | **Context**: PO directive to use function-based approach for RLS maintainability
+
+All 9 tenant-scoped table RLS policies use `check_workspace_access(workspace_id)` instead of inline subqueries. This function checks if `auth.uid()` has a row in `workspace_members` for the given workspace_id. Single point of change if access logic evolves. PO explicitly approved this approach as "most maintainable."
+
+## ADR-011: handle_new_user() Trigger with Partial Signup Handling
+
+**Date**: 2026-04-24 | **Status**: Approved by PO | **Context**: PO directive for robust profiles trigger handling edge cases
+
+The trigger function handles: (1) COALESCE for null email from partial signups, (2) COALESCE for null display_name falling back to email prefix, (3) ON CONFLICT DO NOTHING for duplicate user IDs, (4) EXCEPTION block that logs errors but does not block auth.users INSERT. Auto-creates a personal workspace and workspace_members entry for every new user.
+
+## ADR-012: Auth Middleware as Plain Function (Not createMiddleware Generic)
+
+**Date**: 2026-04-24 | **Status**: Decided by agent | **Context**: Hono's createMiddleware<> caused circular type inference
+
+Using `async function authMiddleware(c: Context, next: Next)` instead of `createMiddleware<AuthEnv>()` to avoid TypeScript circular type inference errors. The AuthEnv interface is exported for route handlers to use with `c.get('auth')`.

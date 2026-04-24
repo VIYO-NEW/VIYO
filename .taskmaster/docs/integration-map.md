@@ -1,12 +1,11 @@
 # VIYO Integration Map
 
-## Current Integrations (T1 Scaffold)
-
-No external service integrations are active at the scaffold stage. The following are planned and have environment variable slots reserved in `.env.example`:
+## External Service Integrations
 
 | Service | Env Vars | Integrated In | Status |
 |:---|:---|:---|:---|
-| Supabase (DB + Auth) | `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL`, `SUPABASE_JWT_SECRET` | T2, T3 | Planned |
+| Supabase (DB) | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL` | T2 | Active — 15 tables, migrations via MCP |
+| Supabase (Auth) | `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_JWT_SECRET` | T3 | Active — Magic Link, JWT, RLS |
 | Inngest (Events) | `INNGEST_EVENT_KEY`, `INNGEST_SIGNING_KEY` | T5 | Planned |
 | Stripe (Billing) | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | T9 | Planned |
 | Upstash Redis | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | T4 | Planned |
@@ -18,9 +17,24 @@ No external service integrations are active at the scaffold stage. The following
 
 | From | To | Method | Status |
 |:---|:---|:---|:---|
-| `apps/web` | `packages/shared` | TypeScript import | Wired |
-| `apps/web` | `packages/ui` | TypeScript import + Tailwind preset | Wired |
-| `apps/admin` | `packages/shared` | TypeScript import | Wired |
-| `apps/admin` | `packages/ui` | TypeScript import + Tailwind preset | Wired |
-| `apps/worker` | `packages/shared` | Planned (T4) | Not yet |
-| `apps/worker` | `packages/db` | Planned (T2) | Not yet |
+| `apps/web` | `@viyo/shared` | TypeScript import (types, auth, security) | Wired (T1, T3) |
+| `apps/web` | `@viyo/ui` | TypeScript import + Tailwind preset | Wired (T1) |
+| `apps/admin` | `@viyo/shared` | TypeScript import (types, auth, security) | Wired (T1, T3) |
+| `apps/admin` | `@viyo/ui` | TypeScript import + Tailwind preset | Wired (T1) |
+| `apps/worker` | `@viyo/shared` | TypeScript import (auth middleware) | Wired (T3) |
+| `apps/worker` | `@viyo/db` | Planned (T4) | Not yet |
+
+## Auth Flow Wiring (T3)
+
+| Step | Component | Connection | Method |
+|:---|:---|:---|:---|
+| 1 | Browser → Supabase Auth | Magic Link OTP | `supabase.auth.signInWithOtp()` |
+| 2 | Supabase Auth → auth.users | User creation | Supabase internal |
+| 3 | auth.users → handle_new_user() | Trigger | PostgreSQL AFTER INSERT trigger |
+| 4 | handle_new_user() → public.users | Profile creation | INSERT with COALESCE for nulls |
+| 5 | handle_new_user() → workspaces | Auto-create personal workspace | INSERT |
+| 6 | handle_new_user() → workspace_members | Auto-assign owner role | INSERT |
+| 7 | Browser → Worker API | JWT in Authorization header | `Bearer <access_token>` |
+| 8 | Worker → Supabase Auth | JWT verification | `supabase.auth.getUser()` |
+| 9 | Worker → workspace_members | Resolve workspace context | service_role SELECT |
+| 10 | RLS → check_workspace_access() | Tenant isolation | SQL function called by every RLS policy |
