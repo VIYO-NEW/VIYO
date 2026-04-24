@@ -18,3 +18,13 @@ export type {
   ApiKeyPayload,
   GeneratedApiKey,
 } from './types.js';
+
+export {
+  verifyWorkspaceMembership,
+  verifyMinimumRole,
+  meetsMinimumRole,
+} from './live-check.js';
+
+export type {
+  LiveCheckResult,
+} from './live-check.js';
