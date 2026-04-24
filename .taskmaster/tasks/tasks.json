@@ -1,0 +1,120 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Initialize Turborepo Monorepo Scaffold",
+      "description": "Set up the Turborepo monorepo structure with apps/web, apps/worker, apps/admin, and shared packages (packages/shared, packages/db, packages/ui). Configure TypeScript, ESLint, Prettier, and environment variable contracts across all packages.",
+      "status": "pending",
+      "dependencies": [],
+      "priority": "high",
+      "details": "1. Initialize Turborepo with `npx create-turbo@latest`\n2. Create app directories: apps/web (React SPA for app.viyo.new), apps/worker (Node.js backend for api.viyo.new), apps/admin (React admin portal for admin.viyo.new)\n3. Create package directories: packages/shared (types, schemas, utilities), packages/db (Drizzle ORM + migrations), packages/ui (shared component library)\n4. Configure root tsconfig.json with path aliases\n5. Configure ESLint with shared config\n6. Configure Prettier with shared config\n7. Create .env.example with all required environment variables per R21\n8. Configure turbo.json pipeline for build, dev, lint, test, type-check\n9. Verify `pnpm build` succeeds across all packages",
+      "testStrategy": "Run `pnpm build` and `pnpm type-check` across all packages. Verify each app starts in dev mode. Verify shared package imports resolve correctly from each app.",
+      "subtasks": []
+    },
+    {
+      "id": 2,
+      "title": "Implement Database Schema and Migrations via Drizzle ORM",
+      "description": "Implement the R20_DATABASE_SCHEMA_LOCK schema using Drizzle ORM in packages/db. Create all core tables, RLHF tables, pgvector extension, and credential vault columns. Generate and verify migrations against a clean Supabase instance.",
+      "status": "pending",
+      "dependencies": [1],
+      "priority": "high",
+      "details": "1. Install drizzle-orm and drizzle-kit in packages/db\n2. Configure drizzle.config.ts with Supabase connection string\n3. Define schema files matching R20 exactly: workspaces, workspace_members, profiles, brands, campaigns, emails, sections, email_sections, section_variants\n4. Define RLHF tables: image_scores, email_scores, pattern_entries, pattern_embeddings\n5. Enable pgvector extension for embedding-based retrieval\n6. Define credential_vaults table with AES-256-GCM encrypted columns\n7. Define billing tables: credit_balances, credit_transactions, stripe_customers\n8. Generate migrations with `drizzle-kit generate`\n9. Run migrations against clean Supabase with `drizzle-kit migrate`\n10. Create seed script for development data",
+      "testStrategy": "Run migrations against a clean Supabase database. Verify all tables exist with correct columns and types. Run seed script. Query each table to confirm data integrity. Diff generated schema against R20 spec.",
+      "subtasks": []
+    },
+    {
+      "id": 3,
+      "title": "Configure Supabase Auth and Workspace-Scoped RLS Policies",
+      "description": "Set up Supabase Auth (email/password + Google OAuth), implement workspace-scoped Row Level Security policies per R22, establish role hierarchy (owner > admin > editor > viewer), and build workspace invitation flow.",
+      "status": "pending",
+      "dependencies": [2],
+      "priority": "high",
+      "details": "1. Configure Supabase Auth providers (email/password, Google OAuth)\n2. Create auth trigger function: on user signup, create profile row\n3. Implement workspace creation flow: create workspace + add creator as owner\n4. Define RLS policies per R22 for all tables: workspace_members-scoped SELECT/INSERT/UPDATE/DELETE\n5. Implement role hierarchy: owner > admin > editor > viewer with permission checks\n6. Create workspace invitation flow: generate invite, accept invite, assign role\n7. Implement session management and token refresh in packages/shared\n8. Create auth utility functions: getCurrentUser, getWorkspaceRole, requireRole\n9. Test RLS by attempting cross-workspace data access (must fail)",
+      "testStrategy": "Test signup flow end-to-end. Test login with email and Google OAuth. Verify workspace creation assigns owner role. Test RLS: user A cannot read user B's workspace data. Test role hierarchy: viewer cannot edit, editor cannot delete members. Test invitation flow.",
+      "subtasks": []
+    },
+    {
+      "id": 4,
+      "title": "Build API Layer Foundation on Render Worker",
+      "description": "Create the Express/Hono API server in apps/worker with Supabase JWT auth middleware, workspace-scoped request context, error handling, rate limiting, CORS configuration, and health check endpoints.",
+      "status": "pending",
+      "dependencies": [1, 3],
+      "priority": "high",
+      "details": "1. Set up Hono framework in apps/worker\n2. Implement Supabase JWT verification middleware\n3. Create workspace-scoped request context (extract workspace_id from JWT claims)\n4. Implement structured error handling with error codes\n5. Add request logging middleware\n6. Configure CORS for viyo.new subdomains (app.viyo.new, admin.viyo.new)\n7. Add rate limiting middleware (configurable per endpoint)\n8. Create health check endpoint: GET /health\n9. Create workspace CRUD endpoints: GET/POST/PATCH /api/workspaces\n10. Create brand CRUD endpoints: GET/POST/PATCH/DELETE /api/workspaces/:id/brands\n11. Add input validation with Zod schemas from packages/shared",
+      "testStrategy": "Test health endpoint returns 200. Test auth middleware rejects invalid JWTs. Test workspace context extracts correct workspace_id. Test CORS headers. Test rate limiting. Test CRUD operations with valid and invalid data. Test cross-workspace access is blocked.",
+      "subtasks": []
+    },
+    {
+      "id": 5,
+      "title": "Configure Inngest Event Orchestration System",
+      "description": "Set up Inngest client in apps/worker, define the event type registry in TypeScript, implement the first pipeline (workspace.created → provision defaults), configure dev server for local testing, and establish retry/failure handling patterns.",
+      "status": "pending",
+      "dependencies": [4],
+      "priority": "medium",
+      "details": "1. Install inngest in apps/worker\n2. Create Inngest client with proper configuration\n3. Define TypeScript event type registry in packages/shared: workspace.created, campaign.created, email.generation.requested, image.generation.requested, etc.\n4. Implement first function: workspace.created → create default brand, create default credit balance, send welcome notification\n5. Register Inngest serve handler at /api/inngest\n6. Configure Inngest dev server for local development\n7. Implement retry configuration: max 3 retries with exponential backoff\n8. Implement failure handling: dead letter queue pattern, error notifications\n9. Create helper utilities for step.run patterns",
+      "testStrategy": "Test Inngest dev server starts and discovers functions. Trigger workspace.created event and verify all provision steps execute. Test retry behavior on simulated failure. Test failure handling logs correctly. Verify event type safety catches invalid payloads at compile time.",
+      "subtasks": []
+    },
+    {
+      "id": 6,
+      "title": "Set Up CI/CD Deployment Pipeline",
+      "description": "Configure GitHub Actions CI/CD pipeline (lint → type-check → test → deploy), set up Vercel projects for apps/web and apps/admin, Render service for apps/worker, environment variables per environment, and health check verification.",
+      "status": "pending",
+      "dependencies": [1, 4],
+      "priority": "medium",
+      "details": "1. Create .github/workflows/ci.yml: lint, type-check, test on every PR\n2. Create .github/workflows/deploy.yml: deploy on push to main\n3. Configure Vercel project for apps/web → app.viyo.new\n4. Configure Vercel project for apps/admin → admin.viyo.new\n5. Configure Render service for apps/worker → api.viyo.new\n6. Set environment variables in each platform (dev/staging/prod)\n7. Add post-deploy health check verification step\n8. Configure branch preview deployments on Vercel\n9. Add deployment status badges to README",
+      "testStrategy": "Push to a feature branch and verify CI runs lint, type-check, test. Merge to main and verify deployment triggers. Verify health endpoints respond on all three domains. Verify environment variables are correctly set per environment.",
+      "subtasks": []
+    },
+    {
+      "id": 7,
+      "title": "Build Admin Portal Skeleton",
+      "description": "Create the admin portal in apps/admin with admin-only Supabase authentication, dashboard layout with sidebar navigation, and placeholder pages for Curator Dashboard, Pattern DB, Model Comparison, User Management, and Billing Overview.",
+      "status": "pending",
+      "dependencies": [3, 4],
+      "priority": "medium",
+      "details": "1. Set up React app in apps/admin with TailwindCSS and shared UI components\n2. Implement admin-only authentication (check Supabase role = 'admin' or 'super_admin')\n3. Create dashboard layout with collapsible sidebar navigation\n4. Create placeholder pages: Dashboard (overview stats), Curator Dashboard, Pattern DB Browser, Model Comparison, User Management, Billing Overview, System Health\n5. Implement admin-specific API routes in apps/worker: GET /api/admin/stats, GET /api/admin/users, etc.\n6. Add breadcrumb navigation\n7. Add responsive design for tablet/desktop\n8. Wire admin routes with auth guards",
+      "testStrategy": "Test admin login rejects non-admin users. Test all placeholder pages render without errors. Test sidebar navigation works. Test responsive layout at different breakpoints. Test auth guard redirects unauthenticated users.",
+      "subtasks": []
+    },
+    {
+      "id": 8,
+      "title": "Implement Credential Vault Service",
+      "description": "Build the AES-256-GCM encryption/decryption service for ESP credentials using VIYO_VAULT_KEY, with CRUD operations integrated into workspace context and zero-plaintext-at-rest guarantee.",
+      "status": "pending",
+      "dependencies": [2, 3],
+      "priority": "medium",
+      "details": "1. Create vault service in packages/shared/vault\n2. Implement AES-256-GCM encrypt function using VIYO_VAULT_KEY from environment\n3. Implement AES-256-GCM decrypt function\n4. Create vault CRUD operations: createCredential, getCredential, updateCredential, deleteCredential, listCredentials (metadata only, no plaintext)\n5. Integrate with workspace context: credentials are workspace-scoped\n6. Add RLS policies for credential_vaults table\n7. Create API endpoints: POST/GET/PATCH/DELETE /api/workspaces/:id/credentials\n8. Verify zero-plaintext-at-rest: query DB directly and confirm all values are encrypted\n9. Add key rotation utility (re-encrypt all credentials with new key)",
+      "testStrategy": "Test encrypt/decrypt round-trip produces original value. Test different credentials produce different ciphertexts. Test workspace scoping: user A cannot access user B's credentials. Test listing returns metadata without plaintext. Query DB directly to verify no plaintext stored. Test key rotation re-encrypts all values.",
+      "subtasks": []
+    },
+    {
+      "id": 9,
+      "title": "Implement Stripe Billing Foundation",
+      "description": "Set up Stripe integration with customer creation on workspace.created, prepaid credit package definitions, credit balance tracking, hard stop enforcement at 0 credits, and Stripe webhook handler.",
+      "status": "pending",
+      "dependencies": [3, 4, 5],
+      "priority": "medium",
+      "details": "1. Install stripe SDK in apps/worker\n2. Create Stripe customer on workspace.created Inngest event\n3. Define credit packages: Starter (1000 credits/$29), Growth (5000 credits/$99), Enterprise (custom)\n4. Implement credit balance service: getBalance, deductCredits, addCredits\n5. Implement hard stop: middleware that rejects API calls requiring credits when balance = 0\n6. Create Stripe checkout session endpoint for purchasing credit packages\n7. Implement Stripe webhook handler: checkout.session.completed → add credits, invoice.payment_failed → notify\n8. Create billing API endpoints: GET /api/billing/balance, POST /api/billing/checkout, GET /api/billing/history\n9. Add billing page in apps/web with balance display and purchase flow\n10. Add billing overview in apps/admin",
+      "testStrategy": "Test Stripe customer creation on workspace creation. Test credit purchase flow end-to-end with Stripe test keys. Test credit deduction on API calls. Test hard stop: verify 402 response when credits = 0. Test webhook handler processes events correctly. Test billing history displays correct transactions.",
+      "subtasks": []
+    },
+    {
+      "id": 10,
+      "title": "Create Internal Records and Project Documentation",
+      "description": "Initialize all 7 mandatory internal record files in docs/internal/, create todo.md, populate source-map with initial mappings, and establish the build journal with Phase 0 entries.",
+      "status": "pending",
+      "dependencies": [1],
+      "priority": "high",
+      "details": "1. Create docs/internal/ directory\n2. Create and populate source-map.md: map each Phase 0 feature to its authoritative KB document(s)\n3. Create build-journal.md: log Phase 0 initialization entries chronologically\n4. Create decision-log.md: log framework choices, schema decisions, deployment topology decisions with rationale and source-doc references\n5. Create research-log.md: log any external research performed during Phase 0\n6. Create integration-map.md: create feature-to-system wiring map for Phase 0 features\n7. Create open-questions.md: document the brands-vs-workspaces conflict, Vite-vs-Next.js conflict, missing ARCH_LOCK_V3\n8. Create kb-candidates.md: add any knowledge worth preserving from Phase 0 work\n9. Create todo.md in project root\n10. Commit all internal records to GitHub",
+      "testStrategy": "Verify all 7 files exist in docs/internal/. Verify source-map.md has at least one entry per Phase 0 feature. Verify build-journal.md has chronological entries. Verify open-questions.md documents known conflicts. Verify todo.md exists in project root.",
+      "subtasks": []
+    }
+  ],
+  "metadata": {
+    "projectName": "VIYO",
+    "totalTasks": 10,
+    "sourceFile": ".taskmaster/docs/prd.md",
+    "generatedAt": "2026-04-24T12:10:00Z"
+  }
+}
