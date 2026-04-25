@@ -28,17 +28,32 @@ jobs:
     needs: ci
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    outputs:
+      deployed: ${{ steps.trigger.outputs.deployed }}
 
     steps:
       - name: Trigger Render Deploy
+        id: trigger
         run: |
-          echo "Triggering Render deploy..."
-          curl -sf "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" || {
-            echo "::warning::Render deploy hook not configured. Skipping."
+          HOOK_URL="${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+          if [ -z "$HOOK_URL" ]; then
+            echo "::notice::Render deploy hook not configured — skipping deployment."
+            echo "deployed=false" >> "$GITHUB_OUTPUT"
             exit 0
-          }
+          fi
+
+          echo "Triggering Render deploy..."
+          if curl -sf "$HOOK_URL"; then
+            echo "Render deploy triggered successfully."
+            echo "deployed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::Render deploy hook failed."
+            echo "deployed=false" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
 
       - name: Poll Worker Health (10s intervals, 5min timeout)
+        if: steps.trigger.outputs.deployed == 'true'
         run: |
           echo "Waiting for worker to become healthy..."
           TIMEOUT=300
@@ -68,10 +83,11 @@ jobs:
           echo "::error::Worker health check timed out after ${TIMEOUT}s"
           exit 1
 
-  # Step 3: Verify all services are live
+  # Step 3: Verify all services are live (only if deploy actually happened)
   verify:
     name: Verify All Services
     needs: deploy-worker
+    if: needs.deploy-worker.outputs.deployed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
