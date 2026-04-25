@@ -73,7 +73,7 @@
       "id": "6",
       "title": "Set Up CI/CD Deployment Pipeline",
       "description": "Configure GitHub Actions CI/CD pipeline (lint → type-check → test → deploy), set up Vercel projects for apps/web and apps/admin, Render service for apps/worker, environment variables per environment, and health check verification.",
-      "status": "in-progress",
+      "status": "done",
       "dependencies": [
         "1",
         "4"
@@ -82,7 +82,7 @@
       "details": "1. Create .github/workflows/ci.yml: lint, type-check, test on every PR\n2. Create .github/workflows/deploy.yml: deploy on push to main\n3. Configure Vercel project for apps/web → app.viyo.new\n4. Configure Vercel project for apps/admin → admin.viyo.new\n5. Configure Render service for apps/worker → api.viyo.new\n6. Set environment variables in each platform (dev/staging/prod)\n7. Add post-deploy health check verification step\n8. Configure branch preview deployments on Vercel\n9. Add deployment status badges to README",
       "testStrategy": "Push to a feature branch and verify CI runs lint, type-check, test. Merge to main and verify deployment triggers. Verify health endpoints respond on all three domains. Verify environment variables are correctly set per environment.",
       "subtasks": [],
-      "updatedAt": "2026-04-24T22:15:45.470Z"
+      "updatedAt": "2026-04-25T15:39:38.770Z"
     },
     {
       "id": "7",
@@ -144,9 +144,9 @@
   ],
   "metadata": {
     "version": "1.0.0",
-    "lastModified": "2026-04-24T22:15:45.470Z",
+    "lastModified": "2026-04-25T15:39:38.770Z",
     "taskCount": 10,
-    "completedCount": 6,
+    "completedCount": 7,
     "tags": [
       "master"
     ]

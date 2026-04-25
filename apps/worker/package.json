@@ -24,7 +24,7 @@
     "@supabase/supabase-js": "^2.47.0",
     "@viyo/db": "workspace:*",
     "@viyo/shared": "workspace:*",
-    "drizzle-orm": "^0.36.4",
+    "drizzle-orm": "^0.45.2",
     "hono": "^4.6.0",
     "inngest": "^3.54.0",
     "postgres": "^3.4.9",

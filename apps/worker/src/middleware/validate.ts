@@ -8,7 +8,7 @@
  *   app.get('/products', validateQuery(listProductsQuerySchema), handler);
  */
 import type { Context, Next } from 'hono';
-import { z } from 'zod';
+import type { z } from 'zod';
 
 /**
  * Validate JSON request body against a Zod schema.
