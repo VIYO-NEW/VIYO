@@ -1,0 +1,46 @@
+# Source Map
+
+Maps every major implementation area to the exact VIYO document(s) that define it. Updated continuously as new areas are implemented.
+
+## Phase 0 Implementation Areas
+
+| Implementation Area | Primary Source | Secondary Sources | Implemented In |
+|---|---|---|---|
+| Turborepo monorepo scaffold | Doc4 §2 (Technical Roadmap) | R21 §3 (Infrastructure) | T1 — `turbo.json`, `pnpm-workspace.yaml`, root `package.json` |
+| Database schema (14 tables) | R20 (Database Schema Lock) | Doc3 (legacy reference only) | T2 — `packages/db/src/schema/*.ts` |
+| Supabase Auth + workspace-scoped RLS | R22 (Security & Auth) | Doc11 (Security Architecture) | T3 — `packages/shared/src/auth/`, migration SQL |
+| API layer (Hono middleware stack) | R18 §6 (Global Wiring Map) | Doc4 §2.2 | T4 — `apps/worker/src/` (routes, middleware, services) |
+| Inngest event orchestration | R18 §4.3 (Event System) | Doc4 §2.3 | T5 — `apps/worker/src/inngest/` |
+| OpenTelemetry instrumentation | R21 §6 (Monitoring) | — | T5 — `apps/worker/src/instrumentation.ts` |
+| CI/CD deployment pipeline | R21 §5 (Infrastructure) | Doc4 §2.2 | T6 — `.github/workflows/ci.yml`, `deploy.yml`, `render.yaml` |
+| Credential vault (AES-256-GCM) | Doc11 §3 (Security) | R22 §5 | T8 — `packages/shared/src/security/vault.ts`, `key-rotation.ts` |
+| Sentry error monitoring | R21 §6 (Monitoring) | — | T12 — `apps/worker/src/lib/sentry.ts`, `apps/web/src/lib/sentry.ts`, `apps/admin/src/lib/sentry.ts` |
+| Frontend architecture (Vite + React SPA) | R17 (UI/UX Architecture) | Doc9 (Frontend Architecture) | T1 — `apps/web/`, `apps/admin/` |
+| Billing & cost tracking | R23 (Cost Reconciliation) | — | T9 — not yet implemented |
+| AI brains & prompts | R19 (LLM Architecture) | Doc2 (System Prompts) | Phase 2 — not yet implemented |
+| Image pipeline | R24 (Image Pipeline) | — | Phase 2 — not yet implemented |
+| Email compiler | R27 (Composable Sections) | Doc6 (Skills Catalog) | Phase 3 — not yet implemented |
+
+## Schema File to R20 Section Mapping
+
+| Schema File | R20 Section | Tables Defined |
+|---|---|---|
+| `identity.ts` | §2 (Identity Domain) | `workspaces`, `users`, `workspace_members`, `api_keys` |
+| `products.ts` | §3 (Product Domain) | `viyo_products`, `assets` |
+| `email.ts` | §4 (Email Domain) | `email_templates`, `esp_connections` |
+| `llm.ts` | §5 (LLM Domain) | `council_decisions` |
+| `image-intelligence.ts` | §6 (Image Domain) | `image_prompt_patterns` |
+| `cost.ts` | §7 (Cost Domain) | `token_usage_logs` |
+| `rlhf.ts` | §8 (RLHF Domain) | `rlhf_votes`, `preference_model_versions`, `pattern_performance_metrics` |
+| `timer.ts` | §9 (Timer Domain) | `timer_definitions` |
+
+## Shared Package to Spec Mapping
+
+| Module | Primary Source | Purpose |
+|---|---|---|
+| `shared/src/auth/` | R22 §3-4 | Supabase client, API key validation, auth types |
+| `shared/src/config/` | R21 §4 | Environment variable schema (Zod-validated) |
+| `shared/src/events/` | R18 §4.3 | Inngest event type definitions (workspace, campaign, asset) |
+| `shared/src/schemas/` | R20 + R18 | Zod request/response schemas (workspace, product, credential) |
+| `shared/src/security/` | Doc11 §3, R22 §5 | AES-256-GCM vault, dual-key rotation, sensitive field patterns |
+| `shared/src/types/` | R20 §2 | TypeScript type exports (workspace types) |
