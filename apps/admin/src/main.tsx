@@ -1,3 +1,8 @@
+/**
+ * VIYO Admin Portal — Entry Point
+ * T12: Sentry MUST be imported first for error capture before React renders.
+ */
+import './lib/sentry.js';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App.js';

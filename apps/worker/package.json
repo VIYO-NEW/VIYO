@@ -21,6 +21,8 @@
     "@opentelemetry/resources": "^2.7.0",
     "@opentelemetry/sdk-node": "^0.215.0",
     "@opentelemetry/semantic-conventions": "^1.40.0",
+    "@sentry/node": "^10.50.0",
+    "@sentry/opentelemetry": "^10.50.0",
     "@supabase/supabase-js": "^2.47.0",
     "@viyo/db": "workspace:*",
     "@viyo/shared": "workspace:*",
