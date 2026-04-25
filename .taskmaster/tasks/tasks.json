@@ -2,7 +2,7 @@
   "master": {
     "tasks": [
       {
-        "id": 1,
+        "id": "1",
         "title": "Initialize Turborepo Monorepo Scaffold",
         "description": "Set up the Turborepo monorepo structure with apps/web, apps/worker, apps/admin, and shared packages (packages/shared, packages/db, packages/ui). Configure TypeScript, ESLint, Prettier, and environment variable contracts across all packages.",
         "status": "done",
@@ -14,7 +14,7 @@
         "updatedAt": "2026-04-24T17:01:11.353Z"
       },
       {
-        "id": 2,
+        "id": "2",
         "title": "Implement Database Schema and Migrations via Drizzle ORM",
         "description": "Implement the R20_DATABASE_SCHEMA_LOCK schema using Drizzle ORM in packages/db. Create all core tables, RLHF tables, pgvector extension, and credential vault columns. Generate and verify migrations against a clean Supabase instance.",
         "status": "done",
@@ -28,7 +28,7 @@
         "updatedAt": "2026-04-24T17:39:14.272Z"
       },
       {
-        "id": 3,
+        "id": "3",
         "title": "Configure Supabase Auth and Workspace-Scoped RLS Policies",
         "description": "Set up Supabase Auth (email/password + Google OAuth), implement workspace-scoped Row Level Security policies per R22, establish role hierarchy (owner > admin > editor > viewer), and build workspace invitation flow.",
         "status": "done",
@@ -42,7 +42,7 @@
         "updatedAt": "2026-04-24T18:22:15.959Z"
       },
       {
-        "id": 4,
+        "id": "4",
         "title": "Build API Layer Foundation on Render Worker",
         "description": "Create the Express/Hono API server in apps/worker with Supabase JWT auth middleware, workspace-scoped request context, error handling, rate limiting, CORS configuration, and health check endpoints.",
         "status": "done",
@@ -57,7 +57,7 @@
         "updatedAt": "2026-04-24T19:23:54.165Z"
       },
       {
-        "id": 5,
+        "id": "5",
         "title": "Configure Inngest Event Orchestration System",
         "description": "Set up Inngest client in apps/worker, define the event type registry in TypeScript, implement the first pipeline (workspace.created → provision defaults), configure dev server for local testing, and establish retry/failure handling patterns.",
         "status": "done",
@@ -71,7 +71,7 @@
         "updatedAt": "2026-04-24T21:44:55.414Z"
       },
       {
-        "id": 6,
+        "id": "6",
         "title": "Set Up CI/CD Deployment Pipeline",
         "description": "Configure GitHub Actions CI/CD pipeline (lint → type-check → test → deploy), set up Vercel projects for apps/web and apps/admin, Render service for apps/worker, environment variables per environment, and health check verification.",
         "status": "done",
@@ -86,7 +86,7 @@
         "updatedAt": "2026-04-25T15:39:38.770Z"
       },
       {
-        "id": 7,
+        "id": "7",
         "title": "Build Admin Portal Skeleton",
         "description": "Create the admin portal in apps/admin with admin-only Supabase authentication, dashboard layout with sidebar navigation, and placeholder pages for Curator Dashboard, Pattern DB, Model Comparison, User Management, and Billing Overview.",
         "status": "pending",
@@ -100,7 +100,7 @@
         "subtasks": []
       },
       {
-        "id": 8,
+        "id": "8",
         "title": "Implement Credential Vault Service",
         "description": "Build the AES-256-GCM encryption/decryption service for ESP credentials using VIYO_VAULT_KEY, with CRUD operations integrated into workspace context and zero-plaintext-at-rest guarantee.",
         "status": "done",
@@ -115,7 +115,7 @@
         "updatedAt": "2026-04-24T22:09:46.758Z"
       },
       {
-        "id": 9,
+        "id": "9",
         "title": "Implement Stripe Billing Foundation",
         "description": "Set up Stripe integration with customer creation on workspace.created, prepaid credit package definitions, credit balance tracking, hard stop enforcement at 0 credits, and Stripe webhook handler.",
         "status": "pending",
@@ -130,7 +130,7 @@
         "subtasks": []
       },
       {
-        "id": 10,
+        "id": "10",
         "title": "Create Internal Records and Project Documentation",
         "description": "Initialize all 7 mandatory internal record files in docs/internal/, create todo.md, populate source-map with initial mappings, and establish the build journal with Phase 0 entries.",
         "status": "pending",
@@ -143,15 +143,15 @@
         "subtasks": []
       },
       {
-        "id": 12,
+        "id": "12",
         "title": "Sentry Error Monitoring Integration",
         "description": "Wire Sentry error monitoring across all 3 apps: @sentry/node for worker (Hono), @sentry/react + @sentry/vite-plugin for web and admin (Vite React SPAs). Bridge to existing T5 OTel setup via @sentry/opentelemetry. Configure 3 DSNs as env vars and wire into Admin Config panel.",
-        "status": "in-progress",
+        "status": "done",
         "priority": "high",
         "dependencies": [
-          5,
-          6,
-          8
+          "5",
+          "6",
+          "8"
         ],
         "details": "Phase 0 foundational infrastructure task.\n\nImplementation:\n1. Install @sentry/node + @sentry/opentelemetry in apps/worker\n2. Install @sentry/react + @sentry/vite-plugin in apps/web and apps/admin\n3. Create apps/worker/src/lib/sentry.ts — Sentry.init with OTel bridge, sensitive data scrubbing from T8 patterns\n4. Create apps/web/src/lib/sentry.ts and apps/admin/src/lib/sentry.ts — Sentry.init with React error boundary\n5. Wire Sentry into Vite config via @sentry/vite-plugin for source map uploads\n6. Add SENTRY_DSN_WORKER, SENTRY_DSN_WEB, SENTRY_DSN_ADMIN to .env.example\n7. Wire DSNs into Admin Config panel schema\n8. Add Sentry error boundary wrapper in web/admin App.tsx\n9. Ensure Inngest function errors are captured by Sentry\n10. Bridge @sentry/opentelemetry to existing T5 NodeSDK setup in instrumentation.ts",
         "testStrategy": "1. Type-check all 6 packages: pnpm type-check (zero errors)\n2. Build all packages: pnpm build (zero errors)\n3. Lint all packages: pnpm lint (zero errors)\n4. Verify Sentry init runs without throwing when DSN is empty (graceful degradation)\n5. Verify source map plugin is configured in vite.config.ts for web and admin\n6. Verify OTel bridge is wired in instrumentation.ts\n7. Verify .env.example contains all 3 DSN variables\n8. Verify no sensitive data patterns (API keys, tokens) leak through Sentry",
@@ -163,7 +163,8 @@
             "details": "",
             "status": "pending",
             "dependencies": [],
-            "parentTaskId": 12
+            "parentTaskId": 12,
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -172,7 +173,8 @@
             "details": "",
             "status": "pending",
             "dependencies": [],
-            "parentTaskId": 12
+            "parentTaskId": 12,
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -181,7 +183,8 @@
             "details": "",
             "status": "pending",
             "dependencies": [],
-            "parentTaskId": 12
+            "parentTaskId": 12,
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -190,7 +193,8 @@
             "details": "",
             "status": "pending",
             "dependencies": [],
-            "parentTaskId": 12
+            "parentTaskId": 12,
+            "parentId": "undefined"
           },
           {
             "id": 5,
@@ -199,7 +203,8 @@
             "details": "",
             "status": "pending",
             "dependencies": [],
-            "parentTaskId": 12
+            "parentTaskId": 12,
+            "parentId": "undefined"
           },
           {
             "id": 6,
@@ -208,7 +213,8 @@
             "details": "",
             "status": "pending",
             "dependencies": [],
-            "parentTaskId": 12
+            "parentTaskId": 12,
+            "parentId": "undefined"
           },
           {
             "id": 7,
@@ -217,21 +223,21 @@
             "details": "",
             "status": "pending",
             "dependencies": [],
-            "parentTaskId": 12
+            "parentTaskId": 12,
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "updatedAt": "2026-04-25T18:58:02.930Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-25T15:39:38.770Z",
-      "taskCount": 10,
-      "completedCount": 7,
+      "lastModified": "2026-04-25T18:58:02.930Z",
+      "taskCount": 11,
+      "completedCount": 8,
       "tags": [
         "master"
-      ],
-      "created": "2026-04-25T17:03:36.872Z",
-      "description": "Tasks for master context"
+      ]
     }
   }
 }
