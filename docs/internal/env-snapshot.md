@@ -91,5 +91,7 @@ Complete snapshot of the VIYO development and deployment environment as of 2026-
 
 | Table | Base ID | Table ID | Purpose |
 |---|---|---|---|
-| Build Tracker | `appJNo7ZFJMwPGfnU` | `tblTrjJBFVoMpGfnU` | Task status tracking |
-| Services Inventory | `appJNo7ZFJMwPGfnU` | (in same base) | External service registry |
+| VIYO Q&A Master Log | `appo5mNncCCzKcIRk` | `tblWr8n54Vb83egxR` | Question and approved solution log |
+| Build Tracker | `appo5mNncCCzKcIRk` | `tblIJUzJoCCjWXaMQ` | Feature-level build status tracking |
+| Skills Registry | `appo5mNncCCzKcIRk` | `tbl4gNd7bWjypMQBF` | All 80+ VIYO skills across phases |
+| Services Inventory | `appo5mNncCCzKcIRk` | `tblcRL2RNys7SIiW5` | External service and API registry |
