@@ -59,13 +59,13 @@
       {
         "id": "5",
         "title": "Configure Inngest Event Orchestration System",
-        "description": "Set up Inngest client in apps/worker, define the event type registry in TypeScript, implement the first pipeline (workspace.created → provision defaults), configure dev server for local testing, and establish retry/failure handling patterns.",
+        "description": "Set up Inngest client in apps/worker, define the event type registry in TypeScript, implement the first pipeline (workspace.created \u2192 provision defaults), configure dev server for local testing, and establish retry/failure handling patterns.",
         "status": "done",
         "dependencies": [
           "4"
         ],
         "priority": "medium",
-        "details": "1. Install inngest in apps/worker\n2. Create Inngest client with proper configuration\n3. Define TypeScript event type registry in packages/shared: workspace.created, campaign.created, email.generation.requested, image.generation.requested, etc.\n4. Implement first function: workspace.created → create default brand, create default credit balance, send welcome notification\n5. Register Inngest serve handler at /api/inngest\n6. Configure Inngest dev server for local development\n7. Implement retry configuration: max 3 retries with exponential backoff\n8. Implement failure handling: dead letter queue pattern, error notifications\n9. Create helper utilities for step.run patterns",
+        "details": "1. Install inngest in apps/worker\n2. Create Inngest client with proper configuration\n3. Define TypeScript event type registry in packages/shared: workspace.created, campaign.created, email.generation.requested, image.generation.requested, etc.\n4. Implement first function: workspace.created \u2192 create default brand, create default credit balance, send welcome notification\n5. Register Inngest serve handler at /api/inngest\n6. Configure Inngest dev server for local development\n7. Implement retry configuration: max 3 retries with exponential backoff\n8. Implement failure handling: dead letter queue pattern, error notifications\n9. Create helper utilities for step.run patterns",
         "testStrategy": "Test Inngest dev server starts and discovers functions. Trigger workspace.created event and verify all provision steps execute. Test retry behavior on simulated failure. Test failure handling logs correctly. Verify event type safety catches invalid payloads at compile time.",
         "subtasks": [],
         "updatedAt": "2026-04-24T21:44:55.414Z"
@@ -73,14 +73,14 @@
       {
         "id": "6",
         "title": "Set Up CI/CD Deployment Pipeline",
-        "description": "Configure GitHub Actions CI/CD pipeline (lint → type-check → test → deploy), set up Vercel projects for apps/web and apps/admin, Render service for apps/worker, environment variables per environment, and health check verification.",
+        "description": "Configure GitHub Actions CI/CD pipeline (lint \u2192 type-check \u2192 test \u2192 deploy), set up Vercel projects for apps/web and apps/admin, Render service for apps/worker, environment variables per environment, and health check verification.",
         "status": "done",
         "dependencies": [
           "1",
           "4"
         ],
         "priority": "medium",
-        "details": "1. Create .github/workflows/ci.yml: lint, type-check, test on every PR\n2. Create .github/workflows/deploy.yml: deploy on push to main\n3. Configure Vercel project for apps/web → app.viyo.new\n4. Configure Vercel project for apps/admin → admin.viyo.new\n5. Configure Render service for apps/worker → api.viyo.new\n6. Set environment variables in each platform (dev/staging/prod)\n7. Add post-deploy health check verification step\n8. Configure branch preview deployments on Vercel\n9. Add deployment status badges to README",
+        "details": "1. Create .github/workflows/ci.yml: lint, type-check, test on every PR\n2. Create .github/workflows/deploy.yml: deploy on push to main\n3. Configure Vercel project for apps/web \u2192 app.viyo.new\n4. Configure Vercel project for apps/admin \u2192 admin.viyo.new\n5. Configure Render service for apps/worker \u2192 api.viyo.new\n6. Set environment variables in each platform (dev/staging/prod)\n7. Add post-deploy health check verification step\n8. Configure branch preview deployments on Vercel\n9. Add deployment status badges to README",
         "testStrategy": "Push to a feature branch and verify CI runs lint, type-check, test. Merge to main and verify deployment triggers. Verify health endpoints respond on all three domains. Verify environment variables are correctly set per environment.",
         "subtasks": [],
         "updatedAt": "2026-04-25T15:39:38.770Z"
@@ -125,7 +125,7 @@
           "5"
         ],
         "priority": "medium",
-        "details": "1. Install stripe SDK in apps/worker\n2. Create Stripe customer on workspace.created Inngest event\n3. Define credit packages: Starter (1000 credits/$29), Growth (5000 credits/$99), Enterprise (custom)\n4. Implement credit balance service: getBalance, deductCredits, addCredits\n5. Implement hard stop: middleware that rejects API calls requiring credits when balance = 0\n6. Create Stripe checkout session endpoint for purchasing credit packages\n7. Implement Stripe webhook handler: checkout.session.completed → add credits, invoice.payment_failed → notify\n8. Create billing API endpoints: GET /api/billing/balance, POST /api/billing/checkout, GET /api/billing/history\n9. Add billing page in apps/web with balance display and purchase flow\n10. Add billing overview in apps/admin",
+        "details": "1. Install stripe SDK in apps/worker\n2. Create Stripe customer on workspace.created Inngest event\n3. Define credit packages: Starter (1000 credits/$29), Growth (5000 credits/$99), Enterprise (custom)\n4. Implement credit balance service: getBalance, deductCredits, addCredits\n5. Implement hard stop: middleware that rejects API calls requiring credits when balance = 0\n6. Create Stripe checkout session endpoint for purchasing credit packages\n7. Implement Stripe webhook handler: checkout.session.completed \u2192 add credits, invoice.payment_failed \u2192 notify\n8. Create billing API endpoints: GET /api/billing/balance, POST /api/billing/checkout, GET /api/billing/history\n9. Add billing page in apps/web with balance display and purchase flow\n10. Add billing overview in apps/admin",
         "testStrategy": "Test Stripe customer creation on workspace creation. Test credit purchase flow end-to-end with Stripe test keys. Test credit deduction on API calls. Test hard stop: verify 402 response when credits = 0. Test webhook handler processes events correctly. Test billing history displays correct transactions.",
         "subtasks": []
       },
@@ -133,14 +133,15 @@
         "id": "10",
         "title": "Create Internal Records and Project Documentation",
         "description": "Initialize all 7 mandatory internal record files in docs/internal/, create todo.md, populate source-map with initial mappings, and establish the build journal with Phase 0 entries.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           "1"
         ],
         "priority": "high",
         "details": "1. Create docs/internal/ directory\n2. Create and populate source-map.md: map each Phase 0 feature to its authoritative KB document(s)\n3. Create build-journal.md: log Phase 0 initialization entries chronologically\n4. Create decision-log.md: log framework choices, schema decisions, deployment topology decisions with rationale and source-doc references\n5. Create research-log.md: log any external research performed during Phase 0\n6. Create integration-map.md: create feature-to-system wiring map for Phase 0 features\n7. Create open-questions.md: document the brands-vs-workspaces conflict, Vite-vs-Next.js conflict, missing ARCH_LOCK_V3\n8. Create kb-candidates.md: add any knowledge worth preserving from Phase 0 work\n9. Create todo.md in project root\n10. Commit all internal records to GitHub",
         "testStrategy": "Verify all 7 files exist in docs/internal/. Verify source-map.md has at least one entry per Phase 0 feature. Verify build-journal.md has chronological entries. Verify open-questions.md documents known conflicts. Verify todo.md exists in project root.",
-        "subtasks": []
+        "subtasks": [],
+        "updatedAt": "2026-04-25T21:19:47.283Z"
       },
       {
         "id": "12",
@@ -153,12 +154,12 @@
           "6",
           "8"
         ],
-        "details": "Phase 0 foundational infrastructure task.\n\nImplementation:\n1. Install @sentry/node + @sentry/opentelemetry in apps/worker\n2. Install @sentry/react + @sentry/vite-plugin in apps/web and apps/admin\n3. Create apps/worker/src/lib/sentry.ts — Sentry.init with OTel bridge, sensitive data scrubbing from T8 patterns\n4. Create apps/web/src/lib/sentry.ts and apps/admin/src/lib/sentry.ts — Sentry.init with React error boundary\n5. Wire Sentry into Vite config via @sentry/vite-plugin for source map uploads\n6. Add SENTRY_DSN_WORKER, SENTRY_DSN_WEB, SENTRY_DSN_ADMIN to .env.example\n7. Wire DSNs into Admin Config panel schema\n8. Add Sentry error boundary wrapper in web/admin App.tsx\n9. Ensure Inngest function errors are captured by Sentry\n10. Bridge @sentry/opentelemetry to existing T5 NodeSDK setup in instrumentation.ts",
+        "details": "Phase 0 foundational infrastructure task.\n\nImplementation:\n1. Install @sentry/node + @sentry/opentelemetry in apps/worker\n2. Install @sentry/react + @sentry/vite-plugin in apps/web and apps/admin\n3. Create apps/worker/src/lib/sentry.ts \u2014 Sentry.init with OTel bridge, sensitive data scrubbing from T8 patterns\n4. Create apps/web/src/lib/sentry.ts and apps/admin/src/lib/sentry.ts \u2014 Sentry.init with React error boundary\n5. Wire Sentry into Vite config via @sentry/vite-plugin for source map uploads\n6. Add SENTRY_DSN_WORKER, SENTRY_DSN_WEB, SENTRY_DSN_ADMIN to .env.example\n7. Wire DSNs into Admin Config panel schema\n8. Add Sentry error boundary wrapper in web/admin App.tsx\n9. Ensure Inngest function errors are captured by Sentry\n10. Bridge @sentry/opentelemetry to existing T5 NodeSDK setup in instrumentation.ts",
         "testStrategy": "1. Type-check all 6 packages: pnpm type-check (zero errors)\n2. Build all packages: pnpm build (zero errors)\n3. Lint all packages: pnpm lint (zero errors)\n4. Verify Sentry init runs without throwing when DSN is empty (graceful degradation)\n5. Verify source map plugin is configured in vite.config.ts for web and admin\n6. Verify OTel bridge is wired in instrumentation.ts\n7. Verify .env.example contains all 3 DSN variables\n8. Verify no sensitive data patterns (API keys, tokens) leak through Sentry",
         "subtasks": [
           {
             "id": 1,
-            "title": "Wire Layer 3: Shared Types — Sentry config types and DSN env var types",
+            "title": "Wire Layer 3: Shared Types \u2014 Sentry config types and DSN env var types",
             "description": "",
             "details": "",
             "status": "pending",
@@ -168,7 +169,7 @@
           },
           {
             "id": 2,
-            "title": "Wire Layer 4: Backend Services — @sentry/node + @sentry/opentelemetry in worker",
+            "title": "Wire Layer 4: Backend Services \u2014 @sentry/node + @sentry/opentelemetry in worker",
             "description": "",
             "details": "",
             "status": "pending",
@@ -178,7 +179,7 @@
           },
           {
             "id": 3,
-            "title": "Wire Layer 6: Frontend UI — @sentry/react error boundaries in web + admin",
+            "title": "Wire Layer 6: Frontend UI \u2014 @sentry/react error boundaries in web + admin",
             "description": "",
             "details": "",
             "status": "pending",
@@ -188,7 +189,7 @@
           },
           {
             "id": 4,
-            "title": "Wire Layer 9: Analytics & Audit — Sentry performance monitoring + release tracking",
+            "title": "Wire Layer 9: Analytics & Audit \u2014 Sentry performance monitoring + release tracking",
             "description": "",
             "details": "",
             "status": "pending",
@@ -198,7 +199,7 @@
           },
           {
             "id": 5,
-            "title": "Wire Layer 10: Config & Feature Flags — 3 DSNs in .env.example + Admin Config panel",
+            "title": "Wire Layer 10: Config & Feature Flags \u2014 3 DSNs in .env.example + Admin Config panel",
             "description": "",
             "details": "",
             "status": "pending",
@@ -208,7 +209,7 @@
           },
           {
             "id": 6,
-            "title": "Wire Layer 11: Logs, Monitoring & Error Handling — Sentry captures + OTel bridge",
+            "title": "Wire Layer 11: Logs, Monitoring & Error Handling \u2014 Sentry captures + OTel bridge",
             "description": "",
             "details": "",
             "status": "pending",
@@ -218,7 +219,7 @@
           },
           {
             "id": 7,
-            "title": "Wire Layer 12: Documentation — Sentry setup runbook + env var docs",
+            "title": "Wire Layer 12: Documentation \u2014 Sentry setup runbook + env var docs",
             "description": "",
             "details": "",
             "status": "pending",
@@ -232,9 +233,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-25T18:58:02.930Z",
+      "lastModified": "2026-04-25T21:19:47.283Z",
       "taskCount": 11,
-      "completedCount": 8,
+      "completedCount": 9,
       "tags": [
         "master"
       ]
