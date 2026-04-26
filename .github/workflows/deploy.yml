@@ -1,8 +1,19 @@
+##
+# VIYO Deploy Pipeline
+#
+# Deploys the worker to Render and verifies all services are live.
+# This workflow is MANUAL-ONLY (workflow_dispatch) until Render + DNS
+# are configured. Once infrastructure is ready:
+#   1. Set RENDER_DEPLOY_HOOK_URL secret in GitHub repo settings
+#   2. Configure DNS: api.viyo.new, app.viyo.new, admin.viyo.new
+#   3. Uncomment the `push` trigger below to enable auto-deploy on merge
+##
 name: VIYO Deploy Pipeline
 
 on:
-  push:
-    branches: [main]
+  # Uncomment when Render + DNS are configured:
+  # push:
+  #   branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -22,7 +33,7 @@ jobs:
     name: CI Gate
     uses: ./.github/workflows/ci.yml
 
-  # Step 2: Deploy worker to Render
+  # Step 2: Deploy worker to Render (fails fast if secret is missing)
   deploy-worker:
     name: Deploy Worker → Render
     needs: ci
@@ -32,28 +43,28 @@ jobs:
       deployed: ${{ steps.trigger.outputs.deployed }}
 
     steps:
+      - name: Verify Render is configured
+        run: |
+          if [ -z "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
+            echo "::error::RENDER_DEPLOY_HOOK_URL secret is not set."
+            echo "Configure Render and add the deploy hook URL as a GitHub secret before running this workflow."
+            exit 1
+          fi
+          echo "Render deploy hook is configured."
+
       - name: Trigger Render Deploy
         id: trigger
         run: |
-          HOOK_URL="${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
-          if [ -z "$HOOK_URL" ]; then
-            echo "::notice::Render deploy hook not configured — skipping deployment."
-            echo "deployed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
           echo "Triggering Render deploy..."
-          if curl -sf "$HOOK_URL"; then
+          if curl -sf "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"; then
             echo "Render deploy triggered successfully."
             echo "deployed=true" >> "$GITHUB_OUTPUT"
           else
-            echo "::error::Render deploy hook failed."
-            echo "deployed=false" >> "$GITHUB_OUTPUT"
+            echo "::error::Render deploy hook request failed."
             exit 1
           fi
 
       - name: Poll Worker Health (10s intervals, 5min timeout)
-        if: steps.trigger.outputs.deployed == 'true'
         run: |
           echo "Waiting for worker to become healthy..."
           TIMEOUT=300
@@ -67,14 +78,14 @@ jobs:
 
           while [ $ELAPSED -lt $TIMEOUT ]; do
             STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.WORKER_HEALTH_URL }}" 2>/dev/null || echo "000")
-            
+
             if [ "$STATUS" = "200" ]; then
               echo "Worker is healthy! (HTTP $STATUS after ${ELAPSED}s)"
               HEALTH=$(curl -sf "${{ env.WORKER_HEALTH_URL }}" 2>/dev/null || echo "{}")
               echo "Health response: $HEALTH"
               exit 0
             fi
-            
+
             echo "  Attempt at ${ELAPSED}s: HTTP $STATUS — retrying in ${INTERVAL}s..."
             sleep $INTERVAL
             ELAPSED=$((ELAPSED + INTERVAL))
@@ -83,7 +94,7 @@ jobs:
           echo "::error::Worker health check timed out after ${TIMEOUT}s"
           exit 1
 
-  # Step 3: Verify all services are live (only if deploy actually happened)
+  # Step 3: Verify all services are live
   verify:
     name: Verify All Services
     needs: deploy-worker
@@ -126,11 +137,11 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Service | URL | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|---------|-----|--------|" >> $GITHUB_STEP_SUMMARY
-          
+
           WORKER=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.WORKER_HEALTH_URL }}" 2>/dev/null || echo "000")
           WEB=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.WEB_URL }}" 2>/dev/null || echo "000")
           ADMIN=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.ADMIN_URL }}" 2>/dev/null || echo "000")
-          
+
           echo "| Worker | ${{ env.WORKER_HEALTH_URL }} | HTTP $WORKER |" >> $GITHUB_STEP_SUMMARY
           echo "| Web | ${{ env.WEB_URL }} | HTTP $WEB |" >> $GITHUB_STEP_SUMMARY
           echo "| Admin | ${{ env.ADMIN_URL }} | HTTP $ADMIN |" >> $GITHUB_STEP_SUMMARY

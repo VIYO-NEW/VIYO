@@ -1,6 +1,8 @@
 name: VIYO CI Pipeline
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main, staging]
   # Allow manual trigger
