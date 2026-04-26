@@ -61,3 +61,23 @@ Unresolved questions, spec gaps, and assumptions made during the build. Each ent
 - **Affected layers:** All packages, CI/CD
 - **Proposed plan:** Write foundational tests as part of each Phase 1+ feature task. Consider a dedicated test infrastructure task if test count remains zero after T7/T9.
 - **Status:** OPEN
+
+## GAP-T7-001 — superadmin Role Not Defined in R22
+
+- **Phase discovered:** T7 Phase 1 (Architecture Plan)
+- **Category:** Auth
+- **Blocking:** No
+- **Description:** R17 §10 references a `superadmin` role for the admin portal ("VIYO HQ"), but R22 (Security & Authentication) does not define this role. The current auth system (`packages/shared/src/auth/live-check.ts`, `apps/worker/src/middleware/auth.ts`) only supports workspace-scoped roles: `owner`, `admin`, `member`, `viewer`. There is no global/platform-level superadmin concept.
+- **Affected layers:** Layer 2 (Auth), Layer 5 (API Routes), Layer 7 (Admin Portal)
+- **Proposed plan:** Proceed with checking `user_metadata.role === 'superadmin'` from Supabase JWT. This is a safe minimal assumption. When the auth system is extended in a future task, this check can be replaced with a proper platform-level role system.
+- **Status:** OPEN
+
+## GAP-T7-002 — Admin Auth Method (Magic Link vs MFA)
+
+- **Phase discovered:** T7 Phase 1 (Architecture Plan)
+- **Category:** Auth
+- **Blocking:** No
+- **Description:** R22 §2.1 specifies Magic Link (passwordless) as the primary login method for the web dashboard, but does not explicitly address whether the admin portal (superadmin access) should use higher-friction auth (email/password + MFA). Doc9 Part 10 mentions "IP allowlisting" for the admin shell but not MFA.
+- **Affected layers:** Layer 2 (Auth), Layer 7 (Admin Portal)
+- **Proposed plan:** Proceed with Magic Link for the skeleton (consistent with R22 §2.1). The admin portal can be upgraded to email/password + MFA in a future security hardening task. IP allowlisting is an infrastructure concern (Cloudflare/Render) deferred to deployment.
+- **Status:** OPEN — PO confirmed proceed with magic links for skeleton.
