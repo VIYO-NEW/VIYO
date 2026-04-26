@@ -51,9 +51,10 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Test
-        run: pnpm test
-        continue-on-error: true # Tests are optional until test suites are written
+      # TEST STEP REMOVED — no test suites exist yet.
+      # Re-add when real tests are written:
+      #   - name: Test
+      #     run: pnpm test
 
   docker-lint:
     name: Dockerfile Lint

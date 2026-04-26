@@ -1,31 +1,39 @@
 /**
- * Router — TanStack Router Configuration for Admin Portal
+ * Router — TanStack Router Configuration for Admin Portal (Code-split)
  *
- * Defines all admin routes with the AdminLayout as root layout.
- * Implements: Doc9 Part 10 (admin routing), PO corrections (PendingComponent, ErrorComponent).
+ * All 12 page components are lazy-loaded via dynamic import().
+ * Only the AdminLayout shell (sidebar + topbar) is in the initial bundle.
+ * Each page loads on navigation, reducing the initial chunk size.
+ *
+ * Implements: Doc9 Part 10 (admin routing), PO corrections (PendingComponent,
+ *             ErrorComponent), PO bundle size directive (code-splitting).
  * Wiring Layer: Layer 7 (UI) → Layer 2 (Auth via AuthGuard in AdminLayout)
  *
- * WHY TanStack Router:
- * The admin app scaffold uses TanStack Router (already installed).
- * It provides type-safe routing, built-in pending/error states, and
- * code-splitting support via lazy routes.
- *
  * Route structure:
- * /login          → Login page (outside AdminLayout, no AuthGuard)
- * /               → Redirect to /dashboard
- * /dashboard      → Dashboard (inside AdminLayout + AuthGuard)
- * /brands         → BrandsList
- * /users          → UserManagement
- * /learning-engine → LearningEngine
- * /council-of-brains → CouncilOfBrains
- * /system-health  → SystemHealth
- * /security       → SecurityDashboard
+ * /login               → Login page (outside AdminLayout, no AuthGuard)
+ * /                    → Redirect to /dashboard
+ * /dashboard           → Dashboard (inside AdminLayout + AuthGuard)
+ * /brands              → BrandsList
+ * /users               → UserManagement
+ * /learning-engine     → LearningEngine
+ * /council-of-brains   → CouncilOfBrains
+ * /system-health       → SystemHealth
+ * /security            → SecurityDashboard
  * /cost-reconciliation → CostReconciliation
- * /content-ops    → ContentOps (placeholder)
- * /performance    → Performance (placeholder)
- * /brand-intelligence → BrandIntelligence (placeholder)
+ * /content-ops         → ContentOps (placeholder)
+ * /performance         → Performance (placeholder)
+ * /brand-intelligence  → BrandIntelligence (placeholder)
+ *
+ * 404 handling:
+ * The rootRoute has a notFoundComponent that renders a generic 404 page.
+ * This catches any URL that doesn't match a defined route.
+ *
+ * AuthGuard placement:
+ * AuthGuard wraps AdminLayout (layout-level), so ALL authenticated routes
+ * are protected. Login is the only route outside the layout.
  */
 
+import { lazy, Suspense } from 'react';
 import {
   createRouter,
   createRootRoute,
@@ -33,21 +41,23 @@ import {
   redirect,
 } from '@tanstack/react-router';
 import { AdminLayout } from './components/layout/AdminLayout.js';
-import { Login } from './pages/Login.js';
-import { Dashboard } from './pages/Dashboard.js';
-import { BrandsList } from './pages/BrandsList.js';
-import { UserManagement } from './pages/UserManagement.js';
-import { LearningEngine } from './pages/LearningEngine.js';
-import { CouncilOfBrains } from './pages/CouncilOfBrains.js';
-import { SystemHealth } from './pages/SystemHealth.js';
-import { SecurityDashboard } from './pages/SecurityDashboard.js';
-import { CostReconciliation } from './pages/CostReconciliation.js';
-import { ContentOps } from './pages/ContentOps.js';
-import { Performance } from './pages/Performance.js';
-import { BrandIntelligence } from './pages/BrandIntelligence.js';
+
+// --- Lazy-loaded page components (code-split) ---
+const Login = lazy(() => import('./pages/Login.js').then((m) => ({ default: m.Login })));
+const Dashboard = lazy(() => import('./pages/Dashboard.js').then((m) => ({ default: m.Dashboard })));
+const BrandsList = lazy(() => import('./pages/BrandsList.js').then((m) => ({ default: m.BrandsList })));
+const UserManagement = lazy(() => import('./pages/UserManagement.js').then((m) => ({ default: m.UserManagement })));
+const LearningEngine = lazy(() => import('./pages/LearningEngine.js').then((m) => ({ default: m.LearningEngine })));
+const CouncilOfBrains = lazy(() => import('./pages/CouncilOfBrains.js').then((m) => ({ default: m.CouncilOfBrains })));
+const SystemHealth = lazy(() => import('./pages/SystemHealth.js').then((m) => ({ default: m.SystemHealth })));
+const SecurityDashboard = lazy(() => import('./pages/SecurityDashboard.js').then((m) => ({ default: m.SecurityDashboard })));
+const CostReconciliation = lazy(() => import('./pages/CostReconciliation.js').then((m) => ({ default: m.CostReconciliation })));
+const ContentOps = lazy(() => import('./pages/ContentOps.js').then((m) => ({ default: m.ContentOps })));
+const Performance = lazy(() => import('./pages/Performance.js').then((m) => ({ default: m.Performance })));
+const BrandIntelligence = lazy(() => import('./pages/BrandIntelligence.js').then((m) => ({ default: m.BrandIntelligence })));
 
 /**
- * Global PendingComponent — shown during route transitions.
+ * Global PendingComponent — shown during route transitions and lazy loads.
  * PO required this in Phase 1 review (item #2).
  */
 function RouterPending() {
@@ -84,20 +94,52 @@ function RouterError({ error }: { error: Error }) {
   );
 }
 
+/**
+ * 404 Not Found component — catch-all for unmatched routes.
+ */
+function NotFound() {
+  return (
+    <div className="flex h-64 items-center justify-center">
+      <div className="flex flex-col items-center gap-3 text-center">
+        <h2 className="text-4xl font-bold text-gray-300 dark:text-gray-700">404</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400">Page not found</p>
+        <a href="/dashboard" className="mt-2 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400">
+          Go to Dashboard
+        </a>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Suspense wrapper for lazy-loaded page components.
+ * TanStack Router's pendingComponent handles route-level loading,
+ * but React.lazy needs Suspense for the component-level fallback.
+ */
+function LazyPage({ Component }: { Component: React.LazyExoticComponent<React.ComponentType> }) {
+  return (
+    <Suspense fallback={<RouterPending />}>
+      <Component />
+    </Suspense>
+  );
+}
+
 // --- Root route (no layout — login renders here) ---
 const rootRoute = createRootRoute({
   pendingComponent: RouterPending,
   errorComponent: RouterError,
+  notFoundComponent: NotFound,
 });
 
 // --- Login route (outside AdminLayout) ---
 const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/login',
-  component: Login,
+  component: () => <LazyPage Component={Login} />,
 });
 
 // --- Layout route (AdminLayout wraps all authenticated routes) ---
+// AuthGuard is inside AdminLayout — wraps ALL children.
 const layoutRoute = createRoute({
   getParentRoute: () => rootRoute,
   id: 'admin-layout',
@@ -113,71 +155,71 @@ const indexRoute = createRoute({
   },
 });
 
-// --- Authenticated page routes ---
+// --- Authenticated page routes (all lazy-loaded) ---
 const dashboardRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/dashboard',
-  component: Dashboard,
+  component: () => <LazyPage Component={Dashboard} />,
 });
 
 const brandsRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/brands',
-  component: BrandsList,
+  component: () => <LazyPage Component={BrandsList} />,
 });
 
 const usersRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/users',
-  component: UserManagement,
+  component: () => <LazyPage Component={UserManagement} />,
 });
 
 const learningEngineRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/learning-engine',
-  component: LearningEngine,
+  component: () => <LazyPage Component={LearningEngine} />,
 });
 
 const councilRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/council-of-brains',
-  component: CouncilOfBrains,
+  component: () => <LazyPage Component={CouncilOfBrains} />,
 });
 
 const systemHealthRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/system-health',
-  component: SystemHealth,
+  component: () => <LazyPage Component={SystemHealth} />,
 });
 
 const securityRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/security',
-  component: SecurityDashboard,
+  component: () => <LazyPage Component={SecurityDashboard} />,
 });
 
 const costRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/cost-reconciliation',
-  component: CostReconciliation,
+  component: () => <LazyPage Component={CostReconciliation} />,
 });
 
 const contentOpsRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/content-ops',
-  component: ContentOps,
+  component: () => <LazyPage Component={ContentOps} />,
 });
 
 const performanceRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/performance',
-  component: Performance,
+  component: () => <LazyPage Component={Performance} />,
 });
 
 const brandIntelligenceRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: '/brand-intelligence',
-  component: BrandIntelligence,
+  component: () => <LazyPage Component={BrandIntelligence} />,
 });
 
 // --- Build route tree ---

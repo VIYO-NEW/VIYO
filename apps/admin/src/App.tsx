@@ -3,19 +3,21 @@
  *
  * Composes the three-tier error handling stack:
  * 1. Sentry.ErrorBoundary (top-level — catches everything, reports to Sentry)
+ *    Conditionally rendered: only wraps when Sentry SDK is loaded.
  * 2. TanStack Router defaultErrorComponent (route-level — per-route errors)
  * 3. Per-page error states (component-level — handled inline)
  *
  * Implements: T12 (Sentry), PO Phase 1 review item #1 (Sentry integration),
- *             PO Phase 1 review item #2 (error/loading states).
+ *             PO Phase 1 review item #2 (error/loading states),
+ *             PO bundle size directive (lazy Sentry).
  * Wiring Layer: Layer 7 (UI) → Layer 11 (Observability via Sentry)
  */
 
-import { useEffect } from 'react';
-import * as Sentry from '@sentry/react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { RouterProvider } from '@tanstack/react-router';
 import { router } from './router.js';
 import { useThemeStore } from './stores/theme.js';
+import { getSentry } from './lib/sentry.js';
 
 /**
  * Sentry Error Boundary fallback UI.
@@ -53,6 +55,39 @@ function SentryFallback({
 }
 
 /**
+ * Conditionally wraps children in Sentry.ErrorBoundary if the SDK is loaded.
+ * Falls back to rendering children unwrapped if Sentry isn't available.
+ */
+function MaybeSentryBoundary({ children }: { children: ReactNode }) {
+  const [sentryReady, setSentryReady] = useState(false);
+
+  useEffect(() => {
+    // Poll briefly for Sentry to finish loading (it starts in main.tsx)
+    const check = () => {
+      if (getSentry()) {
+        setSentryReady(true);
+        return;
+      }
+      // Check again in 100ms — Sentry typically loads in <50ms
+      setTimeout(check, 100);
+    };
+    check();
+  }, []);
+
+  if (sentryReady) {
+    const Sentry = getSentry()!;
+    return (
+      <Sentry.ErrorBoundary fallback={SentryFallback} showDialog>
+        {children}
+      </Sentry.ErrorBoundary>
+    );
+  }
+
+  // Sentry not loaded yet (or DSN not set) — render without boundary
+  return <>{children}</>;
+}
+
+/**
  * Root App component.
  * Initializes the theme system on mount and provides the router.
  */
@@ -65,8 +100,8 @@ export function App() {
   }, [initialize]);
 
   return (
-    <Sentry.ErrorBoundary fallback={SentryFallback} showDialog>
+    <MaybeSentryBoundary>
       <RouterProvider router={router} />
-    </Sentry.ErrorBoundary>
+    </MaybeSentryBoundary>
   );
 }

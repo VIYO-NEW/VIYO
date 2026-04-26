@@ -1,11 +1,17 @@
 /**
- * Auth Store — Admin Portal
- * Same pattern as apps/web auth store.
- * R22 §2.2
+ * Auth Store — Admin Portal (Lazy Supabase)
+ *
+ * Zustand store for admin authentication state.
+ * Uses getSupabase() (async lazy loader) instead of eagerly importing
+ * the Supabase client, so the ~210KB SDK is only loaded when auth
+ * is actually initialized.
+ *
+ * Authority: R22 §2.2, PO bundle size directive
+ * Wiring Layer: Layer 2 (Auth) → Layer 7 (UI)
  */
 import { create } from 'zustand';
 import type { Session, User } from '@supabase/supabase-js';
-import { supabase } from '../lib/supabase.js';
+import { getSupabase } from '../lib/supabase.js';
 
 interface AuthState {
   session: Session | null;
@@ -25,6 +31,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   signInWithMagicLink: async (email: string) => {
     set({ loading: true });
+    const supabase = await getSupabase();
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
@@ -37,29 +44,42 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   signOut: async () => {
     set({ loading: true });
+    const supabase = await getSupabase();
     await supabase.auth.signOut();
     set({ session: null, user: null, loading: false });
   },
 
   initialize: () => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      set({
-        session,
-        user: session?.user ?? null,
-        initialized: true,
+    // Fire-and-forget async initialization.
+    // The subscription cleanup is returned synchronously via a ref.
+    let unsubscribe: (() => void) | null = null;
+
+    getSupabase().then((supabase) => {
+      const {
+        data: { subscription },
+      } = supabase.auth.onAuthStateChange((_event, session) => {
+        set({
+          session,
+          user: session?.user ?? null,
+          initialized: true,
+        });
+      });
+
+      unsubscribe = () => subscription.unsubscribe();
+
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        set({
+          session,
+          user: session?.user ?? null,
+          initialized: true,
+        });
       });
     });
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      set({
-        session,
-        user: session?.user ?? null,
-        initialized: true,
-      });
-    });
-
-    return () => subscription.unsubscribe();
+    // Return cleanup function. If Supabase hasn't loaded yet,
+    // the unsubscribe will be a no-op (component unmounted before init).
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
   },
 }));

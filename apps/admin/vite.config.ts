@@ -52,6 +52,39 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        /**
+         * Manual chunk splitting for optimal loading:
+         * - vendor-react: React + ReactDOM (framework, cached long-term)
+         * - vendor-router: TanStack Router (routing core)
+         * - vendor-supabase: Supabase SDK (lazy-loaded via auth store)
+         * - vendor-sentry: Sentry SDK (lazy-loaded via initSentry)
+         * - vendor-zod: Zod (pulled in by @viyo/shared barrel)
+         * Pages are automatically split by React.lazy() in router.tsx.
+         */
+        manualChunks(id: string) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react-dom') || (id.includes('/react/') && !id.includes('react-router'))) {
+              return 'vendor-react';
+            }
+            if (id.includes('@tanstack/react-router') || id.includes('@tanstack/router-core') || id.includes('@tanstack/history')) {
+              return 'vendor-router';
+            }
+            if (id.includes('@supabase/')) {
+              return 'vendor-supabase';
+            }
+            if (id.includes('@sentry/')) {
+              return 'vendor-sentry';
+            }
+            if (id.includes('/zod/')) {
+              return 'vendor-zod';
+            }
+          }
+          return undefined;
+        },
+      },
+    },
   },
   /**
    * GAP-0003 WORKAROUND: Stub node:crypto for browser builds.
