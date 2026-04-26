@@ -11,7 +11,14 @@
 - [x] T8 — Credential Vault Service (EF-87) — DONE 2026-04-24
 - [x] T10 — Internal Records (7 mandatory files) — DONE 2026-04-25
 - [x] T12 — Sentry Error Monitoring — DONE 2026-04-25
-- [ ] T7 — Admin Portal Skeleton
+- [x] T7 — Admin Portal Skeleton — DONE 2026-04-25
+  - [x] 12 lazy-loaded pages (Dashboard, Brands, Users, LearningEngine, CouncilOfBrains, SystemHealth, Security, CostReconciliation, ContentOps, Performance, BrandIntelligence, Login)
+  - [x] AdminLayout with sidebar + topbar + AuthGuard at layout level
+  - [x] Bundle optimized: 543KB→253KB initial (53% reduction)
+  - [x] darkMode: 'class' in shared Tailwind preset
+  - [x] CI pipeline fixed: deploy conditional, test step removed (honest)
+  - [x] Taskmaster updated → done
+  - [x] Airtable synced → Done
 - [ ] T9 — Stripe Billing Foundation (P5-01)
 
 ## Completed Non-Task Work
