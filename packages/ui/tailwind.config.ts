@@ -6,6 +6,7 @@ import type { Config } from 'tailwindcss';
  * Authority: ARCH_LOCK_V3 §2, R17
  */
 const viyoPreset: Partial<Config> = {
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
