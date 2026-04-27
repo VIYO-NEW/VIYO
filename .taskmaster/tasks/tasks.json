@@ -2,6 +2,18 @@
   "master": {
     "tasks": [
       {
+        "id": 9,
+        "title": "Stripe Billing Foundation",
+        "description": "Completed prerequisite anchor for Sprint 2 tasks. The Sprint 2 handoff records T9 as done: Token Engine, seven Stripe webhook handlers, nineteen billing endpoints, and full frontend billing foundation.",
+        "details": "Backfilled during Sprint 2 directive ingestion because the Taskmaster task registry began at T15 while existing tasks T16, T17, T18, T19, T20, T25, T40, and the PO-confirmed composite T45 depend on T9. This is not new implementation scope; it reconciles the dependency anchor already documented in .taskmaster/docs/SPRINT2_HANDOFF.md.",
+        "testStrategy": "No new test execution required for this reconciliation anchor. Preserve the completed status from the Sprint 2 handoff and rely on the original T9 completion evidence referenced there.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-04-27T23:17:12.233202+00:00"
+      },
+      {
         "id": 15,
         "title": "Install TanStack Router in Web App",
         "description": "Set up TanStack Router in the React frontend to enable brand-scoped routing including the new /brand/[brandId]/studio route. This is a prerequisite for all new frontend routes and components.",
@@ -416,19 +428,72 @@
         ],
         "priority": "low",
         "subtasks": []
+      },
+      {
+        "id": 45,
+        "title": "T45: Composite Database Foundation (T16, T17, T18, T19, T20)",
+        "description": "Execute all five database migrations as a single unified protocol run. Creates comments, webhook_endpoints, webhook_delivery_logs, notification_preferences, integration_connections tables, and updates image_prompt_patterns table.",
+        "details": "Source of truth: PO Directive Sprint 2 Timeline Compression & Full Task Batching. Execute one VIYO protocol run for T16-T20: one architecture plan, one wiring blueprint, one implementation phase, and one post-build/Airtable completion pass. Under updated protocol numbering, architecture lock maps to Phase 2, implementation maps to Phase 4, and post-build/Airtable maps to Phase 9. When complete, mark underlying tasks T16, T17, T18, T19, and T20 done with note: Completed via composite task T45.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          9
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 46,
+        "title": "T46: Composite Art Director Routing Suite (T21, T22, T23)",
+        "description": "Implement 4D scoring matrix, zero-shot fallback, and provider tier routing as a single protocol run.",
+        "details": "Source of truth: PO Directive Sprint 2 Timeline Compression & Full Task Batching plus docs/architecture/art-director-routing-suite.md. Execute one architecture plan covering the full routing logic in image-router.ts, then one wiring blueprint, one implementation phase, and one post-build/Airtable completion pass. Under updated protocol numbering, architecture lock maps to Phase 2, implementation maps to Phase 4, and post-build/Airtable maps to Phase 9. When complete, mark underlying tasks T21, T22, and T23 done with note: Completed via composite task T46.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          45
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 47,
+        "title": "T47: Composite Studio Editing Tools (T27, T28, T29)",
+        "description": "Implement Touch Edit, Layer Split, and Background Swap as a single protocol run covering the shared canvas manipulation UI pattern.",
+        "details": "Source of truth: PO Directive Sprint 2 Timeline Compression & Full Task Batching plus docs/architecture/studio-editing-tools.md. Execute one architecture plan covering all three canvas manipulation tools, then one wiring blueprint, one implementation phase, and one post-build/Airtable completion pass. Under updated protocol numbering, architecture lock maps to Phase 2, implementation maps to Phase 4, and post-build/Airtable maps to Phase 9. When complete, mark underlying tasks T27, T28, and T29 done with note: Completed via composite task T47.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          24,
+          25
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 48,
+        "title": "T48: Composite Webhook Pipeline (T37, T38, T39)",
+        "description": "Build Webhook Management API, Dispatcher Inngest Function, and Event Emission Points as a single protocol run covering the end-to-end webhook flow.",
+        "details": "Source of truth: PO Directive Sprint 2 Timeline Compression & Full Task Batching plus docs/architecture/webhook-pipeline.md. Execute one architecture plan covering event emission, dispatch, delivery, retry logging, and endpoint management, then one wiring blueprint, one implementation phase, and one post-build/Airtable completion pass. Under updated protocol numbering, architecture lock maps to Phase 2, implementation maps to Phase 4, and post-build/Airtable maps to Phase 9. When complete, mark underlying tasks T37, T38, and T39 done with note: Completed via composite task T48.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          45
+        ],
+        "priority": "medium",
+        "subtasks": []
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-27T19:08:05.267444+00:00",
-      "taskCount": 29,
-      "completedCount": 0,
+      "lastModified": "2026-04-27T23:17:12.233626+00:00",
+      "taskCount": 35,
+      "completedCount": 2,
       "tags": [
         "master"
       ],
       "created": "2026-04-27T18:56:15.249Z",
       "description": "Tasks for master context",
-      "updated": "2026-04-27T20:45:18.995Z"
+      "updated": "2026-04-27T23:17:12.233626+00:00"
     }
   }
 }
