@@ -1,0 +1,332 @@
+{
+  "tasks": [
+    {
+      "id": 15,
+      "title": "Install TanStack Router in Web App",
+      "description": "Set up TanStack Router in the React frontend to enable brand-scoped routing including the new /brand/[brandId]/studio route. This is a prerequisite for all new frontend routes and components.",
+      "details": "Install @tanstack/router package, configure router instance in src/app/router.tsx, add route entry for /brand/:brandId/studio. Ensure router supports nested layouts and brandId param propagation. Update main App.tsx to use TanStack Router provider.",
+      "testStrategy": "Verify navigation to /brand/[brandId]/studio works without errors. Confirm brandId param is accessible in route components.",
+      "priority": "high",
+      "dependencies": [],
+      "status": "pending"
+    },
+    {
+      "id": 16,
+      "title": "Database Migration: Create comments Table",
+      "description": "Create the comments table to support pin-on-canvas, section-anchored, and brand chat panel comments with all specified columns and constraints.",
+      "details": "Write SQL migration to create comments table with columns per \u00a730.1.1. Use UUID primary key with uuid_generate_v4(). Add FK constraints to workspaces, brands, users, and self for parent_comment_id. Implement RLS policies restricting access by workspace_id. Add indexes on brand_id, target_type, target_id.",
+      "testStrategy": "Run migration on test DB. Verify table schema matches spec. Test RLS by querying as different workspace users.",
+      "priority": "high",
+      "dependencies": [
+        9
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 17,
+      "title": "Database Migration: Create webhook_endpoints and webhook_delivery_logs Tables",
+      "description": "Create webhook_endpoints and webhook_delivery_logs tables to manage webhook subscriptions and delivery logs with encrypted secrets and failure tracking.",
+      "details": "Write SQL migrations for webhook_endpoints (\u00a730.1.2) and webhook_delivery_logs (\u00a730.1.3). Encrypt secret_key using AES-256-GCM pattern consistent with platform_credentials. Add FK constraints and default values. Implement RLS policies for workspace isolation.",
+      "testStrategy": "Verify tables created with correct columns and encryption. Insert test rows and confirm encryption. Test RLS enforcement.",
+      "priority": "high",
+      "dependencies": [
+        9
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 18,
+      "title": "Database Migration: Create notification_preferences Table",
+      "description": "Create notification_preferences table to store user notification settings per channel and event type.",
+      "details": "Write migration per \u00a730.1.4 with FK to users and workspaces. Include enum channel and event_type columns. Default is_enabled to true. Add RLS policies for workspace isolation.",
+      "testStrategy": "Verify table creation and RLS. Insert and query preferences for multiple users.",
+      "priority": "medium",
+      "dependencies": [
+        9
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 19,
+      "title": "Database Migration: Create integration_connections Table",
+      "description": "Create integration_connections table to store OAuth tokens for Slack and future integrations with encrypted tokens and channel mappings.",
+      "details": "Write migration per \u00a730.1.5. Encrypt access_token and refresh_token with AES-256-GCM. Add FK to workspaces. Include provider enum and JSONB channel_mappings. Add RLS policies.",
+      "testStrategy": "Verify table creation, encryption, and RLS. Insert sample Slack connection.",
+      "priority": "medium",
+      "dependencies": [
+        9
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 20,
+      "title": "Database Migration: Update image_prompt_patterns Table",
+      "description": "Add supports_typography, fidelity_score, and product_type columns to image_prompt_patterns table and backfill existing data.",
+      "details": "Write migration to add three columns per \u00a730.2.1. Run backfill to set supports_typography=true for patterns using Ideogram or GPT Image models. Add RLS policies if needed.",
+      "testStrategy": "Verify columns added and backfill applied correctly. Query updated rows.",
+      "priority": "high",
+      "dependencies": [
+        9
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 21,
+      "title": "Implement Art Director Router 4D Scoring Matrix",
+      "description": "Replace existing image-router.ts scoring logic with the multi-dimensional 4D scoring matrix for pattern selection.",
+      "details": "Update src/lib/ai/image-router.ts to accept generation requests with required params. Generate request embedding using OpenAI text-embedding-3-small. Query pgvector for top 20 candidates. Calculate score using formula SCORE = (Q*0.4)+(C*0.3)*F*T. Sort and select top candidate if score >=0.75. Inject product data and execute model sequence.",
+      "testStrategy": "Unit test scoring calculations with sample data. Integration test pattern selection with mock embeddings.",
+      "priority": "high",
+      "dependencies": [
+        16,
+        20
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 22,
+      "title": "Implement Art Director Router Zero-Shot Fallback",
+      "description": "Add zero-shot fallback logic in image-router.ts to call Claude 3.5 Sonnet for prompt generation when no pattern scores above threshold.",
+      "details": "Integrate Claude 3.5 Sonnet API call to generate MCoT prompt. Route prompt to appropriate model based on request type. Submit generated result to curator_queue table for review. Handle approval and insertion into image_prompt_patterns.",
+      "testStrategy": "Mock zero-shot fallback calls and verify curator_queue insertion. Test fallback triggers correctly.",
+      "priority": "high",
+      "dependencies": [
+        21
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 23,
+      "title": "Implement Provider Tier Routing in Art Director Router",
+      "description": "Implement three-tier provider strategy in image-router.ts with automatic failover on provider failure.",
+      "details": "Check model availability on Tier 2 first. Use Tier 1 for models requiring direct API. Use Tier 3 only if enabled in admin config and model available locally. On failure, failover to next tier. Update router to handle tier selection and retries.",
+      "testStrategy": "Simulate provider failures and verify failover behavior. Confirm tier selection logic matches rules.",
+      "priority": "high",
+      "dependencies": [
+        21
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 24,
+      "title": "Build Image Studio Page Layout",
+      "description": "Create the /brand/[brandId]/studio route with a three-zone layout: mode picker sidebar, freeform canvas, and AI command panel.",
+      "details": "Implement React components for ModePickerSidebar, FreeformCanvas, and AICommandPanel. Use TanStack Router for route. Ensure brandId param is used to scope data. Follow WCAG 2.1 AA accessibility standards. Use CSS grid/flexbox for layout.",
+      "testStrategy": "Verify layout renders correctly on /brand/[brandId]/studio. Test accessibility with axe or similar tools.",
+      "priority": "high",
+      "dependencies": [
+        15,
+        21
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 25,
+      "title": "Implement Image Studio Generation Flow Backend",
+      "description": "Create POST /api/studio/generate endpoint to handle image generation requests with token deduction and Art Director Router integration.",
+      "details": "Validate brandId and mode. Call atomic_token_deduction RPC with row locking. Return 402 if insufficient tokens. Call Art Director Router to select pattern/model. Execute generation pipeline. Stream progress via Supabase Realtime. Save generated image to Cloudflare R2 and index in assets table with type 'studio_generated'.",
+      "testStrategy": "Test endpoint with valid and invalid token balances. Verify images saved and progress streamed.",
+      "priority": "high",
+      "dependencies": [
+        21,
+        16,
+        9
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 26,
+      "title": "Implement Image Studio Generation Flow Frontend",
+      "description": "Connect AI Command Panel generation UI to backend API. Display generating skeleton and render generated images on canvas.",
+      "details": "Add form and controls in AICommandPanel. On submit, call /api/studio/generate. Subscribe to Supabase Realtime for progress updates. Show loading skeleton. On completion, add image to FreeformCanvas. Support multiple images and infinite scroll.",
+      "testStrategy": "Verify generation requests trigger backend calls. Confirm progress updates and images appear on canvas.",
+      "priority": "high",
+      "dependencies": [
+        15,
+        24,
+        25
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 27,
+      "title": "Implement Image Studio Editing Tools: Touch Edit",
+      "description": "Implement Touch Edit tool allowing users to click a region, segment with SAM 2, describe changes, and apply inpainting edits.",
+      "details": "Integrate SAM 2 segmentation API. Capture user text input for edit description. Call inpainting model pipeline. Save edited image as new version. Update version history panel.",
+      "testStrategy": "Test segmentation accuracy. Verify edits apply only to selected region. Confirm new version created.",
+      "priority": "high",
+      "dependencies": [
+        25,
+        24
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 28,
+      "title": "Implement Image Studio Editing Tools: Layer Splitting",
+      "description": "Implement layer splitting using SAM 2 to separate foreground/background layers as draggable canvas elements.",
+      "details": "Call SAM 2 to generate layers. Render each layer as independent React draggable component on FreeformCanvas. Support rearranging and visibility toggling.",
+      "testStrategy": "Verify layers split correctly. Test drag and drop functionality.",
+      "priority": "medium",
+      "dependencies": [
+        24
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 29,
+      "title": "Implement Image Studio Editing Tools: Background Swap",
+      "description": "Implement background removal using RMBG and allow user to select or generate new background with compositing.",
+      "details": "Call RMBG model to remove background. Provide UI to select from preset backgrounds or generate new background via generation pipeline. Composite foreground and background layers.",
+      "testStrategy": "Test background removal quality. Verify compositing updates on selection.",
+      "priority": "medium",
+      "dependencies": [
+        25,
+        24
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 30,
+      "title": "Implement Image Studio Version History Panel",
+      "description": "Create version history UI showing thumbnails and timestamps for all image versions with side-by-side comparison.",
+      "details": "Store versions in assets table with version metadata. Build React component to display thumbnails in a scrollable panel. Support undo/redo and comparison view.",
+      "testStrategy": "Verify version creation on edits. Test navigation and comparison UI.",
+      "priority": "medium",
+      "dependencies": [
+        27,
+        28,
+        29
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 31,
+      "title": "Implement Brand Vault @ Mention System in AI Command Panel",
+      "description": "Add @ mention autocomplete in AI Command Panel querying assets table filtered by brand_id with thumbnails and metadata.",
+      "details": "On '@' keypress, query assets table for brand-scoped assets. Show dropdown with asset thumbnails, names, and types. Insert selected asset references into generation prompt. Ensure accessibility compliance.",
+      "testStrategy": "Test @ mention dropdown triggers and selection. Verify prompt injection includes asset references.",
+      "priority": "high",
+      "dependencies": [
+        15,
+        24,
+        16
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 32,
+      "title": "Auto-Save Generated Images to Brand Vault Assets Table",
+      "description": "Automatically save every generated image from Image Studio to assets table with type 'studio_generated' and metadata tags.",
+      "details": "Extend generation backend to upload images to Cloudflare R2, then insert asset record with brand_id, type, and metadata. Ensure transactional consistency and error handling.",
+      "testStrategy": "Verify generated images appear in assets table and storage. Confirm metadata correctness.",
+      "priority": "high",
+      "dependencies": [
+        25
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 33,
+      "title": "Build Brand Chat Panel Component",
+      "description": "Create a collapsible right sidebar React component displaying brand-scoped comments grouped by entity tags with real-time updates.",
+      "details": "Implement <BrandChatPanel brandId={brandId} />. Fetch comments filtered by brand_id ordered by created_at DESC. Group by target_type and target_id. Support threaded replies, Markdown rendering, and real-time Supabase subscriptions. Implement # entity picker and @ mention picker with dropdowns.",
+      "testStrategy": "Verify comments load and update in real-time. Test # and @ pickers. Confirm Markdown rendering and threading.",
+      "priority": "medium",
+      "dependencies": [
+        15,
+        16
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 34,
+      "title": "Implement Pin-on-Canvas Comments Overlay in Image Studio",
+      "description": "Add overlay on images in FreeformCanvas to allow users to drop numbered pins at clicked coordinates and add comments.",
+      "details": "Capture (x,y) relative to image on click. Show popover input for comment. Save comment with target_type='image' and anchor_x/y. Render numbered pins, support expanding threads on click. Dim pins for resolved comments.",
+      "testStrategy": "Test pin placement accuracy. Verify comment creation and thread expansion. Confirm resolved pins dim.",
+      "priority": "medium",
+      "dependencies": [
+        24,
+        16,
+        33
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 35,
+      "title": "Implement Section-Anchored Comments in Email Editor",
+      "description": "Add comment button to each MJML section in GrapesJS editor to anchor comments to email sections with timeline sidebar.",
+      "details": "Add unique section_id to GrapesJS components. Show comment button on section hover. Save comments with target_type='email_section' and target_id=section_id. Build right sidebar vertical timeline showing comments ordered by section position.",
+      "testStrategy": "Verify comment button appears and saves comments correctly. Test timeline ordering and navigation.",
+      "priority": "medium",
+      "dependencies": [
+        16
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 36,
+      "title": "Implement Brand Chat Panel Super-Search",
+      "description": "Add search bar to Brand Chat Panel to full-text search comments with filters by entity type, date, author, and status.",
+      "details": "Use PostgreSQL ts_vector for full-text search on comment body. Add UI filters for # entity tags, date range, author, and open/resolved status. Show results with highlighted snippets and metadata. Clicking result deep-links to asset with comment thread open.",
+      "testStrategy": "Test search accuracy and filters. Verify deep-link navigation.",
+      "priority": "medium",
+      "dependencies": [
+        33
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 37,
+      "title": "Build Webhook Management API Endpoints",
+      "description": "Implement REST API endpoints to create, list, update, delete webhook endpoints and fetch delivery logs.",
+      "details": "Create /api/webhooks POST, GET, PATCH, DELETE and /api/webhooks/:id/logs GET endpoints. Validate workspace_id from JWT. Encrypt/decrypt secret_key using AES-256-GCM. Validate event subscriptions. Implement pagination for logs.",
+      "testStrategy": "Test CRUD operations with valid and invalid data. Verify encryption of secrets. Confirm RLS enforcement.",
+      "priority": "medium",
+      "dependencies": [
+        17
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 38,
+      "title": "Implement Webhook Dispatcher Inngest Function",
+      "description": "Create Inngest function to listen to all internal events and dispatch webhooks with HMAC-SHA256 signature and retry logic.",
+      "details": "Function ID: dispatch-webhook. Trigger on internal/* events. Query webhook_endpoints filtered by workspace_id and subscribed events. Decrypt secret_key. Compute HMAC-SHA256 signature. POST payload with headers. Log delivery results. Increment consecutive_failures on failure, disable after 10 failures. Configure exponential backoff retries (1m,5m,15m,1h).",
+      "testStrategy": "Simulate events and verify webhook delivery, signature correctness, retries, and disabling after failures.",
+      "priority": "medium",
+      "dependencies": [
+        17
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 39,
+      "title": "Add Inngest Event Emission Points for Webhooks",
+      "description": "Add inngest.send() calls at key points to emit internal events for webhook dispatching.",
+      "details": "Add calls in campaign generation DAG for start/complete/fail events, image-router.ts after image generation, Shopify sync for brand asset sync, Stripe webhook handler for token purchase, and POST /api/comments endpoint for comment creation.",
+      "testStrategy": "Verify events emitted on each action. Confirm webhook dispatcher receives events.",
+      "priority": "medium",
+      "dependencies": [
+        38,
+        25,
+        16
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 40,
+      "title": "Integration Tests for Token Engine + Stripe Webhooks",
+      "description": "Write end-to-end integration tests covering token deduction during Image Studio generation and Stripe webhook handling.",
+      "details": "Test token deduction RPC call with row locking and error handling. Simulate Stripe webhook events and verify billing updates. Include tests for insufficient tokens blocking generation. Use test database and mocks for external APIs.",
+      "testStrategy": "Run integration test suite verifying token deduction correctness and webhook processing. Confirm error cases handled gracefully.",
+      "priority": "high",
+      "dependencies": [
+        25,
+        9
+      ],
+      "status": "pending"
+    }
+  ]
+}
