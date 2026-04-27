@@ -19,7 +19,17 @@
   - [x] CI pipeline fixed: deploy conditional, test step removed (honest)
   - [x] Taskmaster updated → done
   - [x] Airtable synced → Done
-- [ ] T9 — Stripe Billing Foundation (P5-01)
+- [x] T9 — Stripe Billing Foundation (P5-01) — DONE 2026-04-27
+  - [x] Token Engine: dual-write pattern (R23 usage_ledger → T9 token_ledger)
+  - [x] atomic_token_deduction RPC with FOR UPDATE row locking
+  - [x] 7 Stripe webhook handlers with idempotency (stripe_webhook_events table)
+  - [x] 19 billing API endpoints + 6 admin economics endpoints
+  - [x] 4 Inngest functions (auto-top-up, free renewal, workspace hard delete, dunning)
+  - [x] Frontend: PricingPage, BillingSettings, TokenBalanceHeader, QuickTopUpModal, InsufficientTokensModal
+  - [x] Admin: Billing Economics Control Panel (margin health, provider registry, multiplier, promos)
+  - [x] Workspace deletion flow (§17): Stripe cancel, 30-day soft delete, GDPR purge
+  - [x] Annual/Monthly switch (§18): Subscription Schedules for deferred changes
+  - [x] Dunning freeze: separate checkBillingStatus() pre-check → 402 BILLING_FROZEN
 
 ## Completed Non-Task Work
 
