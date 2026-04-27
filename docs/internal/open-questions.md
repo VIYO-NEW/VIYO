@@ -81,3 +81,30 @@ Unresolved questions, spec gaps, and assumptions made during the build. Each ent
 - **Affected layers:** Layer 2 (Auth), Layer 7 (Admin Portal)
 - **Proposed plan:** Proceed with Magic Link for the skeleton (consistent with R22 §2.1). The admin portal can be upgraded to email/password + MFA in a future security hardening task. IP allowlisting is an infrastructure concern (Cloudflare/Render) deferred to deployment.
 - **Status:** OPEN — PO confirmed proceed with magic links for skeleton.
+
+## GAP-20260427-1455-STYLE-PROMPT-LIBRARY — Style/Prompt Library UI deferred to Sprint 3
+- Phase discovered: Sprint 2 Phase 0 approval / T15 Phase 0
+- Category: UI/UX, AI/Brain
+- Blocking: No
+- Description: Product Owner identified that the specs define Style/Prompt Library capabilities not covered by Sprint 2 tasks: pre-built templates, industry prompts, user-saved Style DNA, community gallery, and prompt history.
+- Affected layers: Layer 6 Frontend UI, Layer 7 State Management, Layer 8 AI/Brain, Layer 12 Observability/Analytics
+- Proposed plan: Backlog as Sprint 3 UI surface on top of the Art Director Router and Pattern DB. Do not expose placeholder library UI in Sprint 2.
+- Status: OPEN — PO approved as Sprint 3 backlog on 2026-04-27T14:55:56-04:00
+
+## GAP-20260427-1455-REMAINING-EDITING-TOOLS — Remaining editing tools deferred to Sprint 3
+- Phase discovered: Sprint 2 Phase 0 approval / T15 Phase 0
+- Category: API, UI/UX, AI/Brain
+- Blocking: No
+- Description: Sprint 2 covers Touch Edit, Layer Split, and Background Swap only. The remaining editing tools are not covered: Upscale, Remove Object, Outpaint, Text Edit, Color Adjust, Expand, and Object Recolor.
+- Affected layers: Layer 5 API/Backend, Layer 6 Frontend UI, Layer 7 State Management, Layer 8 AI/Brain, Layer 10 Billing/Entitlements
+- Proposed plan: Backlog as Sprint 3 incremental fal.ai tool integrations after the first three editing pipeline tools prove the architecture. Do not expose unwired tools in Sprint 2 UI.
+- Status: OPEN — PO approved as Sprint 3 backlog on 2026-04-27T14:55:56-04:00
+
+## GAP-20260427-1455-NOTIFICATION-DISPATCH — @mention notification dispatch deferred to Sprint 3
+- Phase discovered: Sprint 2 Phase 0 approval / T15 Phase 0
+- Category: API, Infrastructure, Collaboration
+- Blocking: No
+- Description: T18 creates notification_preferences, but Sprint 2 has no task that sends in-app, email, or push notifications when a user is @mentioned.
+- Affected layers: Layer 1 DB Schema, Layer 5 API/Backend, Layer 9 Background Jobs, Layer 11 Notifications/Integrations, Layer 12 Observability/Analytics
+- Proposed plan: Backlog a Sprint 3 Inngest notification dispatcher that reads notification_preferences and routes @mention notifications to enabled channels without schema changes.
+- Status: OPEN — PO approved as Sprint 3 backlog on 2026-04-27T14:55:56-04:00

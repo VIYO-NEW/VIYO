@@ -113,3 +113,15 @@ Chronological build log. One entry per work session or task completion.
 - Files changed: `apps/worker/src/lib/sentry.ts`, `instrumentation.ts`, `middleware/error-handler.ts`, `apps/web/src/lib/sentry.ts`, `App.tsx`, `main.tsx`, `vite.config.ts`, `apps/admin/src/lib/sentry.ts`, `App.tsx`, `main.tsx`, `vite.config.ts`, `.env.example`
 - Commits: `2faa22d`, `b15ddf4`
 - Taskmaster: T12 completed
+
+## 2026-04-27 — T15: Install TanStack Router in Web App
+
+- Implemented the web router foundation with TanStack Router in `apps/web/src/router.tsx`.
+- Wired `RouterProvider` through `apps/web/src/App.tsx` while preserving the existing Sentry error boundary.
+- Created the route contracts for `/`, `/brand/$brandId/studio`, and the not-found fallback.
+- Kept the Studio route as a boundary-only surface with no Studio module imports, generation tools, or premature UI implementation.
+- Verified route behavior through production-build browser screenshots for home, Studio boundary, and not-found states.
+- Verification: `pnpm test`, `pnpm type-check`, `pnpm lint`, `pnpm build`, bundle visualizer, route-contract semantic checks, and final headless browser validation completed.
+- Phase 6 note: the generic quality-gate scripts remained non-React/TSX-aware after update; Product Owner approved the disclosed one-time exception based on passing engineering and semantic checks.
+- Bundle review: Product Owner confirmed dependencies were expected and no Studio modules or generation tools were present.
+- Tracking: Taskmaster T15 marked done; Airtable Build Tracker `T15-ROUTER` marked Done.

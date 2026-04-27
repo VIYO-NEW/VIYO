@@ -31,6 +31,15 @@
   - [x] Annual/Monthly switch (§18): Subscription Schedules for deferred changes
   - [x] Dunning freeze: separate checkBillingStatus() pre-check → 402 BILLING_FROZEN
 
+- [x] T15 — Install TanStack Router in Web App (T15-ROUTER) — DONE 2026-04-27
+  - [x] Added TanStack Router provider wiring in `apps/web/src/App.tsx`
+  - [x] Added typed route tree in `apps/web/src/router.tsx`
+  - [x] Implemented `/`, `/brand/$brandId/studio`, and not-found route contracts
+  - [x] Preserved Studio route as an integration boundary with no Studio module imports
+  - [x] Verified type-check, lint, tests, production build, bundle budget, and headless browser routes
+  - [x] Taskmaster updated → done
+  - [x] Airtable synced → Done
+
 ## Completed Non-Task Work
 
 - [x] Security: Patched 5 Dependabot vulnerabilities (drizzle-orm, vite, esbuild) — 2026-04-25

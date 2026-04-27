@@ -1,6 +1,10 @@
+/**
+ * Defines the VIYO web application root component and preserves the T12 Sentry error boundary while mounting the T15 router provider.
+ * This file implements the approved T15 router integration without changing Sentry initialization order from `main.tsx`.
+ * Wiring layer: Layer 6 Frontend UI, Layer 7 State/Navigation, Layer 12 Observability.
+ */
 import * as Sentry from '@sentry/react';
-import type { Workspace } from '@viyo/shared';
-import { Button } from '@viyo/ui';
+import { AppRouterProvider } from './router.js';
 
 /**
  * T12: Sentry Error Boundary fallback UI.
@@ -26,24 +30,13 @@ function SentryFallback({ error, resetError }: { error: unknown; componentStack:
 /**
  * VIYO Web App — Root Component
  * T12: Wrapped in Sentry.ErrorBoundary for automatic error capture.
- * Placeholder for Phase 0 scaffold validation.
+ * T15: TanStack Router provider is mounted inside Sentry so global React
+ * errors remain captured while route-level fallbacks handle route states.
  */
 export function App() {
-  // Type validation: ensure cross-package import works at build time
-  void (0 as unknown as Workspace);
-
   return (
     <Sentry.ErrorBoundary fallback={SentryFallback} showDialog>
-      <div className="flex min-h-screen flex-col items-center justify-center bg-surface p-8">
-        <h1 className="mb-4 text-4xl font-bold text-viyo-700">VIYO</h1>
-        <p className="mb-6 text-lg text-gray-600">AI-Powered Email Marketing Platform</p>
-        <Button variant="default" size="lg">
-          Get Started
-        </Button>
-        <p className="mt-8 text-sm text-gray-400">
-          Phase 0 Scaffold — app.viyo.new
-        </p>
-      </div>
+      <AppRouterProvider />
     </Sentry.ErrorBoundary>
   );
 }
