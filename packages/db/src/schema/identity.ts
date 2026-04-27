@@ -12,6 +12,7 @@ import {
   jsonb,
   timestamp,
   text,
+  bigint,
   unique,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
@@ -25,9 +26,17 @@ export const workspaces = pgTable('workspaces', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 255 }).notNull(),
   stripeCustomerId: varchar('stripe_customer_id', { length: 255 }).unique(),
+  stripeSubscriptionId: varchar('stripe_subscription_id', { length: 255 }),
+  subscriptionStatus: varchar('subscription_status', { length: 50 })
+    .default('free')
+    .notNull(),
   subscriptionTier: varchar('subscription_tier', { length: 50 })
     .default('free')
     .notNull(),
+  billingCycleAnchor: timestamp('billing_cycle_anchor', { withTimezone: true }),
+  autoTopUpEnabled: boolean('auto_top_up_enabled').default(false).notNull(),
+  autoTopUpThreshold: bigint('auto_top_up_threshold', { mode: 'number' }).default(500000),
+  autoTopUpPack: varchar('auto_top_up_pack', { length: 20 }).default('small'),
   onboardingCompleted: boolean('onboarding_completed').default(false).notNull(),
   settings: jsonb('settings').default(sql`'{}'::jsonb`).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),

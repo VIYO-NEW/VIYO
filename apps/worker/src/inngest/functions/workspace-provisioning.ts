@@ -1,33 +1,28 @@
 /**
- * Workspace Provisioning Pipeline — R18 §4, Doc4 §2.1
+ * Workspace Provisioning Pipeline — R18 §4, Doc4 §2.1, T9
  *
  * Inngest function triggered by viyo/workspace.created.
- * This is the "Hello World" pipeline for the Inngest event system.
  *
  * Steps (durable, individually retried):
  * 1. verify-workspace — Confirm the workspace exists in the database
- * 2. provision-defaults — Create default brand + credit balance (future tables)
- * 3. send-welcome-notification — Queue a welcome notification (future: Resend)
+ * 2. create-stripe-customer — Create a Stripe customer for the workspace
+ * 3. provision-token-balance — Insert initial token_balances row
+ * 4. send-welcome-notification — Queue a welcome notification (future: ESP)
  *
  * Each step is idempotent — safe to retry on failure.
  * Retry config: max 3 retries with exponential backoff.
  *
- * Note: Steps 2 and 3 currently log their intent because the brands
- * and credit_balances tables are planned for future schema migrations.
- * When those tables land, these steps will be updated to perform real inserts.
- *
- * Authority: R18 §4, Doc4 §2.1, ARCH_LOCK_V3 §3
+ * Authority: R18 §4, Doc4 §2.1, ARCH_LOCK_V3 §3, T9 Master Spec §3
  */
 import { inngest } from '../client.js';
 import { getDb } from '../../lib/db.js';
-import { workspaces } from '@viyo/db';
+import { workspaces, tokenBalances } from '@viyo/db';
 import { eq } from 'drizzle-orm';
+import { getStripe } from '../../lib/stripe.js';
+import { grantTokens } from '../../lib/token-engine.js';
 
 /**
- * workspace.created → provision defaults
- *
- * PO directive: This is the Hello World for the Inngest event system.
- * Demonstrates durable step execution, DB reads, and OTel trace continuity.
+ * workspace.created → provision Stripe customer + token balance
  */
 export const workspaceProvisioning = inngest.createFunction(
   {
@@ -37,14 +32,12 @@ export const workspaceProvisioning = inngest.createFunction(
   },
   { event: 'viyo/workspace.created' },
   async ({ event, step, logger }) => {
-    const { workspaceId, workspaceName, ownerId, subscriptionTier } = event.data;
+    const { workspaceId, workspaceName, ownerId, ownerEmail, subscriptionTier } = event.data;
 
     logger.info('Starting workspace provisioning', { workspaceId, workspaceName });
 
     /**
      * Step 1: Verify workspace exists
-     * Confirms the workspace row was committed to the database before
-     * proceeding with provisioning. This is the DB-touching "Hello World".
      */
     const workspace = await step.run('verify-workspace', async () => {
       const db = getDb();
@@ -57,6 +50,7 @@ export const workspaceProvisioning = inngest.createFunction(
           id: workspaces.id,
           name: workspaces.name,
           subscriptionTier: workspaces.subscriptionTier,
+          stripeCustomerId: workspaces.stripeCustomerId,
         })
         .from(workspaces)
         .where(eq(workspaces.id, workspaceId))
@@ -70,52 +64,110 @@ export const workspaceProvisioning = inngest.createFunction(
     });
 
     /**
-     * Step 2: Provision defaults (brand + credit balance)
-     * Future: When brands and credit_balances tables are added to the schema,
-     * this step will insert real rows. For now, it computes the values and logs.
+     * Step 2: Create Stripe customer (idempotent — skips if already exists)
+     * T9 §3: Every workspace gets a Stripe customer on creation.
      */
-    const defaults = await step.run('provision-defaults', async () => {
-      const initialCredits = getInitialCredits(subscriptionTier);
+    const stripeResult = await step.run('create-stripe-customer', async () => {
+      // Skip if Stripe customer already exists (idempotent retry)
+      if (workspace.stripeCustomerId) {
+        return { customerId: workspace.stripeCustomerId, created: false };
+      }
 
-      logger.info('Provisioning defaults for workspace', {
-        workspaceId,
-        defaultBrandName: workspaceName,
-        initialCredits,
-        subscriptionTier,
+      const stripe = getStripe();
+      if (!stripe) {
+        logger.warn('Stripe not configured — skipping customer creation');
+        return { customerId: null, created: false, skipped: true };
+      }
+
+      const db = getDb();
+      if (!db) throw new Error('Database not available');
+
+      const customer = await stripe.customers.create({
+        email: ownerEmail,
+        name: workspaceName,
+        metadata: {
+          workspaceId,
+          ownerId,
+          tier: subscriptionTier,
+        },
       });
 
-      // Future DB inserts:
-      // await db.insert(brands).values({ workspaceId, name: workspaceName, isDefault: true });
-      // await db.insert(creditBalances).values({ workspaceId, balance: initialCredits });
+      // Save Stripe customer ID to workspace
+      await db
+        .update(workspaces)
+        .set({
+          stripeCustomerId: customer.id,
+          updatedAt: new Date(),
+        })
+        .where(eq(workspaces.id, workspaceId));
 
-      return {
-        brandName: workspaceName,
-        initialCredits,
-        provisioned: false, // Will be true when tables exist
-      };
+      return { customerId: customer.id, created: true };
     });
 
     /**
-     * Step 3: Send welcome notification
-     * Future: integrate with Resend for transactional email.
-     * For now, logs the intent — the notification system is a future task.
+     * Step 3: Provision token balance
+     * T9 §16: Free tier gets 1M tokens on creation.
+     * Paid tiers get their monthly grant (handled by invoice.paid webhook).
+     */
+    const tokenResult = await step.run('provision-token-balance', async () => {
+      const db = getDb();
+      if (!db) throw new Error('Database not available');
+
+      // Check if balance already exists (idempotent retry)
+      const existing = await db
+        .select({ workspaceId: tokenBalances.workspaceId })
+        .from(tokenBalances)
+        .where(eq(tokenBalances.workspaceId, workspaceId))
+        .limit(1);
+
+      if (existing.length > 0) {
+        return { provisioned: false, reason: 'Balance already exists' };
+      }
+
+      // Insert initial token_balances row
+      await db.insert(tokenBalances).values({
+        workspaceId,
+        balance: 0,
+        lifetimeGranted: 0,
+        lifetimeConsumed: 0,
+        lifetimeRefunded: 0,
+      });
+
+      // Grant initial free tier tokens
+      const initialGrant = getInitialTokenGrant(subscriptionTier);
+      if (initialGrant > 0) {
+        await grantTokens({
+          workspaceId,
+          amount: initialGrant,
+          transactionType: 'free_tier_grant',
+          description: `Initial ${subscriptionTier} token grant: ${initialGrant.toLocaleString()} tokens`,
+        });
+      }
+
+      return { provisioned: true, initialGrant };
+    });
+
+    /**
+     * Step 4: Send welcome notification
+     * Future: integrate with ESP for transactional email.
      */
     const notification = await step.run('send-welcome-notification', async () => {
       logger.info('Welcome notification queued', {
         workspaceId,
         ownerId,
         workspaceName: workspace.name,
-        credits: defaults.initialCredits,
+        tokens: tokenResult.provisioned ? getInitialTokenGrant(subscriptionTier) : 0,
       });
 
-      // Future: await resend.emails.send({ ... })
+      // TODO: Send via ESP when email service is integrated
       return { sent: true, channel: 'log' };
     });
 
     logger.info('Workspace provisioning complete', {
       workspaceId,
       workspaceName: workspace.name,
-      defaults,
+      stripeResult,
+      tokenResult,
       notification,
     });
 
@@ -123,22 +175,24 @@ export const workspaceProvisioning = inngest.createFunction(
       success: true,
       workspaceId,
       workspaceName: workspace.name,
-      defaults,
+      stripeResult,
+      tokenResult,
       notification,
     };
   },
 );
 
 /**
- * Map subscription tier to initial credit allocation.
- * Used for both the provisioning step and future Stripe integration.
+ * Map subscription tier to initial token grant.
+ * T9 §16: Free tier gets 1M tokens on creation.
+ * Paid tiers get their monthly grant via invoice.paid webhook, not here.
  */
-function getInitialCredits(tier: string): number {
-  const creditMap: Record<string, number> = {
-    free: 100,
-    starter: 500,
-    pro: 2000,
-    enterprise: 10000,
+function getInitialTokenGrant(tier: string): number {
+  const grantMap: Record<string, number> = {
+    free: 1_000_000,
+    starter: 0, // Granted via invoice.paid
+    growth: 0,
+    agency: 0,
   };
-  return creditMap[tier] ?? 100;
+  return grantMap[tier] ?? 1_000_000;
 }

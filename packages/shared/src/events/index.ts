@@ -1,11 +1,11 @@
 /**
- * Event Type Registry — ADR-019
+ * Event Type Registry — ADR-019, T9
  *
  * Central barrel export for all VIYO event schemas and types.
  * The ViyoEvents type map is consumed by the Inngest client
  * to provide compile-time type safety for event names and payloads.
  *
- * Authority: R18 §4, ARCH_LOCK_V3 §3
+ * Authority: R18 §4, ARCH_LOCK_V3 §3, T9 Master Spec
  */
 export {
   workspaceCreatedSchema,
@@ -28,17 +28,24 @@ export {
   type AssetImageRequestedEvent,
 } from './asset.js';
 
+export {
+  billingTokensLowSchema,
+  billingSubscriptionChangedSchema,
+  billingPaymentFailedSchema,
+  billingFreeTierRenewalSchema,
+  billingWorkspaceHardDeleteSchema,
+  type BillingTokensLowEvent,
+  type BillingSubscriptionChangedEvent,
+  type BillingPaymentFailedEvent,
+  type BillingFreeTierRenewalEvent,
+  type BillingWorkspaceHardDeleteEvent,
+} from './billing.js';
+
 /**
  * ViyoEvents — Inngest event type map.
  *
  * Pass this as the generic parameter to `new Inngest<ViyoEvents>()`
  * to get compile-time type checking on event names and payloads.
- *
- * Usage:
- * ```ts
- * import type { ViyoEvents } from '@viyo/shared';
- * const inngest = new Inngest({ id: 'viyo-worker', schemas: new EventSchemas().fromRecord<ViyoEvents>() });
- * ```
  */
 export type ViyoEvents = {
   'viyo/workspace.created': {
@@ -46,7 +53,8 @@ export type ViyoEvents = {
       workspaceId: string;
       workspaceName: string;
       ownerId: string;
-      subscriptionTier: 'free' | 'starter' | 'pro' | 'enterprise';
+      ownerEmail: string;
+      subscriptionTier: 'free' | 'starter' | 'growth' | 'agency';
       createdAt: string;
     };
   };
@@ -87,6 +95,42 @@ export type ViyoEvents = {
       brief: string;
       style?: 'product' | 'lifestyle' | 'abstract' | 'custom';
       requestedBy: string;
+    };
+  };
+  'viyo/billing.tokens.low': {
+    data: {
+      workspaceId: string;
+      currentBalance: number;
+      threshold: number;
+    };
+  };
+  'viyo/billing.subscription.changed': {
+    data: {
+      workspaceId: string;
+      oldTier: 'free' | 'starter' | 'growth' | 'agency';
+      newTier: 'free' | 'starter' | 'growth' | 'agency';
+      stripeSubscriptionId: string;
+    };
+  };
+  'viyo/billing.payment.failed': {
+    data: {
+      workspaceId: string;
+      stripeInvoiceId: string;
+      amountDue: number;
+      attemptCount: number;
+    };
+  };
+  'viyo/billing.free_tier.renewal': {
+    data: {
+      workspaceId: string;
+      tokensGranted: number;
+      newBalance: number;
+    };
+  };
+  'viyo/billing.workspace.hard_delete': {
+    data: {
+      workspaceId: string;
+      deletedAt: string;
     };
   };
 };

@@ -1,18 +1,18 @@
 /**
- * Workspace Event Schemas — R18 §4, ADR-019
+ * Workspace Event Schemas — R18 §4, ADR-019, T9
  *
  * Type-safe event definitions for workspace lifecycle events.
  * These schemas are consumed by the Inngest client type parameter
  * and validated at runtime via Zod.
  *
  * Event naming convention: viyo/<domain>.<action>
- * Authority: R18 §4, ARCH_LOCK_V3 §3
+ * Authority: R18 §4, ARCH_LOCK_V3 §3, T9 Master Spec §2
  */
 import { z } from 'zod';
 
 /**
  * viyo/workspace.created — fired after a new workspace row is inserted.
- * Triggers the provisioning pipeline: default brand, credit balance, welcome notification.
+ * Triggers the provisioning pipeline: Stripe customer, token balance, welcome email.
  */
 export const workspaceCreatedSchema = z.object({
   name: z.literal('viyo/workspace.created'),
@@ -20,7 +20,8 @@ export const workspaceCreatedSchema = z.object({
     workspaceId: z.string().uuid(),
     workspaceName: z.string().min(1),
     ownerId: z.string().uuid(),
-    subscriptionTier: z.enum(['free', 'starter', 'pro', 'enterprise']).default('free'),
+    ownerEmail: z.string().email(),
+    subscriptionTier: z.enum(['free', 'starter', 'growth', 'agency']).default('free'),
     createdAt: z.string().datetime(),
   }),
 });
@@ -39,6 +40,7 @@ export const workspaceUpdatedSchema = z.object({
 
 /**
  * viyo/workspace.deleted — fired when a workspace is soft-deleted.
+ * Triggers 30-day deletion countdown, Stripe cancellation, team notification.
  */
 export const workspaceDeletedSchema = z.object({
   name: z.literal('viyo/workspace.deleted'),

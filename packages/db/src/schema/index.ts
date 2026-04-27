@@ -1,4 +1,4 @@
-/** Schema barrel export — all 17 R20 tables across 8 domains */
+/** Schema barrel export — all R20 tables across 9 domains */
 export * from './identity';
 export * from './products';
 export * from './image-intelligence';
@@ -7,3 +7,4 @@ export * from './cost';
 export * from './llm';
 export * from './timer';
 export * from './rlhf';
+export * from './billing';
