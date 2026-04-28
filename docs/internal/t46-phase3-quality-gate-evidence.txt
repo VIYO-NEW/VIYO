@@ -1,0 +1,125 @@
+=== GATE 1: Padding ===
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t46-phase3-global-wiring-blueprint.md",
+  "file_type": "spec",
+  "total_lines": 223,
+  "real_content_lines": 218,
+  "padding_lines": 5,
+  "padding_percent": 2.24,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 5
+  },
+  "flagged_sample": [
+    {
+      "line": 24,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "| :--- |---|---|"
+    },
+    {
+      "line": 87,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "| :--- |---|---|"
+    },
+    {
+      "line": 118,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "| :--- |---|---|"
+    },
+    {
+      "line": 196,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "| :--- |---|---|"
+    },
+    {
+      "line": 208,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "| :--- |---|---|"
+    }
+  ]
+}
+=== GATE 2+6: Completeness ===
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t46-phase3-global-wiring-blueprint.md",
+  "file_type": "spec",
+  "overall_pass": true,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 5,
+    "total_implemented": 5,
+    "parity_percent": 100.0,
+    "pass": true,
+    "items": [
+      {
+        "group": "type_block_21811",
+        "name": "ThirteenLayerCoverageInvariant",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "type_block_21811",
+        "name": "BillingTimingInvariant",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "type_block_21811",
+        "name": "ProviderDefaultsInvariant",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "type_block_21811",
+        "name": "GeminiEmbeddingInvariant",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "type_block_21811",
+        "name": "TrpcAuthInvariant",
+        "implemented": true,
+        "depth": "production"
+      }
+    ]
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": true,
+    "classification": "production",
+    "production_percent": 83.3,
+    "block_count": 12,
+    "depth_distribution": {
+      "skeleton": 2,
+      "production": 10
+    },
+    "verdict": "PASS"
+  }
+}
+=== GATE 4: Contamination ===
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t46-phase3-global-wiring-blueprint.md",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}

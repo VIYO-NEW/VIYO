@@ -48,3 +48,5 @@ Maps every major implementation area to the exact VIYO document(s) that define i
 | `shared/src/schemas/` | R20 + R18 | Zod request/response schemas (workspace, product, credential) |
 | `shared/src/security/` | Doc11 §3, R22 §5 | AES-256-GCM vault, dual-key rotation, sensitive field patterns |
 | `shared/src/types/` | R20 §2 | TypeScript type exports (workspace types) |
+
+| T46 Art Director routing suite | `docs/architecture/art-director-routing-suite.md`; `docs/internal/t46-phase2-architecture-plan.md`; `docs/internal/t46-phase3-global-wiring-blueprint.md` | R19 LLM Architecture Enterprise; R24 Multi-Model Image Pipeline Enterprise; T45 `image_prompt_patterns` schema |

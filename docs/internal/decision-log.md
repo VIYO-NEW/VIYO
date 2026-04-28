@@ -105,3 +105,10 @@ Every meaningful engineering decision with rationale and source-doc reference.
 - **Decision:** T45 changes are limited to SQL migrations, Drizzle schema modules, barrel exports, generated build validation, and internal records.
 - **Rationale:** The Product Owner explicitly confirmed the scope boundary during Phase 2. Avoiding runtime stubs prevents dead infrastructure and keeps future tasks responsible for real runtime behavior.
 - **Consequences:** The new tables are queryable through Drizzle once migrations are applied, but no application UI/API behavior is claimed as complete by T45.
+
+## DEC-T46-P4-001: Implement Deduct-After-Success Billing for T46 Frontier Routing
+- **Date:** 2026-04-28
+- **Context:** The approved Phase 3 blueprint found no approved token hold ledger in the current token engine.
+- **Decision:** T46 billable frontier generation will precheck billing and balance, execute the selected provider, and call `deductTokens` only after provider success.
+- **Rationale:** This satisfies the PO correction forbidding deduct-before-execute while avoiding unapproved billing-schema expansion.
+- **Consequences:** Failed provider attempts do not mutate token balances; a true hold ledger remains deferred unless a future task approves the required billing model.
