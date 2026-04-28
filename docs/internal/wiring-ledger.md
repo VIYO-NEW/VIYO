@@ -129,3 +129,7 @@ Tracks every cross-system connection in the VIYO codebase. Each entry maps a sou
 ## 2026-04-28 — T46 Phase 4 Worker Routing Wiring
 
 Layers updated: Layer 2 database read path via `imagePromptPatterns`; Layer 3 domain routing services; Layer 5 tRPC API contract; Layer 6 worker transport mount; Layer 8 observability logs; Layer 10 environment-driven router config; Layer 11 billing precheck boundary; Layer 13 fallback and rollback routing. No UI mutation was introduced in this component.
+
+## 2026-04-28 — T46 Test Wiring Checkpoint
+
+T46 now has focused worker tests covering routing layers 3, 5, 8, 10, and 13. The tests are intentionally colocated at `apps/worker/src/lib/ai/art-director-routing.test.ts` so the provider registry, fallback prompt builder, and scoring formula are validated at the implementation boundary rather than as detached documentation.

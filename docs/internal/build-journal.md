@@ -152,3 +152,7 @@ Chronological build log. One entry per work session or task completion.
 ## 2026-04-28 — T46 Phase 4 Worker Routing and tRPC Surface
 
 Implemented the second T46 Phase 4 component group: worker router configuration, provider registry, Gemini embedding helper, image_prompt_patterns repository, corrected-score routing orchestrator, fallback prompt builder, structured routing logs, root tRPC router, Art Director routeGeneration procedure, and `/api/trpc/*` Hono mount. The mount sits after request ID, logging, CORS, rate limiting, and auth middleware. Validation: `pnpm --filter @viyo/shared build` and `pnpm --filter @viyo/worker type-check` passed.
+
+## 2026-04-28 — T46 Phase 4 Focused Worker Tests
+
+Added focused Vitest coverage for the Art Director routing suite after the worker routing island implementation. The test file validates provider precedence, rollback behavior, typography-aware provider selection, preferred-model routing, fallback prompt construction, and the corrected parenthesized scoring formula. Validation passed with `pnpm --filter @viyo/worker test -- src/lib/ai/art-director-routing.test.ts` and `pnpm --filter @viyo/worker type-check`.

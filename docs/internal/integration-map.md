@@ -21,3 +21,7 @@ T45 intentionally did not add tRPC procedures, Hono routes, webhook dispatchers,
 ## 2026-04-28 — T46 Worker Routing Integration
 
 T46 now integrates the Art Director router through `apps/worker/src/trpc/index.ts` and `apps/worker/src/index.ts` at `/api/trpc/*`. The route delegates to `apps/worker/src/lib/ai/image-router.ts`, which reads T45 `image_prompt_patterns`, computes the corrected PO-approved 4D score, returns cache metadata, and preserves deduct-after-success billing by prechecking token state without deducting before provider success.
+
+## 2026-04-28 — T46 Focused Test Integration
+
+The T46 worker test integration maps the new Art Director routing modules to the worker package's existing Vitest command. No external provider calls, database calls, or token deductions are performed by these tests; the coverage locks deterministic routing and scoring behavior before Phase 5 review.

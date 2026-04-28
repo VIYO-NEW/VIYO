@@ -46,3 +46,14 @@ The worker-side Art Director router and minimal tRPC surface have been implement
 The implementation follows the approved Phase 2 and Phase 3 constraints: NanoBanana remains the Tier 1 rollback/default provider, Ideogram remains Tier 2 typography-oriented fallback, DALL-E 3 remains Tier 3 fallback, Gemini embeddings use the existing Google AI configuration, cached patterns are free, and frontier routes perform a billing precheck while preserving the approved deduct-after-success boundary for the eventual successful provider call. The `/api/trpc/*` mount is intentionally placed after request ID, logger, CORS, rate limiting, and authentication middleware so the tRPC island inherits existing worker tracing and auth semantics instead of bypassing them.
 
 **Validation evidence:** `pnpm --filter @viyo/shared build` succeeded, followed by `pnpm --filter @viyo/worker type-check` succeeding.
+
+## 2026-04-28 — Focused Worker Tests Added
+
+Focused Vitest coverage has been added for the T46 Art Director routing suite. The tests validate provider precedence, rollback-provider behavior, typography-forward Ideogram selection, preferred-model fallback to DALL-E 3, deterministic zero-shot fallback prompt composition, missing-product defaulting, and the PO-approved parenthesized 4D scoring formula.
+
+| Component | Files Touched | Wiring Layers | Validation |
+|---|---|---|---|
+| Focused routing tests | `apps/worker/src/lib/ai/art-director-routing.test.ts` | Layer 3, Layer 5, Layer 8, Layer 10, Layer 13 | `pnpm --filter @viyo/worker test -- src/lib/ai/art-director-routing.test.ts` passed with 8 tests. |
+| Test-aware type validation | `apps/worker/src/lib/ai/art-director-routing.test.ts` | Layer 13 | `pnpm --filter @viyo/worker type-check` passed after test addition. |
+
+The scoring test locks the corrected formula boundary by asserting that `(baseQualityScore * 0.4 + costEfficiencyScore * 0.3) * freshnessPenalty * tierMultiplier` yields `0.7436` for the representative Tier 1 cached candidate, preventing regression to the rejected unparenthesized formula.
