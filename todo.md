@@ -45,3 +45,14 @@
 - [x] Security: Patched 5 Dependabot vulnerabilities (drizzle-orm, vite, esbuild) — 2026-04-25
 - [x] Infra: Enabled SSH deploy keys at VIYO-NEW org level — 2026-04-25
 - [x] Infra: Enabled org-level Dependabot, secret scanning, push protection — 2026-04-25
+
+- [x] T45 — Composite Database Foundation for T16–T20 — DONE 2026-04-28
+  - [x] T16 comments database foundation completed via T45
+  - [x] T17 webhook endpoints and delivery logs database foundation completed via T45
+  - [x] T18 notification preferences database foundation completed via T45
+  - [x] T19 integration connections database foundation completed via T45
+  - [x] T20 image prompt pattern router-support columns and deterministic backfill completed via T45
+  - [x] Product Owner approved Phase 2 architecture plan, Option A `brands` foundation, Phase 3 wiring correction, and Phase 8 deploy gate
+  - [x] Verified static contract checks, SQL parser validation, package/workspace lint, type-check, tests, build, quality gate, and bundle-budget evidence
+  - [x] Taskmaster updated → T16, T17, T18, T19, T20, and T45 done
+  - [x] Airtable synced → Done

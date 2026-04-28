@@ -81,3 +81,27 @@ Every meaningful engineering decision with rationale and source-doc reference.
 - **Decision:** Inline the sensitive field patterns directly in `apps/web/src/lib/sentry.ts` and `apps/admin/src/lib/sentry.ts` instead of importing from `@viyo/shared`.
 - **Rationale:** The patterns are static string arrays (no runtime crypto needed). Inlining avoids the barrel import contamination while maintaining identical scrubbing behavior. The worker's `sentry.ts` imports from `@viyo/shared` normally since it runs on Node.js.
 - **Consequences:** If patterns change in `vault.ts`, they must also be updated in the two browser `sentry.ts` files. A future refactor could extract patterns into a separate `@viyo/shared/security/patterns.ts` file that has no `node:crypto` dependency.
+
+## DEC-011: Implement Minimal Brands Foundation Inside T45
+
+- **Date:** 2026-04-28
+- **Context:** The v3.0 Brand Chat and Comments architecture lock requires `comments.brand_id` as a non-null foreign key to `brands.id`, but the existing database package did not yet define a `brands` table. Deferring the foreign key would create orphan risk, and replacing the locked brand relation with workspace-only comments would violate the approved architecture.
+- **Decision:** Add a minimal `brands` database foundation inside T45 before creating `comments`.
+- **Rationale:** The Product Owner approved Option A at the T45 Phase 2 gate and confirmed that `brands` is foundational infrastructure needed for compliant comment isolation. The table remains schema-only and contains only the fields required to support workspace membership RLS and the locked comments foreign key.
+- **Consequences:** T45 includes `brands` even though the task began as the composite foundation for T16–T20. Future brand runtime tasks can extend brand behavior without weakening the `comments.brand_id` contract.
+
+## DEC-012: Use Exact T48 Webhook Event Catalog in Database Constraint and Drizzle Enum
+
+- **Date:** 2026-04-28
+- **Context:** The initial T45 Phase 3 wiring blueprint used placeholder webhook event names that were not present in the T48 Webhook Pipeline architecture lock. The Product Owner approved Phase 3 with a mandatory correction to use the exact 22 locked event names.
+- **Decision:** Define webhook events exactly as: `email.generation.started`, `email.generation.completed`, `email.generation.failed`, `email.export.completed`, `email.export.failed`, `email.status.changed`, `image.generation.started`, `image.generation.completed`, `image.generation.failed`, `image.edit.completed`, `image.edit.failed`, `image.saved_to_vault`, `brand.import.started`, `brand.import.completed`, `brand.import.failed`, `brand.assets.updated`, `team.comment.added`, `team.approval.granted`, `team.member.invited`, `billing.tokens.low`, `billing.tokens.depleted`, and `billing.subscription.changed`.
+- **Rationale:** Webhook delivery contracts must be interoperable with the future T48 dispatcher and cannot contain fabricated events. Enforcing the catalog at the database/Drizzle layer prevents downstream runtime drift.
+- **Consequences:** Future webhook producers must emit only these 22 events unless a later Product Owner-approved architecture lock expands the catalog.
+
+## DEC-013: Keep T45 Strictly Schema-Only
+
+- **Date:** 2026-04-28
+- **Context:** T45 establishes the database foundation for comments, webhooks, notification preferences, integrations, and image prompt pattern routing. Runtime APIs, dispatchers, notification senders, OAuth clients, and tRPC procedures are owned by later tasks.
+- **Decision:** T45 changes are limited to SQL migrations, Drizzle schema modules, barrel exports, generated build validation, and internal records.
+- **Rationale:** The Product Owner explicitly confirmed the scope boundary during Phase 2. Avoiding runtime stubs prevents dead infrastructure and keeps future tasks responsible for real runtime behavior.
+- **Consequences:** The new tables are queryable through Drizzle once migrations are applied, but no application UI/API behavior is claimed as complete by T45.

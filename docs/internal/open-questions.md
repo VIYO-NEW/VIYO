@@ -108,3 +108,19 @@ Unresolved questions, spec gaps, and assumptions made during the build. Each ent
 - Affected layers: Layer 1 DB Schema, Layer 5 API/Backend, Layer 9 Background Jobs, Layer 11 Notifications/Integrations, Layer 12 Observability/Analytics
 - Proposed plan: Backlog a Sprint 3 Inngest notification dispatcher that reads notification_preferences and routes @mention notifications to enabled channels without schema changes.
 - Status: OPEN — PO approved as Sprint 3 backlog on 2026-04-27T14:55:56-04:00
+## GAP-2026-04-28-0008 — T45 Comments `brand_id` Foreign-Key Target Missing from Current DB Schema
+
+Phase discovered: T45 Phase 2 Architecture Plan.
+
+Category: DB Schema, Architecture, Auth.
+
+Blocking: Yes.
+
+Description: The PO-authorized Brand Chat and Comments architecture lock requires `comments.brand_id` as a non-null foreign key to `brands.id` and requires brand-level RLS isolation. The current first-party database implementation does not define a `brands` table in `packages/db/src/schema` or `packages/db/drizzle`; existing tenant-scoped tables anchor on `workspace_id`, and the current reusable RLS helper is `public.check_workspace_access(auth.uid(), workspace_id)`. Implementing the locked FK literally is impossible until the `brands` table exists; omitting the FK or replacing brand-level isolation with workspace-only isolation would be a security-relevant architecture deviation.
+
+Affected layers: Layer 1 DB Schema, Layer 2 RLS/Auth, Layer 5 API/Backend, Layer 6 Frontend/UI, Layer 11 Notifications/Integrations, Layer 12 Observability/Analytics, Layer 13 Documentation/Source-of-Truth.
+
+Proposed plan: Pause at the Phase 2 approval gate and request a PO decision. Recommended Option A is to add a minimal `brands` database foundation inside T45 before `comments`, with `id`, `workspace_id`, `name`, timestamps, membership-based workspace RLS, and indexes, so `comments.brand_id` can honor the architecture lock. Option B is to defer `brand_id` FK enforcement and implement workspace-only comments temporarily, but this creates a known security/model deviation and is not recommended.
+
+Status: CLOSED — Product Owner approved Option A on 2026-04-28; T45 implemented the minimal `brands` table before `comments` in `packages/db/drizzle/0007_t45_composite_database_foundation.sql`, with workspace-membership RLS through `check_workspace_access` and Drizzle exports in `packages/db/src/schema/collaboration.ts`.
+

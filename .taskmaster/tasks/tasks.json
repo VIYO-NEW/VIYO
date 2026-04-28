@@ -2,7 +2,7 @@
   "master": {
     "tasks": [
       {
-        "id": 9,
+        "id": "9",
         "title": "Stripe Billing Foundation",
         "description": "Completed prerequisite anchor for Sprint 2 tasks. The Sprint 2 handoff records T9 as done: Token Engine, seven Stripe webhook handlers, nineteen billing endpoints, and full frontend billing foundation.",
         "details": "Backfilled during Sprint 2 directive ingestion because the Taskmaster task registry began at T15 while existing tasks T16, T17, T18, T19, T20, T25, T40, and the PO-confirmed composite T45 depend on T9. This is not new implementation scope; it reconciles the dependency anchor already documented in .taskmaster/docs/SPRINT2_HANDOFF.md.",
@@ -14,7 +14,7 @@
         "updatedAt": "2026-04-27T23:17:12.233202+00:00"
       },
       {
-        "id": 15,
+        "id": "15",
         "title": "Install TanStack Router in Web App",
         "description": "Set up TanStack Router in the React frontend to enable brand-scoped routing including the new /brand/[brandId]/studio route. This is a prerequisite for all new frontend routes and components.",
         "details": "Install @tanstack/router package, configure router instance in src/app/router.tsx, add route entry for /brand/:brandId/studio. Ensure router supports nested layouts and brandId param propagation. Update main App.tsx to use TanStack Router provider.",
@@ -26,72 +26,77 @@
         "subtasks": []
       },
       {
-        "id": 16,
+        "id": "16",
         "title": "Database Migration: Create comments Table",
         "description": "Create the comments table to support pin-on-canvas, section-anchored, and brand chat panel comments with all specified columns and constraints.",
-        "details": "Write SQL migration to create comments table with columns per \u00a730.1.1. Use UUID primary key with uuid_generate_v4(). Add FK constraints to workspaces, brands, users, and self for parent_comment_id. Implement RLS policies restricting access by workspace_id. Add indexes on brand_id, target_type, target_id.",
+        "details": "Write SQL migration to create comments table with columns per \u00a730.1.1. Use UUID primary key with uuid_generate_v4(). Add FK constraints to workspaces, brands, users, and self for parent_comment_id. Implement RLS policies restricting access by workspace_id. Add indexes on brand_id, target_type, target_id.\n\nCompletion note: Completed via composite task T45. T45 implemented the approved database foundation migration and Drizzle schema wiring for this task, passed Phase 5 static verification, Phase 6 live validation, Phase 7 quality gate, and Phase 8 product-owner deploy-gate approval.",
         "testStrategy": "Run migration on test DB. Verify table schema matches spec. Test RLS by querying as different workspace users.",
         "priority": "high",
         "dependencies": [
           "9"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-04-28T12:42:25.488811Z"
       },
       {
-        "id": 17,
+        "id": "17",
         "title": "Database Migration: Create webhook_endpoints and webhook_delivery_logs Tables",
         "description": "Create webhook_endpoints and webhook_delivery_logs tables to manage webhook subscriptions and delivery logs with encrypted secrets and failure tracking.",
-        "details": "Write SQL migrations for webhook_endpoints (\u00a730.1.2) and webhook_delivery_logs (\u00a730.1.3). Encrypt secret_key using AES-256-GCM pattern consistent with platform_credentials. Add FK constraints and default values. Implement RLS policies for workspace isolation.",
+        "details": "Write SQL migrations for webhook_endpoints (\u00a730.1.2) and webhook_delivery_logs (\u00a730.1.3). Encrypt secret_key using AES-256-GCM pattern consistent with platform_credentials. Add FK constraints and default values. Implement RLS policies for workspace isolation.\n\nCompletion note: Completed via composite task T45. T45 implemented the approved database foundation migration and Drizzle schema wiring for this task, passed Phase 5 static verification, Phase 6 live validation, Phase 7 quality gate, and Phase 8 product-owner deploy-gate approval.",
         "testStrategy": "Verify tables created with correct columns and encryption. Insert test rows and confirm encryption. Test RLS enforcement.",
         "priority": "high",
         "dependencies": [
           "9"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-04-28T12:42:25.488811Z"
       },
       {
-        "id": 18,
+        "id": "18",
         "title": "Database Migration: Create notification_preferences Table",
         "description": "Create notification_preferences table to store user notification settings per channel and event type.",
-        "details": "Write migration per \u00a730.1.4 with FK to users and workspaces. Include enum channel and event_type columns. Default is_enabled to true. Add RLS policies for workspace isolation.",
+        "details": "Write migration per \u00a730.1.4 with FK to users and workspaces. Include enum channel and event_type columns. Default is_enabled to true. Add RLS policies for workspace isolation.\n\nCompletion note: Completed via composite task T45. T45 implemented the approved database foundation migration and Drizzle schema wiring for this task, passed Phase 5 static verification, Phase 6 live validation, Phase 7 quality gate, and Phase 8 product-owner deploy-gate approval.",
         "testStrategy": "Verify table creation and RLS. Insert and query preferences for multiple users.",
         "priority": "medium",
         "dependencies": [
           "9"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-04-28T12:42:25.488811Z"
       },
       {
-        "id": 19,
+        "id": "19",
         "title": "Database Migration: Create integration_connections Table",
         "description": "Create integration_connections table to store OAuth tokens for Slack and future integrations with encrypted tokens and channel mappings.",
-        "details": "Write migration per \u00a730.1.5. Encrypt access_token and refresh_token with AES-256-GCM. Add FK to workspaces. Include provider enum and JSONB channel_mappings. Add RLS policies.",
+        "details": "Write migration per \u00a730.1.5. Encrypt access_token and refresh_token with AES-256-GCM. Add FK to workspaces. Include provider enum and JSONB channel_mappings. Add RLS policies.\n\nCompletion note: Completed via composite task T45. T45 implemented the approved database foundation migration and Drizzle schema wiring for this task, passed Phase 5 static verification, Phase 6 live validation, Phase 7 quality gate, and Phase 8 product-owner deploy-gate approval.",
         "testStrategy": "Verify table creation, encryption, and RLS. Insert sample Slack connection.",
         "priority": "medium",
         "dependencies": [
           "9"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-04-28T12:42:25.488811Z"
       },
       {
-        "id": 20,
+        "id": "20",
         "title": "Database Migration: Update image_prompt_patterns Table",
         "description": "Add supports_typography, fidelity_score, and product_type columns to image_prompt_patterns table and backfill existing data.",
-        "details": "Write migration to add three columns per \u00a730.2.1. Run backfill to set supports_typography=true for patterns using Ideogram or GPT Image models. Add RLS policies if needed.",
+        "details": "Write migration to add three columns per \u00a730.2.1. Run backfill to set supports_typography=true for patterns using Ideogram or GPT Image models. Add RLS policies if needed.\n\nCompletion note: Completed via composite task T45. T45 implemented the approved database foundation migration and Drizzle schema wiring for this task, passed Phase 5 static verification, Phase 6 live validation, Phase 7 quality gate, and Phase 8 product-owner deploy-gate approval.",
         "testStrategy": "Verify columns added and backfill applied correctly. Query updated rows.",
         "priority": "high",
         "dependencies": [
           "9"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-04-28T12:42:25.488811Z"
       },
       {
-        "id": 21,
+        "id": "21",
         "title": "Implement Art Director Router 4D Scoring Matrix",
         "description": "Replace existing image-router.ts scoring logic with the multi-dimensional 4D scoring matrix for pattern selection.",
         "details": "Update src/lib/ai/image-router.ts to accept generation requests with required params. Generate request embedding using OpenAI text-embedding-3-small. Query pgvector for top 20 candidates. Calculate score using formula SCORE = (Q*0.4)+(C*0.3)*F*T. Sort and select top candidate if score >=0.75. Inject product data and execute model sequence.",
@@ -105,7 +110,7 @@
         "subtasks": []
       },
       {
-        "id": 22,
+        "id": "22",
         "title": "Implement Art Director Router Zero-Shot Fallback",
         "description": "Add zero-shot fallback logic in image-router.ts to call Claude 3.5 Sonnet for prompt generation when no pattern scores above threshold.",
         "details": "Integrate Claude 3.5 Sonnet API call to generate MCoT prompt. Route prompt to appropriate model based on request type. Submit generated result to curator_queue table for review. Handle approval and insertion into image_prompt_patterns.",
@@ -118,7 +123,7 @@
         "subtasks": []
       },
       {
-        "id": 23,
+        "id": "23",
         "title": "Implement Provider Tier Routing in Art Director Router",
         "description": "Implement three-tier provider strategy in image-router.ts with automatic failover on provider failure.",
         "details": "Check model availability on Tier 2 first. Use Tier 1 for models requiring direct API. Use Tier 3 only if enabled in admin config and model available locally. On failure, failover to next tier. Update router to handle tier selection and retries.",
@@ -131,7 +136,7 @@
         "subtasks": []
       },
       {
-        "id": 24,
+        "id": "24",
         "title": "Build Image Studio Page Layout",
         "description": "Create the /brand/[brandId]/studio route with a three-zone layout: mode picker sidebar, freeform canvas, and AI command panel.",
         "details": "Implement React components for ModePickerSidebar, FreeformCanvas, and AICommandPanel. Use TanStack Router for route. Ensure brandId param is used to scope data. Follow WCAG 2.1 AA accessibility standards. Use CSS grid/flexbox for layout.",
@@ -145,7 +150,7 @@
         "subtasks": []
       },
       {
-        "id": 25,
+        "id": "25",
         "title": "Implement Image Studio Generation Flow Backend",
         "description": "Create POST /api/studio/generate endpoint to handle image generation requests with token deduction and Art Director Router integration.",
         "details": "Validate brandId and mode. Call atomic_token_deduction RPC with row locking. Return 402 if insufficient tokens. Call Art Director Router to select pattern/model. Execute generation pipeline. Stream progress via Supabase Realtime. Save generated image to Cloudflare R2 and index in assets table with type 'studio_generated'.",
@@ -160,7 +165,7 @@
         "subtasks": []
       },
       {
-        "id": 26,
+        "id": "26",
         "title": "Implement Image Studio Generation Flow Frontend",
         "description": "Connect AI Command Panel generation UI to backend API. Display generating skeleton and render generated images on canvas.",
         "details": "Add form and controls in AICommandPanel. On submit, call /api/studio/generate. Subscribe to Supabase Realtime for progress updates. Show loading skeleton. On completion, add image to FreeformCanvas. Support multiple images and infinite scroll.",
@@ -175,7 +180,7 @@
         "subtasks": []
       },
       {
-        "id": 27,
+        "id": "27",
         "title": "Implement Image Studio Editing Tools: Touch Edit",
         "description": "Implement Touch Edit tool allowing users to click a region, segment with SAM 2, describe changes, and apply inpainting edits.",
         "details": "Integrate SAM 2 segmentation API. Capture user text input for edit description. Call inpainting model pipeline. Save edited image as new version. Update version history panel.",
@@ -189,7 +194,7 @@
         "subtasks": []
       },
       {
-        "id": 28,
+        "id": "28",
         "title": "Implement Image Studio Editing Tools: Layer Splitting",
         "description": "Implement layer splitting using SAM 2 to separate foreground/background layers as draggable canvas elements.",
         "details": "Call SAM 2 to generate layers. Render each layer as independent React draggable component on FreeformCanvas. Support rearranging and visibility toggling.",
@@ -202,7 +207,7 @@
         "subtasks": []
       },
       {
-        "id": 29,
+        "id": "29",
         "title": "Implement Image Studio Editing Tools: Background Swap",
         "description": "Implement background removal using RMBG and allow user to select or generate new background with compositing.",
         "details": "Call RMBG model to remove background. Provide UI to select from preset backgrounds or generate new background via generation pipeline. Composite foreground and background layers.",
@@ -216,7 +221,7 @@
         "subtasks": []
       },
       {
-        "id": 30,
+        "id": "30",
         "title": "Implement Image Studio Version History Panel",
         "description": "Create version history UI showing thumbnails and timestamps for all image versions with side-by-side comparison.",
         "details": "Store versions in assets table with version metadata. Build React component to display thumbnails in a scrollable panel. Support undo/redo and comparison view.",
@@ -231,7 +236,7 @@
         "subtasks": []
       },
       {
-        "id": 31,
+        "id": "31",
         "title": "Implement Brand Vault @ Mention System in AI Command Panel",
         "description": "Add @ mention autocomplete in AI Command Panel querying assets table filtered by brand_id with thumbnails and metadata.",
         "details": "On '@' keypress, query assets table for brand-scoped assets. Show dropdown with asset thumbnails, names, and types. Insert selected asset references into generation prompt. Ensure accessibility compliance.",
@@ -246,7 +251,7 @@
         "subtasks": []
       },
       {
-        "id": 32,
+        "id": "32",
         "title": "Auto-Save Generated Images to Brand Vault Assets Table",
         "description": "Automatically save every generated image from Image Studio to assets table with type 'studio_generated' and metadata tags.",
         "details": "Extend generation backend to upload images to Cloudflare R2, then insert asset record with brand_id, type, and metadata. Ensure transactional consistency and error handling.",
@@ -259,7 +264,7 @@
         "subtasks": []
       },
       {
-        "id": 33,
+        "id": "33",
         "title": "Build Brand Chat Panel Component",
         "description": "Create a collapsible right sidebar React component displaying brand-scoped comments grouped by entity tags with real-time updates.",
         "details": "Implement <BrandChatPanel brandId={brandId} />. Fetch comments filtered by brand_id ordered by created_at DESC. Group by target_type and target_id. Support threaded replies, Markdown rendering, and real-time Supabase subscriptions. Implement # entity picker and @ mention picker with dropdowns.",
@@ -273,7 +278,7 @@
         "subtasks": []
       },
       {
-        "id": 34,
+        "id": "34",
         "title": "Implement Pin-on-Canvas Comments Overlay in Image Studio",
         "description": "Add overlay on images in FreeformCanvas to allow users to drop numbered pins at clicked coordinates and add comments.",
         "details": "Capture (x,y) relative to image on click. Show popover input for comment. Save comment with target_type='image' and anchor_x/y. Render numbered pins, support expanding threads on click. Dim pins for resolved comments.",
@@ -288,7 +293,7 @@
         "subtasks": []
       },
       {
-        "id": 35,
+        "id": "35",
         "title": "Implement Section-Anchored Comments in Email Editor",
         "description": "Add comment button to each MJML section in GrapesJS editor to anchor comments to email sections with timeline sidebar.",
         "details": "Add unique section_id to GrapesJS components. Show comment button on section hover. Save comments with target_type='email_section' and target_id=section_id. Build right sidebar vertical timeline showing comments ordered by section position.",
@@ -301,7 +306,7 @@
         "subtasks": []
       },
       {
-        "id": 36,
+        "id": "36",
         "title": "Implement Brand Chat Panel Super-Search",
         "description": "Add search bar to Brand Chat Panel to full-text search comments with filters by entity type, date, author, and status.",
         "details": "Use PostgreSQL ts_vector for full-text search on comment body. Add UI filters for # entity tags, date range, author, and open/resolved status. Show results with highlighted snippets and metadata. Clicking result deep-links to asset with comment thread open.",
@@ -314,7 +319,7 @@
         "subtasks": []
       },
       {
-        "id": 37,
+        "id": "37",
         "title": "Build Webhook Management API Endpoints",
         "description": "Implement REST API endpoints to create, list, update, delete webhook endpoints and fetch delivery logs.",
         "details": "Create /api/webhooks POST, GET, PATCH, DELETE and /api/webhooks/:id/logs GET endpoints. Validate workspace_id from JWT. Encrypt/decrypt secret_key using AES-256-GCM. Validate event subscriptions. Implement pagination for logs.",
@@ -327,7 +332,7 @@
         "subtasks": []
       },
       {
-        "id": 38,
+        "id": "38",
         "title": "Implement Webhook Dispatcher Inngest Function",
         "description": "Create Inngest function to listen to all internal events and dispatch webhooks with HMAC-SHA256 signature and retry logic.",
         "details": "Function ID: dispatch-webhook. Trigger on internal/* events. Query webhook_endpoints filtered by workspace_id and subscribed events. Decrypt secret_key. Compute HMAC-SHA256 signature. POST payload with headers. Log delivery results. Increment consecutive_failures on failure, disable after 10 failures. Configure exponential backoff retries (1m,5m,15m,1h).",
@@ -340,7 +345,7 @@
         "subtasks": []
       },
       {
-        "id": 39,
+        "id": "39",
         "title": "Add Inngest Event Emission Points for Webhooks",
         "description": "Add inngest.send() calls at key points to emit internal events for webhook dispatching.",
         "details": "Add calls in campaign generation DAG for start/complete/fail events, image-router.ts after image generation, Shopify sync for brand asset sync, Stripe webhook handler for token purchase, and POST /api/comments endpoint for comment creation.",
@@ -355,7 +360,7 @@
         "subtasks": []
       },
       {
-        "id": 40,
+        "id": "40",
         "title": "Integration Tests for Token Engine + Stripe Webhooks",
         "description": "Write end-to-end integration tests covering token deduction during Image Studio generation and Stripe webhook handling.",
         "details": "Test token deduction RPC call with row locking and error handling. Simulate Stripe webhook events and verify billing updates. Include tests for insufficient tokens blocking generation. Use test database and mocks for external APIs.",
@@ -369,7 +374,7 @@
         "subtasks": []
       },
       {
-        "id": 41,
+        "id": "41",
         "title": "Build Style/Prompt Library UI Surface",
         "description": "Deferred Sprint 3 backlog item for the Style/Prompt Library UI, covering pre-built templates, industry prompts, user-saved Style DNA, community gallery, and prompt history without exposing placeholder UI during Sprint 2.",
         "details": "Product Owner-approved non-blocking Sprint 3 backlog gap from Sprint 2 Phase 0 approval. Build a real, wired Style/Prompt Library UI surface only after Sprint 2 core generation flow is working. It must integrate with Art Director Router intelligence and generation UI state, and must not expose any unwired or placeholder library surfaces in Sprint 2 builds.",
@@ -384,7 +389,7 @@
         "updatedAt": "2026-04-27T19:08:05.267357+00:00"
       },
       {
-        "id": 42,
+        "id": "42",
         "title": "Add Remaining Image Editing Tools with fal.ai Integrations",
         "description": "Deferred Sprint 3 backlog item for the seven remaining editing tools: Upscale, Remove Object, Outpaint, Text Edit, Color Adjust, Expand, and Object Recolor.",
         "details": "Product Owner-approved non-blocking Sprint 3 backlog gap from Sprint 2 Phase 0 approval. Add the remaining editing tools incrementally after the Sprint 2 editing pipeline is proven with Touch Edit, Layer Split, Background Swap, and Version History. Each tool must be fully wired through backend/API, billing or entitlement checks where applicable, state management, and UI before exposure. Avoid all unwired placeholders.",
@@ -402,7 +407,7 @@
         "updatedAt": "2026-04-27T19:08:05.267425+00:00"
       },
       {
-        "id": 43,
+        "id": "43",
         "title": "Build @mention Notification Dispatch with Preference-Based Routing",
         "description": "Deferred Sprint 3 backlog item for dispatching @mention notifications through enabled in-app, email, and push channels using stored notification preferences.",
         "details": "Product Owner-approved non-blocking Sprint 3 backlog gap from Sprint 2 Phase 0 approval. T18 creates notification_preferences, but Sprint 2 intentionally does not send notifications. Sprint 3 should add an Inngest function or equivalent background dispatcher that reads preferences and routes notifications to enabled channels without requiring schema changes. Include retries, observability, and channel-level failure handling.",
@@ -417,67 +422,68 @@
         "updatedAt": "2026-04-27T19:08:05.267437+00:00"
       },
       {
-        "id": 44,
+        "id": "44",
         "title": "Add React/TSX-Aware Heuristics to VIYO Quality-Gate Skill",
         "description": "Enhance the VIYO quality-gate skill to correctly handle React/TSX files by adding parsing and heuristics that distinguish production React components from non-production description blocks, while preserving existing behavior for spec/backend files.",
         "details": "Modify padding_detector.py and completeness_auditor.py to include React/TSX-aware parsing logic. Implement a parser or adapter that can process .tsx files, recognizing JSX syntax and React component structures. Adjust heuristics to treat ordinary JSX syntactic repetition (such as repeated braces and return wrappers) as non-padding to reduce false positives. Ensure that typed React components returning JSX are identified as production implementation code. Maintain existing gates and heuristics for spec and backend files without regression. Include regression test fixtures using router.tsx and App.tsx files from Task 15 to validate React/TSX handling. Document changes and update any relevant configuration or integration points within the VIYO skill pipeline.",
         "testStrategy": "Run existing quality-gate tests to confirm no regressions on spec/backend files. Add new regression tests using router.tsx and App.tsx samples to verify correct parsing and classification of React/TSX files. Test that JSX syntactic repetition does not trigger padding detection. Validate that React components returning JSX are correctly recognized as production code. Perform manual code reviews and static analysis to ensure heuristic correctness. Confirm that the VIYO skill continues to operate correctly in the overall pipeline without introducing false positives or negatives.",
         "status": "pending",
         "dependencies": [
-          15
+          "15"
         ],
         "priority": "low",
         "subtasks": []
       },
       {
-        "id": 45,
+        "id": "45",
         "title": "T45: Composite Database Foundation (T16, T17, T18, T19, T20)",
         "description": "Execute all five database migrations as a single unified protocol run. Creates comments, webhook_endpoints, webhook_delivery_logs, notification_preferences, integration_connections tables, and updates image_prompt_patterns table.",
         "details": "Source of truth: PO Directive Sprint 2 Timeline Compression & Full Task Batching. Execute one VIYO protocol run for T16-T20: one architecture plan, one wiring blueprint, one implementation phase, and one post-build/Airtable completion pass. Under updated protocol numbering, architecture lock maps to Phase 2, implementation maps to Phase 4, and post-build/Airtable maps to Phase 9. When complete, mark underlying tasks T16, T17, T18, T19, and T20 done with note: Completed via composite task T45.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
-          9
+          "9"
         ],
         "priority": "high",
-        "subtasks": []
+        "subtasks": [],
+        "updatedAt": "2026-04-28T12:32:44.655Z"
       },
       {
-        "id": 46,
+        "id": "46",
         "title": "T46: Composite Art Director Routing Suite (T21, T22, T23)",
         "description": "Implement 4D scoring matrix, zero-shot fallback, and provider tier routing as a single protocol run.",
         "details": "Source of truth: PO Directive Sprint 2 Timeline Compression & Full Task Batching plus docs/architecture/art-director-routing-suite.md. Execute one architecture plan covering the full routing logic in image-router.ts, then one wiring blueprint, one implementation phase, and one post-build/Airtable completion pass. Under updated protocol numbering, architecture lock maps to Phase 2, implementation maps to Phase 4, and post-build/Airtable maps to Phase 9. When complete, mark underlying tasks T21, T22, and T23 done with note: Completed via composite task T46.",
         "testStrategy": "",
         "status": "pending",
         "dependencies": [
-          45
+          "45"
         ],
         "priority": "high",
         "subtasks": []
       },
       {
-        "id": 47,
+        "id": "47",
         "title": "T47: Composite Studio Editing Tools (T27, T28, T29)",
         "description": "Implement Touch Edit, Layer Split, and Background Swap as a single protocol run covering the shared canvas manipulation UI pattern.",
         "details": "Source of truth: PO Directive Sprint 2 Timeline Compression & Full Task Batching plus docs/architecture/studio-editing-tools.md. Execute one architecture plan covering all three canvas manipulation tools, then one wiring blueprint, one implementation phase, and one post-build/Airtable completion pass. Under updated protocol numbering, architecture lock maps to Phase 2, implementation maps to Phase 4, and post-build/Airtable maps to Phase 9. When complete, mark underlying tasks T27, T28, and T29 done with note: Completed via composite task T47.",
         "testStrategy": "",
         "status": "pending",
         "dependencies": [
-          24,
-          25
+          "24",
+          "25"
         ],
         "priority": "medium",
         "subtasks": []
       },
       {
-        "id": 48,
+        "id": "48",
         "title": "T48: Composite Webhook Pipeline (T37, T38, T39)",
         "description": "Build Webhook Management API, Dispatcher Inngest Function, and Event Emission Points as a single protocol run covering the end-to-end webhook flow.",
         "details": "Source of truth: PO Directive Sprint 2 Timeline Compression & Full Task Batching plus docs/architecture/webhook-pipeline.md. Execute one architecture plan covering event emission, dispatch, delivery, retry logging, and endpoint management, then one wiring blueprint, one implementation phase, and one post-build/Airtable completion pass. Under updated protocol numbering, architecture lock maps to Phase 2, implementation maps to Phase 4, and post-build/Airtable maps to Phase 9. When complete, mark underlying tasks T37, T38, and T39 done with note: Completed via composite task T48.",
         "testStrategy": "",
         "status": "pending",
         "dependencies": [
-          45
+          "45"
         ],
         "priority": "medium",
         "subtasks": []
@@ -485,15 +491,12 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-27T23:17:12.233626+00:00",
+      "lastModified": "2026-04-28T12:35:34.911Z",
       "taskCount": 35,
-      "completedCount": 2,
+      "completedCount": 8,
       "tags": [
         "master"
-      ],
-      "created": "2026-04-27T18:56:15.249Z",
-      "description": "Tasks for master context",
-      "updated": "2026-04-27T23:17:12.233626+00:00"
+      ]
     }
   }
 }

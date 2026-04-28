@@ -1,0 +1,1561 @@
+===== QUALITY FILE: docs/internal/t45-database-foundation-phase2-architecture-plan.md =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase2-architecture-plan.md",
+  "file_type": "spec",
+  "total_lines": 166,
+  "real_content_lines": 166,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase2-architecture-plan.md",
+  "file_type": "spec",
+  "overall_pass": false,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 33,
+    "total_implemented": 0,
+    "parity_percent": 0.0,
+    "pass": false,
+    "items": [
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Secrets",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "Option",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "1",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "2",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "3",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "4",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "5",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "6",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "7",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "8",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "9",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Flow",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Component",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "webhook_endpoints",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "webhook_delivery_logs",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "notification_preferences",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "integration_connections",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Risk",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Area",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Task",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "T16",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "T17",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "T18",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "T19",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "T20",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      }
+    ]
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": false,
+    "classification": "description",
+    "production_percent": 0.0,
+    "block_count": 1,
+    "depth_distribution": {
+      "description": 1
+    },
+    "verdict": "FAIL \u2014 only 0.0% of blocks are production-grade"
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase2-architecture-plan.md",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: docs/internal/t45-database-foundation-phase3-wiring-blueprint.md =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase3-wiring-blueprint.md",
+  "file_type": "spec",
+  "total_lines": 127,
+  "real_content_lines": 123,
+  "padding_lines": 4,
+  "padding_percent": 3.15,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 4
+  },
+  "flagged_sample": [
+    {
+      "line": 18,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "|---|---|---|"
+    },
+    {
+      "line": 66,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "|---|---|---|"
+    },
+    {
+      "line": 92,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "|---|---|---|"
+    },
+    {
+      "line": 104,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "|---|---|---|"
+    }
+  ]
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase3-wiring-blueprint.md",
+  "file_type": "spec",
+  "overall_pass": false,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 36,
+    "total_implemented": 0,
+    "parity_percent": 0.0,
+    "pass": false,
+    "items": [
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Scope",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "Layer",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Order",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "1",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "2",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "3",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "4",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "5",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "6",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "7",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "8",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Table",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "brands",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "comments",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "webhook_endpoints",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "webhook_delivery_logs",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "notification_preferences",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "integration_connections",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "image_prompt_patterns",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Domain",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Email",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "Image",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "Brand",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Team",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "Billing",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "Guardrail",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Comments",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "Webhooks",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "Notifications",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "Integrations",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      }
+    ]
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": false,
+    "classification": "skeleton",
+    "production_percent": 0.0,
+    "block_count": 2,
+    "depth_distribution": {
+      "skeleton": 1,
+      "description": 1
+    },
+    "verdict": "FAIL \u2014 only 0.0% of blocks are production-grade"
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase3-wiring-blueprint.md",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: docs/internal/t45-database-foundation-phase4-implementation-record.md =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase4-implementation-record.md",
+  "file_type": "spec",
+  "total_lines": 43,
+  "real_content_lines": 43,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase4-implementation-record.md",
+  "file_type": "spec",
+  "overall_pass": false,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 6,
+    "total_implemented": 0,
+    "parity_percent": 0.0,
+    "pass": false,
+    "items": [
+      {
+        "group": "table_registry",
+        "name": "Path",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Constraint",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      },
+      {
+        "group": "table_registry",
+        "name": "Command",
+        "implemented": false,
+        "depth": "missing"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": false,
+        "depth": "mentioned_only"
+      }
+    ]
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": false,
+    "classification": "description",
+    "detail": "No implementation blocks found \u2014 file is purely descriptive.",
+    "block_count": 0,
+    "depth_distribution": {}
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase4-implementation-record.md",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: docs/internal/t45-database-foundation-phase5-static-wiring-report.md =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase5-static-wiring-report.md",
+  "file_type": "spec",
+  "total_lines": 45,
+  "real_content_lines": 45,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase5-static-wiring-report.md",
+  "file_type": "spec",
+  "overall_pass": false,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 0,
+    "total_implemented": 0,
+    "parity_percent": 0,
+    "pass": false,
+    "items": []
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": false,
+    "classification": "description",
+    "detail": "No implementation blocks found \u2014 file is purely descriptive.",
+    "block_count": 0,
+    "depth_distribution": {}
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase5-static-wiring-report.md",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: docs/internal/t45-database-foundation-phase6-sql-parse-report.md =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase6-sql-parse-report.md",
+  "file_type": "spec",
+  "total_lines": 7,
+  "real_content_lines": 7,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase6-sql-parse-report.md",
+  "file_type": "spec",
+  "overall_pass": false,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 0,
+    "total_implemented": 0,
+    "parity_percent": 0,
+    "pass": false,
+    "items": []
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": false,
+    "classification": "description",
+    "detail": "No implementation blocks found \u2014 file is purely descriptive.",
+    "block_count": 0,
+    "depth_distribution": {}
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase6-sql-parse-report.md",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: docs/internal/t45-database-foundation-phase6-validation-report.md =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase6-validation-report.md",
+  "file_type": "spec",
+  "total_lines": 36,
+  "real_content_lines": 36,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase6-validation-report.md",
+  "file_type": "spec",
+  "overall_pass": false,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 0,
+    "total_implemented": 0,
+    "parity_percent": 0,
+    "pass": false,
+    "items": []
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": false,
+    "classification": "description",
+    "detail": "No implementation blocks found \u2014 file is purely descriptive.",
+    "block_count": 0,
+    "depth_distribution": {}
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/t45-database-foundation-phase6-validation-report.md",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: packages/db/src/schema/collaboration.ts =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/collaboration.ts",
+  "file_type": "implementation",
+  "total_lines": 103,
+  "real_content_lines": 103,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/collaboration.ts",
+  "file_type": "implementation",
+  "overall_pass": true,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 0,
+    "total_implemented": 0,
+    "parity_percent": 100.0,
+    "pass": true,
+    "note": "Auto-pass: implementation file has no spec-style declarations. Components/functions are the implementation.",
+    "items": []
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": true,
+    "classification": "production",
+    "production_percent": 75.0,
+    "block_count": 4,
+    "depth_distribution": {
+      "description": 1,
+      "production": 3
+    },
+    "verdict": "PASS"
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/collaboration.ts",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: packages/db/src/schema/webhooks.ts =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/webhooks.ts",
+  "file_type": "implementation",
+  "total_lines": 82,
+  "real_content_lines": 82,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/webhooks.ts",
+  "file_type": "implementation",
+  "overall_pass": true,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 0,
+    "total_implemented": 0,
+    "parity_percent": 100.0,
+    "pass": true,
+    "note": "Auto-pass: implementation file has no spec-style declarations. Components/functions are the implementation.",
+    "items": []
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": true,
+    "classification": "production",
+    "production_percent": 75.0,
+    "block_count": 4,
+    "depth_distribution": {
+      "description": 1,
+      "production": 3
+    },
+    "verdict": "PASS"
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/webhooks.ts",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: packages/db/src/schema/integrations.ts =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/integrations.ts",
+  "file_type": "implementation",
+  "total_lines": 44,
+  "real_content_lines": 44,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/integrations.ts",
+  "file_type": "implementation",
+  "overall_pass": true,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 0,
+    "total_implemented": 0,
+    "parity_percent": 100.0,
+    "pass": true,
+    "note": "Auto-pass: implementation file has no spec-style declarations. Components/functions are the implementation.",
+    "items": []
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": true,
+    "classification": "production",
+    "production_percent": 100.0,
+    "block_count": 1,
+    "depth_distribution": {
+      "production": 1
+    },
+    "verdict": "PASS"
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/integrations.ts",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: packages/db/src/schema/image-intelligence.ts =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/image-intelligence.ts",
+  "file_type": "implementation",
+  "total_lines": 58,
+  "real_content_lines": 58,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/image-intelligence.ts",
+  "file_type": "implementation",
+  "overall_pass": true,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 0,
+    "total_implemented": 0,
+    "parity_percent": 100.0,
+    "pass": true,
+    "note": "Auto-pass: implementation file has no spec-style declarations. Components/functions are the implementation.",
+    "items": []
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": true,
+    "classification": "production",
+    "production_percent": 100.0,
+    "block_count": 2,
+    "depth_distribution": {
+      "production": 2
+    },
+    "verdict": "PASS"
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/image-intelligence.ts",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: packages/db/src/schema/index.ts =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/index.ts",
+  "file_type": "implementation",
+  "total_lines": 13,
+  "real_content_lines": 13,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+--- GATE 2/5/6: Completeness ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/index.ts",
+  "file_type": "implementation",
+  "overall_pass": false,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 0,
+    "total_implemented": 0,
+    "parity_percent": 100.0,
+    "pass": true,
+    "note": "Auto-pass: implementation file has no spec-style declarations. Components/functions are the implementation.",
+    "items": []
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": false,
+    "classification": "description",
+    "detail": "No implementation blocks found \u2014 file is purely descriptive.",
+    "block_count": 0,
+    "depth_distribution": {}
+  }
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/src/schema/index.ts",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}
+===== QUALITY FILE: packages/db/drizzle/0007_t45_composite_database_foundation.sql =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/drizzle/0007_t45_composite_database_foundation.sql",
+  "file_type": "unknown",
+  "total_lines": 389,
+  "real_content_lines": 336,
+  "padding_lines": 53,
+  "padding_percent": 13.62,
+  "threshold_percent": 10.0,
+  "pass": false,
+  "verdict": "FAIL \u2014 13.62% padding exceeds 10.0% threshold",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 53
+  },
+  "flagged_sample": [
+    {
+      "line": 7,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    {
+      "line": 9,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    {
+      "line": 11,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),"
+    },
+    {
+      "line": 12,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  workspace_id UUID NOT NULL REFERENCES public.workspaces(id) ON DELETE CASCADE,"
+    },
+    {
+      "line": 14,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),"
+    },
+    {
+      "line": 15,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),"
+    },
+    {
+      "line": 27,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  USING (public.check_workspace_access(auth.uid(), workspace_id))"
+    },
+    {
+      "line": 28,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  WITH CHECK (public.check_workspace_access(auth.uid(), workspace_id));"
+    },
+    {
+      "line": 30,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    {
+      "line": 32,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    {
+      "line": 52,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    {
+      "line": 54,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    {
+      "line": 56,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),"
+    },
+    {
+      "line": 57,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  workspace_id UUID NOT NULL REFERENCES public.workspaces(id) ON DELETE CASCADE,"
+    },
+    {
+      "line": 69,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),"
+    },
+    {
+      "line": 70,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),"
+    },
+    {
+      "line": 106,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  USING (public.check_workspace_access(auth.uid(), workspace_id))"
+    },
+    {
+      "line": 107,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  WITH CHECK (public.check_workspace_access(auth.uid(), workspace_id));"
+    },
+    {
+      "line": 109,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    {
+      "line": 111,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "-- \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    }
+  ]
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/drizzle/0007_t45_composite_database_foundation.sql",
+  "total_violations": 5,
+  "pass": false,
+  "verdict": "FAIL \u2014 5 vendor syntax violations found",
+  "vendor_breakdown": {
+    "ActiveCampaign": 10
+  },
+  "violations": [
+    {
+      "line": 337,
+      "vendor": "ActiveCampaign",
+      "pattern": "%[A-Z_]+%",
+      "matched": [
+        "%fashion%",
+        "%apparel%"
+      ],
+      "content": "WHEN category ILIKE '%fashion%' OR category ILIKE '%apparel%' THEN 'fashion'"
+    },
+    {
+      "line": 338,
+      "vendor": "ActiveCampaign",
+      "pattern": "%[A-Z_]+%",
+      "matched": [
+        "%beauty%",
+        "%cosmetic%"
+      ],
+      "content": "WHEN category ILIKE '%beauty%' OR category ILIKE '%cosmetic%' THEN 'beauty'"
+    },
+    {
+      "line": 339,
+      "vendor": "ActiveCampaign",
+      "pattern": "%[A-Z_]+%",
+      "matched": [
+        "%food%",
+        "%beverage%"
+      ],
+      "content": "WHEN category ILIKE '%food%' OR category ILIKE '%beverage%' THEN 'food_beverage'"
+    },
+    {
+      "line": 340,
+      "vendor": "ActiveCampaign",
+      "pattern": "%[A-Z_]+%",
+      "matched": [
+        "%home%",
+        "%furniture%"
+      ],
+      "content": "WHEN category ILIKE '%home%' OR category ILIKE '%furniture%' THEN 'home_goods'"
+    },
+    {
+      "line": 341,
+      "vendor": "ActiveCampaign",
+      "pattern": "%[A-Z_]+%",
+      "matched": [
+        "%tech%",
+        "%electronics%"
+      ],
+      "content": "WHEN category ILIKE '%tech%' OR category ILIKE '%electronics%' THEN 'electronics'"
+    }
+  ]
+}
+===== QUALITY FILE: packages/db/drizzle/0007_t45_composite_database_foundation.sql AFTER CLEANUP =====
+--- GATE 1: Padding ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/drizzle/0007_t45_composite_database_foundation.sql",
+  "file_type": "unknown",
+  "total_lines": 367,
+  "real_content_lines": 334,
+  "padding_lines": 33,
+  "padding_percent": 8.99,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 33
+  },
+  "flagged_sample": [
+    {
+      "line": 7,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),"
+    },
+    {
+      "line": 8,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  workspace_id UUID NOT NULL REFERENCES public.workspaces(id) ON DELETE CASCADE,"
+    },
+    {
+      "line": 10,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),"
+    },
+    {
+      "line": 11,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),"
+    },
+    {
+      "line": 23,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  USING (public.check_workspace_access(auth.uid(), workspace_id))"
+    },
+    {
+      "line": 24,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  WITH CHECK (public.check_workspace_access(auth.uid(), workspace_id));"
+    },
+    {
+      "line": 48,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),"
+    },
+    {
+      "line": 49,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  workspace_id UUID NOT NULL REFERENCES public.workspaces(id) ON DELETE CASCADE,"
+    },
+    {
+      "line": 61,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),"
+    },
+    {
+      "line": 62,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),"
+    },
+    {
+      "line": 98,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  USING (public.check_workspace_access(auth.uid(), workspace_id))"
+    },
+    {
+      "line": 99,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  WITH CHECK (public.check_workspace_access(auth.uid(), workspace_id));"
+    },
+    {
+      "line": 103,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),"
+    },
+    {
+      "line": 104,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  workspace_id UUID NOT NULL REFERENCES public.workspaces(id) ON DELETE CASCADE,"
+    },
+    {
+      "line": 158,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  USING (public.check_workspace_access(auth.uid(), workspace_id))"
+    },
+    {
+      "line": 159,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  WITH CHECK (public.check_workspace_access(auth.uid(), workspace_id));"
+    },
+    {
+      "line": 163,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),"
+    },
+    {
+      "line": 236,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),"
+    },
+    {
+      "line": 237,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  workspace_id UUID NOT NULL REFERENCES public.workspaces(id) ON DELETE CASCADE,"
+    },
+    {
+      "line": 242,
+      "categories": [
+        "repeated_lines"
+      ],
+      "content": "  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),"
+    }
+  ]
+}
+--- GATE 4: Contamination ---
+{
+  "file": "/home/ubuntu/VIYO/packages/db/drizzle/0007_t45_composite_database_foundation.sql",
+  "total_violations": 5,
+  "pass": false,
+  "verdict": "FAIL \u2014 5 vendor syntax violations found",
+  "vendor_breakdown": {
+    "ActiveCampaign": 10
+  },
+  "violations": [
+    {
+      "line": 319,
+      "vendor": "ActiveCampaign",
+      "pattern": "%[A-Z_]+%",
+      "matched": [
+        "%fashion%",
+        "%apparel%"
+      ],
+      "content": "WHEN category ILIKE '%fashion%' OR category ILIKE '%apparel%' THEN 'fashion'"
+    },
+    {
+      "line": 320,
+      "vendor": "ActiveCampaign",
+      "pattern": "%[A-Z_]+%",
+      "matched": [
+        "%beauty%",
+        "%cosmetic%"
+      ],
+      "content": "WHEN category ILIKE '%beauty%' OR category ILIKE '%cosmetic%' THEN 'beauty'"
+    },
+    {
+      "line": 321,
+      "vendor": "ActiveCampaign",
+      "pattern": "%[A-Z_]+%",
+      "matched": [
+        "%food%",
+        "%beverage%"
+      ],
+      "content": "WHEN category ILIKE '%food%' OR category ILIKE '%beverage%' THEN 'food_beverage'"
+    },
+    {
+      "line": 322,
+      "vendor": "ActiveCampaign",
+      "pattern": "%[A-Z_]+%",
+      "matched": [
+        "%home%",
+        "%furniture%"
+      ],
+      "content": "WHEN category ILIKE '%home%' OR category ILIKE '%furniture%' THEN 'home_goods'"
+    },
+    {
+      "line": 323,
+      "vendor": "ActiveCampaign",
+      "pattern": "%[A-Z_]+%",
+      "matched": [
+        "%tech%",
+        "%electronics%"
+      ],
+      "content": "WHEN category ILIKE '%tech%' OR category ILIKE '%electronics%' THEN 'electronics'"
+    }
+  ]
+}

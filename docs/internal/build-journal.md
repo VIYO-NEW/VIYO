@@ -125,3 +125,15 @@ Chronological build log. One entry per work session or task completion.
 - Phase 6 note: the generic quality-gate scripts remained non-React/TSX-aware after update; Product Owner approved the disclosed one-time exception based on passing engineering and semantic checks.
 - Bundle review: Product Owner confirmed dependencies were expected and no Studio modules or generation tools were present.
 - Tracking: Taskmaster T15 marked done; Airtable Build Tracker `T15-ROUTER` marked Done.
+
+## 2026-04-28 — T45: Composite Database Foundation for T16–T20
+
+- Implemented the approved schema-only database foundation for T16 through T20 under **VIYO Development Protocol v2 only**, without invoking the standalone post-build protocol.
+- Added `packages/db/drizzle/0007_t45_composite_database_foundation.sql` with the minimal `brands` table approved by the Product Owner, the exact 11-value `comment_target_type` enum, `comments`, `webhook_endpoints`, `webhook_delivery_logs`, `notification_preferences`, `integration_connections`, RLS policies, indexes, updated-at triggers, and deterministic `image_prompt_patterns` backfill.
+- Added Drizzle schema modules `collaboration.ts`, `webhooks.ts`, and `integrations.ts`; updated `image-intelligence.ts` with router-support columns; and exported all new schema modules through `packages/db/src/schema/index.ts`.
+- Corrected the webhook event catalog to the exact 22 events from the T48 Webhook Pipeline architecture lock after the Phase 3 Product Owner ruling.
+- Verification completed: package lint/test/type-check/build, repository lint/type-check/test/build, Drizzle non-destructive consistency check, focused static contract verifier, PostgreSQL parser validation, SQL padding/contamination gate, and bundle-budget evidence for web/admin apps.
+- Tracking completed: Taskmaster T45 and underlying T16–T20 marked done, Airtable Build Tracker `T45-COMPOSITE-DB-FOUNDATION` marked Done, internal records updated, and stale T45 open-question status closed.
+- Files changed: `.taskmaster/tasks/tasks.json`, `packages/db/drizzle/0007_t45_composite_database_foundation.sql`, `packages/db/src/schema/{collaboration,webhooks,integrations,image-intelligence,index}.ts`, and T45 internal planning/validation/completion records.
+- Commit: pending Phase 9 finalization.
+- Taskmaster: T16, T17, T18, T19, T20, and T45 completed.

@@ -12,6 +12,7 @@ import {
   jsonb,
   numeric,
   integer,
+  boolean,
   timestamp,
   customType,
 } from 'drizzle-orm/pg-core';
@@ -47,6 +48,9 @@ export const imagePromptPatterns = pgTable('image_prompt_patterns', {
   embedding: vector('embedding').notNull(),
   qaScore: numeric('qa_score', { precision: 3, scale: 2 }).notNull(),
   costPerGen: numeric('cost_per_gen', { precision: 5, scale: 4 }).notNull(),
+  supportsTypography: boolean('supports_typography').default(false).notNull(),
+  fidelityScore: numeric('fidelity_score', { precision: 3, scale: 2 }).default('0.50').notNull(),
+  productType: varchar('product_type', { length: 100 }).default('general').notNull(),
   usageCount: integer('usage_count').default(0).notNull(),
   lastUsedAt: timestamp('last_used_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),

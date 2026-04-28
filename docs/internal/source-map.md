@@ -16,7 +16,8 @@ Maps every major implementation area to the exact VIYO document(s) that define i
 | Credential vault (AES-256-GCM) | Doc11 §3 (Security) | R22 §5 | T8 — `packages/shared/src/security/vault.ts`, `key-rotation.ts` |
 | Sentry error monitoring | R21 §6 (Monitoring) | — | T12 — `apps/worker/src/lib/sentry.ts`, `apps/web/src/lib/sentry.ts`, `apps/admin/src/lib/sentry.ts` |
 | Frontend architecture (Vite + React SPA) | R17 (UI/UX Architecture) | Doc9 (Frontend Architecture) | T1 — `apps/web/`, `apps/admin/` |
-| Billing & cost tracking | R23 (Cost Reconciliation) | — | T9 — not yet implemented |
+| Billing & cost tracking | R23 (Cost Reconciliation) | — | T9 — implemented |
+| Composite database foundation for comments, brands, webhooks, notifications, integrations, and image prompt routing support | PRD V5 Addendum §30 / R20 | Brand Chat and Comments Architecture Lock v3.0; Webhook Pipeline Architecture Lock v3.0; PO T45 Phase 2 and Phase 3 rulings | T45 — `packages/db/drizzle/0007_t45_composite_database_foundation.sql`, `collaboration.ts`, `webhooks.ts`, `integrations.ts`, `image-intelligence.ts` update |
 | AI brains & prompts | R19 (LLM Architecture) | Doc2 (System Prompts) | Phase 2 — not yet implemented |
 | Image pipeline | R24 (Image Pipeline) | — | Phase 2 — not yet implemented |
 | Email compiler | R27 (Composable Sections) | Doc6 (Skills Catalog) | Phase 3 — not yet implemented |
@@ -29,7 +30,10 @@ Maps every major implementation area to the exact VIYO document(s) that define i
 | `products.ts` | §3 (Product Domain) | `viyo_products`, `assets` |
 | `email.ts` | §4 (Email Domain) | `email_templates`, `esp_connections` |
 | `llm.ts` | §5 (LLM Domain) | `council_decisions` |
-| `image-intelligence.ts` | §6 (Image Domain) | `image_prompt_patterns` |
+| `image-intelligence.ts` | §6 (Image Domain) + PRD V5 Addendum §30.2.1 | `image_prompt_patterns` with T45 router-support columns |
+| `collaboration.ts` | Brand Chat and Comments Architecture Lock v3.0 + PO T45 Option A ruling | `brands`, `comments`, `notification_preferences` |
+| `webhooks.ts` | Webhook Pipeline Architecture Lock v3.0 / T48 event catalog | `webhook_endpoints`, `webhook_delivery_logs` |
+| `integrations.ts` | PRD V5 Addendum §30.1.5 / R18 integration layer | `integration_connections` |
 | `cost.ts` | §7 (Cost Domain) | `token_usage_logs` |
 | `rlhf.ts` | §8 (RLHF Domain) | `rlhf_votes`, `preference_model_versions`, `pattern_performance_metrics` |
 | `timer.ts` | §9 (Timer Domain) | `timer_definitions` |

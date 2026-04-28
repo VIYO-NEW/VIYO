@@ -10,7 +10,10 @@ Tracks every cross-system connection in the VIYO codebase. Each entry maps a sou
 | `packages/db/src/schema/products.ts` | `viyoProducts`, `assets` | `products.ts` route | T2 |
 | `packages/db/src/schema/email.ts` | `emailTemplates`, `espConnections` | (not yet consumed) | T2 |
 | `packages/db/src/schema/llm.ts` | `councilDecisions` | (not yet consumed) | T2 |
-| `packages/db/src/schema/image-intelligence.ts` | `imagePromptPatterns` | (not yet consumed) | T2 |
+| `packages/db/src/schema/image-intelligence.ts` | `imagePromptPatterns` with T45 router-support columns | (not yet consumed) | T2, T45 |
+| `packages/db/src/schema/collaboration.ts` | `brands`, `comments`, `commentTargetTypeEnum`, `notificationPreferences` | Future Brand Chat, Comments, Approval, and Notification runtime tasks | T45 |
+| `packages/db/src/schema/webhooks.ts` | `webhookEndpoints`, `webhookDeliveryLogs`, `webhookEventEnum`, `webhookDeliveryStatusEnum` | Future T48 webhook dispatcher and delivery-worker tasks | T45 |
+| `packages/db/src/schema/integrations.ts` | `integrationConnections`, `integrationProviderEnum`, `integrationConnectionStatusEnum` | Future OAuth/platform integration runtime tasks | T45 |
 | `packages/db/src/schema/cost.ts` | `tokenUsageLogs` | (not yet consumed) | T2 |
 | `packages/db/src/schema/rlhf.ts` | `rlhfVotes`, `preferenceModelVersions`, `patternPerformanceMetrics` | (not yet consumed) | T2 |
 | `packages/db/src/schema/timer.ts` | `timerDefinitions` | (not yet consumed) | T2 |
@@ -90,7 +93,7 @@ Tracks every cross-system connection in the VIYO codebase. Each entry maps a sou
 | `SUPABASE_URL` | shared/auth, web, admin | Yes | T3 |
 | `SUPABASE_ANON_KEY` | shared/auth, web, admin | Yes | T3 |
 | `SUPABASE_SERVICE_ROLE_KEY` | worker (admin ops) | Yes | T3 |
-| `DATABASE_URL` | packages/db | Yes | T2 |
+| `DATABASE_URL` | packages/db | Yes | T2, T45 migration validation |
 | `SUPABASE_JWT_SECRET` | worker/middleware/auth | Yes | T3 |
 | `VIYO_VAULT_KEY` | shared/security/vault | Yes | T8 |
 | `VIYO_VAULT_KEY_PREVIOUS` | shared/security/vault | No (only during rotation) | T8 |
