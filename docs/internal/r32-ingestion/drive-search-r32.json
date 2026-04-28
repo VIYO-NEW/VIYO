@@ -1,0 +1,112 @@
+{
+  "files": [
+    {
+      "id": "1tKm7gP_3hiJbkAIyHIFf3rXD3drvylQS",
+      "mimeType": "text/markdown",
+      "modifiedTime": "2026-04-28T17:33:21.696Z",
+      "name": "VIYO_BUILDER_HANDOFF_R32.md",
+      "parents": [
+        "1i9-hNjVucviVhvwvQJN40TovQnrwvT4B"
+      ]
+    },
+    {
+      "id": "1B36lup9ucVgVIg08etDU22C4dyojoQAh",
+      "mimeType": "text/markdown",
+      "modifiedTime": "2026-04-28T17:24:42.085Z",
+      "name": "VIYO_GOOGLE_DOCS_SYNC_PLAN_R32.md",
+      "parents": [
+        "1NfylvyD_0YFZ36AxD1Hbd24tny01ntfh"
+      ]
+    },
+    {
+      "id": "1WtE5xPIIum6bW24TxjY8QWt8KKTf85cq",
+      "mimeType": "text/markdown",
+      "modifiedTime": "2026-04-28T17:24:19.049Z",
+      "name": "VIYO_GLOBAL_WIRING_PLAN_R32.md",
+      "parents": [
+        "1NfylvyD_0YFZ36AxD1Hbd24tny01ntfh"
+      ]
+    },
+    {
+      "id": "1LVfv-4koaeTLrqhkyNPWkk877GGrzdvY",
+      "mimeType": "text/markdown",
+      "modifiedTime": "2026-04-28T17:24:00.645Z",
+      "name": "VIYO_UX_UI_ARCHITECTURE_R32.md",
+      "parents": [
+        "1NfylvyD_0YFZ36AxD1Hbd24tny01ntfh"
+      ]
+    },
+    {
+      "id": "1ZPNZ0LT2q6_FHfcQ5mGw-MZe7vVbB4II",
+      "mimeType": "text/markdown",
+      "modifiedTime": "2026-04-28T17:23:39.277Z",
+      "name": "VIYO_PRD_V6_ADDENDUM_R32.md",
+      "parents": [
+        "1NfylvyD_0YFZ36AxD1Hbd24tny01ntfh"
+      ]
+    },
+    {
+      "id": "1PAMJds6BFq-VehU9Zbu1HBQj3-wBT--e",
+      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "modifiedTime": "2026-04-28T15:56:31.991Z",
+      "name": "VIYO R32 — Intelligent Email Engine v9.0.docx",
+      "parents": [
+        "1ql1-__ZUmK3ML-jjrlEb9u7pjwV-iGll"
+      ]
+    },
+    {
+      "id": "1F2EfEo19WRbn0Bb8LXstkz2lGfrrROyR",
+      "mimeType": "text/markdown",
+      "modifiedTime": "2026-04-28T15:47:20.171Z",
+      "name": "R32_EQ_BENCH_FULL_RANKINGS.md",
+      "parents": [
+        "1K9c326550yPRg1TEajBOcmKMlqxGMALd"
+      ]
+    },
+    {
+      "id": "1KRYGEiGUd81v1wxv1EmX4efEGl4nWFAr",
+      "mimeType": "text/markdown",
+      "modifiedTime": "2026-04-28T15:46:37.679Z",
+      "name": "R32_BRAIN_MODEL_RESEARCH.md",
+      "parents": [
+        "1K9c326550yPRg1TEajBOcmKMlqxGMALd"
+      ]
+    },
+    {
+      "id": "1Pvlb0VjJojBBhWcto-o7EopKpsTvFql3",
+      "mimeType": "text/markdown",
+      "modifiedTime": "2026-04-28T12:20:51.060Z",
+      "name": "R32_GAP_RESEARCH.md",
+      "parents": [
+        "1K9c326550yPRg1TEajBOcmKMlqxGMALd"
+      ]
+    },
+    {
+      "id": "1oCiNcqyKFafhOy_kliZu_JT-Au7G0EBy",
+      "mimeType": "text/markdown",
+      "modifiedTime": "2026-04-28T04:54:43.305Z",
+      "name": "R32_INSTANT_ONE_FINDINGS.md",
+      "parents": [
+        "1K9c326550yPRg1TEajBOcmKMlqxGMALd"
+      ]
+    },
+    {
+      "id": "1pNVYxv9QHO0DjaBf3knMNvf0OYcJfiNK",
+      "mimeType": "text/markdown",
+      "modifiedTime": "2026-04-28T04:33:55.293Z",
+      "name": "R32_EXTRACTION_REGISTER.md",
+      "parents": [
+        "1K9c326550yPRg1TEajBOcmKMlqxGMALd"
+      ]
+    },
+    {
+      "id": "1utllGGeaBq72Vc3UzLgRQaW5Qsw3VwkR",
+      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "modifiedTime": "2026-04-27T17:01:52.000Z",
+      "name": "R32_Identity_Resolution,_Customer_Enrichment_&_Intelligent_Sending.docx",
+      "parents": [
+        "1gIYx6QxaYV8fdVUjeVhHtXswDAUDC5es"
+      ]
+    }
+  ]
+}
