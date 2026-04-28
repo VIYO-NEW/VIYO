@@ -124,3 +124,7 @@ Proposed plan: Pause at the Phase 2 approval gate and request a PO decision. Rec
 
 Status: CLOSED — Product Owner approved Option A on 2026-04-28; T45 implemented the minimal `brands` table before `comments` in `packages/db/drizzle/0007_t45_composite_database_foundation.sql`, with workspace-membership RLS through `check_workspace_access` and Drizzle exports in `packages/db/src/schema/collaboration.ts`.
 
+
+## 2026-04-28 — T46 Learning Loop Schema Gap Remains Deferred
+
+T46 worker routing can build a zero-shot fallback prompt when cache score is below threshold, but it does not create unapproved curator or learning-loop tables. Persisting new fallback learning events remains a deferred schema decision requiring PO approval.

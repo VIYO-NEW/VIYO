@@ -125,3 +125,7 @@ Tracks every cross-system connection in the VIYO codebase. Each entry maps a sou
 | `UPSTASH_REDIS_REST_TOKEN` | (P0-15 — not yet wired) | — | — |
 | `GOOGLE_AI_API_KEY` | (Phase 2 — not yet wired) | — | — |
 | `IDEOGRAM_API_KEY` | (Phase 2 — not yet wired) | — | — |
+
+## 2026-04-28 — T46 Phase 4 Worker Routing Wiring
+
+Layers updated: Layer 2 database read path via `imagePromptPatterns`; Layer 3 domain routing services; Layer 5 tRPC API contract; Layer 6 worker transport mount; Layer 8 observability logs; Layer 10 environment-driven router config; Layer 11 billing precheck boundary; Layer 13 fallback and rollback routing. No UI mutation was introduced in this component.

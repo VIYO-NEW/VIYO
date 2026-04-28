@@ -61,3 +61,7 @@ Every external research item performed during the build, with structured metadat
 - **Confidence:** Medium (works in practice, not officially supported)
 - **Impact:** When test files are written, vitest behavior should be verified. Consider upgrading to vitest 3.x which officially supports vite 6.
 - **KB Candidate:** Yes — logged to kb-candidates.md
+
+## 2026-04-28 — T46 Worker Routing Implementation Research
+
+Confirmed during implementation: the worker package exposes `type-check` rather than `typecheck`; shared package declarations must be rebuilt for worker package-resolution to see new schema exports; no token hold ledger exists, so deduct-after-success remains the only approved billing boundary.

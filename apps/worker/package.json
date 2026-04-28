@@ -24,6 +24,7 @@
     "@sentry/node": "^10.50.0",
     "@sentry/opentelemetry": "^10.50.0",
     "@supabase/supabase-js": "^2.47.0",
+    "@trpc/server": "^11.17.0",
     "@viyo/db": "workspace:*",
     "@viyo/shared": "workspace:*",
     "drizzle-orm": "^0.45.2",

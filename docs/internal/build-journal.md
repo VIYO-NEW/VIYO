@@ -148,3 +148,7 @@ Chronological build log. One entry per work session or task completion.
 - Implemented `packages/shared/src/schemas/art-director.ts` and exported it through `packages/shared/src/schemas/index.ts`.
 - Extended `packages/shared/src/config/env.ts` with the T46 router rollback flag, cache threshold, timeout, explicit provider defaults, Gemini embedding model, and optional OpenAI emergency-fallback key.
 - Validation: `pnpm --filter @viyo/shared type-check` passed.
+
+## 2026-04-28 — T46 Phase 4 Worker Routing and tRPC Surface
+
+Implemented the second T46 Phase 4 component group: worker router configuration, provider registry, Gemini embedding helper, image_prompt_patterns repository, corrected-score routing orchestrator, fallback prompt builder, structured routing logs, root tRPC router, Art Director routeGeneration procedure, and `/api/trpc/*` Hono mount. The mount sits after request ID, logging, CORS, rate limiting, and auth middleware. Validation: `pnpm --filter @viyo/shared build` and `pnpm --filter @viyo/worker type-check` passed.

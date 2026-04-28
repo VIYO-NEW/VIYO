@@ -31,3 +31,18 @@ The shared Art Director route contract and startup environment wiring have been 
 
 The shared contract exposes the required synchronous route inputs and outputs, including selected model, provider tier, cache state, score, token action, fallback reason, trace ID, route metadata, and trace metadata. The environment wiring adds the rollback flag, cache threshold, provider timeout, explicit NanoBanana → Ideogram → DALL-E 3 defaults, Gemini embedding model, and optional OpenAI key for emergency Tier 3 fallback while preserving the existing Google AI and Ideogram keys.
 
+
+## 2026-04-28 — Worker Routing Service and tRPC Surface Completed
+
+The worker-side Art Director router and minimal tRPC surface have been implemented as the second Phase 4 component group.
+
+| Component | Files Touched | Wiring Layers | Validation |
+|---|---|---|---|
+| Router configuration and provider registry | `apps/worker/src/lib/ai/router-config.ts`, `apps/worker/src/lib/ai/provider-registry.ts` | Layer 3, Layer 10, Layer 13 | `pnpm --filter @viyo/worker type-check` passed after rebuilding shared declarations. |
+| Gemini embedding and cache repository | `apps/worker/src/lib/ai/embeddings.ts`, `apps/worker/src/lib/ai/image-patterns.ts` | Layer 2, Layer 4, Layer 8 | `pnpm --filter @viyo/worker type-check` passed. |
+| Corrected scoring and routing orchestration | `apps/worker/src/lib/ai/image-router.ts`, `apps/worker/src/lib/ai/fallback-prompts.ts`, `apps/worker/src/lib/ai/router-observability.ts` | Layer 3, Layer 5, Layer 8, Layer 11, Layer 13 | `pnpm --filter @viyo/worker type-check` passed. |
+| tRPC API surface and Hono mount | `apps/worker/src/trpc/core.ts`, `apps/worker/src/trpc/context.ts`, `apps/worker/src/trpc/index.ts`, `apps/worker/src/trpc/routers/art-director.ts`, `apps/worker/src/index.ts` | Layer 5, Layer 6, Layer 7, Layer 13 | `pnpm --filter @viyo/worker type-check` passed. |
+
+The implementation follows the approved Phase 2 and Phase 3 constraints: NanoBanana remains the Tier 1 rollback/default provider, Ideogram remains Tier 2 typography-oriented fallback, DALL-E 3 remains Tier 3 fallback, Gemini embeddings use the existing Google AI configuration, cached patterns are free, and frontier routes perform a billing precheck while preserving the approved deduct-after-success boundary for the eventual successful provider call. The `/api/trpc/*` mount is intentionally placed after request ID, logger, CORS, rate limiting, and authentication middleware so the tRPC island inherits existing worker tracing and auth semantics instead of bypassing them.
+
+**Validation evidence:** `pnpm --filter @viyo/shared build` succeeded, followed by `pnpm --filter @viyo/worker type-check` succeeding.

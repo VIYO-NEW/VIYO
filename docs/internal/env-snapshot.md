@@ -95,3 +95,7 @@ Complete snapshot of the VIYO development and deployment environment as of 2026-
 | Build Tracker | `appo5mNncCCzKcIRk` | `tblIJUzJoCCjWXaMQ` | Feature-level build status tracking |
 | Skills Registry | `appo5mNncCCzKcIRk` | `tbl4gNd7bWjypMQBF` | All 80+ VIYO skills across phases |
 | Services Inventory | `appo5mNncCCzKcIRk` | `tblcRL2RNys7SIiW5` | External service and API registry |
+
+## 2026-04-28 — T46 Worker Runtime Environment Keys
+
+Worker routing reads `ENABLE_ART_DIRECTOR_ROUTER`, `ART_DIRECTOR_CACHE_THRESHOLD`, `ART_DIRECTOR_PROVIDER_TIMEOUT_MS`, `GEMINI_EMBEDDING_MODEL`, `GOOGLE_AI_API_KEY`, `IDEOGRAM_API_KEY`, and `OPENAI_API_KEY`. The runtime `enable_art_director_router` system configuration remains the first rollback override, with env fallback only when the DB override is absent.

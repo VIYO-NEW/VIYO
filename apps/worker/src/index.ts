@@ -9,6 +9,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { serve as serveInngest } from 'inngest/hono';
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import { health } from './routes/health.js';
 import { v1Router } from './routes/v1/index.js';
 import { authMiddleware } from './middleware/auth.js';
@@ -16,6 +17,8 @@ import { requestIdMiddleware } from './middleware/request-id.js';
 import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 import { createRateLimiter } from './middleware/rate-limiter.js';
 import { inngest, allFunctions } from './inngest/index.js';
+import { appRouter } from './trpc/index.js';
+import { createTRPCContext } from './trpc/context.js';
 
 /**
  * VIYO Worker — Hono API Server
@@ -83,6 +86,16 @@ app.route('/health', health);
 app.get('/', (c) => {
   return c.json({ service: 'viyo-worker', version: '0.0.1' });
 });
+
+// --- tRPC API Island — T46 Art Director Routing Suite ---
+app.all('/api/trpc/*', (c) =>
+  fetchRequestHandler({
+    endpoint: '/api/trpc',
+    req: c.req.raw,
+    router: appRouter,
+    createContext: () => createTRPCContext(c),
+  }),
+);
 
 // --- Versioned API Routes ---
 app.route('/api/v1', v1Router);

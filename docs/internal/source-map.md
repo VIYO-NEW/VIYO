@@ -50,3 +50,7 @@ Maps every major implementation area to the exact VIYO document(s) that define i
 | `shared/src/types/` | R20 §2 | TypeScript type exports (workspace types) |
 
 | T46 Art Director routing suite | `docs/architecture/art-director-routing-suite.md`; `docs/internal/t46-phase2-architecture-plan.md`; `docs/internal/t46-phase3-global-wiring-blueprint.md` | R19 LLM Architecture Enterprise; R24 Multi-Model Image Pipeline Enterprise; T45 `image_prompt_patterns` schema |
+
+## 2026-04-28 — T46 Worker Routing Source Anchors
+
+Implementation follows `docs/internal/t46-phase2-architecture-plan.md`, `docs/internal/t46-phase3-global-wiring-blueprint.md`, and `docs/architecture/art-director-routing-suite.md`. Existing code anchors used: `packages/db/src/schema/image-intelligence.ts`, `apps/worker/src/lib/token-engine.ts`, `apps/worker/src/middleware/auth.ts`, and `apps/worker/src/index.ts`.

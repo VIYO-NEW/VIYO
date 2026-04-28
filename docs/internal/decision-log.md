@@ -112,3 +112,7 @@ Every meaningful engineering decision with rationale and source-doc reference.
 - **Decision:** T46 billable frontier generation will precheck billing and balance, execute the selected provider, and call `deductTokens` only after provider success.
 - **Rationale:** This satisfies the PO correction forbidding deduct-before-execute while avoiding unapproved billing-schema expansion.
 - **Consequences:** Failed provider attempts do not mutate token balances; a true hold ledger remains deferred unless a future task approves the required billing model.
+
+## 2026-04-28 — T46 Deduct-After-Success Boundary Preserved
+
+Decision maintained from PO-approved Phase 3: worker routeGeneration performs cache selection and billing precheck, but it does not call token deduction before provider execution. The successful image provider boundary must call `deductTokens` in a later provider execution integration because the current token engine has no approved hold ledger.
