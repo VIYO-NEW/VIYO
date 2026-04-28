@@ -56,3 +56,13 @@
   - [x] Verified static contract checks, SQL parser validation, package/workspace lint, type-check, tests, build, quality gate, and bundle-budget evidence
   - [x] Taskmaster updated → T16, T17, T18, T19, T20, and T45 done
   - [x] Airtable synced → Done
+
+## In Review
+
+- [ ] T46 — Composite Art Director Routing Suite (T21, T22, T23) — PHASE 5 REVIEW GATE 2026-04-28
+  - [x] Phase 5 source review completed against Phase 2 architecture plan and Phase 3 wiring blueprint
+  - [x] Shared/worker build, lint, type-check, focused tests, monorepo lint/type-check/test/build passed
+  - [x] Live local worker probe confirmed `/health` responds and unauthenticated `artDirector.routeGeneration` fails closed with HTTP 401
+  - [x] Static source-invariant verifier passed final 13-layer wiring assertions
+  - [x] Taskmaster T46 moved to `review`; wiring subtasks remain done as validation evidence
+  - [ ] Awaiting explicit PO approval before Phase 6, final T46 closeout, T47, or T48 begins

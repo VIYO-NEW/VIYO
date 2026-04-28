@@ -1,0 +1,414 @@
+=== T46 Phase 5 Live Code Validation Evidence ===
+Tue Apr 28 18:37:32 UTC 2026
+\n=== shared build ===
+
+> @viyo/shared@0.0.1 build /home/ubuntu/VIYO/packages/shared
+> tsc --project tsconfig.build.json
+
+\n=== worker lint ===
+
+> @viyo/worker@0.0.1 lint /home/ubuntu/VIYO/apps/worker
+> eslint src/
+
+\n=== worker type-check ===
+
+> @viyo/worker@0.0.1 type-check /home/ubuntu/VIYO/apps/worker
+> tsc --noEmit
+
+\n=== focused worker tests ===
+
+> @viyo/worker@0.0.1 test /home/ubuntu/VIYO/apps/worker
+> vitest run "src/lib/ai/art-director-routing.test.ts"
+
+
+ RUN  v2.1.9 /home/ubuntu/VIYO/apps/worker
+
+ ✓ src/lib/ai/art-director-routing.test.ts (8 tests) 8ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  14:37:44
+   Duration  965ms (transform 168ms, setup 0ms, collect 716ms, tests 8ms, environment 0ms, prepare 69ms)
+
+\n=== repository lint ===
+
+> viyo@0.0.1 lint /home/ubuntu/VIYO
+> turbo run lint
+
+• turbo 2.9.6
+
+   • Packages in scope: @viyo/admin, @viyo/db, @viyo/shared, @viyo/ui, @viyo/web, @viyo/worker
+   • Running lint in 6 packages
+   • Remote caching disabled
+
+@viyo/shared:lint: cache miss, executing a291f7c4a6e7b87f
+@viyo/shared:build: cache miss, executing bc1e83de188cbd5e
+@viyo/shared:lint: 
+@viyo/shared:lint: > @viyo/shared@0.0.1 lint /home/ubuntu/VIYO/packages/shared
+@viyo/shared:lint: > eslint src/
+@viyo/shared:lint: 
+@viyo/shared:build: 
+@viyo/shared:build: > @viyo/shared@0.0.1 build /home/ubuntu/VIYO/packages/shared
+@viyo/shared:build: > tsc --project tsconfig.build.json
+@viyo/shared:build: 
+@viyo/db:lint: cache miss, executing 9ec17e98dd7b1b02
+@viyo/db:build: cache miss, executing 72d8a40813423879
+@viyo/ui:lint: cache miss, executing e02f328b50e8f676
+@viyo/ui:build: cache miss, executing e404b661794e43ef
+@viyo/ui:lint: 
+@viyo/ui:lint: > @viyo/ui@0.0.1 lint /home/ubuntu/VIYO/packages/ui
+@viyo/ui:lint: > eslint src/
+@viyo/ui:lint: 
+@viyo/db:build: 
+@viyo/db:build: > @viyo/db@0.0.1 build /home/ubuntu/VIYO/packages/db
+@viyo/db:build: > tsc --project tsconfig.build.json
+@viyo/db:build: 
+@viyo/db:lint: 
+@viyo/db:lint: > @viyo/db@0.0.1 lint /home/ubuntu/VIYO/packages/db
+@viyo/db:lint: > eslint src/
+@viyo/db:lint: 
+@viyo/ui:build: 
+@viyo/ui:build: > @viyo/ui@0.0.1 build /home/ubuntu/VIYO/packages/ui
+@viyo/ui:build: > tsc --project tsconfig.build.json
+@viyo/ui:build: 
+@viyo/admin:lint: cache miss, executing ef08013f7d220889
+@viyo/web:lint: cache miss, executing 49361b352b2291c1
+@viyo/admin:lint: 
+@viyo/admin:lint: > @viyo/admin@0.0.1 lint /home/ubuntu/VIYO/apps/admin
+@viyo/admin:lint: > eslint src/
+@viyo/admin:lint: 
+@viyo/web:lint: 
+@viyo/web:lint: > @viyo/web@0.0.1 lint /home/ubuntu/VIYO/apps/web
+@viyo/web:lint: > eslint src/
+@viyo/web:lint: 
+@viyo/worker:lint: cache miss, executing 6f469b6f3371b55b
+@viyo/worker:lint: 
+@viyo/worker:lint: > @viyo/worker@0.0.1 lint /home/ubuntu/VIYO/apps/worker
+@viyo/worker:lint: > eslint src/
+@viyo/worker:lint: 
+
+ Tasks:    9 successful, 9 total
+Cached:    0 cached, 9 total
+  Time:    8.211s 
+
+\n=== repository type-check ===
+
+> viyo@0.0.1 type-check /home/ubuntu/VIYO
+> turbo run type-check
+
+• turbo 2.9.6
+
+   • Packages in scope: @viyo/admin, @viyo/db, @viyo/shared, @viyo/ui, @viyo/web, @viyo/worker
+   • Running type-check in 6 packages
+   • Remote caching disabled
+
+@viyo/shared:type-check: cache miss, executing b487d82af848fe69
+@viyo/shared:build: cache hit, replaying logs bc1e83de188cbd5e
+@viyo/shared:build: 
+@viyo/shared:build: > @viyo/shared@0.0.1 build /home/ubuntu/VIYO/packages/shared
+@viyo/shared:build: > tsc --project tsconfig.build.json
+@viyo/shared:build: 
+@viyo/ui:type-check: cache miss, executing 99e03fd11974c9ae
+@viyo/db:build: cache hit, replaying logs 72d8a40813423879
+@viyo/db:build: 
+@viyo/db:build: > @viyo/db@0.0.1 build /home/ubuntu/VIYO/packages/db
+@viyo/db:build: > tsc --project tsconfig.build.json
+@viyo/db:build: 
+@viyo/ui:build: cache hit, replaying logs e404b661794e43ef
+@viyo/db:type-check: cache miss, executing 086862d5d98348d5
+@viyo/ui:build: 
+@viyo/ui:build: > @viyo/ui@0.0.1 build /home/ubuntu/VIYO/packages/ui
+@viyo/ui:build: > tsc --project tsconfig.build.json
+@viyo/ui:build: 
+@viyo/worker:type-check: cache miss, executing 9f22ec23c19b67bb
+@viyo/web:type-check: cache miss, executing fc15574d65628e5a
+@viyo/admin:type-check: cache miss, executing ad28a61b287cf867
+@viyo/admin:type-check: 
+@viyo/admin:type-check: > @viyo/admin@0.0.1 type-check /home/ubuntu/VIYO/apps/admin
+@viyo/admin:type-check: > tsc --noEmit
+@viyo/admin:type-check: 
+@viyo/shared:type-check: 
+@viyo/shared:type-check: > @viyo/shared@0.0.1 type-check /home/ubuntu/VIYO/packages/shared
+@viyo/shared:type-check: > tsc --noEmit
+@viyo/shared:type-check: 
+@viyo/db:type-check: 
+@viyo/db:type-check: > @viyo/db@0.0.1 type-check /home/ubuntu/VIYO/packages/db
+@viyo/db:type-check: > tsc --noEmit
+@viyo/db:type-check: 
+@viyo/ui:type-check: 
+@viyo/ui:type-check: > @viyo/ui@0.0.1 type-check /home/ubuntu/VIYO/packages/ui
+@viyo/ui:type-check: > tsc --noEmit
+@viyo/ui:type-check: 
+@viyo/web:type-check: 
+@viyo/web:type-check: > @viyo/web@0.0.1 type-check /home/ubuntu/VIYO/apps/web
+@viyo/web:type-check: > tsc --noEmit
+@viyo/web:type-check: 
+@viyo/worker:type-check: 
+@viyo/worker:type-check: > @viyo/worker@0.0.1 type-check /home/ubuntu/VIYO/apps/worker
+@viyo/worker:type-check: > tsc --noEmit
+@viyo/worker:type-check: 
+
+ Tasks:    9 successful, 9 total
+Cached:    3 cached, 9 total
+  Time:    8.156s 
+
+\n=== repository test ===
+
+> viyo@0.0.1 test /home/ubuntu/VIYO
+> turbo run test -- --passWithNoTests
+
+• turbo 2.9.6
+
+   • Packages in scope: @viyo/admin, @viyo/db, @viyo/shared, @viyo/ui, @viyo/web, @viyo/worker
+   • Running test in 6 packages
+   • Remote caching disabled
+
+@viyo/shared:build: cache miss, executing b2176e07b3b8c54c
+@viyo/shared:test: cache miss, executing 7e116fd5fa4a63ff
+@viyo/shared:build: 
+@viyo/shared:build: > @viyo/shared@0.0.1 build /home/ubuntu/VIYO/packages/shared
+@viyo/shared:build: > tsc --project tsconfig.build.json
+@viyo/shared:build: 
+@viyo/shared:test: 
+@viyo/shared:test: > @viyo/shared@0.0.1 test /home/ubuntu/VIYO/packages/shared
+@viyo/shared:test: > vitest run "--passWithNoTests"
+@viyo/shared:test: 
+@viyo/shared:test: 
+@viyo/shared:test:  RUN  v2.1.9 /home/ubuntu/VIYO/packages/shared
+@viyo/shared:test: 
+@viyo/shared:test: include: **/*.{test,spec}.?(c|m)[jt]s?(x)
+@viyo/shared:test: exclude:  **/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*
+@viyo/shared:test: No test files found, exiting with code 0
+@viyo/shared:test: 
+@viyo/db:test: cache miss, executing 9996ee6e5e723495
+@viyo/ui:build: cache miss, executing 4493f45442dd12d6
+@viyo/ui:test: cache miss, executing 34011d58d90cef3f
+@viyo/db:build: cache miss, executing 8bf5fadefe085707
+@viyo/ui:build: 
+@viyo/ui:build: > @viyo/ui@0.0.1 build /home/ubuntu/VIYO/packages/ui
+@viyo/ui:build: > tsc --project tsconfig.build.json
+@viyo/ui:build: 
+@viyo/db:build: 
+@viyo/db:build: > @viyo/db@0.0.1 build /home/ubuntu/VIYO/packages/db
+@viyo/db:build: > tsc --project tsconfig.build.json
+@viyo/db:build: 
+@viyo/db:test: 
+@viyo/db:test: > @viyo/db@0.0.1 test /home/ubuntu/VIYO/packages/db
+@viyo/db:test: > vitest run "--passWithNoTests"
+@viyo/db:test: 
+@viyo/ui:test: 
+@viyo/ui:test: > @viyo/ui@0.0.1 test /home/ubuntu/VIYO/packages/ui
+@viyo/ui:test: > vitest run "--passWithNoTests"
+@viyo/ui:test: 
+@viyo/db:test: 
+@viyo/db:test:  RUN  v2.1.9 /home/ubuntu/VIYO/packages/db
+@viyo/db:test: 
+@viyo/db:test: include: **/*.{test,spec}.?(c|m)[jt]s?(x)
+@viyo/db:test: exclude:  **/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*
+@viyo/db:test: No test files found, exiting with code 0
+@viyo/db:test: 
+@viyo/ui:test: 
+@viyo/ui:test:  RUN  v2.1.9 /home/ubuntu/VIYO/packages/ui
+@viyo/ui:test: 
+@viyo/ui:test: include: **/*.{test,spec}.?(c|m)[jt]s?(x)
+@viyo/ui:test: No test files found, exiting with code 0
+@viyo/ui:test: exclude:  **/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*
+@viyo/ui:test: 
+@viyo/admin:test: cache miss, executing 90421f7b3b7361ba
+@viyo/web:test: cache miss, executing 6231de9f2f05ee9d
+@viyo/admin:test: 
+@viyo/admin:test: > @viyo/admin@0.0.1 test /home/ubuntu/VIYO/apps/admin
+@viyo/admin:test: > vitest run "--passWithNoTests"
+@viyo/admin:test: 
+@viyo/web:test: 
+@viyo/web:test: > @viyo/web@0.0.1 test /home/ubuntu/VIYO/apps/web
+@viyo/web:test: > vitest run "--passWithNoTests"
+@viyo/web:test: 
+@viyo/worker:test: cache miss, executing d9d744df88bff4e6
+@viyo/admin:test: 
+@viyo/admin:test:  RUN  v2.1.9 /home/ubuntu/VIYO/apps/admin
+@viyo/admin:test: 
+@viyo/web:test: 
+@viyo/web:test:  RUN  v2.1.9 /home/ubuntu/VIYO/apps/web
+@viyo/web:test: 
+@viyo/admin:test: include: **/*.{test,spec}.?(c|m)[jt]s?(x)
+@viyo/admin:test: exclude:  **/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*
+@viyo/admin:test: No test files found, exiting with code 0
+@viyo/admin:test: 
+@viyo/web:test: include: **/*.{test,spec}.?(c|m)[jt]s?(x)
+@viyo/web:test: exclude:  **/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*
+@viyo/web:test: No test files found, exiting with code 0
+@viyo/web:test: 
+@viyo/worker:test: 
+@viyo/worker:test: > @viyo/worker@0.0.1 test /home/ubuntu/VIYO/apps/worker
+@viyo/worker:test: > vitest run "--passWithNoTests"
+@viyo/worker:test: 
+@viyo/worker:test: 
+@viyo/worker:test:  RUN  v2.1.9 /home/ubuntu/VIYO/apps/worker
+@viyo/worker:test: 
+@viyo/worker:test:  ✓ src/lib/ai/art-director-routing.test.ts (8 tests) 8ms
+@viyo/worker:test: 
+@viyo/worker:test:  Test Files  1 passed (1)
+@viyo/worker:test:       Tests  8 passed (8)
+@viyo/worker:test:    Start at  14:38:11
+@viyo/worker:test:    Duration  1.06s (transform 179ms, setup 0ms, collect 799ms, tests 8ms, environment 0ms, prepare 71ms)
+@viyo/worker:test: 
+
+ Tasks:    9 successful, 9 total
+Cached:    0 cached, 9 total
+  Time:    7.547s 
+
+\n=== repository build ===
+
+> viyo@0.0.1 build /home/ubuntu/VIYO
+> turbo run build
+
+• turbo 2.9.6
+
+   • Packages in scope: @viyo/admin, @viyo/db, @viyo/shared, @viyo/ui, @viyo/web, @viyo/worker
+   • Running build in 6 packages
+   • Remote caching disabled
+
+@viyo/shared:build: cache hit, replaying logs bc1e83de188cbd5e
+@viyo/shared:build: 
+@viyo/shared:build: > @viyo/shared@0.0.1 build /home/ubuntu/VIYO/packages/shared
+@viyo/shared:build: > tsc --project tsconfig.build.json
+@viyo/shared:build: 
+@viyo/ui:build: cache hit, replaying logs e404b661794e43ef
+@viyo/ui:build: 
+@viyo/ui:build: > @viyo/ui@0.0.1 build /home/ubuntu/VIYO/packages/ui
+@viyo/ui:build: > tsc --project tsconfig.build.json
+@viyo/ui:build: 
+@viyo/web:build: cache miss, executing a5503429475a3eca
+@viyo/admin:build: cache miss, executing 904fda8b701019c8
+@viyo/db:build: cache hit, replaying logs 72d8a40813423879
+@viyo/db:build: 
+@viyo/db:build: > @viyo/db@0.0.1 build /home/ubuntu/VIYO/packages/db
+@viyo/db:build: > tsc --project tsconfig.build.json
+@viyo/db:build: 
+@viyo/worker:build: cache miss, executing 521df5dd44fa3a1e
+@viyo/worker:build: 
+@viyo/worker:build: > @viyo/worker@0.0.1 build /home/ubuntu/VIYO/apps/worker
+@viyo/worker:build: > tsc --project tsconfig.json
+@viyo/worker:build: 
+@viyo/admin:build: 
+@viyo/admin:build: > @viyo/admin@0.0.1 build /home/ubuntu/VIYO/apps/admin
+@viyo/admin:build: > vite build
+@viyo/admin:build: 
+@viyo/web:build: 
+@viyo/web:build: > @viyo/web@0.0.1 build /home/ubuntu/VIYO/apps/web
+@viyo/web:build: > vite build
+@viyo/web:build: 
+@viyo/admin:build: vite v6.4.2 building for production...
+@viyo/web:build: vite v6.4.2 building for production...
+@viyo/web:build: transforming...
+@viyo/admin:build: transforming...
+@viyo/web:build: ✓ 425 modules transformed.
+@viyo/web:build: rendering chunks...
+@viyo/web:build: computing gzip size...
+@viyo/web:build: dist/index.html                   0.47 kB │ gzip:  0.31 kB
+@viyo/web:build: dist/assets/index-CI9ci389.css   19.86 kB │ gzip:  4.02 kB
+@viyo/web:build: dist/assets/index-C4BYEf0Y.js   253.21 kB │ gzip: 81.73 kB │ map: 924.06 kB
+@viyo/web:build: ✓ built in 3.04s
+@viyo/admin:build: ✓ 490 modules transformed.
+@viyo/admin:build: Generated an empty chunk: "vendor-sentry".
+@viyo/admin:build: rendering chunks...
+@viyo/admin:build: computing gzip size...
+@viyo/admin:build: dist/index.html                               0.62 kB │ gzip:  0.34 kB
+@viyo/admin:build: dist/assets/index-Cx3gYAre.css               21.34 kB │ gzip:  4.38 kB
+@viyo/admin:build: dist/assets/vendor-sentry-l0sNRNKZ.js         0.05 kB │ gzip:  0.07 kB │ map:     0.11 kB
+@viyo/admin:build: dist/assets/Performance-BsiIfQx4.js           0.97 kB │ gzip:  0.50 kB │ map:     1.64 kB
+@viyo/admin:build: dist/assets/ContentOps-DZ-NGgA4.js            0.98 kB │ gzip:  0.52 kB │ map:     1.66 kB
+@viyo/admin:build: dist/assets/BrandIntelligence-jO5QT2oh.js     0.98 kB │ gzip:  0.50 kB │ map:     1.66 kB
+@viyo/admin:build: dist/assets/LearningEngine-DTmmAtVV.js        1.62 kB │ gzip:  0.80 kB │ map:     3.19 kB
+@viyo/admin:build: dist/assets/SystemHealth-9NH26KkB.js          1.72 kB │ gzip:  0.69 kB │ map:     2.92 kB
+@viyo/admin:build: dist/assets/CouncilOfBrains-fzYr7jBC.js       1.77 kB │ gzip:  0.71 kB │ map:     2.75 kB
+@viyo/admin:build: dist/assets/Dashboard-AMx_P52x.js             1.94 kB │ gzip:  0.72 kB │ map:     4.16 kB
+@viyo/admin:build: dist/assets/SecurityDashboard-CzsgZNyX.js     2.20 kB │ gzip:  0.71 kB │ map:     3.41 kB
+@viyo/admin:build: dist/assets/Login-C6Jq0Afe.js                 2.85 kB │ gzip:  1.23 kB │ map:     6.26 kB
+@viyo/admin:build: dist/assets/UserManagement-DMGCQjP2.js        3.17 kB │ gzip:  0.99 kB │ map:     6.06 kB
+@viyo/admin:build: dist/assets/BrandsList-B7JcTx1k.js            3.18 kB │ gzip:  1.00 kB │ map:     6.16 kB
+@viyo/admin:build: dist/assets/CostReconciliation-ClJ2fiV-.js    7.77 kB │ gzip:  1.84 kB │ map:    18.69 kB
+@viyo/admin:build: dist/assets/index-DPsB9I8c.js                20.84 kB │ gzip:  6.42 kB │ map:    63.97 kB
+@viyo/admin:build: dist/assets/vendor-router-R5hRjiQj.js        65.17 kB │ gzip: 21.27 kB │ map:   273.80 kB
+@viyo/admin:build: dist/assets/vendor-react-kLH8vPGT.js        166.65 kB │ gzip: 54.06 kB │ map:   484.44 kB
+@viyo/admin:build: dist/assets/vendor-supabase-CX_6YRmE.js     198.20 kB │ gzip: 52.25 kB │ map: 1,084.55 kB
+@viyo/admin:build: ✓ built in 3.83s
+
+ Tasks:    6 successful, 6 total
+Cached:    3 cached, 6 total
+  Time:    7.084s 
+
+=== live worker probe ===
+Tue Apr 28 18:39:10 UTC 2026
+\n--- GET /health ---
+HTTP/1.1 200 OK
+access-control-allow-credentials: true
+content-type: application/json
+vary: Origin
+x-request-id: 27cdfb59-6f46-4a13-84c7-276b8756fb9c
+content-length: 182
+Date: Tue, 28 Apr 2026 18:39:10 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"status":"degraded","service":"viyo-worker","version":"0.0.1","timestamp":"2026-04-28T18:39:10.255Z","checks":{"database":{"connected":false,"error":"DATABASE_URL not configured"}}}\n--- POST /api/trpc/artDirector.routeGeneration without Authorization ---
+HTTP/1.1 401 Unauthorized
+access-control-allow-credentials: true
+content-type: application/json
+vary: Origin
+x-ratelimit-limit: 100
+x-ratelimit-remaining: 99
+x-request-id: 584cc3f2-ba5c-4c22-b983-f46c7df50306
+content-length: 51
+Date: Tue, 28 Apr 2026 18:39:10 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Missing or invalid Authorization header"}Traceback (most recent call last):
+  File "/home/ubuntu/terminal_full_output/t46_phase5_static_verifier.py", line 13, in <module>
+    require(
+  File "/home/ubuntu/terminal_full_output/t46_phase5_static_verifier.py", line 10, in require
+    raise AssertionError(f"{name} failed in {path}; missing: {missing}")
+AssertionError: shared schema exports include approved T46 request and response contracts failed in packages/shared/src/schemas/art-director.ts; missing: ['routerDecisionSchema']
+\n=== corrected static wiring verifier ===
+Traceback (most recent call last):
+  File "/home/ubuntu/terminal_full_output/t46_phase5_static_verifier.py", line 55, in <module>
+    require(
+  File "/home/ubuntu/terminal_full_output/t46_phase5_static_verifier.py", line 10, in require
+    raise AssertionError(f"{name} failed in {path}; missing: {missing}")
+AssertionError: provider registry locks approved tier order and rollback provider failed in apps/worker/src/lib/ai/provider-registry.ts; missing: ["tier1Provider: 'nanobanana'", "tier2Provider: 'ideogram'", "tier3Provider: 'dall-e-3'", 'model: config.tier1Provider']
+\n=== revised static wiring verifier ===
+Traceback (most recent call last):
+  File "/home/ubuntu/terminal_full_output/t46_phase5_static_verifier.py", line 66, in <module>
+    require(
+  File "/home/ubuntu/terminal_full_output/t46_phase5_static_verifier.py", line 10, in require
+    raise AssertionError(f"{name} failed in {path}; missing: {missing}")
+AssertionError: router config implements DB system-config precedence and safe env fallbacks failed in apps/worker/src/lib/ai/router-config.ts; missing: ["getSystemConfig<boolean>('enable_art_director_router')"]
+\n=== corrected system-config static verifier ===
+Traceback (most recent call last):
+  File "/home/ubuntu/terminal_full_output/t46_phase5_static_verifier.py", line 77, in <module>
+    require(
+  File "/home/ubuntu/terminal_full_output/t46_phase5_static_verifier.py", line 10, in require
+    raise AssertionError(f"{name} failed in {path}; missing: {missing}")
+AssertionError: image router preserves cache-first routing and billing precheck without premature token deduction failed in apps/worker/src/lib/ai/image-router.ts; missing: ['checkBillingStatus(input.workspaceId)', 'markPatternUsed(bestCandidate.candidate.id)']
+\n=== corrected image-router static verifier ===
+Traceback (most recent call last):
+  File "/home/ubuntu/terminal_full_output/t46_phase5_static_verifier.py", line 103, in <module>
+    require(
+  File "/home/ubuntu/terminal_full_output/t46_phase5_static_verifier.py", line 10, in require
+    raise AssertionError(f"{name} failed in {path}; missing: {missing}")
+AssertionError: Gemini embeddings helper degrades safely when API key or calls are unavailable failed in apps/worker/src/lib/ai/embeddings.ts; missing: ['return null', 'text-embedding-004']
+\n=== corrected embedding static verifier ===
+T46 Phase 5 static wiring verifier: PASS
+01. PASS — shared schema exports include approved T46 request and response contracts (packages/shared/src/schemas/art-director.ts; 5 anchors)
+02. PASS — worker tRPC island is mounted behind Hono middleware at the approved path (apps/worker/src/index.ts; 5 anchors)
+03. PASS — tRPC context fails closed without authenticated Hono context (apps/worker/src/trpc/context.ts; 3 anchors)
+04. PASS — Art Director procedure delegates through shared schema and preserves auth/request IDs (apps/worker/src/trpc/routers/art-director.ts; 5 anchors)
+05. PASS — provider registry locks approved tier order and rollback provider (apps/worker/src/lib/ai/provider-registry.ts; 5 anchors)
+06. PASS — router config implements DB system-config precedence and safe env fallbacks (apps/worker/src/lib/ai/router-config.ts; 5 anchors)
+07. PASS — image router preserves cache-first routing and billing precheck without premature token deduction (apps/worker/src/lib/ai/image-router.ts; 6 anchors)
+08. PASS — image router does not call deductTokens in routeGeneration (apps/worker/src/lib/ai/image-router.ts; 1 anchors)
+09. PASS — pattern repository consumes the existing T45 image_prompt_patterns table (apps/worker/src/lib/ai/image-patterns.ts; 4 anchors)
+10. PASS — Gemini embeddings helper degrades safely when API key or calls are unavailable (apps/worker/src/lib/ai/embeddings.ts; 4 anchors)
+11. PASS — focused tests cover provider tiers, fallbacks, and corrected scoring (apps/worker/src/lib/ai/art-director-routing.test.ts; 6 anchors)
