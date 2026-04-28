@@ -39,6 +39,19 @@ const workerEnvSchema = z.object({
   // Image APIs
   GOOGLE_AI_API_KEY: z.string().optional(),
   IDEOGRAM_API_KEY: z.string().optional(),
+  OPENAI_API_KEY: z.string().optional(),
+
+  // Art Director Router — T46
+  ENABLE_ART_DIRECTOR_ROUTER: z
+    .enum(['true', 'false'])
+    .default('false')
+    .transform((value) => value === 'true'),
+  ART_DIRECTOR_CACHE_THRESHOLD: z.coerce.number().min(0).max(1).default(0.75),
+  ART_DIRECTOR_PROVIDER_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120000).default(30000),
+  ART_DIRECTOR_TIER1_PROVIDER: z.enum(['nanobanana']).default('nanobanana'),
+  ART_DIRECTOR_TIER2_PROVIDER: z.enum(['ideogram']).default('ideogram'),
+  ART_DIRECTOR_TIER3_PROVIDER: z.enum(['dall-e-3']).default('dall-e-3'),
+  GEMINI_EMBEDDING_MODEL: z.string().default('text-embedding-004'),
 
   // Cloudflare R2
   R2_ACCOUNT_ID: z.string().optional(),

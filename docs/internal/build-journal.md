@@ -143,3 +143,8 @@ Chronological build log. One entry per work session or task completion.
 - Scope: Composite Art Director Routing Suite covering corrected 4D scoring, cache-first routing, Gemini embeddings, explicit NanoBanana → Ideogram → DALL-E 3 provider tiers, minimal tRPC island, and deduct-after-success billing.
 - Files started: `docs/internal/t46-phase4-incremental-record.md`.
 - Protocol note: Internal records are being updated incrementally during Phase 4, not deferred to Phase 9.
+
+## 2026-04-28 — T46 Shared Contract and Environment Wiring
+- Implemented `packages/shared/src/schemas/art-director.ts` and exported it through `packages/shared/src/schemas/index.ts`.
+- Extended `packages/shared/src/config/env.ts` with the T46 router rollback flag, cache threshold, timeout, explicit provider defaults, Gemini embedding model, and optional OpenAI emergency-fallback key.
+- Validation: `pnpm --filter @viyo/shared type-check` passed.

@@ -19,3 +19,15 @@ Phase 4 began only after PO approval of the Phase 3 Global Wiring Blueprint. The
 | Billing constraint | Precheck balance before provider execution; call `deductTokens` only after provider success; never deduct on cached or failed provider paths. |
 | Incremental-record rule | This file and the seven standing `docs/internal/` records must be updated as component groups are implemented, not bulk-written at the end. |
 
+
+## 2026-04-28 — Shared Contract and Environment Wiring Completed
+
+The shared Art Director route contract and startup environment wiring have been implemented as the first Phase 4 component group.
+
+| Component | Files Touched | Wiring Layers | Validation |
+|---|---|---|---|
+| Shared request and response contract | `packages/shared/src/schemas/art-director.ts`, `packages/shared/src/schemas/index.ts` | Layer 3, Layer 5, Layer 13 | `pnpm --filter @viyo/shared type-check` passed. |
+| Router configuration environment defaults | `packages/shared/src/config/env.ts` | Layer 10 | `pnpm --filter @viyo/shared type-check` passed. |
+
+The shared contract exposes the required synchronous route inputs and outputs, including selected model, provider tier, cache state, score, token action, fallback reason, trace ID, route metadata, and trace metadata. The environment wiring adds the rollback flag, cache threshold, provider timeout, explicit NanoBanana → Ideogram → DALL-E 3 defaults, Gemini embedding model, and optional OpenAI key for emergency Tier 3 fallback while preserving the existing Google AI and Ideogram keys.
+
