@@ -2,32 +2,54 @@
  * Art Director Image Router — T46
  *
  * Orchestrates synchronous routing for artDirector.routeGeneration using the
- * PO-approved corrected formula, Gemini-first cache lookup, deterministic
- * provider tiers, and safe token-economics boundaries. Cached pattern routing is
- * free. Frontier routing returns billable metadata but does not deduct before a
- * provider success; actual successful generation must call the token engine at
- * the success boundary.
+ * v6.1 provider inventory, A1–A22 mode contracts, Visual Engine V2 editing-tool
+ * plans, Gemini-first cache lookup, Claude 3.5 Sonnet zero-shot fallback, Brand
+ * Vault @mention resolution, and R2-backed generated-asset indexing hooks.
  */
+import { randomUUID } from 'node:crypto';
 import type {
   ArtDirectorFallbackReason,
   ArtDirectorModel,
-  ArtDirectorProviderTier,
+  BrandVaultMention,
   RouteGenerationInput,
   RouteGenerationResponse,
 } from '@viyo/shared';
 import type { AuthContext } from '@viyo/shared';
+import { and, desc, eq, ilike, inArray, or, sql } from 'drizzle-orm';
+import { assets } from '@viyo/db';
+import { getDb } from '../db.js';
 import { checkBillingStatus } from '../token-engine.js';
 import { generateGeminiEmbedding } from './embeddings.js';
-import { buildZeroShotFallbackPrompt } from './fallback-prompts.js';
+import { buildZeroShotFallbackPrompt, ZERO_SHOT_FALLBACK_MODEL } from './fallback-prompts.js';
 import type { ImagePatternCandidate } from './image-patterns.js';
 import { findPatternCandidates, markPatternUsed } from './image-patterns.js';
-import { rollbackProvider, selectProvider, type ProviderDescriptor } from './provider-registry.js';
+import {
+  ART_DIRECTOR_PO_REVIEW_PIPELINE_MODES,
+  rollbackProvider,
+  resolveModeProviderCandidates,
+  selectProvider,
+  type ProviderDescriptor,
+} from './provider-registry.js';
+import { getEditingToolPlan, selectPrimaryEditingProvider } from './editing-router.js';
 import { ART_DIRECTOR_FORMULA_WEIGHTS, getArtDirectorRouterConfig } from './router-config.js';
 import { createTraceId, recordRouterDecision } from './router-observability.js';
+
+export interface R2BucketLike {
+  put(
+    key: string,
+    value: string | ArrayBuffer | ArrayBufferView | ReadableStream,
+    options?: {
+      httpMetadata?: Record<string, string>;
+      customMetadata?: Record<string, string>;
+    },
+  ): Promise<unknown>;
+}
 
 export interface RouteGenerationServiceContext {
   auth: AuthContext;
   requestId: string;
+  r2Bucket?: R2BucketLike;
+  assetUrlBase?: string;
 }
 
 export interface CandidateScore {
@@ -35,9 +57,17 @@ export interface CandidateScore {
   score: number;
   baseQualityScore: number;
   costEfficiencyScore: number;
-  freshnessPenalty: number;
-  tierMultiplier: number;
+  fidelityMultiplier: number;
+  typographyMultiplier: number;
   selectedProvider: ProviderDescriptor;
+}
+
+interface AssetSaveResult {
+  assetUrl: string | null;
+  savedToVault: boolean;
+  assetId: string | null;
+  storagePath?: string;
+  unavailableReason?: string;
 }
 
 function clamp(value: number, min = 0, max = 1): number {
@@ -49,25 +79,19 @@ function roundScore(value: number): number {
   return Number(value.toFixed(4));
 }
 
-function tierMultiplier(tier: ArtDirectorProviderTier): number {
-  if (tier === 'tier_1') return 1.3;
-  if (tier === 'tier_2') return 1.2;
-  return 1;
-}
-
-function freshnessPenalty(candidate: ImagePatternCandidate): number {
-  const now = Date.now();
-  const lastUseSource = candidate.lastUsedAt ?? candidate.createdAt;
-  const ageDays = Math.max(0, (now - lastUseSource.getTime()) / 86_400_000);
-  const agePenalty = Math.max(0.72, 1 - ageDays * 0.01);
-  const usagePenalty = Math.max(0.85, 1 - candidate.usageCount * 0.005);
-  return clamp(agePenalty * usagePenalty, 0.6, 1);
-}
-
 function qualityScore(candidate: ImagePatternCandidate): number {
   const storedQuality = clamp(Math.max(candidate.fidelityScore, candidate.qaScore));
   const semanticQuality = clamp(candidate.similarity);
   return clamp(storedQuality * 0.7 + semanticQuality * 0.3);
+}
+
+function fidelityMultiplier(candidate: ImagePatternCandidate): number {
+  return clamp(candidate.fidelityScore, 0.5, 1.15);
+}
+
+function typographyMultiplier(input: RouteGenerationInput, selectedProvider: ProviderDescriptor): number {
+  if (!input.typographyRequired) return 1;
+  return selectedProvider.typographyOptimized ? 1.1 : 0.9;
 }
 
 function costEfficiencyScore(candidate: ImagePatternCandidate): number {
@@ -78,27 +102,248 @@ function costEfficiencyScore(candidate: ImagePatternCandidate): number {
 export function calculateArtDirectorScore(
   candidate: ImagePatternCandidate,
   selectedProvider: ProviderDescriptor,
+  input: Pick<RouteGenerationInput, 'typographyRequired'> = { typographyRequired: false },
 ): CandidateScore {
   const baseQualityScore = qualityScore(candidate);
   const costScore = costEfficiencyScore(candidate);
-  const freshness = freshnessPenalty(candidate);
-  const tier = tierMultiplier(selectedProvider.tier);
+  const fidelity = fidelityMultiplier(candidate);
+  const typography = typographyMultiplier(input as RouteGenerationInput, selectedProvider);
 
   const score =
     (baseQualityScore * ART_DIRECTOR_FORMULA_WEIGHTS.quality +
       costScore * ART_DIRECTOR_FORMULA_WEIGHTS.costEfficiency) *
-    freshness *
-    tier;
+    fidelity *
+    typography;
 
   return {
     candidate,
     score: roundScore(clamp(score, 0, 1)),
     baseQualityScore,
     costEfficiencyScore: costScore,
-    freshnessPenalty: freshness,
-    tierMultiplier: tier,
+    fidelityMultiplier: fidelity,
+    typographyMultiplier: typography,
     selectedProvider,
   };
+}
+
+function parsePromptMentions(prompt: string): BrandVaultMention[] {
+  const mentions = new Map<string, BrandVaultMention>();
+  const regex = /@([A-Za-z0-9][A-Za-z0-9_.-]{0,119})/g;
+  let match: RegExpExecArray | null;
+
+  while ((match = regex.exec(prompt)) !== null) {
+      const slug = match[1].replace(/[.]+$/g, '').toLowerCase();
+      if (!slug) continue;
+      const raw = `@${slug}`;
+      if (!mentions.has(slug)) {
+        mentions.set(slug, { raw, slug });
+      }
+  }
+
+  return [...mentions.values()];
+}
+
+function mergeMentions(input: RouteGenerationInput): BrandVaultMention[] {
+  const bySlug = new Map<string, BrandVaultMention>();
+
+  for (const mention of [...parsePromptMentions(input.prompt), ...(input.mentionReferences ?? [])]) {
+    bySlug.set(mention.slug.toLowerCase(), {
+      ...(bySlug.get(mention.slug.toLowerCase()) ?? {}),
+      ...mention,
+      slug: mention.slug.toLowerCase(),
+    });
+  }
+
+  return [...bySlug.values()];
+}
+
+function cleanStoragePath(path: string): string {
+  return path.replace(/^\/+/, '');
+}
+
+function publicAssetUrl(
+  storagePath: string,
+  config: Awaited<ReturnType<typeof getArtDirectorRouterConfig>>,
+  context?: RouteGenerationServiceContext,
+): string | null {
+  if (/^https?:\/\//i.test(storagePath)) return storagePath;
+  const cleanPath = cleanStoragePath(storagePath);
+  const base = context?.assetUrlBase ?? config.r2PublicBaseUrl;
+  if (base) return `${base.replace(/\/+$/, '')}/${cleanPath}`;
+  if (config.r2AccountId) {
+    return `https://${config.r2AccountId}.r2.cloudflarestorage.com/${config.r2BucketName}/${cleanPath}`;
+  }
+  return null;
+}
+
+async function resolveBrandVaultMentions(
+  input: RouteGenerationInput,
+  context: RouteGenerationServiceContext,
+  config: Awaited<ReturnType<typeof getArtDirectorRouterConfig>>,
+): Promise<BrandVaultMention[]> {
+  const mentions = mergeMentions(input);
+  if (!mentions.length && !(input.sourceAssetIds ?? []).length) return [];
+
+  const db = getDb();
+  if (!db) return mentions;
+
+  const resolved = new Map<string, BrandVaultMention>();
+  for (const mention of mentions) resolved.set(mention.slug, mention);
+
+  for (const mention of mentions) {
+    if (mention.assetId && mention.assetUrl) continue;
+
+    const [asset] = await db
+      .select({ id: assets.id, storagePath: assets.storagePath })
+      .from(assets)
+      .where(
+        and(
+          eq(assets.workspaceId, context.auth.workspaceId),
+          or(
+            sql`${assets.metadata}->>'brandId' = ${input.brandId}`,
+            sql`${assets.metadata}->>'brand_id' = ${input.brandId}`,
+          ),
+          or(
+            sql`${assets.metadata}->>'slug' = ${mention.slug}`,
+            sql`${assets.metadata}->>'name' ILIKE ${mention.slug}`,
+            ilike(assets.storagePath, `%${mention.slug}%`),
+          ),
+        ),
+      )
+      .orderBy(desc(assets.createdAt))
+      .limit(1);
+
+    if (asset) {
+      resolved.set(mention.slug, {
+        ...mention,
+        assetId: asset.id,
+        assetUrl: publicAssetUrl(asset.storagePath, config, context) ?? undefined,
+      });
+    }
+  }
+
+  const sourceAssetIds = input.sourceAssetIds ?? [];
+  if (sourceAssetIds.length) {
+    const sourceAssets = await db
+      .select({ id: assets.id, storagePath: assets.storagePath })
+      .from(assets)
+      .where(and(eq(assets.workspaceId, context.auth.workspaceId), inArray(assets.id, sourceAssetIds)))
+      .limit(sourceAssetIds.length);
+
+    for (const asset of sourceAssets) {
+      const slug = `asset-${asset.id}`;
+      resolved.set(slug, {
+        raw: `@${slug}`,
+        slug,
+        assetId: asset.id,
+        assetUrl: publicAssetUrl(asset.storagePath, config, context) ?? undefined,
+      });
+    }
+  }
+
+  return [...resolved.values()];
+}
+
+function buildPipelineSteps(input: RouteGenerationInput): string[] {
+  if (input.editingTool) return getEditingToolPlan(input.editingTool).pipelineSteps;
+  const candidates = resolveModeProviderCandidates(input.mode, {
+    enabled: false,
+    threshold: 0,
+    providerTimeoutMs: 0,
+    embeddingModel: '',
+    tier1Provider: 'gpt-image-2',
+    tier2Provider: 'flux-2-pro',
+    tier3Provider: 'stable-diffusion-3.5',
+    rollbackProvider: 'nano-banana-pro',
+    r2BucketName: 'viyo-assets',
+  });
+  return candidates.map((provider) => provider.model);
+}
+
+async function saveGeneratedAssetToVault(params: {
+  input: RouteGenerationInput;
+  context: RouteGenerationServiceContext;
+  config: Awaited<ReturnType<typeof getArtDirectorRouterConfig>>;
+  traceId: string;
+  provider: ProviderDescriptor;
+  prompt: string | null;
+  isCached: boolean;
+  score: number;
+}): Promise<AssetSaveResult> {
+  if (params.isCached) {
+    return { assetUrl: null, savedToVault: false, assetId: null, unavailableReason: 'cache_hit_does_not_materialize_new_asset' };
+  }
+
+  if (!params.context.r2Bucket) {
+    return { assetUrl: null, savedToVault: false, assetId: null, unavailableReason: 'R2 bucket binding is not configured' };
+  }
+
+  const storagePath = `art-director/${params.context.auth.workspaceId}/${new Date().toISOString().slice(0, 10)}/${params.traceId}-${randomUUID()}.json`;
+  const manifest = JSON.stringify(
+    {
+      traceId: params.traceId,
+      workspaceId: params.context.auth.workspaceId,
+      brandId: params.input.brandId,
+      mode: params.input.mode,
+      editingTool: params.input.editingTool ?? null,
+      selectedModel: params.provider.model,
+      providerGateway: params.provider.gateway,
+      score: params.score,
+      prompt: params.prompt,
+      sourceImageUrls: params.input.sourceImageUrls ?? [],
+      mentionReferences: params.input.mentionReferences ?? [],
+      generatedAt: new Date().toISOString(),
+    },
+    null,
+    2,
+  );
+
+  await params.context.r2Bucket.put(storagePath, manifest, {
+    httpMetadata: { contentType: 'application/json' },
+    customMetadata: {
+      traceId: params.traceId,
+      workspaceId: params.context.auth.workspaceId,
+      brandId: params.input.brandId,
+      model: params.provider.model,
+    },
+  });
+
+  const assetUrl = publicAssetUrl(storagePath, params.config, params.context);
+  const db = getDb();
+  if (!db) {
+    return {
+      assetUrl,
+      savedToVault: false,
+      assetId: null,
+      storagePath,
+      unavailableReason: 'DATABASE_URL is not configured, so the R2 object could not be indexed in assets',
+    };
+  }
+
+  const [row] = await db
+    .insert(assets)
+    .values({
+      workspaceId: params.context.auth.workspaceId,
+      assetType: params.input.editingTool ? 'generated_section' : 'generated_hero',
+      storagePath,
+      mimeType: 'application/json',
+      sourceModel: params.provider.model,
+      generationPrompt: params.prompt,
+      metadata: {
+        traceId: params.traceId,
+        brandId: params.input.brandId,
+        mode: params.input.mode,
+        editingTool: params.input.editingTool ?? null,
+        providerGateway: params.provider.gateway,
+        fallbackGateway: params.provider.fallbackGateway ?? null,
+        score: params.score,
+        sourceImageUrls: params.input.sourceImageUrls ?? [],
+        mentionReferences: params.input.mentionReferences ?? [],
+      },
+    })
+    .returning({ id: assets.id });
+
+  return { assetUrl, savedToVault: Boolean(row?.id && assetUrl), assetId: row?.id ?? null, storagePath };
 }
 
 function buildResponse(params: {
@@ -115,6 +360,9 @@ function buildResponse(params: {
   threshold: number;
   billingMode: RouteGenerationResponse['routingMetadata']['billingMode'];
   tokenAction: RouteGenerationResponse['tokenAction'];
+  assetSave: AssetSaveResult;
+  pipelineSteps: string[];
+  zeroShotPromptModel?: typeof ZERO_SHOT_FALLBACK_MODEL | null;
 }): RouteGenerationResponse {
   const durationMs = Math.max(0, Date.now() - params.startedAt);
   const costTokens = params.isCached ? 0 : params.provider.costTokens;
@@ -128,13 +376,24 @@ function buildResponse(params: {
     tokenAction: params.tokenAction,
     fallbackReason: params.fallbackReason,
     traceId: params.traceId,
+    assetUrl: params.assetSave.assetUrl,
+    savedToVault: params.assetSave.savedToVault,
+    assetId: params.assetSave.assetId,
     routingMetadata: {
+      mode: params.input.mode,
+      editingTool: params.input.editingTool ?? null,
       patternId: params.pattern?.id ?? null,
       promptTemplate: params.pattern?.promptTemplate ?? null,
-      targetModels: params.pattern?.targetModels ?? [],
+      targetModels: (params.pattern?.targetModels ?? []) as ArtDirectorModel[],
+      providerGateway: params.provider.gateway,
+      fallbackGateway: params.provider.fallbackGateway ?? null,
       fallbackReason: params.fallbackReason,
       tokenAction: params.tokenAction,
       billingMode: params.billingMode,
+      resolvedMentions: params.input.mentionReferences ?? [],
+      pipelineRequiresPoReview: ART_DIRECTOR_PO_REVIEW_PIPELINE_MODES.has(params.input.mode),
+      pipelineSteps: params.pipelineSteps,
+      zeroShotPromptModel: params.zeroShotPromptModel ?? null,
     },
     traceMetadata: {
       traceId: params.traceId,
@@ -173,12 +432,27 @@ function chooseBestCandidate(
     const provider = selectProvider({
       typographyRequired: input.typographyRequired,
       preferredModels: candidate.targetModels,
+      mode: input.mode,
       config,
     });
-    return calculateArtDirectorScore(candidate, provider);
+    return calculateArtDirectorScore(candidate, provider, input);
   });
 
   return scored.sort((a, b) => b.score - a.score)[0] ?? null;
+}
+
+function selectRouteProvider(
+  input: RouteGenerationInput,
+  config: Awaited<ReturnType<typeof getArtDirectorRouterConfig>>,
+): ProviderDescriptor {
+  if (input.editingTool) {
+    return (
+      selectPrimaryEditingProvider(input.editingTool, config) ??
+      selectProvider({ typographyRequired: input.typographyRequired, mode: input.mode, config })
+    );
+  }
+
+  return selectProvider({ typographyRequired: input.typographyRequired, mode: input.mode, config });
 }
 
 export async function routeGeneration(
@@ -188,12 +462,37 @@ export async function routeGeneration(
   const startedAt = Date.now();
   const traceId = createTraceId(context.requestId);
   const config = await getArtDirectorRouterConfig();
+  const resolvedMentions = await resolveBrandVaultMentions(input, context, config);
+  const effectiveInput: RouteGenerationInput = { ...input, mentionReferences: resolvedMentions };
+  const pipelineSteps = buildPipelineSteps(effectiveInput);
 
   if (!config.enabled) {
     const provider = rollbackProvider(config);
-    buildZeroShotFallbackPrompt(input);
+    const fallbackPrompt = await buildZeroShotFallbackPrompt(effectiveInput, {
+      apiKey: config.claudeApiKey,
+      timeoutMs: config.providerTimeoutMs,
+    });
+    const assetSave = await saveGeneratedAssetToVault({
+      input: effectiveInput,
+      context,
+      config,
+      traceId,
+      provider,
+      prompt: fallbackPrompt.prompt,
+      isCached: false,
+      score: 0,
+    });
+
     return buildResponse({
-      input,
+      input: {
+        ...effectiveInput,
+        metadata: {
+          ...(effectiveInput.metadata ?? {}),
+          fallbackPrompt: fallbackPrompt.prompt,
+          zeroShotPromptUnavailableReason: fallbackPrompt.unavailableReason,
+          r2UnavailableReason: assetSave.unavailableReason,
+        },
+      },
       context,
       traceId,
       startedAt,
@@ -205,21 +504,24 @@ export async function routeGeneration(
       threshold: config.threshold,
       billingMode: 'deduct_after_success',
       tokenAction: 'prechecked',
+      assetSave,
+      pipelineSteps,
+      zeroShotPromptModel: ZERO_SHOT_FALLBACK_MODEL,
     });
   }
 
-  const embeddingResult = await generateGeminiEmbedding(input.prompt, config);
+  const embeddingResult = await generateGeminiEmbedding(effectiveInput.prompt, config);
   const candidates = await findPatternCandidates({
     embedding: embeddingResult.embedding,
-    productType: input.productType,
-    typographyRequired: input.typographyRequired,
+    productType: effectiveInput.productType,
+    typographyRequired: effectiveInput.typographyRequired,
   });
-  const best = chooseBestCandidate(candidates, input, config);
+  const best = chooseBestCandidate(candidates, effectiveInput, config);
 
   if (best && best.score >= config.threshold) {
     await markPatternUsed(best.candidate.id);
     return buildResponse({
-      input,
+      input: effectiveInput,
       context,
       traceId,
       startedAt,
@@ -232,25 +534,41 @@ export async function routeGeneration(
       threshold: config.threshold,
       billingMode: 'free_cache',
       tokenAction: 'none',
+      assetSave: { assetUrl: null, savedToVault: false, assetId: null },
+      pipelineSteps,
+      zeroShotPromptModel: null,
     });
   }
 
-  const fallbackPrompt = buildZeroShotFallbackPrompt(input);
-  const provider = selectProvider({
-    typographyRequired: input.typographyRequired,
-    config,
+  const fallbackPrompt = await buildZeroShotFallbackPrompt(effectiveInput, {
+    apiKey: config.claudeApiKey,
+    timeoutMs: config.providerTimeoutMs,
   });
+  const provider = selectRouteProvider(effectiveInput, config);
   const fallbackReason: ArtDirectorFallbackReason = best ? 'score_below_threshold' : 'cache_miss';
 
   await checkBillingStatus(context.auth.workspaceId);
 
+  const assetSave = await saveGeneratedAssetToVault({
+    input: effectiveInput,
+    context,
+    config,
+    traceId,
+    provider,
+    prompt: fallbackPrompt.prompt,
+    isCached: false,
+    score: best?.score ?? 0,
+  });
+
   return buildResponse({
     input: {
-      ...input,
+      ...effectiveInput,
       metadata: {
-        ...(input.metadata ?? {}),
+        ...(effectiveInput.metadata ?? {}),
         fallbackPrompt: fallbackPrompt.prompt,
+        zeroShotPromptUnavailableReason: fallbackPrompt.unavailableReason,
         embeddingUnavailableReason: embeddingResult.unavailableReason,
+        r2UnavailableReason: assetSave.unavailableReason,
       },
     },
     context,
@@ -265,6 +583,9 @@ export async function routeGeneration(
     threshold: config.threshold,
     billingMode: 'deduct_after_success',
     tokenAction: 'prechecked',
+    assetSave,
+    pipelineSteps,
+    zeroShotPromptModel: ZERO_SHOT_FALLBACK_MODEL,
   });
 }
 

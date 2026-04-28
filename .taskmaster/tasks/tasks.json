@@ -568,9 +568,20 @@
             "parentTaskId": 46,
             "parentId": "undefined",
             "updatedAt": "2026-04-28T18:54:30.617Z"
+          },
+          {
+            "id": 11,
+            "title": "C-T46-001 v6.0 prior-artifact backend repair gate",
+            "description": "",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 46,
+            "parentId": "undefined",
+            "updatedAt": "2026-04-28T21:12:22.071Z"
           }
         ],
-        "updatedAt": "2026-04-28T18:56:18.098Z"
+        "updatedAt": "2026-04-28T21:12:26.876Z"
       },
       {
         "id": "47",
@@ -782,7 +793,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-28T18:56:18.099Z",
+      "lastModified": "2026-04-28T21:12:26.876Z",
       "taskCount": 47,
       "completedCount": 8,
       "tags": [

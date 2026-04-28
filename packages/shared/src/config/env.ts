@@ -40,17 +40,41 @@ const workerEnvSchema = z.object({
   GOOGLE_AI_API_KEY: z.string().optional(),
   IDEOGRAM_API_KEY: z.string().optional(),
   OPENAI_API_KEY: z.string().optional(),
+  ATLAS_CLOUD_API_KEY: z.string().optional(),
+  ATLAS_CLOUD_BASE_URL: z.string().url().default('https://api.atlascloud.ai/v1'),
+  FAL_AI_API_KEY: z.string().optional(),
+  FAL_AI_BASE_URL: z.string().url().default('https://fal.run'),
+  ANTHROPIC_API_KEY: z.string().optional(),
+  CLAUDE_API_KEY: z.string().optional(),
 
-  // Art Director Router — T46
+  // Art Director Router — T46 v6.1
   ENABLE_ART_DIRECTOR_ROUTER: z
     .enum(['true', 'false'])
     .default('false')
     .transform((value) => value === 'true'),
   ART_DIRECTOR_CACHE_THRESHOLD: z.coerce.number().min(0).max(1).default(0.75),
   ART_DIRECTOR_PROVIDER_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120000).default(30000),
-  ART_DIRECTOR_TIER1_PROVIDER: z.enum(['nanobanana']).default('nanobanana'),
-  ART_DIRECTOR_TIER2_PROVIDER: z.enum(['ideogram']).default('ideogram'),
-  ART_DIRECTOR_TIER3_PROVIDER: z.enum(['dall-e-3']).default('dall-e-3'),
+  ART_DIRECTOR_TIER1_PROVIDER: z
+    .enum(['gpt-image-2', 'ideogram-v3', 'imagen-4'])
+    .default('gpt-image-2'),
+  ART_DIRECTOR_TIER2_PROVIDER: z
+    .enum([
+      'flux-2-pro',
+      'flux-2-ultra',
+      'nano-banana-pro',
+      'nano-banana-pro-edit',
+      'seedream-3',
+      'seedream-3-edit',
+      'recraft-v3',
+      'playground-v3',
+      'hidream',
+    ])
+    .default('flux-2-pro'),
+  ART_DIRECTOR_TIER3_PROVIDER: z
+    .enum(['stable-diffusion-3.5', 'sdxl-lightning', 'kolors'])
+    .default('stable-diffusion-3.5'),
+  ART_DIRECTOR_ROLLBACK_PROVIDER: z.literal('nano-banana-pro').default('nano-banana-pro'),
+  ART_DIRECTOR_SELF_HOSTED_BASE_URL: z.string().url().optional(),
   GEMINI_EMBEDDING_MODEL: z.string().default('text-embedding-004'),
 
   // Cloudflare R2
@@ -58,6 +82,7 @@ const workerEnvSchema = z.object({
   R2_ACCESS_KEY_ID: z.string().optional(),
   R2_SECRET_ACCESS_KEY: z.string().optional(),
   R2_BUCKET_NAME: z.string().default('viyo-assets'),
+  R2_PUBLIC_BASE_URL: z.string().url().optional(),
 
   // Upstash Redis
   UPSTASH_REDIS_REST_URL: z.string().optional(),
