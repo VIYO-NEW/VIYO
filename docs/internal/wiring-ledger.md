@@ -133,3 +133,7 @@ Layers updated: Layer 2 database read path via `imagePromptPatterns`; Layer 3 do
 ## 2026-04-28 — T46 Test Wiring Checkpoint
 
 T46 now has focused worker tests covering routing layers 3, 5, 8, 10, and 13. The tests are intentionally colocated at `apps/worker/src/lib/ai/art-director-routing.test.ts` so the provider registry, fallback prompt builder, and scoring formula are validated at the implementation boundary rather than as detached documentation.
+
+## 2026-04-28 — T46 Phase 4 Validation Wiring Checkpoint
+
+The validation pass confirms that the shared contract surface, worker tRPC island, AI routing modules, and focused worker tests are wired through existing package build and test commands. This checkpoint is ready for Phase 5 code review and foundational verification.

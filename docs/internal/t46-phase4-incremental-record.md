@@ -57,3 +57,15 @@ Focused Vitest coverage has been added for the T46 Art Director routing suite. T
 | Test-aware type validation | `apps/worker/src/lib/ai/art-director-routing.test.ts` | Layer 13 | `pnpm --filter @viyo/worker type-check` passed after test addition. |
 
 The scoring test locks the corrected formula boundary by asserting that `(baseQualityScore * 0.4 + costEfficiencyScore * 0.3) * freshnessPenalty * tierMultiplier` yields `0.7436` for the representative Tier 1 cached candidate, preventing regression to the rejected unparenthesized formula.
+
+## 2026-04-28 — Phase 4 Focused Validation Completed
+
+The Phase 4 implementation has completed the focused validation suite required before handoff to Phase 5 review. The evidence file is `docs/internal/t46-phase4-validation-evidence.txt`.
+
+| Validation Command | Result | Purpose |
+|---|---:|---|
+| `pnpm --filter @viyo/shared build` | Passed | Confirms the shared Art Director schemas and environment configuration build into package declarations consumed by worker code. |
+| `pnpm --filter @viyo/worker type-check` | Passed | Confirms the worker tRPC island, routing services, provider registry, cache repository, Gemini embedding helper, and tests compile under strict TypeScript rules. |
+| `pnpm --filter @viyo/worker test -- src/lib/ai/art-director-routing.test.ts` | Passed, 8 tests | Confirms deterministic provider precedence, rollback behavior, fallback prompt construction, and corrected scoring formula behavior. |
+
+No production provider generation calls were executed. No token deduction was performed. The implementation remains aligned to the approved deduct-after-success boundary because tests validate routing decisions and score selection only.
