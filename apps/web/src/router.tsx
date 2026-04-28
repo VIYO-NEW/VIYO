@@ -12,6 +12,7 @@ import {
   createRouter,
 } from '@tanstack/react-router';
 import type { Workspace } from '@viyo/shared';
+import { ImageStudio } from './components/studio/ImageStudio.js';
 
 function RootRouteComponent() {
   return <Outlet />;
@@ -78,24 +79,7 @@ function HomeRouteComponent() {
 function BrandStudioRouteComponent() {
   const { brandId } = brandStudioRoute.useParams();
 
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-surface p-8 text-center">
-      <div className="w-full max-w-2xl rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-viyo-700">Brand Studio Route Boundary</p>
-        <h1 className="mb-4 text-3xl font-bold text-gray-900">Studio routing is ready for brand-scoped wiring</h1>
-        <p className="mb-6 text-gray-600">
-          This route boundary recognizes the brand context and is reserved for the wired Sprint 2 Studio modules.
-          It does not load brand data, generation tools, editing tools, prompt libraries, or collaboration surfaces yet.
-        </p>
-        <dl className="mx-auto grid max-w-md grid-cols-1 gap-3 text-left">
-          <div className="rounded-lg bg-gray-50 p-4">
-            <dt className="text-sm font-medium text-gray-500">Brand route parameter</dt>
-            <dd className="mt-1 font-mono text-sm text-gray-900">{brandId}</dd>
-          </div>
-        </dl>
-      </div>
-    </div>
-  );
+  return <ImageStudio brandId={brandId} />;
 }
 
 const rootRoute = createRootRoute({

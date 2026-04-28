@@ -146,8 +146,9 @@
           "15",
           "21"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-04-28T22:02:36.455Z"
       },
       {
         "id": "25",
@@ -167,17 +168,18 @@
       {
         "id": "26",
         "title": "Implement Image Studio Generation Flow Frontend",
-        "description": "Connect AI Command Panel generation UI to backend API. Display generating skeleton and render generated images on canvas.",
-        "details": "Add form and controls in AICommandPanel. On submit, call /api/studio/generate. Subscribe to Supabase Realtime for progress updates. Show loading skeleton. On completion, add image to FreeformCanvas. Support multiple images and infinite scroll.",
-        "testStrategy": "Verify generation requests trigger backend calls. Confirm progress updates and images appear on canvas.",
+        "description": "Connect AI Command Panel generation UI to the repaired Art Director v6.1 backend contract, display submitting state, render generated images on canvas, and preserve remaining realtime/history scope.",
+        "details": "Phase 6 frontend implementation now validates generation requests against the repaired Art Director v6.1 schemas, calls worker tRPC artDirector.routeGeneration, displays submitting/loading state, renders returned images on the FreeformCanvas area, and maps R2 response fields including assetId, assetUrl, r2ObjectKey, savedToBrandVault, and brandVaultMentions. Remaining Taskmaster scope: Supabase Realtime progress updates and infinite-scroll generation history.",
+        "testStrategy": "Validated via web type-check, web unit tests, web lint, web production build, and live browser validation confirming 22 generation-mode controls, 10 editing-tool controls, A22 selection, Material Swap editing-tool selection, and R2 response mapping coverage. Remaining validation should cover realtime progress and infinite-scroll history when implemented.",
         "priority": "high",
         "dependencies": [
           "15",
           "24",
           "25"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "in-progress",
+        "subtasks": [],
+        "updatedAt": "2026-04-28T22:02:41.325Z"
       },
       {
         "id": "27",
@@ -793,9 +795,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-28T21:12:26.876Z",
+      "lastModified": "2026-04-28T22:02:41.326Z",
       "taskCount": 47,
-      "completedCount": 8,
+      "completedCount": 9,
       "tags": [
         "master"
       ]

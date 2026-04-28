@@ -9,6 +9,14 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./auth/supabase": {
+      "import": "./dist/auth/supabase.js",
+      "types": "./dist/auth/supabase.d.ts"
+    },
+    "./schemas/art-director": {
+      "import": "./dist/schemas/art-director.js",
+      "types": "./dist/schemas/art-director.d.ts"
     }
   },
   "scripts": {

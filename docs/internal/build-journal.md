@@ -160,3 +160,9 @@ Added focused Vitest coverage for the Art Director routing suite after the worke
 ## 2026-04-28 — T46 Phase 4 Focused Validation
 
 Completed the Phase 4 focused validation suite for the Art Director routing implementation. `pnpm --filter @viyo/shared build`, `pnpm --filter @viyo/worker type-check`, and `pnpm --filter @viyo/worker test -- src/lib/ai/art-director-routing.test.ts` all passed. Evidence was saved to `docs/internal/t46-phase4-validation-evidence.txt`.
+
+## 2026-04-28 — Phase 6 Image Studio UI Schema-Bound Foundation
+
+Implemented the Taskmaster-led Image Studio UI foundation at `/brand/:brandId/studio`. The route now mounts a three-zone Studio shell with schema-derived A1-A22 generation-mode controls, all ten Visual Engine V2 editing-tool triggers, Brand Vault mention extraction, typed Art Director request/response validation, canvas result mapping, and R2 asset metadata rendering. The frontend uses browser-safe shared package subpaths for Art Director schemas and Supabase browser helpers to avoid pulling Node-only shared barrel modules into the Vite build.
+
+Validation passed for `pnpm --filter @viyo/web type-check`, `pnpm --filter @viyo/web test`, `pnpm --filter @viyo/web lint`, `pnpm --filter @viyo/web build`, and live browser checks confirming 22 mode controls, 10 editing controls, A22 selection, and Material Swap selection. Taskmaster T24 is `done`; T26 is `in-progress` for the remaining realtime progress and infinite-scroll history work.

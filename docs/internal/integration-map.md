@@ -25,3 +25,9 @@ T46 now integrates the Art Director router through `apps/worker/src/trpc/index.t
 ## 2026-04-28 — T46 Focused Test Integration
 
 The T46 worker test integration maps the new Art Director routing modules to the worker package's existing Vitest command. No external provider calls, database calls, or token deductions are performed by these tests; the coverage locks deterministic routing and scoring behavior before Phase 5 review.
+
+## 2026-04-28 — Phase 6 Image Studio Frontend Integration
+
+The Image Studio route at `/brand/:brandId/studio` now binds the web frontend to the repaired Art Director v6.1 contract through browser-safe schema subpaths. `apps/web/src/lib/studio-contract.ts` derives the A1-A22 generation modes, ten Visual Engine V2 editing tools, and aspect-ratio options from `@viyo/shared/schemas/art-director`. `apps/web/src/lib/studio-api.ts` validates outbound requests and inbound responses against the same schemas before calling the worker tRPC procedure `artDirector.routeGeneration`. `apps/web/src/components/studio/ImageStudio.tsx` maps returned `assetUrl`, `assetId`, `savedToVault`, `palette`, `routingMetadata`, and `traceMetadata` into canvas result state.
+
+Taskmaster status intentionally distinguishes completed layout from remaining flow depth: T24 is `done`, while T26 remains `in-progress` for realtime progress subscription and infinite-scroll history. The editing-tool selector surfaces all ten repaired tool identifiers, but deeper per-tool UX remains governed by T27-T30 and related follow-up tasks.

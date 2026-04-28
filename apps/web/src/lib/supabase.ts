@@ -3,7 +3,7 @@
  * Singleton client for the web app using VITE_ prefixed env vars.
  * Auth state is managed automatically by supabase-js (localStorage).
  */
-import { createBrowserClient } from '@viyo/shared';
+import { createBrowserClient } from '@viyo/shared/auth/supabase';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;

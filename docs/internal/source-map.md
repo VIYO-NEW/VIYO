@@ -54,3 +54,13 @@ Maps every major implementation area to the exact VIYO document(s) that define i
 ## 2026-04-28 — T46 Worker Routing Source Anchors
 
 Implementation follows `docs/internal/t46-phase2-architecture-plan.md`, `docs/internal/t46-phase3-global-wiring-blueprint.md`, and `docs/architecture/art-director-routing-suite.md`. Existing code anchors used: `packages/db/src/schema/image-intelligence.ts`, `apps/worker/src/lib/token-engine.ts`, `apps/worker/src/middleware/auth.ts`, and `apps/worker/src/index.ts`.
+
+## 2026-04-28 — Phase 6 Image Studio UI Source Map
+
+| Surface | Implementation Files | Governing Source | Status |
+|---|---|---|---|
+| Image Studio route shell | `apps/web/src/router.tsx`, `apps/web/src/components/studio/ImageStudio.tsx` | Taskmaster T24/T26 and repaired Art Director v6.1 schemas | T24 done; T26 in progress |
+| Schema-derived Studio inventories | `apps/web/src/lib/studio-contract.ts` | `packages/shared/src/schemas/art-director.ts` via `@viyo/shared/schemas/art-director` | Validated against 22 generation modes and 10 editing tools |
+| Art Director API boundary | `apps/web/src/lib/studio-api.ts` | Worker tRPC `artDirector.routeGeneration` and shared request/response schemas | Request/response validation implemented |
+| R2 response handling | `apps/web/src/components/studio/ImageStudio.tsx` | `ArtDirectorResponseSchema` fields `assetUrl`, `assetId`, `savedToVault`, `palette`, `routingMetadata`, `traceMetadata` | Canvas metadata rendering implemented |
+| Browser-safe shared imports | `packages/shared/package.json`, `apps/web/src/lib/supabase.ts`, Studio files | Vite browser build constraint discovered during validation | Subpath exports added and production build passed |
