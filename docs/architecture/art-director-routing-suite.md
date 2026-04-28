@@ -1,73 +1,117 @@
 # Architecture Lock: Art Director Routing Suite
 
-**Author:** Manus AI
+**Document Version:** 3.0 (PRD Product Architect Depth)
+**Update Description:** Replaced the prior v1 repository lock with the PO-approved v3.0 architecture lock, including the corrected operator-precedence scoring formula, tRPC route contract, token economics integration, observability, and rollback contract.
+**Update Reason:** PO instruction dated 2026-04-27 directed replacement of the earlier architecture-lock content before T45 proceeds.
 **Status:** PO-authorized source of truth
 **Effective Date:** 2026-04-27
 **Updated Protocol Phase:** Phase 2 — Architecture Lock
 **Composite Task:** T46
 **Covered Implementation Tasks:** T21, T22, T23
-**Primary Source:** `/home/ubuntu/upload/Pre-Approved_Architecture_Lock_Art_Director_Routing_Suite.docx`
+**Primary Replacement Source:** `/home/ubuntu/upload/Architecture_Lock_Art_Director_Routing_Suite_(T46).docx`
 
-> This file records the Product Owner-approved architecture lock for the Art Director Routing Suite. The source attachment used legacy wording that described the document as a Phase 1 architecture plan. Per PO confirmation on 2026-04-27, that label maps to the updated VIYO protocol as **Phase 2 — Architecture Lock**. Builders may reference this file as the authoritative repository source when preparing Phase 2 wiring and Phase 4 implementation work for the covered tasks.
+> This file supersedes the prior Art Director Routing architecture-lock content in this repository. Builders must use this v3.0 document for Sprint 2 implementation planning and must not rely on the earlier score formula or older routing assumptions.
 
-## 1. Subsystem Purpose
+## 1. Source Declaration
 
-The **Art Director Routing Suite** replaces basic image-generation routing with an intelligent, multi-dimensional decision layer. It evaluates incoming generation requests against historical prompt patterns, selects the most cost-effective provider tier that can satisfy the request, and provides a zero-shot fallback path when historical patterns do not produce an acceptable match.
+| Source ID | Source Path or Title | Authority Status | Sections Read | Facts Extracted | Gaps or Conflicts |
+|---|---|---|---|---|---|
+| S1 | `/home/ubuntu/upload/PO_Instruction_Architecture_Lock_Corrections_&_Source-of-Truth_Enforcement.docx` | approved source opened | Full correction instruction | The four v1 architecture locks must be discarded and replaced before T45 proceeds. | None for this replacement action. |
+| S2 | `/home/ubuntu/upload/Architecture_Lock_Art_Director_Routing_Suite_(T46).docx` | approved source opened | Full v3.0 lock | Corrected scoring formula, tRPC API contract, token economics integration, observability metrics, release flag, and rollback rule. | None. |
 
-| Scope Element | Locked Decision |
+## 2. Architecture Contract
+
+| Contract Element | Locked Decision |
 |---|---|
-| Primary module | `src/lib/ai/image-router.ts` |
-| Core data source | `image_prompt_patterns` with pgvector similarity search |
-| Embedding model | `OpenAI text-embedding-3-small` |
-| Candidate search size | Top 20 prompt-pattern candidates |
-| Acceptance threshold | `SCORE >= 0.75` |
-| Fallback model class | Frontier prompt-synthesis model, for example `GPT-4o` |
-| Composite execution wrapper | T46 |
+| Objective | Implement a multi-model router that scores and selects the optimal AI model for image generation tasks based on a 4D scoring matrix: Quality, Cost, Freshness, and Tier. |
+| Builder outcome | Complete routing logic, fallback mechanism, and zero-shot caching loop. |
+| Acceptance checks | The router correctly selects a cached pattern over a frontier model when the score is higher; the router falls back to Tier 2 if Tier 1 fails or times out; the scoring formula calculates correctly according to explicitly defined operator precedence. |
+| Non-goals | Building new image generation models. |
+| Constraints | All routing must execute synchronously within the generation request. |
+| Source-confirmed assumptions | The router is exposed through `artDirector.routeGeneration`, returns selected-model and scoring metadata, and integrates with token deduction for frontier generation. |
+| Open decisions | None for architecture-lock replacement. |
 
-## 2. Locked Components
+## 3. Prior-Artifact Back-Propagation Register
 
-### 2.1 4D Scoring Matrix — T21
+| Affected Artifact | Issue Discovered | Root Source of Truth | Required Correction | Build Blocking | Owner | Verification Evidence |
+|---|---|---|---|---|---|---|
+| `docs/architecture/art-director-routing-suite.md` | The prior v1 lock contained an ambiguous scoring formula with the previous multiplication-precedence bug. | S1, S2 | Replace with the v3.0 lock and corrected parenthesized score formula. | Yes | Manus AI | This file has been overwritten with v3.0 content. |
+| T46 builder prompt assumptions | Any builder plan using the older unparenthesized score formula would produce incorrect routing behavior. | S2 | Use the exact formula in Section 4. | Yes | Builder assigned to T46 | This lock defines the canonical score calculation. |
 
-The 4D Scoring Matrix is implemented in `src/lib/ai/image-router.ts`. It generates request embeddings, queries the `image_prompt_patterns` table for the top 20 pgvector candidates, and calculates the locked composite score:
+## 4. Scoring Formula
 
-```text
-SCORE = (Quality * 0.4) + (Cost_Efficiency * 0.3) * Freshness_Penalty * Tier_Multiplier
+The score must be implemented with exact operator precedence to avoid the previous multiplication bug. The additive quality and cost-efficiency subtotal is calculated first, then multiplied by freshness and tier factors.
+
+```ts
+const score = (
+  (baseQualityScore * 0.4) +
+  (costEfficiencyScore * 0.3)
+) * freshnessPenalty * tierMultiplier;
 ```
 
-The router selects the top candidate when the resulting score is greater than or equal to `0.75`. Scores below that threshold must fall through to the zero-shot fallback path rather than being treated as a confident pattern match.
+| Formula Component | Locked Weight or Role | Implementation Note |
+|---|---|---|
+| `baseQualityScore` | Weighted by `0.4` | Contributes to the additive subtotal before freshness and tier multiplication. |
+| `costEfficiencyScore` | Weighted by `0.3` | Contributes to the additive subtotal before freshness and tier multiplication. |
+| `freshnessPenalty` | Multiplicative factor | Applied after the additive subtotal is computed. |
+| `tierMultiplier` | Multiplicative factor | Applied after the additive subtotal is computed. |
 
-### 2.2 Zero-Shot Fallback — T22
+## 5. API Contract
 
-The Zero-Shot Fallback is implemented in `src/lib/ai/image-router.ts` and is triggered when no 4D Scoring Matrix candidate reaches `SCORE >= 0.75`. The fallback invokes a frontier model, such as `GPT-4o`, to synthesize a novel generation prompt. Successful fallback patterns must be flagged for later evaluation and potential seeding into `image_prompt_patterns` after successful generation and user acceptance.
+### 5.1 `artDirector.routeGeneration`
 
-### 2.3 Provider Tier Routing — T23
-
-Provider Tier Routing is implemented in `src/lib/ai/image-router.ts`. It evaluates request complexity, including typography requirements and product-integration needs, then routes simple requests to lower-cost tiers such as standard SDXL or basic Ideogram. More complex requests, especially those requiring strict typography or high-fidelity product placement, are routed to premium tiers such as Ideogram 3.0 or suitable custom fine-tunes.
-
-## 3. API and Data Flow
-
-| Step | Locked Flow |
+| Field | Locked Contract |
 |---|---|
-| 1 | `POST /api/studio/generate` receives the generation request. |
-| 2 | The request is embedded and compared against `image_prompt_patterns`. |
-| 3 | The 4D Scoring Matrix evaluates candidate patterns. |
-| 4 | If `SCORE >= 0.75`, Provider Tier Routing selects the optimal provider from the accepted pattern requirements. |
-| 5 | If `SCORE < 0.75`, Zero-Shot Fallback synthesizes a new prompt and defaults to a safe mid-tier provider unless complexity requires another tier. |
-| 6 | The selected provider executes the generation request. |
+| API style | tRPC procedure |
+| Procedure name | `artDirector.routeGeneration` |
+| Execution timing | Synchronous within the generation request. |
+| Response purpose | Return the selected model, whether the selection used cache, the score, and token cost. |
 
-## 4. Updated VIYO Protocol Mapping
+#### Request
 
-| Directive Label in Source Attachment | Updated Protocol Phase | Operational Meaning |
-|---|---:|---|
-| Legacy “Phase 1 Architecture Plan” | Phase 2 | This file is the locked architecture source of truth. |
-| Legacy “Phase 2 Wiring Blueprint” | Phase 3 | Builders prepare the narrow wiring plan from this lock. |
-| Legacy implementation sequencing | Phase 4 | Builders execute implementation under the composite task wrapper. |
-| Legacy post-build tracking | Phase 9 | Builders complete post-build, Airtable, and delivery records. |
+```ts
+{
+  prompt: string;
+  brandId: string;
+  aspectRatio: string;
+  styleId?: string;
+}
+```
 
-## 5. Implementation Sequence Within Composite T46
+#### Response
 
-The covered tasks are executed as a single composite protocol run under **T46**. The locked implementation sequence is **T21 → T23 → T22**. Builders must first implement the 4D Scoring Matrix, then implement Provider Tier Routing so the selected pattern can be acted upon, and finally implement the Zero-Shot Fallback for cases where the matrix fails.
+```ts
+{
+  selectedModel: string;
+  isCached: boolean;
+  score: number;
+  costTokens: number;
+}
+```
 
-## 6. Supersession Rule
+## 6. Token Economics Integration
 
-This architecture lock supersedes conflicting instructions in individual task descriptions for T21, T22, or T23. If a future implementation detail appears to conflict with this lock, the builder must stop and request PO clarification before modifying the architectural intent.
+| Action | Cost Source | Deduction Call | Fallback |
+|---|---|---|---|
+| Frontier Generation | User balance | `atomic_token_deduction(cost, 'image_gen')` | Return `insufficient_balance` error. |
+| Cached Pattern | Free | Not applicable | Not applicable. |
+
+The routing implementation must not bypass token economics for billable frontier generation. Cached pattern routing remains free under the v3.0 lock.
+
+## 7. Observability and Analytics
+
+| Category | Locked Requirement |
+|---|---|
+| Metrics | Log every routing decision, selected model, score, cache hit or miss, and generation duration. |
+| Alerts | Trigger a PagerDuty alert if the Tier 1 fallback rate exceeds 15% in a 1-hour window. |
+
+## 8. Release and Rollback Plan
+
+| Release Control | Locked Decision |
+|---|---|
+| Feature flag | `enable_art_director_router` |
+| Rollback | Disable the flag to route all requests directly to the default model, Tier 1. |
+
+## 9. Supersession Rule
+
+This v3.0 architecture lock supersedes the earlier v1 repository lock and conflicting draft context for T21, T22, T23, and T46. If any implementation task, handoff note, formula draft, route contract, or builder prompt conflicts with this file, the builder must stop and follow this v3.0 lock unless a later PO-approved source explicitly supersedes it.

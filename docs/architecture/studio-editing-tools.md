@@ -1,67 +1,164 @@
 # Architecture Lock: Studio Editing Tools
 
-**Author:** Manus AI
+**Document Version:** 3.0 (PRD Product Architect Depth)
+**Update Description:** Replaced the prior v1 repository lock with the PO-approved v3.0 architecture lock, including the full 10-tool editing matrix, token deduction and refund flow, unified editing API, asset versioning, event emission, observability, and rollback contract.
+**Update Reason:** PO instruction dated 2026-04-27 directed replacement of the earlier architecture-lock content before T45 proceeds.
 **Status:** PO-authorized source of truth
 **Effective Date:** 2026-04-27
 **Updated Protocol Phase:** Phase 2 — Architecture Lock
 **Composite Task:** T47
-**Covered Implementation Tasks:** T27, T28, T29
-**Primary Source:** `/home/ubuntu/upload/Pre-Approved_Architecture_Lock_Studio_Editing_Tools.docx`
+**Covered Implementation Tasks:** T27, T28, T29, T30
+**Primary Replacement Source:** `/home/ubuntu/upload/Architecture_Lock_Studio_Editing_Tools_(T47).docx`
 
-> This file records the Product Owner-approved architecture lock for Studio Editing Tools. The source attachment used legacy wording that described the document as a Phase 1 architecture plan. Per PO confirmation on 2026-04-27, that label maps to the updated VIYO protocol as **Phase 2 — Architecture Lock**. Builders may reference this file as the authoritative repository source when preparing Phase 2 wiring and Phase 4 implementation work for the covered tasks.
+> This file supersedes the prior Studio Editing Tools architecture-lock content in this repository. Builders must use this v3.0 document for Sprint 2 implementation planning and must not rely on the earlier three-tool summary or older endpoint assumptions.
 
-## 1. Subsystem Purpose
+## 1. Source Declaration
 
-The **Studio Editing Tools** subsystem provides a unified set of image-manipulation capabilities within the Freeform Canvas. It allows users to perform localized touch edits, separate subjects from backgrounds, and replace backgrounds through AI-powered editing APIs while preserving the original image in version history.
+| Source ID | Source Path or Title | Authority Status | Sections Read | Facts Extracted | Gaps or Conflicts |
+|---|---|---|---|---|---|
+| S1 | `/home/ubuntu/upload/PO_Instruction_Architecture_Lock_Corrections_&_Source-of-Truth_Enforcement.docx` | approved source opened | Full correction instruction | The four v1 architecture locks must be discarded and replaced before T45 proceeds. | None for this replacement action. |
+| S2 | `/home/ubuntu/upload/Architecture_Lock_Studio_Editing_Tools_(T47).docx` | approved source opened | Full v3.0 lock | 10-tool matrix, token economics, unified API, edit event emission, canvas integration, asset versioning, observability, feature flag, and rollback rule. | None. |
 
-| Scope Element | Locked Decision |
+## 2. Architecture Contract
+
+| Contract Element | Locked Decision |
 |---|---|
-| Primary UI integration | `src/components/studio/FreeformCanvas.tsx` |
-| Touch Edit endpoint | `/api/studio/edit/inpaint` |
-| Layer Split endpoint | `/api/studio/edit/remove-bg` |
-| Background Swap endpoint | `/api/studio/edit/swap-bg` |
-| Versioning dependency | Version History Panel, T30 |
-| Composite execution wrapper | T47 |
+| Objective | Implement 10 distinct AI-powered image editing operations within the freeform canvas, routing through the Tier 2 Aggregator with integrated token deduction and event emission. |
+| Builder outcome | Complete the tRPC router for editing operations, UI canvas tools, and Inngest event emission. |
+| Acceptance checks | All 10 editing tools are available in the UI; billable operations deduct tokens before execution; failed operations refund tokens; successful operations emit `image.edit.completed`; edits create a new asset version rather than overwriting the original. |
+| Non-goals | Real-time collaborative multiplayer editing is out of scope for Sprint 2. |
+| Constraints | All operations must enforce `brand_id` RLS isolation. |
+| Source-confirmed assumptions | Editing uses the Tier 2 Aggregator by default, charges per tool from the locked matrix, and emits Webhook Pipeline events after completion or failure. |
+| Open decisions | None for architecture-lock replacement. |
 
-## 2. Locked Components
+## 3. Prior-Artifact Back-Propagation Register
 
-### 2.1 Touch Edit — T27
+| Affected Artifact | Issue Discovered | Root Source of Truth | Required Correction | Build Blocking | Owner | Verification Evidence |
+|---|---|---|---|---|---|---|
+| `docs/architecture/studio-editing-tools.md` | The prior v1 lock documented only three editing tools and older endpoint assumptions. | S1, S2 | Replace with the v3.0 10-tool matrix, unified API, token flow, asset versioning, and event emission contract. | Yes | Manus AI | This file has been overwritten with v3.0 content. |
+| T47 builder prompt assumptions | Any builder plan that implements only Touch Edit, Layer Split, and Background Swap would underbuild the approved v3.0 scope. | S2 | Implement all 10 tools and the associated token/event contracts. | Yes | Builder assigned to T47 | Section 4 contains the canonical tool inventory. |
 
-Touch Edit is integrated into `src/components/studio/FreeformCanvas.tsx`. It implements a brush tool for localized inpainting. Users paint over a specific area of an image and provide a text prompt describing the desired change. The frontend calls a backend endpoint, for example `/api/studio/edit/inpaint`, backed by an inpainting model such as SDXL Inpainting or DALL-E 2 Edit.
+## 4. Tool Inventory and Provider Mapping
 
-### 2.2 Layer Split — T28
+The subsystem must support the following 10 editing tools. These tools route through the Tier 2 Aggregator, Atlas Cloud or fal.ai, by default for cost efficiency unless a later PO-approved source supersedes that routing rule.
 
-Layer Split is integrated into `src/components/studio/FreeformCanvas.tsx`. It provides one-click subject isolation by calling a backend endpoint, for example `/api/studio/edit/remove-bg`, backed by a background-removal API such as Photoroom or a custom model. The endpoint returns the isolated subject as a transparent PNG layer that can be manipulated independently on the canvas.
+| Tool | Capability | Backend Model | Token Cost |
+|---|---|---|---:|
+| Touch Edit | Click region plus text prompt to modify. | SAM 2 + Inpainting | 25,000 |
+| Text Edit | Change text while preserving 3D/style. | GPT Image 2 / Ideogram | 35,000 |
+| Layer Splitting | Separate foreground and background. | SAM 2 | 15,000 |
+| Background Swap | Replace background while preserving subject. | RMBG + Generation | 30,000 |
+| Object Removal | Remove object and let AI fill the gap. | Inpainting (SDXL) | 20,000 |
+| Canvas Expand | Outpaint in any direction. | Outpainting (SDXL) | 25,000 |
+| Upscale | 2x or 4x resolution enhancement. | Real-ESRGAN | 10,000 |
+| Quick Edit | Brightness, contrast, saturation, and crop. | Local Canvas API | 0 |
+| Style Transfer | Apply the style of image A to image B. | IP-Adapter | 35,000 |
+| Material Swap | Change texture, such as wood to marble. | ControlNet + Generation | 30,000 |
 
-### 2.3 Background Swap — T29
+## 5. Token Economics Integration
 
-Background Swap is integrated into `src/components/studio/FreeformCanvas.tsx`. It combines the Layer Split capability with a generative background prompt. Users select an image, provide a prompt for the new background, and the system isolates the subject, generates the replacement background, and composites the two outputs. The frontend calls a backend endpoint, for example `/api/studio/edit/swap-bg`, which orchestrates background removal and subsequent outpainting or compositing.
+Every billable editing operation must deduct tokens before execution using the `atomic_token_deduction` RPC. Quick Edit is free because its locked token cost is zero.
 
-## 3. UI and Interaction Flow
+| Step | Locked Execution Flow |
+|---:|---|
+| 1 | User initiates an edit, such as **Upscale**. |
+| 2 | UI calls `POST /api/studio/edit`. |
+| 3 | Backend looks up token cost from the locked matrix in Section 4. |
+| 4 | Backend calls `atomic_token_deduction(workspace_id, cost, 'image_edit')`. |
+| 5 | If deduction returns false, backend returns HTTP `402 Payment Required` and emits `billing.tokens.depleted`. |
+| 6 | If deduction returns true, backend proceeds to execution. |
+| 7 | Backend executes the model call through the selected provider. |
+| 8 | If the model call fails with a `5xx` provider error, backend refunds tokens using `atomic_token_refund` RPC and returns HTTP `502`. |
 
-| Step | Locked Flow |
+## 6. API Contract
+
+### 6.1 Execute Edit: `POST /api/studio/edit`
+
+#### Request Body
+
+```json
+{
+  "brand_id": "uuid",
+  "source_asset_id": "uuid",
+  "tool": "background_swap",
+  "parameters": {
+    "prompt": "A sunny beach with palm trees",
+    "mask_coordinates": null
+  }
+}
+```
+
+#### Response: `200 OK`
+
+```json
+{
+  "new_asset_id": "uuid",
+  "url": "https://r2.viyo.app/ws_abc/assets/edit_123.png",
+  "token_cost": 30000,
+  "parent_asset_id": "uuid"
+}
+```
+
+The `parent_asset_id` field is required for lineage tracking. Edits must create a new asset version rather than overwriting the original file.
+
+## 7. Event Emission
+
+Upon successful completion of any billable edit, the backend must emit the following Inngest event for the Webhook Pipeline.
+
+```ts
+await inngest.send({
+  name: 'image.edit.completed',
+  data: {
+    workspace_id: user.workspaceId,
+    payload: {
+      source_asset_id: request.source_asset_id,
+      new_asset_id: result.new_asset_id,
+      tool_used: request.tool,
+      token_cost: cost
+    }
+  }
+});
+```
+
+If the edit fails after tokens are refunded, the backend must emit the failed-edit event.
+
+```ts
+await inngest.send({
+  name: 'image.edit.failed',
+  data: {
+    workspace_id: user.workspaceId,
+    payload: {
+      source_asset_id: request.source_asset_id,
+      tool_attempted: request.tool,
+      error_code: "PROVIDER_TIMEOUT"
+    }
+  }
+});
+```
+
+## 8. UX Flow and Canvas Integration
+
+| Canvas Requirement | Locked Behavior |
 |---|---|
-| 1 | The user selects an image on the Freeform Canvas. |
-| 2 | A context menu appears with options for Touch Edit, Layer Split, and Background Swap. |
-| 3 | Touch Edit places the canvas into brush mode. |
-| 4 | Layer Split presents a processing/loading state while the isolated subject is generated. |
-| 5 | Background Swap presents a prompt input field before processing. |
-| 6 | The edited image replaces the original image, or a new transparent layer is added for Layer Split. |
-| 7 | The original image is preserved in the Version History Panel implemented by T30. |
+| Freeform Canvas | Editing tools operate within an infinite canvas UI. |
+| Asset Versioning | Edits do not overwrite the original file in Cloudflare R2. They create a new file and a new row in the `assets` table with `parent_asset_id` set to the original, enabling undo/redo and side-by-side comparison. |
+| Auto-Save | The resulting image is automatically saved to the Brand Vault. |
+| Interactive Masking | For tools such as Touch Edit and Object Removal, the UI must provide a brush tool to generate a black/white mask image. The mask is passed in `parameters.mask_base64` to the API. |
 
-## 4. Updated VIYO Protocol Mapping
+## 9. Observability and Analytics
 
-| Directive Label in Source Attachment | Updated Protocol Phase | Operational Meaning |
-|---|---:|---|
-| Legacy “Phase 1 Architecture Plan” | Phase 2 | This file is the locked architecture source of truth. |
-| Legacy “Phase 2 Wiring Blueprint” | Phase 3 | Builders prepare the narrow wiring plan from this lock. |
-| Legacy implementation sequencing | Phase 4 | Builders execute implementation under the composite task wrapper. |
-| Legacy post-build tracking | Phase 9 | Builders complete post-build, Airtable, and delivery records. |
+| Category | Locked Requirement |
+|---|---|
+| Metrics | Log tool usage frequency, average execution time per tool, and failure rates. |
+| Alerts | Alert if token refund rate exceeds 5% in a 1-hour window. |
 
-## 5. Implementation Sequence Within Composite T47
+## 10. Release and Rollback Plan
 
-The covered tasks are executed as a single composite protocol run under **T47**. The locked implementation sequence is shared canvas UI first, then **T28 → T29 → T27**. Builders must implement the shared context menu and loading states first, implement Layer Split as the foundational background-removal capability, implement Background Swap on top of the Layer Split logic, and finally implement Touch Edit with its distinct brush interaction model.
+| Release Control | Locked Decision |
+|---|---|
+| Feature flag | `enable_studio_editing_tools` |
+| Rollback | Disable the flag to hide editing tools from the UI. |
 
-## 6. Supersession Rule
+## 11. Supersession Rule
 
-This architecture lock supersedes conflicting instructions in individual task descriptions for T27, T28, or T29. If a future implementation detail appears to conflict with this lock, the builder must stop and request PO clarification before modifying the architectural intent.
+This v3.0 architecture lock supersedes the earlier v1 repository lock and conflicting draft context for T27, T28, T29, T30, and T47. If any implementation task, handoff note, tool matrix, endpoint draft, event draft, or builder prompt conflicts with this file, the builder must stop and follow this v3.0 lock unless a later PO-approved source explicitly supersedes it.
