@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import type { RouteGenerationInput } from '@viyo/shared';
-import { routeGenerationRequestSchema, routeGenerationResponseSchema } from '@viyo/shared';
+import {
+  ART_DIRECTOR_EDITING_TOOL_CONTRACTS,
+  ART_DIRECTOR_GENERATION_MODEL_METADATA,
+  artDirectorEditingToolContractSchema,
+  artDirectorModelMetadataSchema,
+  routeGenerationRequestSchema,
+  routeGenerationResponseSchema,
+} from '@viyo/shared';
 import { buildZeroShotFallbackPrompt } from './fallback-prompts.js';
 import { calculateArtDirectorScore } from './image-router.js';
 import type { ImagePatternCandidate } from './image-patterns.js';
@@ -97,6 +104,13 @@ describe('T46 v6.1 Art Director provider registry', () => {
         'stable-diffusion-3.5',
         'sdxl-lightning',
         'kolors',
+        'flux-kontext-max',
+        'seedream-4.5',
+        'ideogram-3.0-turbo',
+        'gemini-3.1-flash-image',
+        'gemini-3-pro-image-preview',
+        'imagen-4.0-generate-001',
+        'imagen-3.0-generate-001',
         'sam-2',
         'real-esrgan',
         'controlnet',
@@ -109,7 +123,10 @@ describe('T46 v6.1 Art Director provider registry', () => {
         'gfpgan',
       ]),
     );
-    expect(providers).toHaveLength(25);
+    expect(providers).toHaveLength(32);
+    expect(Object.keys(ART_DIRECTOR_GENERATION_MODEL_METADATA)).toHaveLength(22);
+    expect(ART_DIRECTOR_GENERATION_MODEL_METADATA['flux-kontext-max'].tier).toBe('tier_2');
+    expect(ART_DIRECTOR_GENERATION_MODEL_METADATA['imagen-4.0-generate-001'].gateway).toBe('google');
     expect(provider.model).toBe('flux-2-pro');
     expect(provider.tier).toBe('tier_2');
     expect(provider.gateway).toBe('atlas-cloud');
@@ -146,11 +163,14 @@ describe('T46 v6.1 Art Director provider registry', () => {
     expect(Object.keys(ART_DIRECTOR_MODE_PRIMARY_MODELS)).toHaveLength(22);
     expect(resolveModeProviderCandidates('A1', enabledConfig).map((provider) => provider.model)).toEqual([
       'flux-2-pro',
+      'nano-banana-pro',
+      'imagen-4.0-generate-001',
       'imagen-4',
     ]);
     expect(resolveModeProviderCandidates('A3', enabledConfig).map((provider) => provider.model)).toEqual([
       'rmbg',
       'flux-2-pro',
+      'ideogram-3.0-turbo',
       'ideogram-v3',
     ]);
     expect([...ART_DIRECTOR_PO_REVIEW_PIPELINE_MODES]).toEqual(['A3', 'A4', 'A8', 'A9', 'A13', 'A14', 'A15', 'A16']);
@@ -177,6 +197,12 @@ describe('T46 v6.1 editing tool router', () => {
       'sharp-composite',
     ]);
     expect(getEditingToolPlan('quick_edit').localOnly).toBe(true);
+    expect(getEditingToolPlan('quick_edit').providerRequired).toBe(false);
+    expect(ART_DIRECTOR_EDITING_TOOL_CONTRACTS.text_edit.primaryModels).toEqual([
+      'gpt-image-2',
+      'ideogram-3.0-turbo',
+      'ideogram-v3',
+    ]);
   });
 
   it('selects the primary editing backend for a non-local editing tool', () => {
@@ -188,7 +214,12 @@ describe('T46 v6.1 editing tool router', () => {
 });
 
 describe('T46 v6.1 shared Art Director contract', () => {
-  it('accepts mode, editing tool, Brand Vault mentions, source assets, and R2 response fields', () => {
+  it('accepts model metadata, editing-tool contracts, mode, Brand Vault mentions, source assets, and R2 response fields', () => {
+    const modelMetadata = artDirectorModelMetadataSchema.parse(ART_DIRECTOR_GENERATION_MODEL_METADATA['seedream-4.5']);
+    const editingContract = artDirectorEditingToolContractSchema.parse(ART_DIRECTOR_EDITING_TOOL_CONTRACTS.background_swap);
+
+    expect(modelMetadata.typographyOptimized).toBe(true);
+    expect(editingContract.primaryModels).toContain('flux-kontext-max');
     const request = routeGenerationRequestSchema.parse(
       routeInput({
         mode: 'A14',

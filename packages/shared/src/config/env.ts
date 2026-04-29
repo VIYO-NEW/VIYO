@@ -55,16 +55,27 @@ const workerEnvSchema = z.object({
   ART_DIRECTOR_CACHE_THRESHOLD: z.coerce.number().min(0).max(1).default(0.75),
   ART_DIRECTOR_PROVIDER_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120000).default(30000),
   ART_DIRECTOR_TIER1_PROVIDER: z
-    .enum(['gpt-image-2', 'ideogram-v3', 'imagen-4'])
+    .enum([
+      'gpt-image-2',
+      'ideogram-v3',
+      'ideogram-3.0-turbo',
+      'imagen-4',
+      'imagen-4.0-generate-001',
+      'imagen-3.0-generate-001',
+      'gemini-3.1-flash-image',
+      'gemini-3-pro-image-preview',
+    ])
     .default('gpt-image-2'),
   ART_DIRECTOR_TIER2_PROVIDER: z
     .enum([
       'flux-2-pro',
       'flux-2-ultra',
+      'flux-kontext-max',
       'nano-banana-pro',
       'nano-banana-pro-edit',
       'seedream-3',
       'seedream-3-edit',
+      'seedream-4.5',
       'recraft-v3',
       'playground-v3',
       'hidream',
