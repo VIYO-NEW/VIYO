@@ -106,8 +106,9 @@
           "16",
           "20"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:18:39.971Z"
       },
       {
         "id": "22",
@@ -119,8 +120,9 @@
         "dependencies": [
           "21"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:18:45.752Z"
       },
       {
         "id": "23",
@@ -132,8 +134,9 @@
         "dependencies": [
           "21"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:18:51.722Z"
       },
       {
         "id": "24",
@@ -146,9 +149,9 @@
           "15",
           "21"
         ],
-        "status": "done",
+        "status": "cancelled",
         "subtasks": [],
-        "updatedAt": "2026-04-28T22:02:36.455Z"
+        "updatedAt": "2026-04-29T03:18:57.775Z"
       },
       {
         "id": "25",
@@ -162,8 +165,9 @@
           "16",
           "9"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:19:03.462Z"
       },
       {
         "id": "26",
@@ -177,9 +181,21 @@
           "24",
           "25"
         ],
-        "status": "in-progress",
-        "subtasks": [],
-        "updatedAt": "2026-04-28T22:02:41.325Z"
+        "status": "cancelled",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "PO rejection repair: rebuild standalone Image Studio UI",
+            "description": "Rebuild Phase 6 Image Studio UI to close six PO-rejected foundational gaps: aspect ratio selector, token economics and insufficient-balance UI, conversational slash-command interface, generation error/scoring visibility, style/prompt library, and multi-format export.",
+            "details": "SIZE: L. Evidence: standalone Image Studio repair is expected to touch more than 10 frontend/test/internal-record files, no new DB tables planned, no new external integrations, but it rebuilds a product subsystem surface around the existing Art Director backend contract. Required phases: 0 through 8. FOUNDATIONAL FIX ANALYSIS: Q1 Origin: ORIGIN Layer 6 Frontend UI composition and Layer 7 frontend state/API orchestration; SPEC PRD V5 Addendum Section 26 defines standalone Image Studio with conversational interface, style/prompt library, export, and canvas workspace; Architecture Lock v6.1 Sections 2 through 6 define scoring, token economics, feature flag, mode/platform constraints, and observability; ACTUAL prior completion provided a thin generation wrapper around repaired schemas. Q2 Layers: symptom Layer 6 Frontend UI; root cause layers Layer 6 UI, Layer 7 client state/API orchestration, Layer 5 API contract consumption, Layer 10 config/feature flag surfacing, Layer 11 user-visible errors/observability metadata, Layer 13 tests/validation. Q3 Class prevention: patch approach would add isolated controls to the command panel; foundational approach chosen is to model Image Studio as an end-to-end standalone design workspace with typed mode/aspect/billing/library/export/error/scoring state so future backend schema binding cannot be mistaken for product completion. Q4 Spec gap: none blocking; sources are explicit. Architecture Lock v6.1 is backend-scoped and labels frontend as Phase 6; PRD Section 26 governs the UI. Q5 Blast radius: frontend Image Studio route/components/tests and existing billing/router metadata only; no destructive DB migration; risk medium because UI workflow changes are broad but additive around existing API contracts. APPROVED TO PROCEED: yes to Phase 2 architecture plan, no code until PO approves plan.\n\nPHASE 2 ARCHITECTURE PLAN: Completed and saved at docs/internal/phase6-repair/PHASE6_IMAGE_STUDIO_REPAIR_ARCHITECTURE_PLAN.md. Plan audits current ImageStudio monolith, studio contract, shared Art Director schema, API wrapper, tests, and billing modal; confirms no product-code changes yet. Proposed repair rebuilds Studio as standalone design workspace with Studio Library and Mode Planner, Conversational Composer, Canvas and Generation Inspector, explicit generation state machine, billing/token preflight, mode-aware aspect/platform selector, error/scoring visibility, style/prompt library, and export controls. Awaiting PO approval before implementation.",
+            "status": "in-progress",
+            "dependencies": [],
+            "parentTaskId": 26,
+            "updatedAt": "2026-04-28T22:44:30.000Z",
+            "parentId": "undefined"
+          }
+        ],
+        "updatedAt": "2026-04-29T03:19:10.119Z"
       },
       {
         "id": "27",
@@ -192,8 +208,9 @@
           "25",
           "24"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:19:15.770Z"
       },
       {
         "id": "28",
@@ -205,8 +222,9 @@
         "dependencies": [
           "24"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:19:21.909Z"
       },
       {
         "id": "29",
@@ -219,8 +237,9 @@
           "25",
           "24"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:19:27.920Z"
       },
       {
         "id": "30",
@@ -234,8 +253,9 @@
           "28",
           "29"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:19:34.435Z"
       },
       {
         "id": "31",
@@ -249,8 +269,9 @@
           "24",
           "16"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:19:40.335Z"
       },
       {
         "id": "32",
@@ -262,8 +283,9 @@
         "dependencies": [
           "25"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:19:46.037Z"
       },
       {
         "id": "33",
@@ -276,8 +298,9 @@
           "15",
           "16"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:19:52.213Z"
       },
       {
         "id": "34",
@@ -291,8 +314,9 @@
           "16",
           "33"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:19:58.552Z"
       },
       {
         "id": "35",
@@ -304,8 +328,9 @@
         "dependencies": [
           "16"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:20:04.819Z"
       },
       {
         "id": "36",
@@ -317,8 +342,9 @@
         "dependencies": [
           "33"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:20:10.951Z"
       },
       {
         "id": "37",
@@ -330,8 +356,9 @@
         "dependencies": [
           "17"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:20:16.450Z"
       },
       {
         "id": "38",
@@ -343,8 +370,9 @@
         "dependencies": [
           "17"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:20:21.992Z"
       },
       {
         "id": "39",
@@ -358,8 +386,9 @@
           "25",
           "16"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:20:27.643Z"
       },
       {
         "id": "40",
@@ -372,8 +401,9 @@
           "25",
           "9"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:20:33.366Z"
       },
       {
         "id": "41",
@@ -381,14 +411,14 @@
         "description": "Deferred Sprint 3 backlog item for the Style/Prompt Library UI, covering pre-built templates, industry prompts, user-saved Style DNA, community gallery, and prompt history without exposing placeholder UI during Sprint 2.",
         "details": "Product Owner-approved non-blocking Sprint 3 backlog gap from Sprint 2 Phase 0 approval. Build a real, wired Style/Prompt Library UI surface only after Sprint 2 core generation flow is working. It must integrate with Art Director Router intelligence and generation UI state, and must not expose any unwired or placeholder library surfaces in Sprint 2 builds.",
         "testStrategy": "Verify all five library surfaces render only when backed by wired data/API paths. Confirm no placeholder or disabled library modes are exposed in Sprint 2. Test accessibility, state management, prompt selection, saved Style DNA behavior, gallery loading, and prompt history persistence once implemented.",
-        "status": "pending",
+        "status": "cancelled",
         "dependencies": [
           "21",
           "26"
         ],
         "priority": "medium",
         "subtasks": [],
-        "updatedAt": "2026-04-27T19:08:05.267357+00:00"
+        "updatedAt": "2026-04-29T03:20:39.753Z"
       },
       {
         "id": "42",
@@ -396,7 +426,7 @@
         "description": "Deferred Sprint 3 backlog item for the seven remaining editing tools: Upscale, Remove Object, Outpaint, Text Edit, Color Adjust, Expand, and Object Recolor.",
         "details": "Product Owner-approved non-blocking Sprint 3 backlog gap from Sprint 2 Phase 0 approval. Add the remaining editing tools incrementally after the Sprint 2 editing pipeline is proven with Touch Edit, Layer Split, Background Swap, and Version History. Each tool must be fully wired through backend/API, billing or entitlement checks where applicable, state management, and UI before exposure. Avoid all unwired placeholders.",
         "testStrategy": "For each editing tool, validate backend integration, fal.ai request/response handling, billing/entitlement behavior, state management, canvas rendering, and end-to-end UI workflow. Confirm tools remain hidden until wired.",
-        "status": "pending",
+        "status": "cancelled",
         "dependencies": [
           "25",
           "27",
@@ -406,7 +436,7 @@
         ],
         "priority": "medium",
         "subtasks": [],
-        "updatedAt": "2026-04-27T19:08:05.267425+00:00"
+        "updatedAt": "2026-04-29T03:20:45.882Z"
       },
       {
         "id": "43",
@@ -414,14 +444,14 @@
         "description": "Deferred Sprint 3 backlog item for dispatching @mention notifications through enabled in-app, email, and push channels using stored notification preferences.",
         "details": "Product Owner-approved non-blocking Sprint 3 backlog gap from Sprint 2 Phase 0 approval. T18 creates notification_preferences, but Sprint 2 intentionally does not send notifications. Sprint 3 should add an Inngest function or equivalent background dispatcher that reads preferences and routes notifications to enabled channels without requiring schema changes. Include retries, observability, and channel-level failure handling.",
         "testStrategy": "Simulate @mention events and verify preferences are read correctly. Confirm only enabled channels receive notifications. Test all-disabled preferences, partial channel preferences, dispatch failures, retries, and observability output.",
-        "status": "pending",
+        "status": "cancelled",
         "dependencies": [
           "18",
           "38"
         ],
         "priority": "medium",
         "subtasks": [],
-        "updatedAt": "2026-04-27T19:08:05.267437+00:00"
+        "updatedAt": "2026-04-29T03:20:51.430Z"
       },
       {
         "id": "44",
@@ -429,12 +459,13 @@
         "description": "Enhance the VIYO quality-gate skill to correctly handle React/TSX files by adding parsing and heuristics that distinguish production React components from non-production description blocks, while preserving existing behavior for spec/backend files.",
         "details": "Modify padding_detector.py and completeness_auditor.py to include React/TSX-aware parsing logic. Implement a parser or adapter that can process .tsx files, recognizing JSX syntax and React component structures. Adjust heuristics to treat ordinary JSX syntactic repetition (such as repeated braces and return wrappers) as non-padding to reduce false positives. Ensure that typed React components returning JSX are identified as production implementation code. Maintain existing gates and heuristics for spec and backend files without regression. Include regression test fixtures using router.tsx and App.tsx files from Task 15 to validate React/TSX handling. Document changes and update any relevant configuration or integration points within the VIYO skill pipeline.",
         "testStrategy": "Run existing quality-gate tests to confirm no regressions on spec/backend files. Add new regression tests using router.tsx and App.tsx samples to verify correct parsing and classification of React/TSX files. Test that JSX syntactic repetition does not trigger padding detection. Validate that React components returning JSX are correctly recognized as production code. Perform manual code reviews and static analysis to ensure heuristic correctness. Confirm that the VIYO skill continues to operate correctly in the overall pipeline without introducing false positives or negatives.",
-        "status": "pending",
+        "status": "cancelled",
         "dependencies": [
           "15"
         ],
         "priority": "low",
-        "subtasks": []
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:20:56.924Z"
       },
       {
         "id": "45",
@@ -791,13 +822,493 @@
         "subtasks": [],
         "createdAt": "2026-04-28T17:53:40.730Z",
         "updatedAt": "2026-04-28T17:53:40.730Z"
+      },
+      {
+        "id": "61",
+        "title": "T47: Architecture Broadcast Ingestion Handshake",
+        "description": "Mandatory Architecture Broadcast handshake at the start of every VIYO task session.",
+        "details": "Source: PO Combined Directive v2 Section 1 and Architecture Broadcast record recqGyk0oIekpYEe9. Query Architecture Broadcasts; if a pending broadcast exists, halt planned work, download attached Drive documents, ingest the directive and source documents, write the task-graph diff to Builder Diff Output, set broadcast Status to Diff Proposed, and stop for PO approval. No product-code implementation is allowed from this task alone.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:07:46.104Z"
+      },
+      {
+        "id": "62",
+        "title": "T48: SEC-18 Branch Protection Gate",
+        "description": "Enable the immediate Phase 0 branch-protection governance required before the next commit.",
+        "details": "Source: PO Combined Directive v2 Section 3 and Architecture Lock Security Phase Gate Addendum. Main branch must require PR review, required status checks, and force-push prevention. Direct pushes to main must be blocked. Capture evidence from GitHub settings, CLI, or API output before any next commit.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          "61"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:07:58.058Z"
+      },
+      {
+        "id": "63",
+        "title": "T49: Phase 0 Secret-Exposure Controls",
+        "description": "Install and verify immediate secret-exposure controls before the next commit.",
+        "details": "Source: PO Combined Directive v2 Section 3 and Doc 11 Security Phase Triggers Addendum. Install TruffleHog or equivalent pre-commit secret scanning; enable GitHub secret scanning if available; audit .gitignore for .env, .env.local, .env.production, key files, and generated secret artifacts; run git log --all --full-history -- '*.env*' and save evidence. This is immediate Phase 0 scope and precedes product-code commits.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          "62"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T03:14:09.986Z"
+      },
+      {
+        "id": "64",
+        "title": "T50: SEC-02 Encryption Foundation Readiness",
+        "description": "Confirm encryption design readiness before sensitive-token persistence is introduced.",
+        "details": "Source: PO Combined Directive v2 Section 3. Confirm AES-256-GCM implementation path for OAuth tokens, API keys, webhook secrets, and other Restricted-class data. No plaintext secret persistence may be introduced by Phase 6. This is a readiness and architecture gate unless implementation is triggered by sensitive-token storage.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          "63"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T14:03:37.626Z"
+      },
+      {
+        "id": "65",
+        "title": "T51a: SEC-14 and SEC-15 Auth Hardening",
+        "description": "Implement auth hardening when the first auth/database code trigger occurs.",
+        "details": "PO Modification A replaces grouped T51 with T51a/T51b/T51c. This task covers SEC-14 and SEC-15: password complexity, bcrypt cost 10+, HaveIBeenPwned k-anonymity check, last-five password reuse prevention, and brute-force lockout controls when auth surface is built. Trigger: first auth/database code.",
+        "testStrategy": "",
+        "status": "deferred",
+        "dependencies": [
+          "64"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T14:05:33.552Z"
+      },
+      {
+        "id": "66",
+        "title": "T51b: SEC-04 and SEC-05 Network Hardening",
+        "description": "Split security-header and rate-limiting implementation according to their distinct triggers.",
+        "details": "PO Modification A split task. Implement security headers with the first auth/database surface. Implement rate limiting at first public deployment using the directive's limits. Preserve trigger notes so headers are not delayed until deployment and rate limiting is not exposed prematurely without infrastructure.",
+        "testStrategy": "",
+        "status": "deferred",
+        "dependencies": [
+          "64"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T14:06:21.488Z"
+      },
+      {
+        "id": "67",
+        "title": "T51c: SEC-07 and SEC-08 CI Hardening",
+        "description": "Separate Phase 0 push-time scanning from pre-paying-customer SAST/SCA requirements.",
+        "details": "PO Modification A split task. Phase 0 includes push-time secret scanning controls. SAST/SCA with CodeQL and Dependabot is required before first paying customer, with Critical/High findings blocking merge. This task must retain both trigger notes explicitly.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          "63"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T14:07:44.873Z"
+      },
+      {
+        "id": "68",
+        "title": "T51d: Explicit Taskmaster Re-Parse Evidence Gate",
+        "description": "Record the required Taskmaster re-parse evidence before Phase 6.2 implementation foundations begin.",
+        "details": "PO Modification B. Before T52-equivalent work, run task-master parse-prd on the PRD V5 Addendum and Architecture Lock v6.1 ingestion bundle, save command output, and reconcile local .taskmaster state with the approved Airtable graph. If provider failure occurs, record failure evidence and use a PO-approved deterministic diff. Current directive from PO says parse-prd is not blocking and manual add-task creation is acceptable after evidence has been captured.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          "61"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T14:10:34.868Z"
+      },
+      {
+        "id": "69",
+        "title": "T52: T46 Gap Repair — Provider Registry and Shared Contracts",
+        "description": "Repair Visual Engine provider inventory and shared Art Director contracts for the expanded Phase 6.2 scope.",
+        "details": "Source: Architecture Lock v6.1, T46 Gap Addendum, and PO Combined Directive v2. Cover 22+ generation models, 10 editing tools, provider tier metadata, mode contracts, editing-tool contracts, and Art Director Router schema parity. This task is the foundation for cache-first routing, billing, persistence, editing coverage, and UI mode matrices.\n<info added on 2026-04-29T15:01:04.833Z>\nUpdated provider registry and shared Art Director contracts to include a source-grounded inventory of 22 generation models, 10 editing models, and 32 total model metadata entries. Shared contracts now expose provider tier, gateway, and fallback metadata, with the editing-tool contract map expanded to ten tools. Worker provider registry derives descriptors from shared metadata, and router-config token costs have been adjusted to cover the expanded generation inventory. Environment validation now includes the full provider roster, and the editing-router consumes the shared editing-tool contracts as the single source of truth. Routing tests confirm the presence of 32 providers, 22 generation models, and parity in editing contracts. All validation and quality gates, including build, typecheck, lint, and runtime validation, have passed, ensuring schema and namespace integrity.\n</info added on 2026-04-29T15:01:04.833Z>",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          "68"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-04-29T15:01:20.497Z"
+      },
+      {
+        "id": "70",
+        "title": "T53: T46 Gap Repair — Cache-First Router and Pattern DB Integration",
+        "description": "Ensure Studio generation routes through Pattern DB before model execution and exposes route metadata.",
+        "details": "Image generation requests must query Pattern DB before model execution, surface cached pattern versus zero-shot path, preserve fallback routing, and include scoring metadata for user-facing visibility. This repairs the architectural gap that allowed a schema-bound wrapper to ship without Pattern DB route transparency.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "69"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "71",
+        "title": "T54: Billing and Token Economics Foundation",
+        "description": "Provide token estimate, balance preflight, deduction, and insufficient-balance recovery for Studio generation and editing paths.",
+        "details": "Every generation/edit path has token estimate display, pre-execution balance check, atomic deduction where backend surface exists, graceful insufficient_balance recovery, and cost reconciliation notes. This directly closes the PO rejection gap for token economics and billing UI.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "69"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "72",
+        "title": "T55: R2 Auto-Save and Brand Vault Asset Contract",
+        "description": "Persist generated and edited Studio outputs to R2/assets with brand-safe metadata.",
+        "details": "Generated and edited outputs auto-save to R2/assets with workspace and brand isolation, metadata tags, source mode, prompt/style reference, and email-editor availability. This task provides the persistence contract consumed by export, version history, and Brand Vault availability.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "69"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "73",
+        "title": "T56: Editing Router Coverage for 10 Tools",
+        "description": "Wire the ten specified editing tools only where backend-supported capability exists.",
+        "details": "Touch Edit, Text Edit, Layer Splitting, Background Swap, Object Removal, Canvas Expand, Upscale, Quick Edit, Style Transfer, and Material Swap are wired to backend-supported capabilities only. No unwired placeholder buttons may be exposed. Tool availability must reflect shared contracts and feature flags.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "69"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "74",
+        "title": "T57: Standalone Studio Route, Navigation, and Brand Scope",
+        "description": "Build Image Studio as a standalone brand-scoped workspace rather than a thin API wrapper.",
+        "details": "Build /brand/[brandId]/studio as a standalone brand-scoped workspace reachable from main navigation with tenant-safe route handling and no cross-brand data leakage. This is the route/navigation foundation for PRD V5 Addendum Section 26.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "69"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "75",
+        "title": "T58: Conversational Studio Shell and Slash Commands",
+        "description": "Implement the required chat-based Image Studio interaction model with slash commands.",
+        "details": "Provide chat-based interaction model, natural-language prompt entry, command parsing for slash commands such as /mockup and /poster, command history/session context, and mode-picker parity. This closes the PO rejection gap for conversational interface.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "74"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "76",
+        "title": "T59: Generation Mode Matrix with Explicit v6.1 Multi-Model Flows",
+        "description": "Cover all A1-A22 generation modes and explicit v6.1 multi-model UI acceptance criteria.",
+        "details": "PO Modification C. Cover all A1-A22 modes and explicitly implement UI requirements for A3 compositional poster, A4 brand mockup, A8 platform-specific social templates, A9 palette extraction, A13 style invention, A14 seasonal themes, A15 unified brand kit, and A16 before/after comparison. A3 collects prompt and optional product @mention and discloses RMBG, Flux, Ideogram, and compositing lifecycle. A4 collects base image, brand asset @mention, and target region and supports SAM mask, ControlNet warp, and Sharp compositing lifecycle. A8 requires target platform such as IG, FB, Pinterest, or YouTube and exposes correct aspect/platform sizing before generation. A9 accepts image URL/upload or prompt source and surfaces BLIP-2, node-vibrant hex extraction, and Claude naming output. A13 presents four MCoT prompt branches and four-image selection flow. A14 surfaces Pattern DB template lookup before Nano Banana Pro Edit. A15 groups logo, palette, and imagery output from Recraft, Claude palette, and Flux. A16 requires side-by-side before/after output handling.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "75",
+          "70",
+          "71"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "77",
+        "title": "T60: Aspect Ratio, Platform Sizing, and Output-Shape Controls",
+        "description": "Require aspect ratio and platform sizing controls before generation submission where relevant.",
+        "details": "UI requires aspect ratio/platform sizing before generation where relevant; A8 must expose IG, FB, Pinterest, YouTube or equivalent target sizes; export output shape is visible before model call. This closes the PO rejection gap for aspect-ratio selector and platform-specific sizing.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "76"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "78",
+        "title": "T61: Style and Prompt Library",
+        "description": "Implement the required Image Studio style and prompt library capabilities.",
+        "details": "Implement Pre-Built Templates, Industry Prompt Packs, User-Saved Styles, Brand Style Lock, and deferred Community Styles notation without exposing unfinished marketplace actions. This closes the PO rejection gap for style/prompt library.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "75"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "79",
+        "title": "T62: Error, Timeout, Scoring, and Feature-Flag Visibility",
+        "description": "Expose user-visible Studio failure states, retry states, route metadata, and feature-flag state.",
+        "details": "Show generation failure states, timeout states, retry affordances, cached-pattern versus zero-shot path, score/routing metadata, and feature-flag status for gated router capabilities. This closes the PO rejection gap for errors, scoring visibility, and feature flags.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "75",
+          "70"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "80",
+        "title": "T63: Multi-Format Export and Resolution Choices",
+        "description": "Support Studio export formats and resolution choices required by PRD Section 26.",
+        "details": "Support PNG, JPG, WebP, and PDF export with resolution choices, transparent PNG where supported, multi-size output handling, direct-to-email insertion, and Brand Kit save metadata. This closes the PO rejection gap for multi-format export.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "72",
+          "76"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "81",
+        "title": "T64: Version History and Multi-Image Project Organization",
+        "description": "Provide active Phase 6.2 version history and multi-image organization while deferring full freeform canvas.",
+        "details": "PO Modification D. Provide session-level version history and multi-image organization. This replaces the prior Freeform Canvas active task; full freeform infinite canvas is deferred to V1.1 and must not be treated as an active Phase 6.2 blocker.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "74",
+          "72"
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": "82",
+        "title": "T65: Accessibility and No-Placeholder UI Compliance",
+        "description": "Verify WCAG compliance and ensure the active UI does not expose unwired placeholder actions.",
+        "details": "PO Modification D. WCAG 2.1 AA keyboard/focus/label/contrast checks pass; no visible mode, editing tool, export action, or library action is present unless wired to supported backend behavior or clearly deferred outside the active UI. Pin-on-canvas collaboration remains V1.1 deferred scope.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "74",
+          "75",
+          "76",
+          "77",
+          "78",
+          "79",
+          "80",
+          "81"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "83",
+        "title": "T66: Unit and Integration Test Expansion",
+        "description": "Expand tests for the Phase 6.2 corrected Studio scope and six PO rejection gaps.",
+        "details": "Add tests for slash commands, aspect/platform selector, token estimate and insufficient balance, style library, error/scoring visibility, export selection, and mode-specific multi-step requirements. Include coverage for explicit v6.1 A3/A4/A8/A9/A13/A14/A15/A16 flows.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "74",
+          "75",
+          "76",
+          "77",
+          "78",
+          "79",
+          "80",
+          "81",
+          "82"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "84",
+        "title": "T67: Static Wiring and Type Validation",
+        "description": "Run static validation for the repaired contracts, components, route, and API wiring.",
+        "details": "Run lint, type-check, schema validation, and import/wiring checks. Confirm route, component, API client, shared schema, router contract alignment, and no orphaned UI actions. Evidence must be saved before browser validation.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "69",
+          "70",
+          "71",
+          "72",
+          "73",
+          "74",
+          "75",
+          "76",
+          "77",
+          "78",
+          "79",
+          "80",
+          "81",
+          "82",
+          "83"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "85",
+        "title": "T68: Browser Validation and Visual Evidence",
+        "description": "Validate the corrected Studio workflow in-browser and capture visual evidence.",
+        "details": "Launch the web app locally, exercise the Studio workflow in-browser, and capture evidence for the six PO rejection gaps and v6.1 multi-model UI gates. Evidence must include conversational shell, aspect/platform selector, billing preflight, style library, error/scoring visibility, and export controls.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "74",
+          "75",
+          "76",
+          "77",
+          "78",
+          "79",
+          "80",
+          "81",
+          "82",
+          "83",
+          "84"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "86",
+        "title": "T69: Security Trigger Verification Matrix",
+        "description": "Produce matrix proving which phased security controls are complete, triggered, deferred, or blocked.",
+        "details": "Produce a matrix proving Phase 0 is complete before commit and documenting which Phase 1-4 controls are triggered now, deferred by attack surface, or blocked by PO approval. Include SEC-18, secret scanning, encryption readiness, auth hardening, network hardening, CI hardening, Image Studio/Brand Vault upload/fetch controls, public deployment controls, and first-paying-customer gates.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "62",
+          "63",
+          "64",
+          "65",
+          "66",
+          "67",
+          "68",
+          "69",
+          "70",
+          "71",
+          "72",
+          "73",
+          "74",
+          "75",
+          "76",
+          "77",
+          "78",
+          "79",
+          "80",
+          "81",
+          "82",
+          "83",
+          "84",
+          "85"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "87",
+        "title": "T70: Airtable Build Tracker Sync After PO Diff Approval",
+        "description": "Synchronize the approved task graph to Airtable Build Tracker only after PO diff approval.",
+        "details": "After PO approval only, sync the approved graph to Airtable Build Tracker. Do not sync unapproved task mutations as active execution tasks. This task preserves the Architecture Broadcast approval boundary.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "61",
+          "62",
+          "63",
+          "64",
+          "65",
+          "66",
+          "67",
+          "68",
+          "69",
+          "70",
+          "71",
+          "72",
+          "73",
+          "74",
+          "75",
+          "76",
+          "77",
+          "78",
+          "79",
+          "80",
+          "81",
+          "82",
+          "83",
+          "84",
+          "85",
+          "86"
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": "88",
+        "title": "T71: Final Quality Gate and Source-of-Truth Reconciliation",
+        "description": "Run final quality gate and reconcile implementation evidence to all governing sources.",
+        "details": "Run VIYO quality gate and reconcile final implementation evidence against PRD Section 26, Architecture Lock v6.1, T46 Gap Addendum, PO Combined Directive v2, and security trigger addenda. Findings must be resolved or explicitly escalated before Phase 6.2 completion can be claimed.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "83",
+          "84",
+          "85",
+          "86",
+          "87"
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": "89",
+        "title": "T72: PO Approval Stop Before Phase 7",
+        "description": "Deliver Phase 6.2 acceptance evidence and stop before Phase 7 until explicit PO acceptance.",
+        "details": "Deliver acceptance evidence and stop. Do not proceed to Phase 7 until PO explicitly accepts Phase 6.2 completion. This task closes the directive's approval boundary and prevents repeat execution drift.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "88"
+        ],
+        "priority": "high",
+        "subtasks": []
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-28T22:02:41.326Z",
-      "taskCount": 47,
-      "completedCount": 9,
+      "lastModified": "2026-04-29T15:01:20.498Z",
+      "taskCount": 76,
+      "completedCount": 15,
       "tags": [
         "master"
       ]

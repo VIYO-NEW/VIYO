@@ -1,32 +1,57 @@
 /**
- * Art Director Router Configuration — T46
+ * Art Director Router Configuration — T46/T69
  *
  * Centralizes the v6.1 defaults for the routing suite. The shared schema owns
  * provider/model validation; this worker helper keeps request-time logic
- * testable without forcing the whole worker env parser to run inside unit tests.
+ * testable while exposing explicit tier option arrays and token costs for the
+ * expanded Phase 6.2 Visual Engine model roster.
  */
 import type { ArtDirectorGenerationModel, ArtDirectorModel } from '@viyo/shared';
 import { getSystemConfig } from '../token-engine.js';
+
+export const ART_DIRECTOR_TIER1_GENERATION_MODELS = [
+  'gpt-image-2',
+  'ideogram-v3',
+  'ideogram-3.0-turbo',
+  'imagen-4',
+  'imagen-4.0-generate-001',
+  'imagen-3.0-generate-001',
+  'gemini-3.1-flash-image',
+  'gemini-3-pro-image-preview',
+] as const satisfies readonly ArtDirectorGenerationModel[];
+
+export const ART_DIRECTOR_TIER2_GENERATION_MODELS = [
+  'flux-2-pro',
+  'flux-2-ultra',
+  'flux-kontext-max',
+  'nano-banana-pro',
+  'nano-banana-pro-edit',
+  'seedream-3',
+  'seedream-3-edit',
+  'seedream-4.5',
+  'recraft-v3',
+  'playground-v3',
+  'hidream',
+] as const satisfies readonly ArtDirectorGenerationModel[];
+
+export const ART_DIRECTOR_TIER3_GENERATION_MODELS = [
+  'stable-diffusion-3.5',
+  'sdxl-lightning',
+  'kolors',
+] as const satisfies readonly ArtDirectorGenerationModel[];
+
+export type ArtDirectorTier1Provider = (typeof ART_DIRECTOR_TIER1_GENERATION_MODELS)[number];
+export type ArtDirectorTier2Provider = (typeof ART_DIRECTOR_TIER2_GENERATION_MODELS)[number];
+export type ArtDirectorTier3Provider = (typeof ART_DIRECTOR_TIER3_GENERATION_MODELS)[number];
 
 export interface ArtDirectorRouterConfig {
   enabled: boolean;
   threshold: number;
   providerTimeoutMs: number;
   embeddingModel: string;
-  tier1Provider: Extract<ArtDirectorGenerationModel, 'gpt-image-2' | 'ideogram-v3' | 'imagen-4'>;
-  tier2Provider: Extract<
-    ArtDirectorGenerationModel,
-    | 'flux-2-pro'
-    | 'flux-2-ultra'
-    | 'nano-banana-pro'
-    | 'nano-banana-pro-edit'
-    | 'seedream-3'
-    | 'seedream-3-edit'
-    | 'recraft-v3'
-    | 'playground-v3'
-    | 'hidream'
-  >;
-  tier3Provider: Extract<ArtDirectorGenerationModel, 'stable-diffusion-3.5' | 'sdxl-lightning' | 'kolors'>;
+  tier1Provider: ArtDirectorTier1Provider;
+  tier2Provider: ArtDirectorTier2Provider;
+  tier3Provider: ArtDirectorTier3Provider;
   rollbackProvider: Extract<ArtDirectorGenerationModel, 'nano-banana-pro'>;
   atlasCloudApiKey?: string;
   atlasCloudBaseUrl?: string;
@@ -68,6 +93,16 @@ function envValue(source: NodeJS.ProcessEnv, key: string): string | undefined {
   return value && value.trim().length > 0 ? value : undefined;
 }
 
+function parseProviderOption<const T extends readonly string[]>(
+  source: NodeJS.ProcessEnv,
+  key: string,
+  options: T,
+  fallback: T[number],
+): T[number] {
+  const value = envValue(source, key);
+  return value && options.includes(value) ? value : fallback;
+}
+
 async function readEnabledOverride(): Promise<boolean | null> {
   const value = await getSystemConfig<boolean | string>('enable_art_director_router');
   if (value === null || value === undefined) return null;
@@ -90,9 +125,9 @@ export async function getArtDirectorRouterConfig(
       120_000,
     ),
     embeddingModel: envValue(source, 'GEMINI_EMBEDDING_MODEL') ?? DEFAULT_EMBEDDING_MODEL,
-    tier1Provider: 'gpt-image-2',
-    tier2Provider: 'flux-2-pro',
-    tier3Provider: 'stable-diffusion-3.5',
+    tier1Provider: parseProviderOption(source, 'ART_DIRECTOR_TIER1_PROVIDER', ART_DIRECTOR_TIER1_GENERATION_MODELS, 'gpt-image-2'),
+    tier2Provider: parseProviderOption(source, 'ART_DIRECTOR_TIER2_PROVIDER', ART_DIRECTOR_TIER2_GENERATION_MODELS, 'flux-2-pro'),
+    tier3Provider: parseProviderOption(source, 'ART_DIRECTOR_TIER3_PROVIDER', ART_DIRECTOR_TIER3_GENERATION_MODELS, 'stable-diffusion-3.5'),
     rollbackProvider: 'nano-banana-pro',
     atlasCloudApiKey: envValue(source, 'ATLAS_CLOUD_API_KEY'),
     atlasCloudBaseUrl: envValue(source, 'ATLAS_CLOUD_BASE_URL') ?? DEFAULT_ATLAS_CLOUD_BASE_URL,
@@ -132,6 +167,13 @@ export const ART_DIRECTOR_TOKEN_COSTS: Record<ArtDirectorModel, number> = {
   'stable-diffusion-3.5': 450,
   'sdxl-lightning': 250,
   kolors: 350,
+  'flux-kontext-max': 1_100,
+  'seedream-4.5': 550,
+  'ideogram-3.0-turbo': 1_600,
+  'gemini-3.1-flash-image': 1_900,
+  'gemini-3-pro-image-preview': 2_500,
+  'imagen-4.0-generate-001': 2_000,
+  'imagen-3.0-generate-001': 1_700,
   'sam-2': 180,
   'real-esrgan': 160,
   controlnet: 220,

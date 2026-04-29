@@ -1,22 +1,25 @@
 {
   "models": {
     "main": {
-      "provider": "openai",
-      "modelId": "gpt-4o-mini",
-      "maxTokens": 64000,
-      "temperature": 0.2
+      "provider": "openai-compatible",
+      "modelId": "gpt-4.1-mini",
+      "maxTokens": 16000,
+      "temperature": 0.2,
+      "baseURL": "https://api.manus.im/api/llm-proxy/v1"
     },
     "research": {
-      "provider": "openai",
-      "modelId": "gpt-4o-mini",
-      "maxTokens": 8700,
-      "temperature": 0.1
+      "provider": "openai-compatible",
+      "modelId": "gpt-4.1-mini",
+      "maxTokens": 8000,
+      "temperature": 0.1,
+      "baseURL": "https://api.manus.im/api/llm-proxy/v1"
     },
     "fallback": {
-      "provider": "openai",
-      "modelId": "gpt-4o-mini",
-      "maxTokens": 120000,
-      "temperature": 0.2
+      "provider": "openai-compatible",
+      "modelId": "gpt-4.1-nano",
+      "maxTokens": 8000,
+      "temperature": 0.2,
+      "baseURL": "https://api.manus.im/api/llm-proxy/v1"
     }
   },
   "global": {
