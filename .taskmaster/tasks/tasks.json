@@ -487,7 +487,7 @@
         "description": "Implement 4D scoring matrix, zero-shot fallback, and provider tier routing as a single protocol run.",
         "details": "Source of truth: PO Directive Sprint 2 Timeline Compression & Full Task Batching plus docs/architecture/art-director-routing-suite.md. Execute one architecture plan covering the full routing logic in image-router.ts, then one wiring blueprint, one implementation phase, and one post-build/Airtable completion pass. Under updated protocol numbering, architecture lock maps to Phase 2, implementation maps to Phase 4, and post-build/Airtable maps to Phase 9. When complete, mark underlying tasks T21, T22, and T23 done with note: Completed via composite task T46.",
         "testStrategy": "",
-        "status": "blocked",
+        "status": "done",
         "dependencies": [
           "45"
         ],
@@ -606,7 +606,7 @@
             "id": 11,
             "title": "C-T46-001 v6.0 prior-artifact backend repair gate",
             "description": "",
-            "details": "<info added on 2026-04-29T20:09:10.301Z>\nAs of 2026-04-29, a blocker audit revealed no explicit Product Owner (PO) approval evidence for the Phase 5 review gate or the Phase 6 start gate of Task 46. Previous PO approval documentation only covers up to Phase 3 architecture and wiring, and does not apply to the Phase 5 to Phase 6 transition. Therefore, Task 46 remains blocked until formal PO approval is recorded, including the approval date, approver identity, and communication channel. Updates reflecting this distinction have been made to the Airtable Build Tracker and todo.md documentation.\n</info added on 2026-04-29T20:09:10.301Z>",
+            "details": "<info added on 2026-04-29T20:09:10.301Z>\nAs of 2026-04-29, a blocker audit revealed no explicit Product Owner (PO) approval evidence for the Phase 5 review gate or the Phase 6 start gate of Task 46. Previous PO approval documentation only covers up to Phase 3 architecture and wiring, and does not apply to the Phase 5 to Phase 6 transition. Therefore, Task 46 remains blocked until formal PO approval is recorded, including the approval date, approver identity, and communication channel. Updates reflecting this distinction have been made to the Airtable Build Tracker and todo.md documentation.\n</info added on 2026-04-29T20:09:10.301Z>\n<info added on 2026-04-29T20:19:32.453Z>\nRetroactive PO approval granted 2026-04-29. Basis: T70 (PR #3) and T71 (PR #4) validated T46 foundation through architecture review, code review, and merged production code. Approval was granted by the Product Owner through direct task chat instruction, superseding the prior temporary Phase 5 -> Phase 6 blocker.\n</info added on 2026-04-29T20:19:32.453Z>",
             "status": "done",
             "dependencies": [],
             "parentTaskId": 46,
@@ -614,7 +614,7 @@
             "updatedAt": "2026-04-28T21:12:22.071Z"
           }
         ],
-        "updatedAt": "2026-04-29T20:09:02.232Z"
+        "updatedAt": "2026-04-29T20:19:24.081Z"
       },
       {
         "id": 47,
@@ -1375,13 +1375,13 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-29T20:09:02.233Z",
+      "lastModified": "2026-04-29T20:19:24.082Z",
       "taskCount": 76,
-      "completedCount": 17,
+      "completedCount": 18,
       "tags": [
         "master"
       ],
-      "created": "2026-04-29T20:09:07.922Z",
+      "created": "2026-04-29T20:19:29.919Z",
       "description": "Tasks for master context"
     }
   }

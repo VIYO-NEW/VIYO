@@ -59,13 +59,15 @@
 
 ## In Review
 
-- [ ] T46 — Composite Art Director Routing Suite (T21, T22, T23) — PHASE 5 REVIEW GATE 2026-04-28
+## Completed
+
+- [x] T46 — Composite Art Director Routing Suite (T21, T22, T23) — DONE 2026-04-29
   - [x] Phase 5 source review completed against Phase 2 architecture plan and Phase 3 wiring blueprint
   - [x] Shared/worker build, lint, type-check, focused tests, monorepo lint/type-check/test/build passed
   - [x] Live local worker probe confirmed `/health` responds and unauthenticated `artDirector.routeGeneration` fails closed with HTTP 401
   - [x] Static source-invariant verifier passed final 13-layer wiring assertions
-  - [x] Taskmaster T46 moved from `review` to `blocked` on 2026-04-29; wiring subtasks remain done as validation evidence.
-  - [ ] BLOCKER: No explicit PO approval evidence found for Phase 5 → Phase 6 gate as of 2026-04-29; Airtable Build Tracker `T46-COMPOSITE-ART-DIRECTOR-ROUTING-SUITE` updated to preserve blocker status and distinguish earlier Phase 3 approval evidence from missing Phase 5 approval.
+  - [x] Taskmaster T46 moved from `blocked` to `done` on 2026-04-29 after retroactive PO approval.
+  - [x] Approval evidence recorded: "Retroactive PO approval granted 2026-04-29. Basis: T70 (PR #3) and T71 (PR #4) validated T46 foundation through architecture review, code review, and merged production code."
 
 ## Phase 6.2 Art Director Execution
 

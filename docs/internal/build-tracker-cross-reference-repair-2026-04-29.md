@@ -8,7 +8,7 @@ This record documents the blocking tracking repair completed before starting any
 
 | Requirement | Verified Outcome |
 |---|---|
-| Resolve T46 PO approval status | Taskmaster Task 46 is now `blocked`. Airtable record `T46-COMPOSITE-ART-DIRECTOR-ROUTING-SUITE` remains `In Progress` because Airtable rejected `Blocked` as a status option, but its notes explicitly state that no Phase 5 → Phase 6 PO approval evidence was found and that prior approval evidence applied only to the earlier Phase 3 gate. `todo.md` mirrors the blocker. |
+| Resolve T46 PO approval status | Superseded by direct PO instruction on 2026-04-29. Taskmaster Task 46 is now `done`, Airtable record `T46-COMPOSITE-ART-DIRECTOR-ROUTING-SUITE` is `Done`, and `todo.md` records the retroactive PO approval evidence: "Retroactive PO approval granted 2026-04-29. Basis: T70 (PR #3) and T71 (PR #4) validated T46 foundation through architecture review, code review, and merged production code." |
 | Create or fix T70 Airtable record | Airtable record `T70-CACHE-ROUTE-META` exists, has status `Done`, and has `Taskmaster Task ID = T70`. The prior local note saying no matching record was found has been replaced. |
 | Backfill new `Taskmaster Task ID` field | Evidence-backed completed or in-progress records touched by this build stream were backfilled. Records without direct local evidence were intentionally left unassigned to avoid false traceability. |
 | Update T71 notes on affected records | `T25-STUDIO-BACKEND`, `T26-STUDIO-FRONTEND`, and `P5-05` now record Task 71 / PR #4 advancement notes and have the correct Taskmaster cross-reference values. |
@@ -45,8 +45,8 @@ This record documents the blocking tracking repair completed before starting any
 
 ## Fresh Verification Evidence
 
-The final Airtable verification export is saved locally at `/home/ubuntu/.mcp/tool-results/2026-04-29_16-06-03_airtable_list_records.json`. The Airtable update response is saved at `/home/ubuntu/.mcp/tool-results/2026-04-29_16-05-48_airtable_update_records.json`. Taskmaster verification after the correction showed Task 46 status as `blocked`, and Taskmaster subtask 46.11 now includes a timestamped note explaining the missing Phase 5 → Phase 6 PO approval evidence.
+The original Airtable verification export is saved locally at `/home/ubuntu/.mcp/tool-results/2026-04-29_16-06-03_airtable_list_records.json`. The original Airtable update response is saved at `/home/ubuntu/.mcp/tool-results/2026-04-29_16-05-48_airtable_update_records.json`. A later PO instruction on 2026-04-29 granted retroactive approval and superseded the temporary blocker. Taskmaster Task 46 was moved from `blocked` to `done`, and subtask 46.11 now records both the earlier blocker audit and the superseding approval evidence.
 
 ## Remaining Blocker
 
-Taskmaster Task 46 remains blocked until the PO provides explicit Phase 5 → Phase 6 approval evidence. If approval is verbal, the date, approver, and channel must be recorded in Taskmaster, Airtable, and `todo.md` before any new Taskmaster work begins.
+No T46 approval blocker remains after the 2026-04-29 retroactive PO approval. The remaining repository-level blocker is GitHub synchronization: the local tracking repair commit must be pushed once credentials are repaired.
