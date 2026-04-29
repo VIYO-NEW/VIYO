@@ -1,38 +1,40 @@
 # R23 — Cost Reconciliation Engine Enterprise Spec
 
 ## 1. Executive Summary
-The Cost Reconciliation Engine is the financial nervous system of VIYO. It tracks, attributes, and reconciles every API call (OpenAI, Anthropic, Ideogram, Gemini, Stripe) across the platform. It enforces margin floors, manages token allocations per tier, handles multi-currency billing, and provides granular cost visibility at the organization, user, and campaign levels.
+The Cost Reconciliation Engine is the financial nervous system of VIYO. It tracks, attributes, and reconciles every API call (OpenAI, Anthropic, Ideogram, Gemini, Stripe) across the platform. It enforces margin floors, manages token allocations per tier, handles multi-currency billing, and provides granular cost visibility at the workspace, user, and campaign levels.
 
 ## 2. Core Database Schema
 
 ### 2.1 Usage Ledger
-The `usage_ledger` is the immutable append-only table for all API costs.
+The `token_usage_logs` table is the immutable append-only ledger for all API costs. It is tenant-scoped by `workspace_id` per R20 and Architecture Lock V7.1.
 
 ```sql
-CREATE TABLE usage_ledger (
+CREATE TABLE token_usage_logs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    org_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
+    workspace_id UUID NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
     user_id UUID REFERENCES users(id) ON DELETE SET NULL,
     campaign_id UUID REFERENCES campaigns(id) ON DELETE SET NULL,
-    model VARCHAR(50) NOT NULL, -- e.g., 'gpt-4o', 'gemini-1.5-pro', 'ideogram-v2'
+    provider VARCHAR(50) NOT NULL,
+    model VARCHAR(100) NOT NULL, -- e.g., 'gpt-4o', 'gemini-1.5-pro', 'ideogram-v2'
     tokens_input INTEGER DEFAULT 0,
     tokens_output INTEGER DEFAULT 0,
     images_generated INTEGER DEFAULT 0,
     cost_usd NUMERIC(10, 6) NOT NULL,
     context VARCHAR(255) NOT NULL, -- e.g., 'cmo_brain_pitch', 'hero_image_gen'
+    stripe_meter_event_id VARCHAR(255),
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_usage_ledger_org_id ON usage_ledger(org_id);
-CREATE INDEX idx_usage_ledger_created_at ON usage_ledger(created_at);
+CREATE INDEX idx_usage_ws_date ON token_usage_logs(workspace_id, created_at DESC);
+CREATE INDEX idx_usage_unsent ON token_usage_logs(stripe_meter_event_id) WHERE stripe_meter_event_id IS NULL;
 ```
 
-### 2.2 Organization Balances
-Tracks the current billing cycle's allocation and usage.
+### 2.2 Workspace Token Balances
+Tracks the current billing cycle's allocation and usage for each workspace.
 
 ```sql
-CREATE TABLE organization_balances (
-    org_id UUID PRIMARY KEY REFERENCES organizations(id) ON DELETE CASCADE,
+CREATE TABLE token_balances (
+    workspace_id UUID PRIMARY KEY REFERENCES workspaces(id) ON DELETE CASCADE,
     tokens_allocated BIGINT NOT NULL,
     tokens_used BIGINT DEFAULT 0,
     images_allocated INTEGER NOT NULL,
@@ -52,9 +54,10 @@ This function is called by every Brain and Pipeline after an API call completes.
 import { supabase } from '@/lib/supabase';
 
 export async function deductUsage(params: {
-  orgId: string;
+  workspaceId: string;
   userId?: string;
   campaignId?: string;
+  provider: string;
   model: string;
   tokensInput?: number;
   tokensOutput?: number;
@@ -62,13 +65,14 @@ export async function deductUsage(params: {
   costUsd: number;
   context: string;
 }) {
-  const { orgId, userId, campaignId, model, tokensInput = 0, tokensOutput = 0, imagesGenerated = 0, costUsd, context } = params;
+  const { workspaceId, userId, campaignId, provider, model, tokensInput = 0, tokensOutput = 0, imagesGenerated = 0, costUsd, context } = params;
 
   // 1. Log to immutable ledger
-  const { error: ledgerError } = await supabase.from('usage_ledger').insert({
-    org_id: orgId,
+  const { error: ledgerError } = await supabase.from('token_usage_logs').insert({
+    workspace_id: workspaceId,
     user_id: userId,
     campaign_id: campaignId,
+    provider,
     model,
     tokens_input: tokensInput,
     tokens_output: tokensOutput,
@@ -81,7 +85,7 @@ export async function deductUsage(params: {
 
   // 2. Update running balance atomically via RPC
   const { data, error: balanceError } = await supabase.rpc('increment_usage_balance', {
-    p_org_id: orgId,
+    p_workspace_id: workspaceId,
     p_tokens_used: tokensInput + tokensOutput,
     p_images_used: imagesGenerated
   });
@@ -100,18 +104,18 @@ export async function deductUsage(params: {
 ### 3.2 RPC Function for Atomic Updates
 ```sql
 CREATE OR REPLACE FUNCTION increment_usage_balance(
-  p_org_id UUID,
+  p_workspace_id UUID,
   p_tokens_used BIGINT,
   p_images_used INTEGER
 ) RETURNS TABLE (tokens_used BIGINT, tokens_allocated BIGINT, images_used INTEGER, images_allocated INTEGER) AS $$
 BEGIN
-  UPDATE organization_balances
+  UPDATE token_balances
   SET 
-    tokens_used = organization_balances.tokens_used + p_tokens_used,
-    images_used = organization_balances.images_used + p_images_used,
+    tokens_used = token_balances.tokens_used + p_tokens_used,
+    images_used = token_balances.images_used + p_images_used,
     updated_at = NOW()
-  WHERE org_id = p_org_id
-  RETURNING organization_balances.tokens_used, organization_balances.tokens_allocated, organization_balances.images_used, organization_balances.images_allocated
+  WHERE workspace_id = p_workspace_id
+  RETURNING token_balances.tokens_used, token_balances.tokens_allocated, token_balances.images_used, token_balances.images_allocated
   INTO tokens_used, tokens_allocated, images_used, images_allocated;
   
   RETURN NEXT;
@@ -159,17 +163,17 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export async function handleInvoicePaid(invoice: Stripe.Invoice) {
   const customerId = invoice.customer as string;
   
-  const { data: org } = await supabase
-    .from('organizations')
-    .select('id, tier')
+  const { data: workspace } = await supabase
+    .from('workspaces')
+    .select('id, subscription_tier')
     .eq('stripe_customer_id', customerId)
     .single();
 
-  if (!org) return;
+  if (!workspace) return;
 
-  const allocation = getTokenAllocationForTier(org.tier);
+  const allocation = getTokenAllocationForTier(workspace.subscription_tier);
 
-  await supabase.from('organization_balances').update({
+  await supabase.from('token_balances').update({
     tokens_allocated: allocation.tokens,
     tokens_used: 0,
     images_allocated: allocation.images,
@@ -177,15 +181,16 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice) {
     billing_cycle_start: new Date(invoice.period_start * 1000).toISOString(),
     billing_cycle_end: new Date(invoice.period_end * 1000).toISOString(),
     updated_at: new Date().toISOString()
-  }).eq('org_id', org.id);
+  }).eq('workspace_id', workspace.id);
 }
 
 function getTokenAllocationForTier(tier: string) {
   switch(tier) {
-    case 'starter': return { tokens: 3000000, images: 300 };
-    case 'growth': return { tokens: 10000000, images: 1000 };
-    case 'agency': return { tokens: 30000000, images: 3000 };
-    default: return { tokens: 500000, images: 50 };
+    case 'starter': return { tokens: 1000000, images: 100 };
+    case 'growth': return { tokens: 6000000, images: 600 };
+    case 'agency': return { tokens: 23000000, images: 2300 };
+    case 'enterprise': return { tokens: 100000000, images: 10000 };
+    default: return { tokens: 1000000, images: 100 };
   }
 }
 ```
@@ -207,7 +212,7 @@ export const costReconciliationJob = inngest.createFunction(
 
     const internalCost = await step.run('calculate-internal-cost', async () => {
       const { data } = await supabase
-        .from('usage_ledger')
+        .from('token_usage_logs')
         .select('cost_usd')
         .gte('created_at', `${dateStr}T00:00:00Z`)
         .lt('created_at', `${dateStr}T23:59:59Z`);

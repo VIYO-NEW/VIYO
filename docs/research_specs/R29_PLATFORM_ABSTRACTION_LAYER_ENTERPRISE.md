@@ -34,7 +34,7 @@ export const VIYO_UTL_SCHEMA = {
     ADDRESS: '{{viyo.org.address}}'
   },
   Utility: {
-    UNSUBSCRIBE: '{{viyo.link.unsubscribe}}',
+    UNSUBSCRIBE: '{{viyo.org.unsubscribe_url}}',
     WEB_VIEW: '{{viyo.link.web_view}}'
   }
 } as const;
@@ -82,7 +82,7 @@ export interface EspTagMap {
   'viyo.item.image_url': string;
   'viyo.org.name': string;
   'viyo.org.address': string;
-  'viyo.link.unsubscribe': string;
+  'viyo.org.unsubscribe_url': string;
   'viyo.link.web_view': string;
 }
 
@@ -109,7 +109,7 @@ export const ESP_REGISTRY: Record<string, EspRegistryEntry> = {
       'viyo.event.items_loop_start': "{%% for item in event.Items %%}", 'viyo.event.items_loop_end': "{%% endfor %%}",
       'viyo.item.title': "{{ item.product_title }}", 'viyo.item.price': "{%% currency_format item.price %%}",
       'viyo.item.image_url': "{{ item.image_url }}", 'viyo.org.name': "{{ organization.name }}",
-      'viyo.org.address': "{{ organization.full_address }}", 'viyo.link.unsubscribe': "{%% unsubscribe_link %%}",
+      'viyo.org.address': "{{ organization.full_address }}", 'viyo.org.unsubscribe_url': "{%% unsubscribe_link %%}",
       'viyo.link.web_view': "{%% web_view_link %%}"
     },
     requiredFooterTags: ['{%% unsubscribe_link %%}', '{{ organization.full_address }}'],
@@ -122,7 +122,7 @@ export const ESP_REGISTRY: Record<string, EspRegistryEntry> = {
       'viyo.contact.first_name': "%%FIRSTNAME%%", 'viyo.contact.last_name': "%%LASTNAME%%",
       'viyo.contact.email': "%%EMAIL%%", 'viyo.event.order_id': "%%EVENT_ORDER_ID%%",
       'viyo.org.name': "%%ORGANIZATION%%", 'viyo.org.address': "%%SENDER-INFO-SINGLELINE%%",
-      'viyo.link.unsubscribe': "%%UNSUBSCRIBELINK%%", 'viyo.link.web_view': "%%WEBCOPY%%"
+      'viyo.org.unsubscribe_url': "%%UNSUBSCRIBELINK%%", 'viyo.link.web_view': "%%WEBCOPY%%"
     },
     requiredFooterTags: ['%%UNSUBSCRIBELINK%%'],
     conditionalSyntax: { if: '%%IF $COND%%', else: '%%ELSE%%', endif: '%%ENDIF%%' },
@@ -133,7 +133,7 @@ export const ESP_REGISTRY: Record<string, EspRegistryEntry> = {
     tagMap: {
       'viyo.contact.first_name': "*|FNAME|*", 'viyo.contact.last_name': "*|LNAME|*",
       'viyo.contact.email': "*|EMAIL|*", 'viyo.org.name': "*|LIST:COMPANY|*",
-      'viyo.org.address': "*|HTML:LIST_ADDRESS_HTML|*", 'viyo.link.unsubscribe': "*|UNSUB|*",
+      'viyo.org.address': "*|HTML:LIST_ADDRESS_HTML|*", 'viyo.org.unsubscribe_url': "*|UNSUB|*",
       'viyo.link.web_view': "*|ARCHIVE|*"
     },
     requiredFooterTags: ['*|UNSUB|*'],
@@ -144,7 +144,7 @@ export const ESP_REGISTRY: Record<string, EspRegistryEntry> = {
     id: 'braze', name: 'Braze',
     tagMap: {
       'viyo.contact.first_name': '{{${first_name}}}', 'viyo.contact.last_name': '{{${last_name}}}',
-      'viyo.contact.email': '{{${email_address}}}', 'viyo.link.unsubscribe': '{{${set_user_to_unsubscribed_url}}}'
+      'viyo.contact.email': '{{${email_address}}}', 'viyo.org.unsubscribe_url': '{{${set_user_to_unsubscribed_url}}}'
     },
     requiredFooterTags: ['{{${set_user_to_unsubscribed_url}}}'],
     conditionalSyntax: { if: '{%% if ${$COND} %%}', else: '{%% else %%}', endif: '{%% endif %%}' },
@@ -154,7 +154,7 @@ export const ESP_REGISTRY: Record<string, EspRegistryEntry> = {
     id: 'hubspot', name: 'HubSpot',
     tagMap: {
       'viyo.contact.first_name': "{{ contact.firstname }}", 'viyo.contact.last_name': "{{ contact.lastname }}",
-      'viyo.contact.email': "{{ contact.email }}", 'viyo.link.unsubscribe': "{{ unsubscribe_link }}",
+      'viyo.contact.email': "{{ contact.email }}", 'viyo.org.unsubscribe_url': "{{ unsubscribe_link }}",
       'viyo.link.web_view': "{{ view_as_page_url }}"
     },
     requiredFooterTags: ['{{ unsubscribe_link }}'],
@@ -165,7 +165,7 @@ export const ESP_REGISTRY: Record<string, EspRegistryEntry> = {
     id: 'omnisend', name: 'Omnisend',
     tagMap: {
       'viyo.contact.first_name': "[[contact.first_name]]", 'viyo.contact.email': "[[contact.email]]",
-      'viyo.link.unsubscribe': "[[unsubscribe_url]]"
+      'viyo.org.unsubscribe_url': "[[unsubscribe_url]]"
     },
     requiredFooterTags: ['[[unsubscribe_url]]'],
     conditionalSyntax: { if: '[[IF $COND]]', else: '[[ELSE]]', endif: '[[ENDIF]]' },
@@ -175,7 +175,7 @@ export const ESP_REGISTRY: Record<string, EspRegistryEntry> = {
     id: 'sendgrid', name: 'SendGrid',
     tagMap: {
       'viyo.contact.first_name': "{{first_name}}", 'viyo.contact.email': "{{email}}",
-      'viyo.link.unsubscribe': "{{{unsubscribe}}}"
+      'viyo.org.unsubscribe_url': "{{{unsubscribe}}}"
     },
     requiredFooterTags: ['{{{unsubscribe}}}'],
     conditionalSyntax: { if: '{{#if $COND}}', else: '{{else}}', endif: '{{/if}}' },
@@ -185,7 +185,7 @@ export const ESP_REGISTRY: Record<string, EspRegistryEntry> = {
     id: 'drip', name: 'Drip',
     tagMap: {
       'viyo.contact.first_name': "{{ subscriber.first_name }}", 'viyo.contact.email': "{{ subscriber.email }}",
-      'viyo.link.unsubscribe': "{{ unsubscribe_url }}"
+      'viyo.org.unsubscribe_url': "{{ unsubscribe_url }}"
     },
     requiredFooterTags: ['{{ unsubscribe_url }}'],
     conditionalSyntax: { if: '{%% if $COND %%}', else: '{%% else %%}', endif: '{%% endif %%}' },
@@ -276,12 +276,14 @@ export class TagTranslationEngine {
 The Translation Engine is wired into the email export API endpoint. The flow is: Composable Sections (VIYO-UTL) -> MJML Compiler -> Translation Engine -> ESP-native HTML.
 
 ```typescript
-// /api/email/export — Next.js API Route
-import { NextRequest, NextResponse } from 'next/server';
+// POST /api/email/export — Hono API route on Render
+import { Hono } from 'hono';
 import mjml2html from 'mjml';
 
-export async function POST(req: NextRequest) {
-  const { sections, brandId, espId } = await req.json();
+const app = new Hono();
+
+app.post('/api/email/export', async (c) => {
+  const { sections, brandId, espId } = await c.req.json();
 
   // Step 1: Compile sections into MJML (R27)
   const mjmlString = compileSectionsToMjml(sections);
@@ -289,7 +291,7 @@ export async function POST(req: NextRequest) {
   // Step 2: MJML -> HTML
   const { html: rawHtml, errors } = mjml2html(mjmlString, { validationLevel: 'strict' });
   if (errors.length > 0) {
-    return NextResponse.json({ error: 'MJML compilation failed', details: errors }, { status: 400 });
+    return c.json({ error: 'MJML compilation failed', details: errors }, 400);
   }
 
   // Step 3: Translate VIYO-UTL -> ESP-native (R29)
@@ -297,15 +299,15 @@ export async function POST(req: NextRequest) {
   const { html: finalHtml, validation } = engine.compileForEsp(rawHtml);
 
   if (!validation.isValid) {
-    return NextResponse.json({
+    return c.json({
       error: 'ESP compliance check failed',
       missing: validation.missing,
       esp: espId
-    }, { status: 422 });
+    }, 422);
   }
 
-  return NextResponse.json({ html: finalHtml, esp: espId, status: 'ready' });
-}
+  return c.json({ html: finalHtml, esp: espId, status: 'ready' });
+});
 ```
 
 ## 5. E-commerce Data Model Normalizer

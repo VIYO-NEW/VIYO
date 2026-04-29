@@ -11,7 +11,7 @@ This specification defines the security posture, authentication flows, and autho
 
 ## 2. User Authentication (Supabase GoTrue)
 
-VIYO delegates user identity to Supabase Auth (GoTrue).
+VIYO delegates user identity to Supabase Auth (GoTrue) while preserving the v7.1 locked stack: a Vite React SPA hosted on Vercel calls a Hono API backend running on Render, with Supabase as the database/auth authority.
 
 ### 2.1 Supported Auth Methods
 *   **Magic Link (Passwordless):** Primary login method for web dashboard.
@@ -19,42 +19,39 @@ VIYO delegates user identity to Supabase Auth (GoTrue).
 *   **SAML 2.0:** Available for Enterprise tier workspaces.
 
 ### 2.2 JWT Lifecycle
-1.  User authenticates via Vercel frontend.
-2.  Supabase issues a short-lived access token (JWT, 1 hour) and a long-lived refresh token (HTTP-only secure cookie).
-3.  The Next.js App Router middleware verifies the JWT on every request.
+1.  User authenticates from the Vite React SPA hosted on Vercel through Supabase Auth.
+2.  Supabase issues a short-lived access token (JWT, 1 hour) and a refresh token managed by the Supabase browser client.
+3.  The React/TanStack Router layer protects client-only routes for user experience, but the Hono API backend on Render is the authoritative enforcement point for every protected request.
+4.  Hono middleware verifies the `Authorization: Bearer <jwt>` token with Supabase before attaching the authenticated user context to downstream route handlers.
 
 ```typescript
-// src/middleware.ts
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
-import { NextResponse, type NextRequest } from 'next/server';
+// apps/api/src/middleware/auth.ts
+import { createClient } from '@supabase/supabase-js';
+import type { Context, Next } from 'hono';
 
-export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({ request: { headers: request.headers } });
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_ANON_KEY!,
+);
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) { return request.cookies.get(name)?.value; },
-        set(name: string, value: string, options: CookieOptions) {
-          response.cookies.set({ name, value, ...options });
-        },
-        remove(name: string, options: CookieOptions) {
-          response.cookies.set({ name, value: '', ...options });
-        },
-      },
-    }
-  );
+export async function requireUser(c: Context, next: Next) {
+  const authHeader = c.req.header('Authorization');
+  const token = authHeader?.startsWith('Bearer ')
+    ? authHeader.slice('Bearer '.length)
+    : null;
 
-  const { data: { user } } = await supabase.auth.getUser();
-
-  // Protect /dashboard routes
-  if (request.nextUrl.pathname.startsWith('/dashboard') && !user) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  if (!token) {
+    return c.json({ error: 'Missing bearer token' }, 401);
   }
 
-  return response;
+  const { data, error } = await supabase.auth.getUser(token);
+
+  if (error || !data.user) {
+    return c.json({ error: 'Invalid or expired token' }, 401);
+  }
+
+  c.set('user', data.user);
+  return next();
 }
 ```
 
@@ -159,6 +156,6 @@ Background workers (Inngest) and webhook receivers use the `SUPABASE_SERVICE_ROL
 
 ## 6. Network & Edge Security
 
-1.  **DDoS Protection:** Cloudflare WAF is enabled on all `*.viyo.ai` domains.
+1.  **DDoS Protection:** Cloudflare WAF is enabled on all production `*.viyo.app` domains.
 2.  **Rate Limiting:** Implemented at the API gateway level using Upstash Redis to prevent abuse of expensive LLM/Image endpoints.
 3.  **CORS:** API endpoints restrict cross-origin requests to approved domains only.
