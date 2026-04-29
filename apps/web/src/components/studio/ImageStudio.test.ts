@@ -14,6 +14,9 @@ const responseFixture: RouteGenerationResponse = {
   traceId: 'trace-phase6-001',
   assetUrl: 'https://assets.viyo.test/brand/image.png',
   savedToVault: true,
+  persistenceStatus: 'saved',
+  r2ObjectKey:
+    'workspaces/55555555-5555-4555-8555-555555555555/brands/22222222-2222-4222-8222-222222222222/studio/2026-04-29/trace-test/generated-hero.json',
   assetId: '11111111-1111-4111-8111-111111111111',
   palette: [
     { hex: '#112233', name: 'Midnight Ink' },
@@ -114,14 +117,21 @@ describe('Image Studio Phase 6 contract binding', () => {
   });
 
   it('extracts unique Brand Vault mentions with punctuation-safe slugs', () => {
-    expect(parseBrandVaultMentions('Use @hero-bottle, @Hero-Bottle and @logo.v2 in a hero scene.')).toEqual([
+    expect(
+      parseBrandVaultMentions('Use @hero-bottle, @Hero-Bottle and @logo.v2 in a hero scene.'),
+    ).toEqual([
       { raw: '@hero-bottle', slug: 'hero-bottle' },
       { raw: '@logo.v2', slug: 'logo.v2' },
     ]);
   });
 
   it('normalizes comma and newline separated source inputs', () => {
-    expect(parseDelimitedList('one, two\nthree\n\n four ')).toEqual(['one', 'two', 'three', 'four']);
+    expect(parseDelimitedList('one, two\nthree\n\n four ')).toEqual([
+      'one',
+      'two',
+      'three',
+      'four',
+    ]);
   });
 
   it('maps R2 response fields, routing metadata, and Brand Vault mentions into canvas asset state', () => {
@@ -133,6 +143,7 @@ describe('Image Studio Phase 6 contract binding', () => {
       assetId: '11111111-1111-4111-8111-111111111111',
       assetUrl: 'https://assets.viyo.test/brand/image.png',
       savedToVault: true,
+      persistenceStatus: 'saved',
       mode: 'A14',
       editingTool: 'text_edit',
       selectedModel: 'gpt-image-2',

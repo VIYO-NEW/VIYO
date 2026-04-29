@@ -1,0 +1,348 @@
+=== GATE 1: Padding ===
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/phase6-repair/TASK72_R2_AUTO_SAVE_BRAND_VAULT_ARCHITECTURE_PLAN.md",
+  "file_type": "spec",
+  "total_lines": 269,
+  "real_content_lines": 269,
+  "padding_lines": 0,
+  "padding_percent": 0.0,
+  "threshold_percent": 10.0,
+  "pass": true,
+  "verdict": "PASS",
+  "breakdown": {
+    "html_comments": 0,
+    "excessive_blanks": 0,
+    "filler_comments": 0,
+    "placeholders": 0,
+    "repeated_lines": 0
+  },
+  "flagged_sample": []
+}
+=== GATE 2+5+6: Completeness ===
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/phase6-repair/TASK72_R2_AUTO_SAVE_BRAND_VAULT_ARCHITECTURE_PLAN.md",
+  "file_type": "spec",
+  "overall_pass": false,
+  "gap_5_declaration_implementation_parity": {
+    "total_declared": 48,
+    "total_implemented": 48,
+    "parity_percent": 100.0,
+    "pass": true,
+    "items": [
+      {
+        "group": "table_registry",
+        "name": "Gate",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "T32-AUTO-SAVE-VAULT",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "T25-STUDIO-BACKEND",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "T26-STUDIO-FRONTEND",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "T46-COMPOSITE-ART-DIRECTOR-ROUTING-SUITE",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "T70-CACHE-ROUTE-META",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "P0-14",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "P2-11",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "Field",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "assetMetadataVersion",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "workspaceId",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "brandId",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "assetId",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "r2ObjectKey",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "assetUrl",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "assetKind",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "sourceMode",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "editingTool",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "sourcePrompt",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "styleId",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "sourceAssetIds",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "sourceImageUrls",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "mentionReferences",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "selectedModel",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "providerGateway",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "score",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "emailEditorAvailable",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "versionParentAssetId",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "persistenceStatus",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "unavailableReason",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "Step",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "1",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "2",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "3",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "4",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "5",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "6",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "7",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "Evidence",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "System",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "---",
+        "implemented": true,
+        "depth": "production"
+      },
+      {
+        "group": "table_registry",
+        "name": "Taskmaster",
+        "implemented": true,
+        "depth": "production"
+      }
+    ]
+  },
+  "gap_8_coverage_universe_completeness": {
+    "pass": true,
+    "note": "No coverage manifest provided \u2014 skipped. Provide --manifest for full audit.",
+    "universes": {}
+  },
+  "gap_9_production_readiness_depth": {
+    "pass": false,
+    "classification": "description",
+    "production_percent": 20.0,
+    "block_count": 5,
+    "depth_distribution": {
+      "description": 3,
+      "skeleton": 1,
+      "production": 1
+    },
+    "verdict": "FAIL \u2014 only 20.0% of blocks are production-grade"
+  }
+}
+=== GATE 4: Contamination ===
+{
+  "file": "/home/ubuntu/VIYO/docs/internal/phase6-repair/TASK72_R2_AUTO_SAVE_BRAND_VAULT_ARCHITECTURE_PLAN.md",
+  "total_violations": 0,
+  "pass": true,
+  "verdict": "PASS \u2014 no vendor contamination detected",
+  "vendor_breakdown": {},
+  "violations": []
+}

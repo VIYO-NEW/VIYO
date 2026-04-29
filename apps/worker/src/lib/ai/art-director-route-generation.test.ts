@@ -104,7 +104,12 @@ describe('T46 v6.1 routeGeneration execution', () => {
     findPatternCandidatesMock.mockResolvedValue([]);
     markPatternUsedMock.mockResolvedValue(undefined);
     checkBillingStatusMock.mockResolvedValue(undefined);
-    getTokenBalanceMock.mockResolvedValue({ balance: 10000, lifetimeGranted: 10000, lifetimeConsumed: 0, lifetimeRefunded: 0 });
+    getTokenBalanceMock.mockResolvedValue({
+      balance: 10000,
+      lifetimeGranted: 10000,
+      lifetimeConsumed: 0,
+      lifetimeRefunded: 0,
+    });
     deductTokensMock.mockResolvedValue({ newBalance: 7600, tokensDeducted: 2400 });
     getDbMock.mockReturnValue(null);
   });
@@ -142,6 +147,8 @@ describe('T46 v6.1 routeGeneration execution', () => {
     expect(response.fallbackReason).toBe('cache_hit');
     expect(response.costTokens).toBe(0);
     expect(response.tokenAction).toBe('none');
+    expect(response.persistenceStatus).toBe('cache_hit_not_materialized');
+    expect(response.r2ObjectKey).toBeNull();
     expect(response.routingMetadata.billingMode).toBe('free_cache');
     expect(response.routingMetadata.routeSource).toBe('pattern_db_cache');
     expect(response.routingMetadata.cacheStatus).toBe('hit');
@@ -154,7 +161,9 @@ describe('T46 v6.1 routeGeneration execution', () => {
     expect(response.routingMetadata.patternProductType).toBe('beverage');
     expect(response.routingMetadata.patternLayoutType).toBe('square');
     expect(response.routingMetadata.patternId).toBe('11111111-1111-4111-8111-111111111111');
-    expect(response.routingMetadata.resolvedMentions).toEqual([{ raw: '@hero-packshot', slug: 'hero-packshot' }]);
+    expect(response.routingMetadata.resolvedMentions).toEqual([
+      { raw: '@hero-packshot', slug: 'hero-packshot' },
+    ]);
     expect(checkBillingStatusMock).not.toHaveBeenCalled();
     expect(getTokenBalanceMock).not.toHaveBeenCalled();
     expect(deductTokensMock).not.toHaveBeenCalled();
@@ -189,14 +198,16 @@ describe('T46 v6.1 routeGeneration execution', () => {
 
     expect(checkBillingStatusMock).toHaveBeenCalledWith(auth.workspaceId);
     expect(getTokenBalanceMock).toHaveBeenCalledWith(auth.workspaceId);
-    expect(deductTokensMock).toHaveBeenCalledWith(expect.objectContaining({
-      workspaceId: auth.workspaceId,
-      userId: auth.userId,
-      amount: 2400,
-      transactionType: 'art_director_generation',
-      referenceType: 'art_director_trace',
-      metadata: expect.objectContaining({ traceId: response.traceId }),
-    }));
+    expect(deductTokensMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        workspaceId: auth.workspaceId,
+        userId: auth.userId,
+        amount: 2400,
+        transactionType: 'art_director_generation',
+        referenceType: 'art_director_trace',
+        metadata: expect.objectContaining({ traceId: response.traceId }),
+      }),
+    );
     expect(response.isCached).toBe(false);
     expect(response.selectedModel).toBe('gpt-image-2');
     expect(response.providerTier).toBe('tier_1');
@@ -207,8 +218,14 @@ describe('T46 v6.1 routeGeneration execution', () => {
     expect(response.routingMetadata.balanceAfterTokens).toBe(7600);
     expect(response.routingMetadata.tokensDeducted).toBe(2400);
     expect(response.fallbackReason).toBe('cache_miss');
-    expect(response.assetUrl).toMatch(/^https:\/\/assets\.viyo\.test\/art-director\/55555555-5555-4555-8555-555555555555\//);
+    expect(response.assetUrl).toMatch(
+      /^https:\/\/assets\.viyo\.test\/workspaces\/55555555-5555-4555-8555-555555555555\/brands\/22222222-2222-4222-8222-222222222222\/studio\//,
+    );
     expect(response.savedToVault).toBe(false);
+    expect(response.persistenceStatus).toBe('r2_saved_db_unavailable');
+    expect(response.r2ObjectKey).toMatch(
+      /^workspaces\/55555555-5555-4555-8555-555555555555\/brands\/22222222-2222-4222-8222-222222222222\/studio\/\d{4}-\d{2}-\d{2}\/[0-9a-f-]+/,
+    );
     expect(response.routingMetadata.editingTool).toBe('text_edit');
     expect(response.routingMetadata.routeSource).toBe('zero_shot_generation');
     expect(response.routingMetadata.cacheStatus).toBe('miss');
@@ -223,10 +240,16 @@ describe('T46 v6.1 routeGeneration execution', () => {
     });
     expect(r2Bucket.put).toHaveBeenCalledTimes(1);
     const [storagePath, manifest, options] = r2Bucket.put.mock.calls[0];
-    expect(storagePath).toMatch(/^art-director\/55555555-5555-4555-8555-555555555555\//);
+    expect(storagePath).toMatch(
+      /^workspaces\/55555555-5555-4555-8555-555555555555\/brands\/22222222-2222-4222-8222-222222222222\/studio\/\d{4}-\d{2}-\d{2}\/[0-9a-f-]+.*\/generated-section\.json$/,
+    );
+    expect(response.r2ObjectKey).toBe(storagePath);
     expect(JSON.parse(manifest as string)).toMatchObject({
+      metadataVersion: 't72.asset-manifest.v1',
       workspaceId: auth.workspaceId,
       brandId: '22222222-2222-4222-8222-222222222222',
+      assetKind: 'generated-section',
+      r2ObjectKey: storagePath,
       mode: 'A14',
       editingTool: 'text_edit',
       selectedModel: 'gpt-image-2',
@@ -237,7 +260,8 @@ describe('T46 v6.1 routeGeneration execution', () => {
       customMetadata: {
         workspaceId: auth.workspaceId,
         brandId: '22222222-2222-4222-8222-222222222222',
-        model: 'gpt-image-2',
+        assetKind: 'generated-section',
+        metadataVersion: 't72.asset-manifest.v1',
       },
     });
   });
@@ -276,19 +300,78 @@ describe('T46 v6.1 routeGeneration execution', () => {
     expect(getTokenBalanceMock).toHaveBeenCalledWith(auth.workspaceId);
     expect(deductTokensMock).toHaveBeenCalled();
     expect(response.tokenAction).toBe('deducted_after_success');
+    expect(response.persistenceStatus).toBe('r2_saved_db_unavailable');
+    expect(response.r2ObjectKey).toMatch(
+      /^workspaces\/55555555-5555-4555-8555-555555555555\/brands\/22222222-2222-4222-8222-222222222222\/studio\/\d{4}-\d{2}-\d{2}\/[0-9a-f-]+/,
+    );
+    expect(r2Bucket.put).toHaveBeenCalledTimes(1);
+  }, 10000);
+
+  it('reports storage unavailable before materialization when the R2 binding is absent', async () => {
+    const response = await routeGeneration(routeInput({ mode: 'A14', editingTool: 'text_edit' }), {
+      auth,
+      requestId: 'request-no-r2-binding',
+      assetUrlBase: 'https://assets.viyo.test',
+    });
+
+    expect(response.isCached).toBe(false);
+    expect(response.savedToVault).toBe(false);
+    expect(response.persistenceStatus).toBe('r2_binding_unavailable');
+    expect(response.assetUrl).toBeNull();
+    expect(response.r2ObjectKey).toBeNull();
+    expect(deductTokensMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        metadata: expect.objectContaining({
+          savedToVault: false,
+          storagePath: undefined,
+        }),
+      }),
+    );
+  });
+
+  it('reports a failed persistence state when the R2 manifest write rejects', async () => {
+    const r2Bucket = {
+      put: vi.fn(async () => {
+        throw new Error('r2 unavailable');
+      }),
+    };
+
+    const response = await routeGeneration(routeInput({ mode: 'A14', editingTool: 'text_edit' }), {
+      auth,
+      requestId: 'request-r2-failure',
+      r2Bucket,
+      assetUrlBase: 'https://assets.viyo.test',
+    });
+
+    expect(response.isCached).toBe(false);
+    expect(response.savedToVault).toBe(false);
+    expect(response.persistenceStatus).toBe('failed');
+    expect(response.assetUrl).toBeNull();
+    expect(response.r2ObjectKey).toMatch(
+      /^workspaces\/55555555-5555-4555-8555-555555555555\/brands\/22222222-2222-4222-8222-222222222222\/studio\/\d{4}-\d{2}-\d{2}\/[0-9a-f-]+/,
+    );
     expect(r2Bucket.put).toHaveBeenCalledTimes(1);
   });
+
   it('rejects non-cached generation before provider execution when the balance is insufficient', async () => {
-    getTokenBalanceMock.mockResolvedValue({ balance: 1000, lifetimeGranted: 1000, lifetimeConsumed: 0, lifetimeRefunded: 0 });
+    getTokenBalanceMock.mockResolvedValue({
+      balance: 1000,
+      lifetimeGranted: 1000,
+      lifetimeConsumed: 0,
+      lifetimeRefunded: 0,
+    });
     const r2Bucket = { put: vi.fn(async () => undefined) };
 
     await expect(
-      routeGeneration(routeInput({ mode: 'A14', editingTool: 'text_edit', typographyRequired: true }), {
-        auth,
-        requestId: 'request-insufficient-balance',
-        r2Bucket,
-        assetUrlBase: 'https://assets.viyo.test',
-      }),
+      routeGeneration(
+        routeInput({ mode: 'A14', editingTool: 'text_edit', typographyRequired: true }),
+        {
+          auth,
+          requestId: 'request-insufficient-balance',
+          r2Bucket,
+          assetUrlBase: 'https://assets.viyo.test',
+        },
+      ),
     ).rejects.toMatchObject({
       statusCode: 402,
       details: expect.objectContaining({
@@ -303,5 +386,4 @@ describe('T46 v6.1 routeGeneration execution', () => {
     expect(deductTokensMock).not.toHaveBeenCalled();
     expect(r2Bucket.put).not.toHaveBeenCalled();
   });
-
 });

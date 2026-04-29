@@ -6,7 +6,6 @@
  * plans, Gemini-first cache lookup, Claude 3.5 Sonnet zero-shot fallback, Brand
  * Vault @mention resolution, and R2-backed generated-asset indexing hooks.
  */
-import { randomUUID } from 'node:crypto';
 import type * as Shared from '@viyo/shared';
 import { and, desc, eq, ilike, inArray, or, sql } from 'drizzle-orm';
 import { assets } from '@viyo/db';
@@ -66,7 +65,9 @@ export interface CandidateScore {
 interface AssetSaveResult {
   assetUrl: string | null;
   savedToVault: boolean;
+  persistenceStatus: Shared.ArtDirectorPersistenceStatus;
   assetId: string | null;
+  r2ObjectKey: string | null;
   storagePath?: string;
   unavailableReason?: string;
 }
@@ -97,7 +98,10 @@ function fidelityMultiplier(candidate: ImagePatternCandidate): number {
   return clamp(candidate.fidelityScore, 0.5, 1.15);
 }
 
-function typographyMultiplier(input: RouteGenerationInput, selectedProvider: ProviderDescriptor): number {
+function typographyMultiplier(
+  input: RouteGenerationInput,
+  selectedProvider: ProviderDescriptor,
+): number {
   if (!input.typographyRequired) return 1;
   return selectedProvider.typographyOptimized ? 1.1 : 0.9;
 }
@@ -140,12 +144,12 @@ function parsePromptMentions(prompt: string): BrandVaultMention[] {
   let match: RegExpExecArray | null;
 
   while ((match = regex.exec(prompt)) !== null) {
-      const slug = match[1].replace(/[.]+$/g, '').toLowerCase();
-      if (!slug) continue;
-      const raw = `@${slug}`;
-      if (!mentions.has(slug)) {
-        mentions.set(slug, { raw, slug });
-      }
+    const slug = match[1].replace(/[.]+$/g, '').toLowerCase();
+    if (!slug) continue;
+    const raw = `@${slug}`;
+    if (!mentions.has(slug)) {
+      mentions.set(slug, { raw, slug });
+    }
   }
 
   return [...mentions.values()];
@@ -154,7 +158,10 @@ function parsePromptMentions(prompt: string): BrandVaultMention[] {
 function mergeMentions(input: RouteGenerationInput): BrandVaultMention[] {
   const bySlug = new Map<string, BrandVaultMention>();
 
-  for (const mention of [...parsePromptMentions(input.prompt), ...(input.mentionReferences ?? [])]) {
+  for (const mention of [
+    ...parsePromptMentions(input.prompt),
+    ...(input.mentionReferences ?? []),
+  ]) {
     bySlug.set(mention.slug.toLowerCase(), {
       ...(bySlug.get(mention.slug.toLowerCase()) ?? {}),
       ...mention,
@@ -207,10 +214,7 @@ async function resolveBrandVaultMentions(
       .where(
         and(
           eq(assets.workspaceId, context.auth.workspaceId),
-          or(
-            sql`${assets.metadata}->>'brandId' = ${input.brandId}`,
-            sql`${assets.metadata}->>'brand_id' = ${input.brandId}`,
-          ),
+          eq(assets.brandId, input.brandId),
           or(
             sql`${assets.metadata}->>'slug' = ${mention.slug}`,
             sql`${assets.metadata}->>'name' ILIKE ${mention.slug}`,
@@ -235,7 +239,13 @@ async function resolveBrandVaultMentions(
     const sourceAssets = await db
       .select({ id: assets.id, storagePath: assets.storagePath })
       .from(assets)
-      .where(and(eq(assets.workspaceId, context.auth.workspaceId), inArray(assets.id, sourceAssetIds)))
+      .where(
+        and(
+          eq(assets.workspaceId, context.auth.workspaceId),
+          eq(assets.brandId, input.brandId),
+          inArray(assets.id, sourceAssetIds),
+        ),
+      )
       .limit(sourceAssetIds.length);
 
     for (const asset of sourceAssets) {
@@ -279,19 +289,39 @@ async function saveGeneratedAssetToVault(params: {
   score: number;
 }): Promise<AssetSaveResult> {
   if (params.isCached) {
-    return { assetUrl: null, savedToVault: false, assetId: null, unavailableReason: 'cache_hit_does_not_materialize_new_asset' };
+    return {
+      assetUrl: null,
+      savedToVault: false,
+      persistenceStatus: 'cache_hit_not_materialized',
+      assetId: null,
+      r2ObjectKey: null,
+      unavailableReason: 'cache_hit_does_not_materialize_new_asset',
+    };
   }
 
   if (!params.context.r2Bucket) {
-    return { assetUrl: null, savedToVault: false, assetId: null, unavailableReason: 'R2 bucket binding is not configured' };
+    return {
+      assetUrl: null,
+      savedToVault: false,
+      persistenceStatus: 'r2_binding_unavailable',
+      assetId: null,
+      r2ObjectKey: null,
+      unavailableReason: 'R2 bucket binding is not configured',
+    };
   }
 
-  const storagePath = `art-director/${params.context.auth.workspaceId}/${new Date().toISOString().slice(0, 10)}/${params.traceId}-${randomUUID()}.json`;
+  const generatedAt = new Date().toISOString();
+  const assetKind = params.input.editingTool ? 'generated-section' : 'generated-hero';
+  const metadataVersion = 't72.asset-manifest.v1';
+  const storagePath = `workspaces/${params.context.auth.workspaceId}/brands/${params.input.brandId}/studio/${generatedAt.slice(0, 10)}/${params.traceId}/${assetKind}.json`;
   const manifest = JSON.stringify(
     {
+      metadataVersion,
       traceId: params.traceId,
       workspaceId: params.context.auth.workspaceId,
       brandId: params.input.brandId,
+      assetKind,
+      r2ObjectKey: storagePath,
       mode: params.input.mode,
       editingTool: params.input.editingTool ?? null,
       selectedModel: params.provider.model,
@@ -300,21 +330,34 @@ async function saveGeneratedAssetToVault(params: {
       prompt: params.prompt,
       sourceImageUrls: params.input.sourceImageUrls ?? [],
       mentionReferences: params.input.mentionReferences ?? [],
-      generatedAt: new Date().toISOString(),
+      generatedAt,
     },
     null,
     2,
   );
 
-  await params.context.r2Bucket.put(storagePath, manifest, {
-    httpMetadata: { contentType: 'application/json' },
-    customMetadata: {
-      traceId: params.traceId,
-      workspaceId: params.context.auth.workspaceId,
-      brandId: params.input.brandId,
-      model: params.provider.model,
-    },
-  });
+  try {
+    await params.context.r2Bucket.put(storagePath, manifest, {
+      httpMetadata: { contentType: 'application/json' },
+      customMetadata: {
+        traceId: params.traceId,
+        workspaceId: params.context.auth.workspaceId,
+        brandId: params.input.brandId,
+        assetKind,
+        metadataVersion,
+      },
+    });
+  } catch (error) {
+    return {
+      assetUrl: null,
+      savedToVault: false,
+      persistenceStatus: 'failed',
+      assetId: null,
+      r2ObjectKey: storagePath,
+      storagePath,
+      unavailableReason: error instanceof Error ? error.message : 'R2 object write failed',
+    };
+  }
 
   const assetUrl = publicAssetUrl(storagePath, params.config, params.context);
   const db = getDb();
@@ -322,36 +365,63 @@ async function saveGeneratedAssetToVault(params: {
     return {
       assetUrl,
       savedToVault: false,
+      persistenceStatus: 'r2_saved_db_unavailable',
       assetId: null,
+      r2ObjectKey: storagePath,
       storagePath,
-      unavailableReason: 'DATABASE_URL is not configured, so the R2 object could not be indexed in assets',
+      unavailableReason:
+        'DATABASE_URL is not configured, so the R2 object could not be indexed in assets',
     };
   }
 
-  const [row] = await db
-    .insert(assets)
-    .values({
-      workspaceId: params.context.auth.workspaceId,
-      assetType: params.input.editingTool ? 'generated_section' : 'generated_hero',
-      storagePath,
-      mimeType: 'application/json',
-      sourceModel: params.provider.model,
-      generationPrompt: params.prompt,
-      metadata: {
-        traceId: params.traceId,
+  try {
+    const [row] = await db
+      .insert(assets)
+      .values({
+        workspaceId: params.context.auth.workspaceId,
         brandId: params.input.brandId,
-        mode: params.input.mode,
-        editingTool: params.input.editingTool ?? null,
-        providerGateway: params.provider.gateway,
-        fallbackGateway: params.provider.fallbackGateway ?? null,
-        score: params.score,
-        sourceImageUrls: params.input.sourceImageUrls ?? [],
-        mentionReferences: params.input.mentionReferences ?? [],
-      },
-    })
-    .returning({ id: assets.id });
+        assetType: params.input.editingTool ? 'generated_section' : 'generated_hero',
+        storagePath,
+        mimeType: 'application/json',
+        sourceModel: params.provider.model,
+        generationPrompt: params.prompt,
+        metadata: {
+          metadataVersion,
+          traceId: params.traceId,
+          mode: params.input.mode,
+          assetKind,
+          r2ObjectKey: storagePath,
+          editingTool: params.input.editingTool ?? null,
+          providerGateway: params.provider.gateway,
+          fallbackGateway: params.provider.fallbackGateway ?? null,
+          score: params.score,
+          sourceImageUrls: params.input.sourceImageUrls ?? [],
+          mentionReferences: params.input.mentionReferences ?? [],
+        },
+      })
+      .returning({ id: assets.id });
 
-  return { assetUrl, savedToVault: Boolean(row?.id && assetUrl), assetId: row?.id ?? null, storagePath };
+    return {
+      assetUrl,
+      savedToVault: Boolean(row?.id),
+      persistenceStatus: row?.id ? 'saved' : 'r2_saved_db_unavailable',
+      assetId: row?.id ?? null,
+      r2ObjectKey: storagePath,
+      storagePath,
+      unavailableReason: row?.id ? undefined : 'Database insert did not return an asset id',
+    };
+  } catch (error) {
+    return {
+      assetUrl,
+      savedToVault: false,
+      persistenceStatus: 'r2_saved_db_unavailable',
+      assetId: null,
+      r2ObjectKey: storagePath,
+      storagePath,
+      unavailableReason:
+        error instanceof Error ? error.message : 'R2 object was saved but database indexing failed',
+    };
+  }
 }
 
 function buildResponse(params: {
@@ -377,18 +447,20 @@ function buildResponse(params: {
 }): RouteGenerationResponse {
   const durationMs = Math.max(0, Date.now() - params.startedAt);
   const costTokens = params.isCached ? 0 : params.provider.costTokens;
-  const routeSource: RouteGenerationResponse['routingMetadata']['routeSource'] = !params.routerEnabled
-    ? 'router_disabled_rollback'
-    : params.isCached
-      ? 'pattern_db_cache'
-      : 'zero_shot_generation';
-  const cacheStatus: RouteGenerationResponse['routingMetadata']['cacheStatus'] = !params.routerEnabled
-    ? 'disabled'
-    : params.isCached
-      ? 'hit'
-      : params.patternScore
-        ? 'below_threshold'
-        : 'miss';
+  const routeSource: RouteGenerationResponse['routingMetadata']['routeSource'] =
+    !params.routerEnabled
+      ? 'router_disabled_rollback'
+      : params.isCached
+        ? 'pattern_db_cache'
+        : 'zero_shot_generation';
+  const cacheStatus: RouteGenerationResponse['routingMetadata']['cacheStatus'] =
+    !params.routerEnabled
+      ? 'disabled'
+      : params.isCached
+        ? 'hit'
+        : params.patternScore
+          ? 'below_threshold'
+          : 'miss';
 
   const response: RouteGenerationResponse = {
     selectedModel: params.provider.model,
@@ -401,6 +473,8 @@ function buildResponse(params: {
     traceId: params.traceId,
     assetUrl: params.assetSave.assetUrl,
     savedToVault: params.assetSave.savedToVault,
+    persistenceStatus: params.assetSave.persistenceStatus,
+    r2ObjectKey: params.assetSave.r2ObjectKey,
     assetId: params.assetSave.assetId,
     routingMetadata: {
       mode: params.input.mode,
@@ -418,11 +492,21 @@ function buildResponse(params: {
       resolvedMentions: params.input.mentionReferences ?? [],
       evaluatedPatternCount: params.evaluatedPatternCount,
       bestPatternScore: params.patternScore?.score ?? null,
-      bestPatternSimilarity: params.patternScore ? roundScore(params.patternScore.candidate.similarity) : null,
-      bestPatternQualityScore: params.patternScore ? roundScore(params.patternScore.baseQualityScore) : null,
-      bestPatternCostEfficiencyScore: params.patternScore ? roundScore(params.patternScore.costEfficiencyScore) : null,
-      bestPatternFidelityMultiplier: params.patternScore ? roundScore(params.patternScore.fidelityMultiplier) : null,
-      bestPatternTypographyMultiplier: params.patternScore ? roundScore(params.patternScore.typographyMultiplier) : null,
+      bestPatternSimilarity: params.patternScore
+        ? roundScore(params.patternScore.candidate.similarity)
+        : null,
+      bestPatternQualityScore: params.patternScore
+        ? roundScore(params.patternScore.baseQualityScore)
+        : null,
+      bestPatternCostEfficiencyScore: params.patternScore
+        ? roundScore(params.patternScore.costEfficiencyScore)
+        : null,
+      bestPatternFidelityMultiplier: params.patternScore
+        ? roundScore(params.patternScore.fidelityMultiplier)
+        : null,
+      bestPatternTypographyMultiplier: params.patternScore
+        ? roundScore(params.patternScore.typographyMultiplier)
+        : null,
       patternCategory: params.patternScore?.candidate.category ?? null,
       patternProductType: params.patternScore?.candidate.productType ?? null,
       patternLayoutType: params.patternScore?.candidate.layoutType ?? null,
@@ -527,7 +611,9 @@ async function deductArtDirectorTokensAfterSuccess(params: {
   assetSave: AssetSaveResult;
 }): Promise<BillingLifecycleResult> {
   if (!params.context.auth.userId) {
-    throw new ApiError(401, 'Authenticated user is required to deduct Art Director tokens.', { code: 'AUTH_REQUIRED' });
+    throw new ApiError(401, 'Authenticated user is required to deduct Art Director tokens.', {
+      code: 'AUTH_REQUIRED',
+    });
   }
 
   const deduction = await deductTokens({
@@ -658,7 +744,13 @@ export async function routeGeneration(
       threshold: config.threshold,
       billingMode: 'free_cache',
       tokenAction: 'none',
-      assetSave: { assetUrl: null, savedToVault: false, assetId: null },
+      assetSave: {
+        assetUrl: null,
+        savedToVault: false,
+        persistenceStatus: 'cache_hit_not_materialized',
+        assetId: null,
+        r2ObjectKey: null,
+      },
       pipelineSteps,
       zeroShotPromptModel: null,
     });
@@ -671,7 +763,9 @@ export async function routeGeneration(
   const provider = selectRouteProvider(effectiveInput, config);
   const fallbackReason: ArtDirectorFallbackReason = best ? 'score_below_threshold' : 'cache_miss';
 
-  const cacheStatus: RouteGenerationResponse['routingMetadata']['cacheStatus'] = best ? 'below_threshold' : 'miss';
+  const cacheStatus: RouteGenerationResponse['routingMetadata']['cacheStatus'] = best
+    ? 'below_threshold'
+    : 'miss';
   const resolvedFallbackReason = provider.available ? fallbackReason : 'provider_unavailable';
   const preflight = await preflightArtDirectorTokens({ context, provider });
 

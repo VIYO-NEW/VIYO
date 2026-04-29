@@ -126,7 +126,9 @@ describe('T46 v6.1 Art Director provider registry', () => {
     expect(providers).toHaveLength(32);
     expect(Object.keys(ART_DIRECTOR_GENERATION_MODEL_METADATA)).toHaveLength(22);
     expect(ART_DIRECTOR_GENERATION_MODEL_METADATA['flux-kontext-max'].tier).toBe('tier_2');
-    expect(ART_DIRECTOR_GENERATION_MODEL_METADATA['imagen-4.0-generate-001'].gateway).toBe('google');
+    expect(ART_DIRECTOR_GENERATION_MODEL_METADATA['imagen-4.0-generate-001'].gateway).toBe(
+      'google',
+    );
     expect(provider.model).toBe('flux-2-pro');
     expect(provider.tier).toBe('tier_2');
     expect(provider.gateway).toBe('atlas-cloud');
@@ -161,19 +163,22 @@ describe('T46 v6.1 Art Director provider registry', () => {
 
   it('maps all A1–A22 generation modes and marks the original pipeline modes for PO review', () => {
     expect(Object.keys(ART_DIRECTOR_MODE_PRIMARY_MODELS)).toHaveLength(22);
-    expect(resolveModeProviderCandidates('A1', enabledConfig).map((provider) => provider.model)).toEqual([
-      'flux-2-pro',
-      'nano-banana-pro',
-      'imagen-4.0-generate-001',
-      'imagen-4',
+    expect(
+      resolveModeProviderCandidates('A1', enabledConfig).map((provider) => provider.model),
+    ).toEqual(['flux-2-pro', 'nano-banana-pro', 'imagen-4.0-generate-001', 'imagen-4']);
+    expect(
+      resolveModeProviderCandidates('A3', enabledConfig).map((provider) => provider.model),
+    ).toEqual(['rmbg', 'flux-2-pro', 'ideogram-3.0-turbo', 'ideogram-v3']);
+    expect([...ART_DIRECTOR_PO_REVIEW_PIPELINE_MODES]).toEqual([
+      'A3',
+      'A4',
+      'A8',
+      'A9',
+      'A13',
+      'A14',
+      'A15',
+      'A16',
     ]);
-    expect(resolveModeProviderCandidates('A3', enabledConfig).map((provider) => provider.model)).toEqual([
-      'rmbg',
-      'flux-2-pro',
-      'ideogram-3.0-turbo',
-      'ideogram-v3',
-    ]);
-    expect([...ART_DIRECTOR_PO_REVIEW_PIPELINE_MODES]).toEqual(['A3', 'A4', 'A8', 'A9', 'A13', 'A14', 'A15', 'A16']);
   });
 });
 
@@ -196,7 +201,10 @@ describe('T46 v6.1 editing tool router', () => {
       'tier-2-background-generation',
       'sharp-composite',
     ]);
-    expect(getEditingToolPlan('upscale').primaryModels).toEqual(['real-esrgan', 'imagen-4.0-generate-001']);
+    expect(getEditingToolPlan('upscale').primaryModels).toEqual([
+      'real-esrgan',
+      'imagen-4.0-generate-001',
+    ]);
     expect(getEditingToolPlan('upscale').pipelineSteps).toEqual(['provider-selected-upscale']);
     expect(getEditingToolPlan('quick_edit').localOnly).toBe(true);
     expect(getEditingToolPlan('quick_edit').providerRequired).toBe(false);
@@ -217,8 +225,12 @@ describe('T46 v6.1 editing tool router', () => {
 
 describe('T46 v6.1 shared Art Director contract', () => {
   it('accepts model metadata, editing-tool contracts, mode, Brand Vault mentions, source assets, and R2 response fields', () => {
-    const modelMetadata = artDirectorModelMetadataSchema.parse(ART_DIRECTOR_GENERATION_MODEL_METADATA['seedream-4.5']);
-    const editingContract = artDirectorEditingToolContractSchema.parse(ART_DIRECTOR_EDITING_TOOL_CONTRACTS.background_swap);
+    const modelMetadata = artDirectorModelMetadataSchema.parse(
+      ART_DIRECTOR_GENERATION_MODEL_METADATA['seedream-4.5'],
+    );
+    const editingContract = artDirectorEditingToolContractSchema.parse(
+      ART_DIRECTOR_EDITING_TOOL_CONTRACTS.background_swap,
+    );
 
     expect(modelMetadata.typographyOptimized).toBe(true);
     expect(editingContract.primaryModels).toContain('flux-kontext-max');
@@ -250,6 +262,9 @@ describe('T46 v6.1 shared Art Director contract', () => {
       traceId: 'trace-123',
       assetUrl: 'https://assets.viyo.test/generated.json',
       savedToVault: true,
+      persistenceStatus: 'saved',
+      r2ObjectKey:
+        'workspaces/55555555-5555-4555-8555-555555555555/brands/22222222-2222-4222-8222-222222222222/studio/2026-04-29/trace-123/generated-hero.json',
       assetId: '44444444-4444-4444-8444-444444444444',
       routingMetadata: {
         mode: request.mode,
@@ -283,6 +298,8 @@ describe('T46 v6.1 shared Art Director contract', () => {
 
     expect(request.mode).toBe('A14');
     expect(response.assetUrl).toBe('https://assets.viyo.test/generated.json');
+    expect(response.persistenceStatus).toBe('saved');
+    expect(response.r2ObjectKey).toContain('/studio/2026-04-29/trace-123/');
     expect(response.routingMetadata.resolvedMentions[0]?.slug).toBe('hero-packshot');
   });
 });
@@ -299,14 +316,19 @@ describe('T46 v6.1 zero-shot fallback prompts', () => {
     expect(result.unavailableReason).toContain('ANTHROPIC_API_KEY');
     expect(result.prompt).toContain('Create a vertical_story general image in aspect ratio 9:16.');
     expect(result.prompt).toContain('Mode A1: Launch image for a premium coffee subscription');
-    expect(result.prompt).toContain('Typography must be legible, brand-safe, and central to the composition.');
+    expect(result.prompt).toContain(
+      'Typography must be legible, brand-safe, and central to the composition.',
+    );
   });
 
   it('uses Claude text when the configured Claude-compatible endpoint returns provider-ready content', async () => {
     const fetchImpl = async () =>
-      new Response(JSON.stringify({ content: [{ text: 'Claude-composed commercial image prompt.' }] }), {
-        status: 200,
-      });
+      new Response(
+        JSON.stringify({ content: [{ text: 'Claude-composed commercial image prompt.' }] }),
+        {
+          status: 200,
+        },
+      );
 
     const result = await buildZeroShotFallbackPrompt(routeInput({ typographyRequired: false }), {
       apiKey: 'claude-key',
@@ -336,7 +358,13 @@ describe('T46 v6.1 corrected Art Director scoring', () => {
     const provider = selectProvider({ typographyRequired: true, config: enabledConfig });
 
     const result = calculateArtDirectorScore(
-      candidate({ targetModels: ['gpt-image-2'], fidelityScore: 1, qaScore: 1, similarity: 1, costPerGen: 0 }),
+      candidate({
+        targetModels: ['gpt-image-2'],
+        fidelityScore: 1,
+        qaScore: 1,
+        similarity: 1,
+        costPerGen: 0,
+      }),
       provider,
       { typographyRequired: true },
     );
