@@ -348,6 +348,10 @@ export const routeGenerationRoutingMetadataSchema = z.object({
   pipelineRequiresPoReview: z.boolean().default(false),
   pipelineSteps: z.array(z.string()).default([]),
   zeroShotPromptModel: z.literal('claude-3-5-sonnet').nullable().optional(),
+  estimatedCostTokens: z.number().int().min(0).optional(),
+  balanceBeforeTokens: z.number().int().min(0).nullable().optional(),
+  balanceAfterTokens: z.number().int().min(0).nullable().optional(),
+  tokensDeducted: z.number().int().min(0).optional(),
 });
 
 export const routeGenerationResponseSchema = z.object({

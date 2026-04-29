@@ -6,6 +6,8 @@ type AuthContext = Shared.AuthContext;
 type RouteGenerationInput = Shared.RouteGenerationInput;
 
 const checkBillingStatusMock = vi.fn();
+const deductTokensMock = vi.fn();
+const getTokenBalanceMock = vi.fn();
 const getSystemConfigMock = vi.fn(async () => null);
 const generateGeminiEmbeddingMock = vi.fn();
 const findPatternCandidatesMock = vi.fn();
@@ -14,6 +16,8 @@ const getDbMock = vi.fn(() => null);
 
 vi.mock('../token-engine.js', () => ({
   checkBillingStatus: checkBillingStatusMock,
+  deductTokens: deductTokensMock,
+  getTokenBalance: getTokenBalanceMock,
   getSystemConfig: getSystemConfigMock,
 }));
 
@@ -100,6 +104,8 @@ describe('T46 v6.1 routeGeneration execution', () => {
     findPatternCandidatesMock.mockResolvedValue([]);
     markPatternUsedMock.mockResolvedValue(undefined);
     checkBillingStatusMock.mockResolvedValue(undefined);
+    getTokenBalanceMock.mockResolvedValue({ balance: 10000, lifetimeGranted: 10000, lifetimeConsumed: 0, lifetimeRefunded: 0 });
+    deductTokensMock.mockResolvedValue({ newBalance: 7600, tokensDeducted: 2400 });
     getDbMock.mockReturnValue(null);
   });
 
@@ -150,6 +156,8 @@ describe('T46 v6.1 routeGeneration execution', () => {
     expect(response.routingMetadata.patternId).toBe('11111111-1111-4111-8111-111111111111');
     expect(response.routingMetadata.resolvedMentions).toEqual([{ raw: '@hero-packshot', slug: 'hero-packshot' }]);
     expect(checkBillingStatusMock).not.toHaveBeenCalled();
+    expect(getTokenBalanceMock).not.toHaveBeenCalled();
+    expect(deductTokensMock).not.toHaveBeenCalled();
     expect(markPatternUsedMock).toHaveBeenCalledWith('11111111-1111-4111-8111-111111111111');
     expect(r2Bucket.put).not.toHaveBeenCalled();
   });
@@ -180,11 +188,24 @@ describe('T46 v6.1 routeGeneration execution', () => {
     );
 
     expect(checkBillingStatusMock).toHaveBeenCalledWith(auth.workspaceId);
+    expect(getTokenBalanceMock).toHaveBeenCalledWith(auth.workspaceId);
+    expect(deductTokensMock).toHaveBeenCalledWith(expect.objectContaining({
+      workspaceId: auth.workspaceId,
+      userId: auth.userId,
+      amount: 2400,
+      transactionType: 'art_director_generation',
+      referenceType: 'art_director_trace',
+      metadata: expect.objectContaining({ traceId: response.traceId }),
+    }));
     expect(response.isCached).toBe(false);
     expect(response.selectedModel).toBe('gpt-image-2');
     expect(response.providerTier).toBe('tier_1');
     expect(response.costTokens).toBe(2400);
-    expect(response.tokenAction).toBe('prechecked');
+    expect(response.tokenAction).toBe('deducted_after_success');
+    expect(response.routingMetadata.estimatedCostTokens).toBe(2400);
+    expect(response.routingMetadata.balanceBeforeTokens).toBe(10000);
+    expect(response.routingMetadata.balanceAfterTokens).toBe(7600);
+    expect(response.routingMetadata.tokensDeducted).toBe(2400);
     expect(response.fallbackReason).toBe('cache_miss');
     expect(response.assetUrl).toMatch(/^https:\/\/assets\.viyo\.test\/art-director\/55555555-5555-4555-8555-555555555555\//);
     expect(response.savedToVault).toBe(false);
@@ -252,6 +273,35 @@ describe('T46 v6.1 routeGeneration execution', () => {
     expect(response.routingMetadata.patternTypographyStyle).toBe('headline-safe');
     expect(response.routingMetadata.patternId).toBe('11111111-1111-4111-8111-111111111111');
     expect(checkBillingStatusMock).toHaveBeenCalledWith(auth.workspaceId);
+    expect(getTokenBalanceMock).toHaveBeenCalledWith(auth.workspaceId);
+    expect(deductTokensMock).toHaveBeenCalled();
+    expect(response.tokenAction).toBe('deducted_after_success');
     expect(r2Bucket.put).toHaveBeenCalledTimes(1);
   });
+  it('rejects non-cached generation before provider execution when the balance is insufficient', async () => {
+    getTokenBalanceMock.mockResolvedValue({ balance: 1000, lifetimeGranted: 1000, lifetimeConsumed: 0, lifetimeRefunded: 0 });
+    const r2Bucket = { put: vi.fn(async () => undefined) };
+
+    await expect(
+      routeGeneration(routeInput({ mode: 'A14', editingTool: 'text_edit', typographyRequired: true }), {
+        auth,
+        requestId: 'request-insufficient-balance',
+        r2Bucket,
+        assetUrlBase: 'https://assets.viyo.test',
+      }),
+    ).rejects.toMatchObject({
+      statusCode: 402,
+      details: expect.objectContaining({
+        code: 'INSUFFICIENT_TOKENS',
+        required: 2400,
+        balance: 1000,
+      }),
+    });
+
+    expect(checkBillingStatusMock).toHaveBeenCalledWith(auth.workspaceId);
+    expect(getTokenBalanceMock).toHaveBeenCalledWith(auth.workspaceId);
+    expect(deductTokensMock).not.toHaveBeenCalled();
+    expect(r2Bucket.put).not.toHaveBeenCalled();
+  });
+
 });

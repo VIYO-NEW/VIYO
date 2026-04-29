@@ -1,5 +1,4 @@
-import { useMemo, useState } from 'react';
-import type { FormEvent } from 'react';
+import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react';
 import {
   routeGenerationRequestSchema,
   type ArtDirectorAspectRatio,
@@ -15,7 +14,9 @@ import {
   studioEditingToolDefinitions,
   studioModeDefinitions,
 } from '../../lib/studio-contract.js';
-import { routeStudioGeneration } from '../../lib/studio-api.js';
+import { isInsufficientTokensError, routeStudioGeneration, type StudioApiError } from '../../lib/studio-api.js';
+import { fetchTokenBalance, type TokenBalance } from '../../lib/billing-api.js';
+import { InsufficientTokensModal } from '../billing/InsufficientTokensModal.js';
 
 interface ImageStudioProps {
   brandId: string;
@@ -38,6 +39,10 @@ interface StudioCanvasAsset {
   score: number;
   costTokens: number;
   tokenAction: string;
+  estimatedCostTokens: number;
+  balanceBeforeTokens?: number | null;
+  balanceAfterTokens?: number | null;
+  tokensDeducted: number;
   fallbackReason?: string;
   evaluatedPatternCount: number;
   bestPatternScore?: number | null;
@@ -99,6 +104,10 @@ function resultToCanvasAsset(response: RouteGenerationResponse, prompt: string):
     score: response.score,
     costTokens: response.costTokens,
     tokenAction: response.tokenAction,
+    estimatedCostTokens: response.routingMetadata.estimatedCostTokens ?? response.costTokens,
+    balanceBeforeTokens: response.routingMetadata.balanceBeforeTokens ?? null,
+    balanceAfterTokens: response.routingMetadata.balanceAfterTokens ?? null,
+    tokensDeducted: response.routingMetadata.tokensDeducted ?? (response.tokenAction === 'deducted_after_success' ? response.costTokens : 0),
     fallbackReason: response.fallbackReason,
     evaluatedPatternCount: response.routingMetadata.evaluatedPatternCount,
     bestPatternScore: response.routingMetadata.bestPatternScore ?? null,
@@ -123,6 +132,43 @@ function formatToolName(tool?: ArtDirectorEditingTool | null): string {
   return studioEditingToolDefinitions.find((definition) => definition.id === tool)?.title ?? tool;
 }
 
+const studioModeEstimatedTokens: Record<ArtDirectorGenerationMode, number> = {
+  A1: 1_000,
+  A2: 2_400,
+  A3: 120,
+  A4: 180,
+  A5: 900,
+  A6: 950,
+  A7: 900,
+  A8: 1_000,
+  A9: 120,
+  A10: 1_000,
+  A11: 850,
+  A12: 1_000,
+  A13: 1_000,
+  A14: 950,
+  A15: 850,
+  A16: 180,
+  A17: 2_400,
+  A18: 1_000,
+  A19: 1_000,
+  A20: 220,
+  A21: 900,
+  A22: 1_000,
+};
+
+function estimateStudioTokens(mode: ArtDirectorGenerationMode): number {
+  return studioModeEstimatedTokens[mode];
+}
+
+function formatTokens(value: number | null | undefined): string {
+  if (value === null || value === undefined) {
+    return 'Unavailable';
+  }
+
+  return new Intl.NumberFormat().format(value);
+}
+
 export function ImageStudio({ brandId }: ImageStudioProps) {
   const [selectedMode, setSelectedMode] = useState<ArtDirectorGenerationMode>('A1');
   const [selectedTool, setSelectedTool] = useState<ArtDirectorEditingTool | undefined>();
@@ -137,6 +183,10 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
   const [statusMessage, setStatusMessage] = useState('Ready to create with the v6.1 Art Director Router.');
   const [canvasAssets, setCanvasAssets] = useState<StudioCanvasAsset[]>([]);
   const [lastResponse, setLastResponse] = useState<RouteGenerationResponse | null>(null);
+  const [tokenBalance, setTokenBalance] = useState<TokenBalance | null>(null);
+  const [billingError, setBillingError] = useState<string | null>(null);
+  const [showInsufficientTokensModal, setShowInsufficientTokensModal] = useState(false);
+  const [insufficientTokensContext, setInsufficientTokensContext] = useState<{ estimatedCost?: number; currentBalance: number } | null>(null);
 
   const selectedModeDefinition = useMemo(
     () => studioModeDefinitions.find((mode) => mode.id === selectedMode) ?? studioModeDefinitions[0],
@@ -147,12 +197,41 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
     [selectedTool],
   );
   const parsedMentions = useMemo(() => parseBrandVaultMentions(prompt), [prompt]);
+  const estimatedCostTokens = useMemo(() => estimateStudioTokens(selectedMode), [selectedMode]);
+  const hasInsufficientBalance = tokenBalance ? tokenBalance.balance < estimatedCostTokens : false;
+
+  const refreshTokenBalance = useCallback(async () => {
+    try {
+      const balance = await fetchTokenBalance();
+      setTokenBalance(balance);
+      setBillingError(null);
+      return balance;
+    } catch (caughtError) {
+      console.error('[VIYO] Failed to load Studio token balance:', caughtError);
+      setBillingError('Token balance is temporarily unavailable. The backend will still enforce billing before execution.');
+      return null;
+    }
+  }, []);
+
+  useEffect(() => {
+    void refreshTokenBalance();
+  }, [refreshTokenBalance]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+    setBillingError(null);
+
+    const latestBalance = tokenBalance ?? (await refreshTokenBalance());
+    if (latestBalance && latestBalance.balance < estimatedCostTokens) {
+      setInsufficientTokensContext({ estimatedCost: estimatedCostTokens, currentBalance: latestBalance.balance });
+      setShowInsufficientTokensModal(true);
+      setStatusMessage('Add tokens before routing this Studio request.');
+      return;
+    }
+
     setIsSubmitting(true);
-    setStatusMessage('Routing request through Art Director v6.1…');
+    setStatusMessage('Routing request through Art Director v6.1 with billing preflight…');
 
     try {
       const request: RouteGenerationInput = routeGenerationRequestSchema.parse({
@@ -177,12 +256,24 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
       const response = await routeStudioGeneration(request);
       setLastResponse(response);
       setCanvasAssets((currentAssets) => [resultToCanvasAsset(response, request.prompt), ...currentAssets]);
+      await refreshTokenBalance();
       setStatusMessage(
         response.assetUrl
-          ? 'Image routed successfully and added to the canvas.'
+          ? `Image routed successfully. ${formatTokens(response.routingMetadata.tokensDeducted ?? response.costTokens)} tokens reconciled after success.`
           : 'Request routed successfully. The backend returned trace metadata without an image URL.',
       );
     } catch (caughtError) {
+      if (isInsufficientTokensError(caughtError)) {
+        const error = caughtError as StudioApiError;
+        const currentBalance = error.currentBalance ?? tokenBalance?.balance ?? 0;
+        const estimatedCost = error.estimatedCostTokens ?? error.requiredTokens ?? estimatedCostTokens;
+        setInsufficientTokensContext({ estimatedCost, currentBalance });
+        setShowInsufficientTokensModal(true);
+        setError('Your workspace needs more tokens before Studio can complete this operation.');
+        setStatusMessage('Token top-up required before this Studio request can run.');
+        return;
+      }
+
       const message = caughtError instanceof Error ? caughtError.message : 'Image Studio request failed.';
       setError(message);
       setStatusMessage('Request failed. Review the command panel details and try again.');
@@ -208,6 +299,18 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
           </dl>
         </div>
       </header>
+
+      {showInsufficientTokensModal && insufficientTokensContext ? (
+        <InsufficientTokensModal
+          estimatedCost={insufficientTokensContext.estimatedCost}
+          currentBalance={insufficientTokensContext.currentBalance}
+          onClose={() => setShowInsufficientTokensModal(false)}
+          onPurchased={() => {
+            setShowInsufficientTokensModal(false);
+            void refreshTokenBalance();
+          }}
+        />
+      ) : null}
 
       <div className="grid min-h-[calc(100vh-137px)] grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)_380px]">
         <aside aria-labelledby="mode-picker-heading" className="border-b border-white/10 bg-slate-900/80 p-5 lg:border-b-0 lg:border-r">
@@ -334,6 +437,16 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
                         <dd className="mt-1 break-all font-mono text-slate-200">
                           {asset.patternId ? `${asset.patternCategory ?? 'pattern'} · ${asset.patternProductType ?? 'general'} · ${asset.patternLayoutType ?? 'layout'} · ${asset.patternTypographyStyle ?? 'typography'}` : 'Zero-shot generation'}
                         </dd>
+                      </div>
+                      <div className="rounded-xl bg-white/[0.04] p-3">
+                        <dt className="text-slate-500">Billing reconciliation</dt>
+                        <dd className="mt-1 font-mono text-slate-200">
+                          {formatTokens(asset.tokensDeducted)} deducted · {asset.tokenAction}
+                        </dd>
+                      </div>
+                      <div className="rounded-xl bg-white/[0.04] p-3">
+                        <dt className="text-slate-500">Balance after success</dt>
+                        <dd className="mt-1 font-mono text-slate-200">{formatTokens(asset.balanceAfterTokens)}</dd>
                       </div>
                     </dl>
                     {asset.palette && asset.palette.length > 0 ? (
@@ -482,6 +595,23 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
               />
             </label>
 
+            <section className="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-3 text-sm text-cyan-50" data-testid="studio-token-estimate">
+              <div className="flex items-center justify-between gap-3">
+                <span>Estimated Studio cost</span>
+                <strong>{formatTokens(estimatedCostTokens)} tokens</strong>
+              </div>
+              <div className="mt-2 flex items-center justify-between gap-3 text-xs text-cyan-100/80">
+                <span>Current balance</span>
+                <span>{tokenBalance ? `${formatTokens(tokenBalance.balance)} tokens` : 'Loading…'}</span>
+              </div>
+              {hasInsufficientBalance ? (
+                <p className="mt-2 rounded-xl border border-amber-300/30 bg-amber-300/10 p-2 text-xs text-amber-100" role="status">
+                  Add tokens before routing. Final enforcement remains the backend atomic deduction.
+                </p>
+              ) : null}
+              {billingError ? <p className="mt-2 text-xs text-amber-100">{billingError}</p> : null}
+            </section>
+
             {error ? (
               <div className="rounded-2xl border border-red-400/30 bg-red-500/10 p-3 text-sm text-red-100" role="alert">
                 {error}
@@ -494,7 +624,7 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
               className="w-full rounded-2xl bg-cyan-300 px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-cyan-200 disabled:cursor-not-allowed disabled:bg-slate-600 disabled:text-slate-300"
               data-testid="studio-submit-button"
             >
-              {isSubmitting ? 'Routing…' : selectedTool ? `Run ${selectedToolDefinition?.title ?? selectedTool}` : 'Generate image'}
+              {isSubmitting ? 'Routing…' : hasInsufficientBalance ? 'Add tokens to continue' : selectedTool ? `Run ${selectedToolDefinition?.title ?? selectedTool}` : 'Generate image'}
             </button>
           </form>
 
@@ -521,6 +651,14 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <dt className="text-slate-500">Estimated cost</dt>
+                    <dd className="mt-1 font-mono text-slate-100">{formatTokens(lastResponse.routingMetadata.estimatedCostTokens ?? lastResponse.costTokens)}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-slate-500">Balance after</dt>
+                    <dd className="mt-1 font-mono text-slate-100">{formatTokens(lastResponse.routingMetadata.balanceAfterTokens)}</dd>
+                  </div>
                   <div>
                     <dt className="text-slate-500">Route source</dt>
                     <dd className="mt-1 font-mono text-slate-100">{lastResponse.routingMetadata.routeSource}</dd>

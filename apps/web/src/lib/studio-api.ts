@@ -23,8 +23,23 @@ interface TrpcErrorEnvelope {
     data?: {
       code?: string;
       httpStatus?: number;
+      apiError?: {
+        message?: string;
+        details?: Record<string, unknown>;
+      };
     };
   };
+}
+
+export interface StudioApiError extends Error {
+  status?: number;
+  code?: number | string;
+  apiErrorCode?: string;
+  details?: Record<string, unknown>;
+  requiredTokens?: number;
+  currentBalance?: number;
+  estimatedCostTokens?: number;
+  selectedModel?: string;
 }
 
 async function getAuthHeaders(): Promise<Record<string, string>> {
@@ -58,12 +73,37 @@ function unwrapTrpcData(body: unknown): unknown {
   return data ?? body;
 }
 
-function buildStudioApiError(body: unknown, status: number): Error {
+function numberFromDetails(details: Record<string, unknown> | undefined, key: string): number | undefined {
+  const value = details?.[key];
+  return typeof value === 'number' && Number.isFinite(value) ? value : undefined;
+}
+
+function stringFromDetails(details: Record<string, unknown> | undefined, key: string): string | undefined {
+  const value = details?.[key];
+  return typeof value === 'string' ? value : undefined;
+}
+
+function codeFromDetails(details: Record<string, unknown> | undefined): string | undefined {
+  return stringFromDetails(details, 'code');
+}
+
+function buildStudioApiError(body: unknown, status: number): StudioApiError {
   if (isTrpcErrorEnvelope(body)) {
-    const error = new Error(body.error?.message ?? `Art Director request failed with ${status}`);
-    const record = error as unknown as Record<string, unknown>;
-    record.status = body.error?.data?.httpStatus ?? status;
-    record.code = body.error?.data?.code ?? body.error?.code;
+    const apiError = body.error?.data?.apiError;
+    const details = apiError?.details;
+    const error = new Error(
+      apiError?.message ?? body.error?.message ?? `Art Director request failed with ${status}`,
+    ) as StudioApiError;
+    const apiErrorCode = codeFromDetails(details) ?? body.error?.data?.code;
+
+    error.status = body.error?.data?.httpStatus ?? status;
+    error.code = apiErrorCode ?? body.error?.data?.code ?? body.error?.code;
+    error.apiErrorCode = apiErrorCode;
+    error.details = details;
+    error.requiredTokens = numberFromDetails(details, 'required');
+    error.currentBalance = numberFromDetails(details, 'balance');
+    error.estimatedCostTokens = numberFromDetails(details, 'estimatedCostTokens') ?? error.requiredTokens;
+    error.selectedModel = stringFromDetails(details, 'selectedModel');
     return error;
   }
 
@@ -71,9 +111,18 @@ function buildStudioApiError(body: unknown, status: number): Error {
     body && typeof body === 'object' && 'message' in body
       ? String((body as { message?: unknown }).message)
       : `Art Director request failed with ${status}`;
-  const error = new Error(fallbackMessage);
-  (error as unknown as Record<string, unknown>).status = status;
+  const error = new Error(fallbackMessage) as StudioApiError;
+  error.status = status;
   return error;
+}
+
+export function isInsufficientTokensError(error: unknown): error is StudioApiError {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  const candidate = error as StudioApiError;
+  return candidate.apiErrorCode === 'INSUFFICIENT_TOKENS' || candidate.code === 'INSUFFICIENT_TOKENS';
 }
 
 export async function routeStudioGeneration(input: RouteGenerationInput): Promise<RouteGenerationResponse> {

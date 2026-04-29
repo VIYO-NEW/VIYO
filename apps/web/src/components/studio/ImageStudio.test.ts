@@ -32,6 +32,10 @@ const responseFixture: RouteGenerationResponse = {
     fallbackReason: 'cache_miss',
     tokenAction: 'deducted_after_success',
     billingMode: 'deduct_after_success',
+    estimatedCostTokens: 18,
+    balanceBeforeTokens: 100,
+    balanceAfterTokens: 82,
+    tokensDeducted: 18,
     resolvedMentions: [
       {
         raw: '@hero-bottle',
@@ -138,6 +142,10 @@ describe('Image Studio Phase 6 contract binding', () => {
       cacheStatus: 'below_threshold',
       costTokens: 18,
       tokenAction: 'deducted_after_success',
+      estimatedCostTokens: 18,
+      balanceBeforeTokens: 100,
+      balanceAfterTokens: 82,
+      tokensDeducted: 18,
       fallbackReason: 'cache_miss',
       evaluatedPatternCount: 3,
       bestPatternScore: 0.93,

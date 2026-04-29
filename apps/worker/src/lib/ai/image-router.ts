@@ -11,7 +11,7 @@ import type * as Shared from '@viyo/shared';
 import { and, desc, eq, ilike, inArray, or, sql } from 'drizzle-orm';
 import { assets } from '@viyo/db';
 import { getDb } from '../db.js';
-import { checkBillingStatus } from '../token-engine.js';
+import { checkBillingStatus, deductTokens, getTokenBalance } from '../token-engine.js';
 import { generateGeminiEmbedding } from './embeddings.js';
 import { buildZeroShotFallbackPrompt, ZERO_SHOT_FALLBACK_MODEL } from './fallback-prompts.js';
 import type { ImagePatternCandidate } from './image-patterns.js';
@@ -26,6 +26,7 @@ import {
 import { getEditingToolPlan, selectPrimaryEditingProvider } from './editing-router.js';
 import { ART_DIRECTOR_FORMULA_WEIGHTS, getArtDirectorRouterConfig } from './router-config.js';
 import { createTraceId, recordRouterDecision } from './router-observability.js';
+import { ApiError } from '../../middleware/error-handler.js';
 
 type ArtDirectorFallbackReason = Shared.ArtDirectorFallbackReason;
 type ArtDirectorModel = Shared.ArtDirectorModel;
@@ -68,6 +69,13 @@ interface AssetSaveResult {
   assetId: string | null;
   storagePath?: string;
   unavailableReason?: string;
+}
+
+interface BillingLifecycleResult {
+  estimatedCostTokens: number;
+  balanceBeforeTokens: number | null;
+  balanceAfterTokens: number | null;
+  tokensDeducted: number;
 }
 
 function clamp(value: number, min = 0, max = 1): number {
@@ -365,6 +373,7 @@ function buildResponse(params: {
   assetSave: AssetSaveResult;
   pipelineSteps: string[];
   zeroShotPromptModel?: typeof ZERO_SHOT_FALLBACK_MODEL | null;
+  billing?: BillingLifecycleResult;
 }): RouteGenerationResponse {
   const durationMs = Math.max(0, Date.now() - params.startedAt);
   const costTokens = params.isCached ? 0 : params.provider.costTokens;
@@ -421,6 +430,10 @@ function buildResponse(params: {
       pipelineRequiresPoReview: ART_DIRECTOR_PO_REVIEW_PIPELINE_MODES.has(params.input.mode),
       pipelineSteps: params.pipelineSteps,
       zeroShotPromptModel: params.zeroShotPromptModel ?? null,
+      estimatedCostTokens: params.billing?.estimatedCostTokens ?? costTokens,
+      balanceBeforeTokens: params.billing?.balanceBeforeTokens ?? null,
+      balanceAfterTokens: params.billing?.balanceAfterTokens ?? null,
+      tokensDeducted: params.billing?.tokensDeducted ?? (params.isCached ? 0 : 0),
     },
     traceMetadata: {
       traceId: params.traceId,
@@ -482,6 +495,72 @@ function selectRouteProvider(
   return selectProvider({ typographyRequired: input.typographyRequired, mode: input.mode, config });
 }
 
+async function preflightArtDirectorTokens(params: {
+  context: RouteGenerationServiceContext;
+  provider: ProviderDescriptor;
+}): Promise<{ estimatedCostTokens: number; balanceBeforeTokens: number }> {
+  const estimatedCostTokens = params.provider.costTokens;
+  await checkBillingStatus(params.context.auth.workspaceId);
+  const balance = await getTokenBalance(params.context.auth.workspaceId);
+
+  if (balance.balance < estimatedCostTokens) {
+    throw new ApiError(402, 'INSUFFICIENT_TOKENS: Not enough tokens to complete this operation.', {
+      code: 'INSUFFICIENT_TOKENS',
+      required: estimatedCostTokens,
+      balance: balance.balance,
+      estimatedCostTokens,
+      selectedModel: params.provider.model,
+    });
+  }
+
+  return { estimatedCostTokens, balanceBeforeTokens: balance.balance };
+}
+
+async function deductArtDirectorTokensAfterSuccess(params: {
+  input: RouteGenerationInput;
+  context: RouteGenerationServiceContext;
+  traceId: string;
+  provider: ProviderDescriptor;
+  fallbackReason: ArtDirectorFallbackReason;
+  cacheStatus: RouteGenerationResponse['routingMetadata']['cacheStatus'];
+  preflight: { estimatedCostTokens: number; balanceBeforeTokens: number };
+  assetSave: AssetSaveResult;
+}): Promise<BillingLifecycleResult> {
+  if (!params.context.auth.userId) {
+    throw new ApiError(401, 'Authenticated user is required to deduct Art Director tokens.', { code: 'AUTH_REQUIRED' });
+  }
+
+  const deduction = await deductTokens({
+    workspaceId: params.context.auth.workspaceId,
+    userId: params.context.auth.userId,
+    amount: params.preflight.estimatedCostTokens,
+    transactionType: 'art_director_generation',
+    description: `Art Director ${params.input.editingTool ? 'editing' : 'generation'} route via ${params.provider.model}`,
+    referenceType: 'art_director_trace',
+    metadata: {
+      traceId: params.traceId,
+      assetId: params.assetSave.assetId,
+      storagePath: params.assetSave.storagePath,
+      savedToVault: params.assetSave.savedToVault,
+      brandId: params.input.brandId,
+      mode: params.input.mode,
+      editingTool: params.input.editingTool ?? null,
+      selectedModel: params.provider.model,
+      providerTier: params.provider.tier,
+      providerGateway: params.provider.gateway,
+      fallbackReason: params.fallbackReason,
+      cacheStatus: params.cacheStatus,
+    },
+  });
+
+  return {
+    estimatedCostTokens: params.preflight.estimatedCostTokens,
+    balanceBeforeTokens: params.preflight.balanceBeforeTokens,
+    balanceAfterTokens: deduction.newBalance,
+    tokensDeducted: deduction.tokensDeducted,
+  };
+}
+
 export async function routeGeneration(
   input: RouteGenerationInput,
   context: RouteGenerationServiceContext,
@@ -499,6 +578,8 @@ export async function routeGeneration(
       apiKey: config.claudeApiKey,
       timeoutMs: config.providerTimeoutMs,
     });
+    const preflight = await preflightArtDirectorTokens({ context, provider });
+
     const assetSave = await saveGeneratedAssetToVault({
       input: effectiveInput,
       context,
@@ -508,6 +589,17 @@ export async function routeGeneration(
       prompt: fallbackPrompt.prompt,
       isCached: false,
       score: 0,
+    });
+
+    const billing = await deductArtDirectorTokensAfterSuccess({
+      input: effectiveInput,
+      context,
+      traceId,
+      provider,
+      fallbackReason: 'router_disabled',
+      cacheStatus: 'disabled',
+      preflight,
+      assetSave,
     });
 
     return buildResponse({
@@ -532,8 +624,9 @@ export async function routeGeneration(
       routerEnabled: false,
       threshold: config.threshold,
       billingMode: 'deduct_after_success',
-      tokenAction: 'prechecked',
+      tokenAction: 'deducted_after_success',
       assetSave,
+      billing,
       pipelineSteps,
       zeroShotPromptModel: ZERO_SHOT_FALLBACK_MODEL,
     });
@@ -578,7 +671,9 @@ export async function routeGeneration(
   const provider = selectRouteProvider(effectiveInput, config);
   const fallbackReason: ArtDirectorFallbackReason = best ? 'score_below_threshold' : 'cache_miss';
 
-  await checkBillingStatus(context.auth.workspaceId);
+  const cacheStatus: RouteGenerationResponse['routingMetadata']['cacheStatus'] = best ? 'below_threshold' : 'miss';
+  const resolvedFallbackReason = provider.available ? fallbackReason : 'provider_unavailable';
+  const preflight = await preflightArtDirectorTokens({ context, provider });
 
   const assetSave = await saveGeneratedAssetToVault({
     input: effectiveInput,
@@ -589,6 +684,17 @@ export async function routeGeneration(
     prompt: fallbackPrompt.prompt,
     isCached: false,
     score: best?.score ?? 0,
+  });
+
+  const billing = await deductArtDirectorTokensAfterSuccess({
+    input: effectiveInput,
+    context,
+    traceId,
+    provider,
+    fallbackReason: resolvedFallbackReason,
+    cacheStatus,
+    preflight,
+    assetSave,
   });
 
   return buildResponse({
@@ -611,12 +717,13 @@ export async function routeGeneration(
     pattern: best?.candidate ?? null,
     patternScore: best,
     evaluatedPatternCount: candidates.length,
-    fallbackReason: provider.available ? fallbackReason : 'provider_unavailable',
+    fallbackReason: resolvedFallbackReason,
     routerEnabled: true,
     threshold: config.threshold,
     billingMode: 'deduct_after_success',
-    tokenAction: 'prechecked',
+    tokenAction: 'deducted_after_success',
     assetSave,
+    billing,
     pipelineSteps,
     zeroShotPromptModel: ZERO_SHOT_FALLBACK_MODEL,
   });
