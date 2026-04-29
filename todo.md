@@ -64,8 +64,8 @@
   - [x] Shared/worker build, lint, type-check, focused tests, monorepo lint/type-check/test/build passed
   - [x] Live local worker probe confirmed `/health` responds and unauthenticated `artDirector.routeGeneration` fails closed with HTTP 401
   - [x] Static source-invariant verifier passed final 13-layer wiring assertions
-  - [x] Taskmaster T46 moved to `review`; wiring subtasks remain done as validation evidence
-  - [ ] Awaiting explicit PO approval before Phase 6, final T46 closeout, T47, or T48 begins
+  - [x] Taskmaster T46 moved from `review` to `blocked` on 2026-04-29; wiring subtasks remain done as validation evidence.
+  - [ ] BLOCKER: No explicit PO approval evidence found for Phase 5 → Phase 6 gate as of 2026-04-29; Airtable Build Tracker `T46-COMPOSITE-ART-DIRECTOR-ROUTING-SUITE` updated to preserve blocker status and distinguish earlier Phase 3 approval evidence from missing Phase 5 approval.
 
 ## Phase 6.2 Art Director Execution
 
@@ -75,7 +75,7 @@
   - [x] Image Studio displays cache-route and Pattern DB scoring transparency in canvas and latest-response panels.
   - [x] Focused worker route-generation and Image Studio tests passed; shared, worker, and web type-check/lint validation passed.
   - [x] Taskmaster Task 70 marked done; generative evidence-update command failed twice with provider schema mismatch, so status was completed via non-generative status command.
-  - [x] Airtable sync attempted through Build Tracker searches for `T53`, `Cache-First Router`, and `Pattern DB`; no matching Task 70 record was found within the three-attempt blocker limit.
+  - [x] Airtable sync repaired 2026-04-29: Build Tracker record `T70-CACHE-ROUTE-META` exists, is marked Done, and has `Taskmaster Task ID = T70`.
 - [x] Task #71: Billing and token economics foundation — DONE 2026-04-29, PR #4 open
   - [x] Verified PO Condition 1: Visual Engine editing operations use editing-router contracts and flow through `artDirector.routeGeneration`; no separate editing execution endpoint was found.
   - [x] Verified PO Condition 2: insufficient-token metadata is propagated through tRPC formatted `data.apiError.details` and parsed by Studio frontend code.
@@ -83,4 +83,11 @@
   - [x] Image Studio now displays token estimate/current balance, opens canonical top-up recovery for insufficient balance, and renders final billing status/deducted token metadata.
   - [x] Validation gates passed: shared build, worker/web focused tests, worker/web lint, workspace type-check/test/lint/build, and `git diff --check`.
   - [x] Taskmaster Task 71 and all six subtasks marked done; Airtable Build Tracker T25/T26 notes synced conservatively without marking broader Studio flows done.
+  - [x] Airtable sync repaired 2026-04-29: `T25-STUDIO-BACKEND` has `Taskmaster Task ID = T25, T46, T71`; `T26-STUDIO-FRONTEND` has `Taskmaster Task ID = T26, T71`; `P5-05` has `Taskmaster Task ID = T71`, status `In Progress`, and Task 71 / PR #4 advancement notes.
+
+## Build Tracker Cross-Reference Repair
+
+- [x] 2026-04-29 — Backfilled new Airtable `Taskmaster Task ID` field for verified completed/in-progress VIYO Build Tracker records touched by this build stream, including Phase 0 records, T7, EF-87, T10, T12, P5-01, T15, T24, T25, T26, T32, T46, P5-05, and T70.
+- [x] 2026-04-29 — Created durable verification report at `docs/internal/build-tracker-cross-reference-repair-2026-04-29.md` and verified Airtable with a fresh post-update Build Tracker export.
+- [ ] Future architecture plans must include a `Build Tracker Feature IDs` section listing the exact Airtable Feature IDs that the task will update before plan approval.
 
