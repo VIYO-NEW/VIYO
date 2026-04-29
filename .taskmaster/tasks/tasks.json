@@ -1048,7 +1048,7 @@
         "description": "Persist generated and edited Studio outputs to R2/assets with brand-safe metadata.",
         "details": "Generated and edited outputs auto-save to R2/assets with workspace and brand isolation, metadata tags, source mode, prompt/style reference, and email-editor availability. This task provides the persistence contract consumed by export, version history, and Brand Vault availability.",
         "testStrategy": "",
-        "status": "in-progress",
+        "status": "done",
         "dependencies": [
           "69"
         ],
@@ -1059,10 +1059,10 @@
             "title": "Add assets.brand_id schema and migration",
             "description": "Add a first-class brand_id column to the assets table with a foreign key to brands.id and an index for Brand Vault queries, following the comments.brand_id pattern.",
             "details": "Update packages/db schema and generated migration artifacts. Do not store brandId only in assets.metadata JSONB. Verify migration output contains brand_id, FK, and index.",
-            "status": "in-progress",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 72,
-            "updatedAt": "2026-04-29T21:28:29.864Z",
+            "updatedAt": "2026-04-29T22:10:44.266Z",
             "parentId": "undefined"
           },
           {
@@ -1070,43 +1070,47 @@
             "title": "Extract Studio asset persistence helper",
             "description": "Move the existing R2 auto-save/database insert path into a focused worker helper that returns explicit persistence status and asset contract fields.",
             "details": "Preserve T46/T70/T71 routing, scoring, provider registry, billing, and route metadata. Add status values saved, r2_saved_db_unavailable, r2_binding_unavailable, cache_hit_not_materialized, and failed.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 72,
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-04-29T22:10:44.273Z"
           },
           {
             "id": 3,
             "title": "Add shared persistence schemas and response fields",
             "description": "Define the versioned Studio asset metadata and persistence-status contract in the shared Art Director schema package.",
             "details": "Expose r2ObjectKey, assetMetadataVersion, emailEditorAvailable, assetPersistenceStatus, unavailableReason, assetKind, source lineage, and version parent fields while preserving existing assetUrl, savedToVault, and assetId compatibility.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 72,
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-04-29T22:10:44.277Z"
           },
           {
             "id": 4,
             "title": "Propagate Studio frontend asset persistence state",
             "description": "Extend Image Studio result mapping and compact UX labels to consume the explicit persistence contract without redesigning the Studio surface.",
             "details": "Map assetId, assetUrl, r2ObjectKey, assetPersistenceStatus, emailEditorAvailable, versionParentAssetId, and transparent unavailable reasons. Do not build Brand Vault browsing or email insertion flows.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 72,
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-04-29T22:10:44.280Z"
           },
           {
             "id": 5,
             "title": "Validate persistence contract and synchronize evidence",
             "description": "Run schema, worker, frontend, build, architecture-review, code-review, Build Tracker, GitHub, and CI evidence gates before marking Task 72 done.",
             "details": "Verify migration, R2/DB success and failure paths, cache-hit non-materialization, backward-compatible response parsing, and Build Tracker mapping to T32-AUTO-SAVE-VAULT.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 72,
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-04-29T22:10:44.284Z"
           }
         ],
-        "updatedAt": "2026-04-29T21:28:29.864Z"
+        "updatedAt": "2026-04-29T22:10:44.284Z"
       },
       {
         "id": "73",
@@ -1428,9 +1432,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-29T21:28:29.865Z",
+      "lastModified": "2026-04-29T22:10:44.284Z",
       "taskCount": 76,
-      "completedCount": 18,
+      "completedCount": 19,
       "tags": [
         "master"
       ]

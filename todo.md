@@ -93,3 +93,10 @@
 - [x] 2026-04-29 — Created durable verification report at `docs/internal/build-tracker-cross-reference-repair-2026-04-29.md` and verified Airtable with a fresh post-update Build Tracker export.
 - [ ] Future architecture plans must include a `Build Tracker Feature IDs` section listing the exact Airtable Feature IDs that the task will update before plan approval.
 
+- [x] Task #72: T55 R2 Auto-Save and Brand Vault Asset Contract — DONE 2026-04-29
+  - [x] Added `assets.brand_id` schema and migration support for Brand Vault asset ownership.
+  - [x] Extracted and wired Studio generated-asset persistence through R2 and the assets table without changing Art Director routing decisions.
+  - [x] Shared Art Director response contract now exposes `assetId`, `assetUrl`, `r2ObjectKey`, `savedToBrandVault`, and `persistenceStatus`.
+  - [x] Image Studio surfaces honest persistence state and Brand Vault availability metadata.
+  - [x] Validation passed: targeted Prettier, `pnpm type-check`, `pnpm lint`, `pnpm test`, and `pnpm build`.
+  - [x] Taskmaster Task 72 and subtasks marked done; Airtable Build Tracker record `T32-AUTO-SAVE-VAULT` verified Done.
