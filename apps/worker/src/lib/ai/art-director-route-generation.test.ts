@@ -1,6 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { AuthContext, RouteGenerationInput } from '@viyo/shared';
+import type * as Shared from '@viyo/shared';
 import type { ImagePatternCandidate } from './image-patterns.js';
+
+type AuthContext = Shared.AuthContext;
+type RouteGenerationInput = Shared.RouteGenerationInput;
 
 const checkBillingStatusMock = vi.fn();
 const getSystemConfigMock = vi.fn(async () => null);
@@ -134,6 +137,16 @@ describe('T46 v6.1 routeGeneration execution', () => {
     expect(response.costTokens).toBe(0);
     expect(response.tokenAction).toBe('none');
     expect(response.routingMetadata.billingMode).toBe('free_cache');
+    expect(response.routingMetadata.routeSource).toBe('pattern_db_cache');
+    expect(response.routingMetadata.cacheStatus).toBe('hit');
+    expect(response.routingMetadata.evaluatedPatternCount).toBe(1);
+    expect(response.routingMetadata.bestPatternScore).toBe(0.7);
+    expect(response.routingMetadata.bestPatternSimilarity).toBe(1);
+    expect(response.routingMetadata.bestPatternQualityScore).toBe(1);
+    expect(response.routingMetadata.bestPatternCostEfficiencyScore).toBe(1);
+    expect(response.routingMetadata.patternCategory).toBe('hero');
+    expect(response.routingMetadata.patternProductType).toBe('beverage');
+    expect(response.routingMetadata.patternLayoutType).toBe('square');
     expect(response.routingMetadata.patternId).toBe('11111111-1111-4111-8111-111111111111');
     expect(response.routingMetadata.resolvedMentions).toEqual([{ raw: '@hero-packshot', slug: 'hero-packshot' }]);
     expect(checkBillingStatusMock).not.toHaveBeenCalled();
@@ -176,6 +189,10 @@ describe('T46 v6.1 routeGeneration execution', () => {
     expect(response.assetUrl).toMatch(/^https:\/\/assets\.viyo\.test\/art-director\/55555555-5555-4555-8555-555555555555\//);
     expect(response.savedToVault).toBe(false);
     expect(response.routingMetadata.editingTool).toBe('text_edit');
+    expect(response.routingMetadata.routeSource).toBe('zero_shot_generation');
+    expect(response.routingMetadata.cacheStatus).toBe('miss');
+    expect(response.routingMetadata.evaluatedPatternCount).toBe(0);
+    expect(response.routingMetadata.bestPatternScore).toBeNull();
     expect(response.routingMetadata.pipelineRequiresPoReview).toBe(true);
     expect(response.routingMetadata.pipelineSteps).toEqual(['typography-aware-direct-edit']);
     expect(response.routingMetadata.zeroShotPromptModel).toBe('claude-3-5-sonnet');
@@ -202,5 +219,39 @@ describe('T46 v6.1 routeGeneration execution', () => {
         model: 'gpt-image-2',
       },
     });
+  });
+
+  it('preserves the best Pattern DB score metadata when falling back because the threshold is not met', async () => {
+    process.env.ART_DIRECTOR_CACHE_THRESHOLD = '0.98';
+    findPatternCandidatesMock.mockResolvedValue([
+      candidate({
+        similarity: 0.8,
+        fidelityScore: 0.86,
+        qaScore: 0.8,
+        costPerGen: 0.25,
+        typographyStyle: 'headline-safe',
+      }),
+    ]);
+    const r2Bucket = { put: vi.fn(async () => undefined) };
+
+    const response = await routeGeneration(routeInput(), {
+      auth,
+      requestId: 'request-threshold-fallback',
+      r2Bucket,
+      assetUrlBase: 'https://assets.viyo.test',
+    });
+
+    expect(response.isCached).toBe(false);
+    expect(response.fallbackReason).toBe('score_below_threshold');
+    expect(response.routingMetadata.routeSource).toBe('zero_shot_generation');
+    expect(response.routingMetadata.cacheStatus).toBe('below_threshold');
+    expect(response.routingMetadata.evaluatedPatternCount).toBe(1);
+    expect(response.routingMetadata.bestPatternScore).toBeGreaterThan(0);
+    expect(response.routingMetadata.bestPatternScore).toBeLessThan(0.98);
+    expect(response.routingMetadata.bestPatternSimilarity).toBe(0.8);
+    expect(response.routingMetadata.patternTypographyStyle).toBe('headline-safe');
+    expect(response.routingMetadata.patternId).toBe('11111111-1111-4111-8111-111111111111');
+    expect(checkBillingStatusMock).toHaveBeenCalledWith(auth.workspaceId);
+    expect(r2Bucket.put).toHaveBeenCalledTimes(1);
   });
 });

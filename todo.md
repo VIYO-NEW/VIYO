@@ -66,3 +66,13 @@
   - [x] Static source-invariant verifier passed final 13-layer wiring assertions
   - [x] Taskmaster T46 moved to `review`; wiring subtasks remain done as validation evidence
   - [ ] Awaiting explicit PO approval before Phase 6, final T46 closeout, T47, or T48 begins
+
+## Phase 6.2 Art Director Execution
+
+- [x] Task #70: Cache-first Pattern DB route metadata transparency — DONE 2026-04-29
+  - [x] Shared Art Director response contract exposes cache-first route source, Pattern DB cache status, score, threshold, candidate, and provenance metadata.
+  - [x] Worker image router populates routing metadata from actual Pattern DB lookup, scoring, threshold, and rollback decisions.
+  - [x] Image Studio displays cache-route and Pattern DB scoring transparency in canvas and latest-response panels.
+  - [x] Focused worker route-generation and Image Studio tests passed; shared, worker, and web type-check/lint validation passed.
+  - [x] Taskmaster Task 70 marked done; generative evidence-update command failed twice with provider schema mismatch, so status was completed via non-generative status command.
+  - [x] Airtable sync attempted through Build Tracker searches for `T53`, `Cache-First Router`, and `Pattern DB`; no matching Task 70 record was found within the three-attempt blocker limit.

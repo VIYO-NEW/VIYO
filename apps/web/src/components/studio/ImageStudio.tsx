@@ -32,10 +32,23 @@ interface StudioCanvasAsset {
   prompt: string;
   selectedModel: string;
   providerTier: string;
+  isCached: boolean;
+  routeSource: RouteGenerationResponse['routingMetadata']['routeSource'];
+  cacheStatus: RouteGenerationResponse['routingMetadata']['cacheStatus'];
   score: number;
   costTokens: number;
   tokenAction: string;
   fallbackReason?: string;
+  evaluatedPatternCount: number;
+  bestPatternScore?: number | null;
+  bestPatternSimilarity?: number | null;
+  bestPatternQualityScore?: number | null;
+  bestPatternCostEfficiencyScore?: number | null;
+  patternId?: string | null;
+  patternCategory?: string | null;
+  patternProductType?: string | null;
+  patternLayoutType?: string | null;
+  patternTypographyStyle?: string | null;
   palette: RouteGenerationResponse['palette'];
   resolvedMentions: BrandVaultMention[];
 }
@@ -80,10 +93,23 @@ function resultToCanvasAsset(response: RouteGenerationResponse, prompt: string):
     prompt,
     selectedModel: response.selectedModel,
     providerTier: response.providerTier,
+    isCached: response.isCached,
+    routeSource: response.routingMetadata.routeSource,
+    cacheStatus: response.routingMetadata.cacheStatus,
     score: response.score,
     costTokens: response.costTokens,
     tokenAction: response.tokenAction,
     fallbackReason: response.fallbackReason,
+    evaluatedPatternCount: response.routingMetadata.evaluatedPatternCount,
+    bestPatternScore: response.routingMetadata.bestPatternScore ?? null,
+    bestPatternSimilarity: response.routingMetadata.bestPatternSimilarity ?? null,
+    bestPatternQualityScore: response.routingMetadata.bestPatternQualityScore ?? null,
+    bestPatternCostEfficiencyScore: response.routingMetadata.bestPatternCostEfficiencyScore ?? null,
+    patternId: response.routingMetadata.patternId ?? null,
+    patternCategory: response.routingMetadata.patternCategory ?? null,
+    patternProductType: response.routingMetadata.patternProductType ?? null,
+    patternLayoutType: response.routingMetadata.patternLayoutType ?? null,
+    patternTypographyStyle: response.routingMetadata.patternTypographyStyle ?? null,
     palette: response.palette,
     resolvedMentions: response.routingMetadata.resolvedMentions,
   };
@@ -267,6 +293,9 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
                       <span className="rounded-full bg-emerald-300/15 px-3 py-1 text-xs font-semibold text-emerald-100">
                         {asset.savedToVault ? 'Saved to Brand Vault' : 'Not saved to vault'}
                       </span>
+                      <span className="rounded-full bg-amber-300/15 px-3 py-1 text-xs font-semibold text-amber-100">
+                        {asset.isCached ? 'Pattern DB cache hit' : asset.cacheStatus === 'below_threshold' ? 'Pattern below threshold' : 'Zero-shot route'}
+                      </span>
                     </div>
                     <p className="line-clamp-3 text-sm leading-6 text-slate-300">{asset.prompt}</p>
                     <dl className="grid grid-cols-1 gap-3 text-xs text-slate-300 md:grid-cols-2">
@@ -285,6 +314,26 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
                       <div className="rounded-xl bg-white/[0.04] p-3">
                         <dt className="text-slate-500">Trace</dt>
                         <dd className="mt-1 break-all font-mono text-slate-200">{asset.traceId}</dd>
+                      </div>
+                      <div className="rounded-xl bg-white/[0.04] p-3">
+                        <dt className="text-slate-500">Route source</dt>
+                        <dd className="mt-1 font-mono text-slate-200">{asset.routeSource}</dd>
+                      </div>
+                      <div className="rounded-xl bg-white/[0.04] p-3">
+                        <dt className="text-slate-500">Pattern DB score</dt>
+                        <dd className="mt-1 font-mono text-slate-200">
+                          {asset.bestPatternScore === null || asset.bestPatternScore === undefined ? 'No pattern evaluated' : `${asset.bestPatternScore} · ${asset.cacheStatus}`}
+                        </dd>
+                      </div>
+                      <div className="rounded-xl bg-white/[0.04] p-3">
+                        <dt className="text-slate-500">Patterns evaluated</dt>
+                        <dd className="mt-1 font-mono text-slate-200">{asset.evaluatedPatternCount}</dd>
+                      </div>
+                      <div className="rounded-xl bg-white/[0.04] p-3">
+                        <dt className="text-slate-500">Pattern provenance</dt>
+                        <dd className="mt-1 break-all font-mono text-slate-200">
+                          {asset.patternId ? `${asset.patternCategory ?? 'pattern'} · ${asset.patternProductType ?? 'general'} · ${asset.patternLayoutType ?? 'layout'} · ${asset.patternTypographyStyle ?? 'typography'}` : 'Zero-shot generation'}
+                        </dd>
                       </div>
                     </dl>
                     {asset.palette && asset.palette.length > 0 ? (
@@ -470,6 +519,24 @@ export function ImageStudio({ brandId }: ImageStudioProps) {
                     <dt className="text-slate-500">Tokens</dt>
                     <dd className="mt-1 font-semibold text-slate-100">{lastResponse.costTokens}</dd>
                   </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <dt className="text-slate-500">Route source</dt>
+                    <dd className="mt-1 font-mono text-slate-100">{lastResponse.routingMetadata.routeSource}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-slate-500">Cache status</dt>
+                    <dd className="mt-1 font-mono text-slate-100">{lastResponse.routingMetadata.cacheStatus}</dd>
+                  </div>
+                </div>
+                <div>
+                  <dt className="text-slate-500">Pattern DB score</dt>
+                  <dd className="mt-1 font-mono text-slate-100">
+                    {lastResponse.routingMetadata.bestPatternScore === null || lastResponse.routingMetadata.bestPatternScore === undefined
+                      ? `No matching pattern · ${lastResponse.routingMetadata.evaluatedPatternCount} evaluated`
+                      : `${lastResponse.routingMetadata.bestPatternScore} best · ${lastResponse.routingMetadata.evaluatedPatternCount} evaluated`}
+                  </dd>
                 </div>
                 <div>
                   <dt className="text-slate-500">Trace ID</dt>
