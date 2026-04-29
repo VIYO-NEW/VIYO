@@ -7,14 +7,7 @@
  * Vault @mention resolution, and R2-backed generated-asset indexing hooks.
  */
 import { randomUUID } from 'node:crypto';
-import type {
-  ArtDirectorFallbackReason,
-  ArtDirectorModel,
-  BrandVaultMention,
-  RouteGenerationInput,
-  RouteGenerationResponse,
-} from '@viyo/shared';
-import type { AuthContext } from '@viyo/shared';
+import type * as Shared from '@viyo/shared';
 import { and, desc, eq, ilike, inArray, or, sql } from 'drizzle-orm';
 import { assets } from '@viyo/db';
 import { getDb } from '../db.js';
@@ -33,6 +26,13 @@ import {
 import { getEditingToolPlan, selectPrimaryEditingProvider } from './editing-router.js';
 import { ART_DIRECTOR_FORMULA_WEIGHTS, getArtDirectorRouterConfig } from './router-config.js';
 import { createTraceId, recordRouterDecision } from './router-observability.js';
+
+type ArtDirectorFallbackReason = Shared.ArtDirectorFallbackReason;
+type ArtDirectorModel = Shared.ArtDirectorModel;
+type AuthContext = Shared.AuthContext;
+type BrandVaultMention = Shared.BrandVaultMention;
+type RouteGenerationInput = Shared.RouteGenerationInput;
+type RouteGenerationResponse = Shared.RouteGenerationResponse;
 
 export interface R2BucketLike {
   put(
@@ -355,6 +355,8 @@ function buildResponse(params: {
   isCached: boolean;
   score: number;
   pattern?: ImagePatternCandidate | null;
+  patternScore?: CandidateScore | null;
+  evaluatedPatternCount: number;
   fallbackReason: ArtDirectorFallbackReason;
   routerEnabled: boolean;
   threshold: number;
@@ -366,6 +368,18 @@ function buildResponse(params: {
 }): RouteGenerationResponse {
   const durationMs = Math.max(0, Date.now() - params.startedAt);
   const costTokens = params.isCached ? 0 : params.provider.costTokens;
+  const routeSource: RouteGenerationResponse['routingMetadata']['routeSource'] = !params.routerEnabled
+    ? 'router_disabled_rollback'
+    : params.isCached
+      ? 'pattern_db_cache'
+      : 'zero_shot_generation';
+  const cacheStatus: RouteGenerationResponse['routingMetadata']['cacheStatus'] = !params.routerEnabled
+    ? 'disabled'
+    : params.isCached
+      ? 'hit'
+      : params.patternScore
+        ? 'below_threshold'
+        : 'miss';
 
   const response: RouteGenerationResponse = {
     selectedModel: params.provider.model,
@@ -382,6 +396,8 @@ function buildResponse(params: {
     routingMetadata: {
       mode: params.input.mode,
       editingTool: params.input.editingTool ?? null,
+      routeSource,
+      cacheStatus,
       patternId: params.pattern?.id ?? null,
       promptTemplate: params.pattern?.promptTemplate ?? null,
       targetModels: (params.pattern?.targetModels ?? []) as ArtDirectorModel[],
@@ -391,6 +407,17 @@ function buildResponse(params: {
       tokenAction: params.tokenAction,
       billingMode: params.billingMode,
       resolvedMentions: params.input.mentionReferences ?? [],
+      evaluatedPatternCount: params.evaluatedPatternCount,
+      bestPatternScore: params.patternScore?.score ?? null,
+      bestPatternSimilarity: params.patternScore ? roundScore(params.patternScore.candidate.similarity) : null,
+      bestPatternQualityScore: params.patternScore ? roundScore(params.patternScore.baseQualityScore) : null,
+      bestPatternCostEfficiencyScore: params.patternScore ? roundScore(params.patternScore.costEfficiencyScore) : null,
+      bestPatternFidelityMultiplier: params.patternScore ? roundScore(params.patternScore.fidelityMultiplier) : null,
+      bestPatternTypographyMultiplier: params.patternScore ? roundScore(params.patternScore.typographyMultiplier) : null,
+      patternCategory: params.patternScore?.candidate.category ?? null,
+      patternProductType: params.patternScore?.candidate.productType ?? null,
+      patternLayoutType: params.patternScore?.candidate.layoutType ?? null,
+      patternTypographyStyle: params.patternScore?.candidate.typographyStyle ?? null,
       pipelineRequiresPoReview: ART_DIRECTOR_PO_REVIEW_PIPELINE_MODES.has(params.input.mode),
       pipelineSteps: params.pipelineSteps,
       zeroShotPromptModel: params.zeroShotPromptModel ?? null,
@@ -499,6 +526,8 @@ export async function routeGeneration(
       provider,
       isCached: false,
       score: 0,
+      patternScore: null,
+      evaluatedPatternCount: 0,
       fallbackReason: 'router_disabled',
       routerEnabled: false,
       threshold: config.threshold,
@@ -529,6 +558,8 @@ export async function routeGeneration(
       isCached: true,
       score: best.score,
       pattern: best.candidate,
+      patternScore: best,
+      evaluatedPatternCount: candidates.length,
       fallbackReason: 'cache_hit',
       routerEnabled: true,
       threshold: config.threshold,
@@ -578,6 +609,8 @@ export async function routeGeneration(
     isCached: false,
     score: best?.score ?? 0,
     pattern: best?.candidate ?? null,
+    patternScore: best,
+    evaluatedPatternCount: candidates.length,
     fallbackReason: provider.available ? fallbackReason : 'provider_unavailable',
     routerEnabled: true,
     threshold: config.threshold,

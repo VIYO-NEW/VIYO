@@ -269,6 +269,19 @@ export const artDirectorFallbackReasonSchema = z.enum([
   'insufficient_tokens',
 ]);
 
+export const artDirectorRouteSourceSchema = z.enum([
+  'pattern_db_cache',
+  'zero_shot_generation',
+  'router_disabled_rollback',
+]);
+
+export const artDirectorCacheStatusSchema = z.enum([
+  'hit',
+  'miss',
+  'below_threshold',
+  'disabled',
+]);
+
 export const brandVaultMentionSchema = z.object({
   raw: z.string().min(2).max(120),
   slug: z.string().min(1).max(120),
@@ -310,6 +323,8 @@ export const routeGenerationTraceMetadataSchema = z.object({
 export const routeGenerationRoutingMetadataSchema = z.object({
   mode: artDirectorGenerationModeSchema,
   editingTool: artDirectorEditingToolSchema.nullable().optional(),
+  routeSource: artDirectorRouteSourceSchema,
+  cacheStatus: artDirectorCacheStatusSchema,
   patternId: z.string().uuid().nullable().optional(),
   promptTemplate: z.string().nullable().optional(),
   targetModels: z.array(artDirectorModelSchema).default([]),
@@ -319,6 +334,17 @@ export const routeGenerationRoutingMetadataSchema = z.object({
   tokenAction: artDirectorTokenActionSchema,
   billingMode: z.enum(['free_cache', 'deduct_after_success', 'none']),
   resolvedMentions: z.array(brandVaultMentionSchema).default([]),
+  evaluatedPatternCount: z.number().int().min(0).default(0),
+  bestPatternScore: z.number().min(0).max(1).nullable().optional(),
+  bestPatternSimilarity: z.number().min(0).max(1).nullable().optional(),
+  bestPatternQualityScore: z.number().min(0).max(1).nullable().optional(),
+  bestPatternCostEfficiencyScore: z.number().min(0).max(1).nullable().optional(),
+  bestPatternFidelityMultiplier: z.number().min(0).nullable().optional(),
+  bestPatternTypographyMultiplier: z.number().min(0).nullable().optional(),
+  patternCategory: z.string().nullable().optional(),
+  patternProductType: z.string().nullable().optional(),
+  patternLayoutType: z.string().nullable().optional(),
+  patternTypographyStyle: z.string().nullable().optional(),
   pipelineRequiresPoReview: z.boolean().default(false),
   pipelineSteps: z.array(z.string()).default([]),
   zeroShotPromptModel: z.literal('claude-3-5-sonnet').nullable().optional(),
@@ -354,6 +380,8 @@ export type ArtDirectorModelMetadata = z.infer<typeof artDirectorModelMetadataSc
 export type ArtDirectorEditingToolContract = z.infer<typeof artDirectorEditingToolContractSchema>;
 export type ArtDirectorTokenAction = z.infer<typeof artDirectorTokenActionSchema>;
 export type ArtDirectorFallbackReason = z.infer<typeof artDirectorFallbackReasonSchema>;
+export type ArtDirectorRouteSource = z.infer<typeof artDirectorRouteSourceSchema>;
+export type ArtDirectorCacheStatus = z.infer<typeof artDirectorCacheStatusSchema>;
 export type BrandVaultMention = z.infer<typeof brandVaultMentionSchema>;
 export type RouteGenerationInput = z.infer<typeof routeGenerationRequestSchema>;
 export type RouteGenerationTraceMetadata = z.infer<typeof routeGenerationTraceMetadataSchema>;

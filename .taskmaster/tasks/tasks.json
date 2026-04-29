@@ -953,12 +953,13 @@
         "description": "Ensure Studio generation routes through Pattern DB before model execution and exposes route metadata.",
         "details": "Image generation requests must query Pattern DB before model execution, surface cached pattern versus zero-shot path, preserve fallback routing, and include scoring metadata for user-facing visibility. This repairs the architectural gap that allowed a schema-bound wrapper to ship without Pattern DB route transparency.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           "69"
         ],
         "priority": "high",
-        "subtasks": []
+        "subtasks": [],
+        "updatedAt": "2026-04-29T16:18:52.194Z"
       },
       {
         "id": "71",
@@ -1306,9 +1307,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-29T15:01:20.498Z",
+      "lastModified": "2026-04-29T16:18:52.194Z",
       "taskCount": 76,
-      "completedCount": 15,
+      "completedCount": 16,
       "tags": [
         "master"
       ]
