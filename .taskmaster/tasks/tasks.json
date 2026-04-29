@@ -967,12 +967,80 @@
         "description": "Provide token estimate, balance preflight, deduction, and insufficient-balance recovery for Studio generation and editing paths.",
         "details": "Every generation/edit path has token estimate display, pre-execution balance check, atomic deduction where backend surface exists, graceful insufficient_balance recovery, and cost reconciliation notes. This directly closes the PO rejection gap for token economics and billing UI.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           "69"
         ],
         "priority": "high",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Verify PO Condition 1: editing-router path coverage and deferred gap logging if Visual Engine editing bypasses routeGeneration",
+            "description": "",
+            "details": "<info added on 2026-04-29T18:59:19.845Z>\nPO Condition 1 has been verified prior to implementation. The editing-router.ts file functions as a contract-only module and does not execute operations or trigger billing. Current Visual Engine V2 editing operations enter the routeGeneration process via input.editingTool. The image-router.ts module constructs the editing pipeline steps, selects editing providers, saves editing-aware metadata, and ensures that the non-cached path reaches the routeGeneration billing gate. A comprehensive repository-wide scan confirmed that there is no separate non-test editing execution endpoint outside of artDirector.routeGeneration. Based on the current source evidence, no additional billing-gap task is necessary. Future direct editing execution paths must reuse the Task 71 token-economics primitives to maintain consistency. Evidence supporting this verification includes apps/worker/src/lib/ai/editing-router.ts, apps/worker/src/lib/ai/image-router.ts, and the file /tmp/task71_condition1_deep_check.txt.\n</info added on 2026-04-29T18:59:19.845Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 71,
+            "updatedAt": "2026-04-29T19:00:33.458Z",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Verify PO Condition 2: frontend insufficient-token metadata reads preserved tRPC cause or explicit data propagation",
+            "description": "",
+            "details": "<info added on 2026-04-29T19:00:18.119Z>\nPO Condition 2 verification confirms that the frontend Studio API wrapper currently reads error codes from body.error.data.code or body.error.code only. The Art Director tRPC router maps ApiError status 402 to tRPC FORBIDDEN and preserves the original ApiError in the cause property. However, the client wrapper does not read cause.code and should not rely on tRPC serializing the cause. To address this, Task 71 must implement explicit propagation of insufficient-token metadata at the API boundary. Additionally, the Studio client handling must be updated to detect INSUFFICIENT_TOKENS errors explicitly rather than treating them as generic FORBIDDEN errors. Relevant code references include apps/worker/src/trpc/routers/art-director.ts, apps/web/src/lib/studio-api.ts, and verification evidence in /tmp/task71_condition_verification_grep.txt.\n</info added on 2026-04-29T19:00:18.119Z>\n<info added on 2026-04-29T19:00:46.739Z>\nDiagnostic evidence for PO Condition 2 confirms that the frontend Studio API wrapper currently reads only trpc error data.code or code fields and does not access the preserved cause.code from the tRPC error. This necessitates explicit propagation of insufficient-token metadata at the API boundary to ensure accurate detection and handling of INSUFFICIENT_TOKENS errors, rather than relying on generic FORBIDDEN error mapping. This diagnostic finding underscores the requirement for Task 71 to implement explicit metadata propagation and update client error handling accordingly.\n</info added on 2026-04-29T19:00:46.739Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 71,
+            "parentId": "undefined",
+            "updatedAt": "2026-04-29T19:00:38.700Z"
+          },
+          {
+            "id": 3,
+            "title": "Wire Layer 4/8 backend token economics: estimate metadata, balance preflight, atomic post-success deduction, reconciliation notes",
+            "description": "",
+            "details": "<info added on 2026-04-29T19:23:11.104Z>\nThe backend billing foundation for Task 71 has been implemented. The image-router now reuses token-engine primitives to provide provider-cost estimates, perform billing freeze checks, conduct balance preflight validations, and handle insufficient-token ApiError details. It also supports atomic deductTokens operations following successful non-cached Art Director executions. Cached Pattern DB hits continue to be free_cache with tokenAction set to none. Deduction metadata now records traceId, asset save status, mode, editingTool, selected model, provider tier/gateway, fallback reason, and cache status to support reconciliation. Targeted backend route-generation tests and full worker tests have passed successfully.\n</info added on 2026-04-29T19:23:11.104Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 71,
+            "parentId": "undefined",
+            "updatedAt": "2026-04-29T19:24:02.331Z"
+          },
+          {
+            "id": 4,
+            "title": "Wire Layer 3 API contracts: preserve shared schemas and expose billing status, token action, balance, and insufficient-token data",
+            "description": "",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 71,
+            "parentId": "undefined",
+            "updatedAt": "2026-04-29T19:24:07.705Z"
+          },
+          {
+            "id": 5,
+            "title": "Wire Layer 6/7 Studio UI and state: estimate display, balance check, top-up recovery, and error messaging",
+            "description": "",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 71,
+            "parentId": "undefined",
+            "updatedAt": "2026-04-29T19:24:12.926Z"
+          },
+          {
+            "id": 6,
+            "title": "Wire Layer 12/13 validation and tracking: targeted tests, quality gates, internal records, PR evidence",
+            "description": "",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 71,
+            "parentId": "undefined",
+            "updatedAt": "2026-04-29T19:24:18.594Z"
+          }
+        ],
+        "updatedAt": "2026-04-29T19:24:18.594Z"
       },
       {
         "id": "72",
@@ -1307,9 +1375,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-29T16:18:52.194Z",
+      "lastModified": "2026-04-29T19:24:18.595Z",
       "taskCount": 76,
-      "completedCount": 16,
+      "completedCount": 17,
       "tags": [
         "master"
       ]

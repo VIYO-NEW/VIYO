@@ -76,3 +76,11 @@
   - [x] Focused worker route-generation and Image Studio tests passed; shared, worker, and web type-check/lint validation passed.
   - [x] Taskmaster Task 70 marked done; generative evidence-update command failed twice with provider schema mismatch, so status was completed via non-generative status command.
   - [x] Airtable sync attempted through Build Tracker searches for `T53`, `Cache-First Router`, and `Pattern DB`; no matching Task 70 record was found within the three-attempt blocker limit.
+- [x] Task #71: Billing and token economics foundation — DONE 2026-04-29, PR #4 open
+  - [x] Verified PO Condition 1: Visual Engine editing operations use editing-router contracts and flow through `artDirector.routeGeneration`; no separate editing execution endpoint was found.
+  - [x] Verified PO Condition 2: insufficient-token metadata is propagated through tRPC formatted `data.apiError.details` and parsed by Studio frontend code.
+  - [x] Backend Art Director routing now exposes billing reconciliation metadata, performs UX balance preflight metadata, and enforces atomic post-success token deduction.
+  - [x] Image Studio now displays token estimate/current balance, opens canonical top-up recovery for insufficient balance, and renders final billing status/deducted token metadata.
+  - [x] Validation gates passed: shared build, worker/web focused tests, worker/web lint, workspace type-check/test/lint/build, and `git diff --check`.
+  - [x] Taskmaster Task 71 and all six subtasks marked done; Airtable Build Tracker T25/T26 notes synced conservatively without marking broader Studio flows done.
+
