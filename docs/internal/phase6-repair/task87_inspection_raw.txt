@@ -1,0 +1,48 @@
+=== Task 87 ===
+(node:185301) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+🏷  tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+╭─────────────────────────────────────────────────────────────────────╮
+│ Task: #87 - T70: Airtable Build Tracker Sync After PO Diff Approval │
+╰─────────────────────────────────────────────────────────────────────╯
+[90m┌────────────────────[39m[90m┬────────────────────────────────────────────────────────────────────────────────┐[39m
+[90m│[39m ID:                [90m│[39m 87                                                                             [90m│[39m
+[90m│[39m Title:             [90m│[39m T70: Airtable Build Tracker Sync After PO Diff Approval                        [90m│[39m
+[90m│[39m Status:            [90m│[39m ○ pending                                                                      [90m│[39m
+[90m│[39m Priority:          [90m│[39m medium                                                                         [90m│[39m
+[90m│[39m Dependencies:      [90m│[39m 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,    [90m│[39m
+[90m│[39m Complexity:        [90m│[39m 80, 81, 82, 83, 84, 85, 86                                                     [90m│[39m
+[90m│[39m Category:          [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Skills:            [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Description:       [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m                    [90m│[39m Synchronize the approved task graph to Airtable Build Tracker only after PO    [90m│[39m
+[90m│[39m                    [90m│[39m diff approval.                                                                 [90m│[39m
+[90m└────────────────────[39m[90m┴────────────────────────────────────────────────────────────────────────────────┘[39m
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Implementation Details:                                                                        │
+│                                                                                                  │
+│   After PO approval only, sync the approved graph to Airtable Build Tracker. Do not sync         │
+│   unapproved task mutations as active execution tasks. This task preserves the Architecture      │
+│   Broadcast approval boundary.                                                                   │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Suggested Actions:                                                                             │
+│                                                                                                  │
+│   1. Run task-master set-status --id=87 --status=in-progress to start working                    │
+│   2. Run task-master expand --id=87 to break down into subtasks                                  │
+│   3. Run task-master update-task --id=87 --prompt="..." to update details                        │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+=== Task 87 references in current task list ===
+154:                                                                                            87
+157:                                                                                            87
+175:                                                                                            87
+237:    87        T70: Airtable Build Trac...          pending      medium       61, 62, 63,      88               N/A

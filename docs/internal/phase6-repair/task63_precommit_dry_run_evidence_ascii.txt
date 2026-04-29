@@ -1,0 +1,7 @@
+=== pre-commit hook dry run ===
+              TruffleHog. Unearth your secrets.
+
+2026-04-28T23:13:42-04:00	info-0	trufflehog	running source	{"source_manager_worker_id": "dH5Oc", "with_units": true}
+2026-04-28T23:13:42-04:00	info-0	trufflehog	scanning repo	{"source_manager_worker_id": "dH5Oc", "unit_kind": "dir", "unit": "/tmp/trufflehog-180395-3063217981", "repo": "file:///home/ubuntu/VIYO", "base": "f5a8c2e3e7b9915707ab5d23e8a774139df8235e"}
+2026-04-28T23:13:42-04:00	info-0	trufflehog	finished scanning	{"chunks": 0, "bytes": 0, "verified_secrets": 0, "unverified_secrets": 0, "scan_duration": "225.747253ms", "trufflehog_version": "3.95.2", "verification_caching": {"Hits":0,"Misses":0,"HitsWasted":0,"AttemptsSaved":0,"VerificationTimeSpentMS":0}}
+=== pre-commit hook dry run exit code: 0 ===

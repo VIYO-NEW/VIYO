@@ -1,0 +1,9 @@
+=== pnpm --filter @viyo/shared type-check ===
+
+> @viyo/shared@0.0.1 type-check /home/ubuntu/VIYO/packages/shared
+> tsc --noEmit
+
+=== pnpm --filter @viyo/shared build ===
+
+> @viyo/shared@0.0.1 build /home/ubuntu/VIYO/packages/shared
+> tsc --project tsconfig.build.json

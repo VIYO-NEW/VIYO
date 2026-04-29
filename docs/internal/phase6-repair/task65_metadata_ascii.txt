@@ -1,0 +1,13 @@
+{
+  "id": "65",
+  "title": "T51a: SEC-14 and SEC-15 Auth Hardening",
+  "description": "Implement auth hardening when the first auth/database code trigger occurs.",
+  "details": "PO Modification A replaces grouped T51 with T51a/T51b/T51c. This task covers SEC-14 and SEC-15: password complexity, bcrypt cost 10+, HaveIBeenPwned k-anonymity check, last-five password reuse prevention, and brute-force lockout controls when auth surface is built. Trigger: first auth/database code.",
+  "testStrategy": "",
+  "status": "pending",
+  "dependencies": [
+    "64"
+  ],
+  "priority": "high",
+  "subtasks": []
+}

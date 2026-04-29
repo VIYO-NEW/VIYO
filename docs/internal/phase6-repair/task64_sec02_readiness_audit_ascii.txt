@@ -1,0 +1,40 @@
+# Task 64 SEC-02 Encryption Readiness Audit
+
+Scope: read-only audit of first-party source files for AES-256-GCM readiness before Phase 6.2 introduces any sensitive-token persistence.
+
+Result Summary:
+- PASS checks: 13
+- FAIL checks: 0
+- GUARDRAIL checks: 1
+
+Readiness Decision:
+- SEC-02 encryption foundation is READY for ESP API keys and OAuth token storage paths that use VaultService and *_encrypted columns.
+- Webhook endpoint secret persistence is NOT cleared for new writes as currently modeled; any implementation that creates or stores webhook endpoint secrets must first refactor to encrypted-at-rest storage or obtain explicit PO/security approval for a derived non-recoverable secret design.
+- This audit does not implement Phase 1-4 security work and does not modify product code.
+
+| Check | Status | Evidence |
+|---|---:|---|
+| VaultService AES-256-GCM algorithm | PASS | packages/shared/src/security/vault.ts declares const ALGORITHM = 'aes-256-gcm'. |
+| VaultService 256-bit key enforcement | PASS | VaultService validates a 32-byte / 64-hex-character VIYO_VAULT_KEY. |
+| VaultService authenticated payload format | PASS | VaultService stores iv:authTag:ciphertext and validates three colon-separated hex segments. |
+| Dual-key decrypt and rotation support | PASS | VaultService supports VIYO_VAULT_KEY_PREVIOUS and dual-key fallback during decrypt. |
+| Sensitive error-report scrubbing patterns | PASS | Shared scrub patterns include token, secret, key, credential, password, vault, api_key, and apikey. |
+| Key rotation helper exists | PASS | packages/shared/src/security/key-rotation.ts provides rotateVaultKey with rotatedRows output. |
+| ESP API keys stored in encrypted column | PASS | packages/db/src/schema/email.ts defines esp_connections.api_key_encrypted as apiKeyEncrypted. |
+| OAuth access token stored in encrypted column | PASS | packages/db/src/schema/integrations.ts defines access_token_encrypted as accessTokenEncrypted. |
+| OAuth refresh token stored in encrypted column | PASS | packages/db/src/schema/integrations.ts defines refresh_token_encrypted as refreshTokenEncrypted. |
+| Credential create path encrypts before storage | PASS | apps/worker/src/services/credential.service.ts encrypts input.apiKey before inserting apiKeyEncrypted. |
+| Credential update path re-encrypts before storage | PASS | apps/worker/src/services/credential.service.ts re-encrypts apiKey updates before persistence. |
+| External credential metadata-only gate | PASS | getDecryptedApiKey rejects non-internal callerContext and list/get methods select metadata fields only. |
+| Credential routes return metadata-only responses | PASS | Credential API route comments and error handling confirm metadata-only responses and vault-required create/update. |
+| Webhook secret persistence requires before-use refactor | GUARDRAIL | Existing T45/T48 schema stores webhook_endpoints.secret as constrained VARCHAR(64), not as *_encrypted. Do not persist new webhook secrets until this path is encrypted or PO-approved as a non-recoverable derived value. |
+
+Source Files Audited:
+- packages/shared/src/security/vault.ts
+- packages/shared/src/security/key-rotation.ts
+- packages/db/src/schema/email.ts
+- packages/db/src/schema/integrations.ts
+- packages/db/src/schema/webhooks.ts
+- packages/db/drizzle/0007_t45_composite_database_foundation.sql
+- apps/worker/src/services/credential.service.ts
+- apps/worker/src/routes/v1/credentials.ts

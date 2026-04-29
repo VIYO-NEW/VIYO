@@ -1,0 +1,31 @@
+=== Taskmaster model configuration evidence ===
+UTC 2026-04-29T14:37:27Z
+=== command 1: task-master models --set-main gpt-4.1-mini --openai-compatible --baseURL https://api.manus.im/api/llm-proxy/v1 ===
+(node:202848) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✅ Successfully set main model to gpt-4.1-mini (Provider: openai-compatible)
+Warning: Custom OpenAI-compatible model 'gpt-4.1-mini' set with base URL 'https://api.manus.im/api/llm-proxy/v1'. Taskmaster cannot guarantee compatibility. Ensure your API endpoint follows the OpenAI API specification.
+
+Model configuration updated.
+=== command 2: task-master models --set-fallback gpt-4.1-nano --openai-compatible --baseURL https://api.manus.im/api/llm-proxy/v1 ===
+(node:202867) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✅ Successfully set fallback model to gpt-4.1-nano (Provider: openai-compatible)
+Warning: Custom OpenAI-compatible model 'gpt-4.1-nano' set with base URL 'https://api.manus.im/api/llm-proxy/v1'. Taskmaster cannot guarantee compatibility. Ensure your API endpoint follows the OpenAI API specification.
+
+Model configuration updated.
+=== command 3: echo OPENAI_COMPATIBLE_API_KEY mapping into .env ===
+.env key mapping appended without printing secret value.
+=== sanitized config presence check ===
+3:    "main": {
+4:      "provider": "openai-compatible",
+5:      "modelId": "gpt-4.1-mini",
+8:      "baseURL": "https://api.manus.im/api/llm-proxy/v1"
+11:      "provider": "openai",
+12:      "modelId": "gpt-4.1-mini",
+16:    "fallback": {
+17:      "provider": "openai-compatible",
+18:      "modelId": "gpt-4.1-nano",
+21:      "baseURL": "https://api.manus.im/api/llm-proxy/v1"
+=== .env mapping count check ===
+2

@@ -1,0 +1,18 @@
+=== mark Task 63 in-progress ===
+(node:178801) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 63
+
+      From: pending
+      To:   in-progress
+
+
+=== download official TruffleHog release assets ===
+=== verify checksum ===
+trufflehog_3.95.2_linux_amd64.tar.gz: OK
+=== install binary ===
+=== installed version ===
+trufflehog 3.95.2

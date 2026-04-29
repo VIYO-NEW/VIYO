@@ -1,0 +1,80 @@
+=== task 61 ===
+(node:176549) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+🏷  tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+╭─────────────────────────────────────────────────────────────╮
+│ Task: #61 - T47: Architecture Broadcast Ingestion Handshake │
+╰─────────────────────────────────────────────────────────────╯
+[90m┌────────────────────[39m[90m┬────────────────────────────────────────────────────────────────────────────────┐[39m
+[90m│[39m ID:                [90m│[39m 61                                                                             [90m│[39m
+[90m│[39m Title:             [90m│[39m T47: Architecture Broadcast Ingestion Handshake                                [90m│[39m
+[90m│[39m Status:            [90m│[39m ○ pending                                                                      [90m│[39m
+[90m│[39m Priority:          [90m│[39m high                                                                           [90m│[39m
+[90m│[39m Dependencies:      [90m│[39m None                                                                           [90m│[39m
+[90m│[39m Complexity:        [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Category:          [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Skills:            [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Description:       [90m│[39m Mandatory Architecture Broadcast handshake at the start of every VIYO task     [90m│[39m
+[90m│[39m                    [90m│[39m session.                                                                       [90m│[39m
+[90m└────────────────────[39m[90m┴────────────────────────────────────────────────────────────────────────────────┘[39m
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Implementation Details:                                                                        │
+│                                                                                                  │
+│   Source: PO Combined Directive v2 Section 1 and Architecture Broadcast record                   │
+│   recqGyk0oIekpYEe9. Query Architecture Broadcasts; if a pending broadcast exists, halt          │
+│   planned work, download attached Drive documents, ingest the directive and source documents,    │
+│   write the task-graph diff to Builder Diff Output, set broadcast Status to Diff Proposed, and   │
+│   stop for PO approval. No product-code implementation is allowed from this task alone.          │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Suggested Actions:                                                                             │
+│                                                                                                  │
+│   1. Run task-master set-status --id=61 --status=in-progress to start working                    │
+│   2. Run task-master expand --id=61 to break down into subtasks                                  │
+│   3. Run task-master update-task --id=61 --prompt="..." to update details                        │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+=== repository remotes ===
+github	https://github.com/VIYO-NEW/VIYO.git (fetch)
+github	https://github.com/VIYO-NEW/VIYO.git (push)
+=== workflows ===
+--- .github/workflows/ci.yml
+name: VIYO CI Pipeline
+  push:
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+  NODE_VERSION: "22"
+  PNPM_VERSION: "9.15.4"
+  quality-gate:
+    name: Lint → Type-Check → Build → Test
+  docker-lint:
+    name: Dockerfile Lint
+--- .github/workflows/deploy.yml
+name: VIYO Deploy Pipeline
+  workflow_dispatch:
+  group: deploy-production
+  cancel-in-progress: false # Never cancel in-flight deploys
+  NODE_VERSION: "22"
+  PNPM_VERSION: "9.15.4"
+  WORKER_HEALTH_URL: "https://api.viyo.new/health"
+  WEB_URL: "https://app.viyo.new"
+  ADMIN_URL: "https://admin.viyo.new"
+  ci:
+    name: CI Gate
+  deploy-worker:
+    name: Deploy Worker → Render
+  verify:
+    name: Verify All Services
+=== current branch protection ===
+{"allow_deletions":{"enabled":false},"allow_force_pushes":{"enabled":false},"allow_fork_syncing":{"enabled":false},"block_creations":{"enabled":false},"enforce_admins":{"enabled":false,"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/enforce_admins"},"lock_branch":{"enabled":false},"required_conversation_resolution":{"enabled":false},"required_linear_history":{"enabled":false},"required_pull_request_reviews":{"dismiss_stale_reviews":false,"require_code_owner_reviews":false,"require_last_push_approval":false,"required_approving_review_count":1,"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_pull_request_reviews"},"required_signatures":{"enabled":false,"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_signatures"},"required_status_checks":{"checks":[{"app_id":null,"context":"ci"}],"contexts":["ci"],"contexts_url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_status_checks/contexts","strict":true,"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_status_checks"},"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection"}

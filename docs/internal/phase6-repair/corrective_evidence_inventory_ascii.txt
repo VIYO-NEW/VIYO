@@ -1,0 +1,133 @@
+=== git status porcelain ===
+ M .gitignore
+ M .taskmaster/config.json
+ M .taskmaster/tasks/tasks.json
+?? .githooks/
+?? docs/internal/phase6-repair/
+?? scripts/
+
+=== corrective files ===
+-rw-r--r-- 1 ubuntu ubuntu 7.7K Apr 29 09:06 docs/internal/phase6-repair/TASK24_LEGACY_CODE_IMPLEMENTATION_GUARDRAIL.md
+-rw-rw-r-- 1 ubuntu ubuntu 5.1K Apr 29 09:03 docs/internal/phase6-repair/task63_env_history_audit_ascii.txt
+
+=== sha256 ===
+6dc8c52f5bbddfec38f8e4bfbde26ece90faed7cef39badddc0e5d6d176d7b74  docs/internal/phase6-repair/task63_env_history_audit_ascii.txt
+91c9476bcbf6337cde4b1eb499c0f148217f23b225d93d57d47e984805b6bf6f  docs/internal/phase6-repair/TASK24_LEGACY_CODE_IMPLEMENTATION_GUARDRAIL.md
+
+=== explicit .env history proof excerpt ===
+=== Task 63 .env history audit corrective evidence ===
+Generated: 2026-04-29T09:03:27-04:00
+
+=== Exact PO-review command: git log --all -- .env ===
+=== End exact command output ===
+
+Interpretation: no commits were printed by the exact command above, which means Git has no commit history entries for a repository-root file named .env.
+
+=== Broader env-pattern history check: git log --all --name-status -- .env .env.* **/.env **/.env.* ===
+commit b15ddf4213ec3a23f6257344e0506268ac6544e3
+Author: viyo-ai <278984973+viyo-ai@users.noreply.github.com>
+Date:   Sat Apr 25 16:31:54 2026 -0400
+
+    chore(T12): wire Sentry DSNs into .env.example
+
+    - SENTRY_DSN_WORKER: node-hono project DSN
+    - VITE_SENTRY_DSN_WEB: viyo-web React project DSN
+    - VITE_SENTRY_DSN_ADMIN: viyo-admin React project DSN
+    - SENTRY_ORG: viyo
+    - SENTRY_AUTH_TOKEN left blank (set in CI/CD env vars only)
+    - T12 status: done in taskmaster
+
+M	.env.example
+
+commit 2faa22dc66f60c60180021b1b3b25ae53032776a
+Author: viyo-ai <278984973+viyo-ai@users.noreply.github.com>
+Date:   Sat Apr 25 14:57:47 2026 -0400
+
+    feat(T12): Sentry error monitoring — worker, web, admin
+
+    - @sentry/node + @sentry/opentelemetry for worker (OTel bridge)
+    - @sentry/react + @sentry/vite-plugin for web & admin SPAs
+    - Sentry.ErrorBoundary wrapping root components
+    - captureToSentry() in error-handler for 5xx + unhandled errors
+    - SentrySpanProcessor/Propagator/Sampler wired into OTel NodeSDK
+    - Sensitive data scrubbing via T8 vault patterns (beforeSend)
+    - Source map upload on production builds (sentryVitePlugin)
+    - Session replay: 10% sample, 100% on error
+    - 3 DSNs + auth vars added to .env.example
+    - Graceful degradation: no-op when DSN not set
+    - T12 added to Taskmaster with layer subtasks
+
+    Verified: type-check ✓ | build ✓ | lint ✓ (all packages)
+
+M	.env.example
+
+commit 250666b6e2b5a3d9fefcd86fec20ae6594205070
+Author: viyo-ai <278984973+viyo-ai@users.noreply.github.com>
+Date:   Fri Apr 24 18:09:29 2026 -0400
+
+    feat(T8): credential vault service — AES-256-GCM encryption with dual-key rotation
+
+    - Upgrade VaultService to class-based with boot-time key validation
+    - Add dual-key decrypt: VIYO_VAULT_KEY + VIYO_VAULT_KEY_PREVIOUS for zero-downtime rotation
+    - Add key-rotation utility for atomic re-encryption of all credentials
+    - Add internal-only gate: getDecryptedApiKey() rejects external callers at service layer
+    - Add credential CRUD routes: POST/GET/PATCH/DELETE + soft-delete recovery (/restore)
+    - Add ?includeInactive=true query param for soft-deleted credential visibility
+    - Add Sentry-compatible memory scrubbing (scrubSensitiveData + SENSITIVE_FIELD_PATTERNS)
+    - Add Zod credential schemas with ESP_PROVIDERS + EXTENDED_PROVIDERS enums
+    - Add VIYO_VAULT_KEY_PREVIOUS to env schema for key rotation support
+
+    Authority: R22 §4, R29, R20, ARCH_LOCK_V3 §3
+
+M	.env.example
+
+commit f86b7446ce8fae5e89c9d717c340190171bc793e
+Author: viyo-ai <278984973+viyo-ai@users.noreply.github.com>
+Date:   Fri Apr 24 17:43:45 2026 -0400
+
+    feat(T5): inngest event system + opentelemetry instrumentation
+
+    - Add OTel NodeSDK bootstrap with HTTP + pg auto-instrumentation
+    - Add Inngest client with EventSchemas<ViyoEvents> for compile-time type safety
+    - Add Extended Traces middleware for OTel trace continuity across event bus
+    - Mount /api/inngest BEFORE auth middleware (uses signing key instead)
+    - Add workspace-provisioning pipeline (viyo/workspace.created Hello World)
+    - Add Zod event schemas: workspace, campaign, asset (shared package)
+    - Add ViyoEvents type map for compile-time event safety
+    - Add OTEL_EXPORTER_OTLP_ENDPOINT + OTEL_SERVICE_NAME to env validation
+    - Create TM task #11 + Airtable GAP-T5-01 for missing brands/credit_balances
+
+    Authority: Doc4 §0.3/§2.1, R18 §4/§8, R21 §5, ARCH_LOCK_V3 §3
+
+M	.env.example
+
+commit 5bff633dced559cb28203cb55387e49dc91aca0d
+Author: Manus Agent <manus@viyo.ai>
+Date:   Fri Apr 24 13:06:17 2026 -0400
+
+    feat(T1): initialize Turborepo monorepo scaffold
+
+    - apps/web: Vite + React + TanStack Router + Zustand + Tailwind
+    - apps/worker: Hono API server with health endpoint
+    - apps/admin: Vite + React admin portal
+    - packages/shared: TypeScript types (Workspace, Brand, WorkspaceMember)
+    - packages/db: Drizzle ORM placeholder
+    - packages/ui: Button component + Tailwind preset + cn() utility
+    - Root configs: TypeScript, ESLint 10 flat, Prettier, Turbo pipelines
+    - .env.example with 24 environment variables
+    - Internal records: source-map, build-journal, decision-log, integration-map,
+      research-log, open-questions, kb-candidates
+    - todo.md with Phase 0 task checklist
+
+    Taskmaster: T1 done | Airtable: P0-01 done
+    All gates passed: build 6/6, type-check 9/9, lint 9/9, 0 errors
+
+A	.env.example
+=== End broader env-pattern history output ===
+
+=== Currently tracked env-pattern files: git ls-files .env .env.* **/.env **/.env.* ===
+.env.example
+=== End tracked env-pattern files output ===
+
+=== Current worktree env-pattern files excluding .git and node_modules ===
+./.env.example

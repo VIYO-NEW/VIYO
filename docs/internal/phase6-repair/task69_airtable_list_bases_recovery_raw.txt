@@ -1,0 +1,4 @@
+=== Airtable bases recovery after Task 69 pre-flight INVALID_PERMISSIONS_OR_MODEL_NOT_FOUND ===
+Tool execution result saved to: /home/ubuntu/.mcp/tool-results/2026-04-29_10-11-35_airtable_list_bases.json
+Tool execution result:
+[{"id":"appo5mNncCCzKcIRk","name":"Viyo Projects QA Tracker","permissionLevel":"create"},{"id":"appHmqicUoJraM4Bt","name":"2 Hour Mastery Roadmap","permissionLevel":"create"}]

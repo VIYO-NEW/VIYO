@@ -1,0 +1,94 @@
+=== Existing approved graph next-task inspection ===
+UTC 2026-04-29T14:38:01Z
+=== note ===
+No parse-prd command is being run. This reads the existing approved Taskmaster task database only.
+=== task-master next ===
+(node:203073) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+🏷  tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│ Next Task: #69 - T52: T46 Gap Repair — Provider Registry and Shared          │
+│ Contracts                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────╯
+[90m┌────────────────────[39m[90m┬────────────────────────────────────────────────────────────────────────────────┐[39m
+[90m│[39m ID:                [90m│[39m 69                                                                             [90m│[39m
+[90m│[39m Title:             [90m│[39m T52: T46 Gap Repair — Provider Registry and Shared Contracts                   [90m│[39m
+[90m│[39m Status:            [90m│[39m ▶ in-progress                                                                  [90m│[39m
+[90m│[39m Priority:          [90m│[39m high                                                                           [90m│[39m
+[90m│[39m Dependencies:      [90m│[39m 68                                                                             [90m│[39m
+[90m│[39m Complexity:        [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Category:          [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Skills:            [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Description:       [90m│[39m Repair Visual Engine provider inventory and shared Art Director contracts for  [90m│[39m
+[90m│[39m                    [90m│[39m the expanded Phase 6.2 scope.                                                  [90m│[39m
+[90m└────────────────────[39m[90m┴────────────────────────────────────────────────────────────────────────────────┘[39m
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Implementation Details:                                                                        │
+│                                                                                                  │
+│   Source: Architecture Lock v6.1, T46 Gap Addendum, and PO Combined Directive v2. Cover 22+      │
+│   generation models, 10 editing tools, provider tier metadata, mode contracts, editing-tool      │
+│   contracts, and Art Director Router schema parity. This task is the foundation for              │
+│   cache-first routing, billing, persistence, editing coverage, and UI mode matrices.             │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Suggested Actions:                                                                             │
+│                                                                                                  │
+│   1. Run task-master set-status --id=69 --status=in-progress to start working                    │
+│   2. Run task-master expand --id=69 to break down into subtasks                                  │
+│   3. Run task-master update-task --id=69 --prompt="..." to update details                        │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+=== deterministic local inspector ===
+/home/ubuntu/VIYO/docs/internal/phase6-repair/next_task_dependency_inspection_20260429.md
+NEXT_TASK_ID=NONE
+=== Task 69 status snapshot ===
+(node:203094) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+🏷  tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+╭──────────────────────────────────────────────────────────────────────────╮
+│ Task: #69 - T52: T46 Gap Repair — Provider Registry and Shared Contracts │
+╰──────────────────────────────────────────────────────────────────────────╯
+[90m┌────────────────────[39m[90m┬────────────────────────────────────────────────────────────────────────────────┐[39m
+[90m│[39m ID:                [90m│[39m 69                                                                             [90m│[39m
+[90m│[39m Title:             [90m│[39m T52: T46 Gap Repair — Provider Registry and Shared Contracts                   [90m│[39m
+[90m│[39m Status:            [90m│[39m ▶ in-progress                                                                  [90m│[39m
+[90m│[39m Priority:          [90m│[39m high                                                                           [90m│[39m
+[90m│[39m Dependencies:      [90m│[39m 68                                                                             [90m│[39m
+[90m│[39m Complexity:        [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Category:          [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Skills:            [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Description:       [90m│[39m Repair Visual Engine provider inventory and shared Art Director contracts for  [90m│[39m
+[90m│[39m                    [90m│[39m the expanded Phase 6.2 scope.                                                  [90m│[39m
+[90m└────────────────────[39m[90m┴────────────────────────────────────────────────────────────────────────────────┘[39m
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Implementation Details:                                                                        │
+│                                                                                                  │
+│   Source: Architecture Lock v6.1, T46 Gap Addendum, and PO Combined Directive v2. Cover 22+      │
+│   generation models, 10 editing tools, provider tier metadata, mode contracts, editing-tool      │
+│   contracts, and Art Director Router schema parity. This task is the foundation for              │
+│   cache-first routing, billing, persistence, editing coverage, and UI mode matrices.             │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Suggested Actions:                                                                             │
+│                                                                                                  │
+│   1. Run task-master set-status --id=69 --status=in-progress to start working                    │
+│   2. Run task-master expand --id=69 to break down into subtasks                                  │
+│   3. Run task-master update-task --id=69 --prompt="..." to update details                        │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯

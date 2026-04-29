@@ -1,0 +1,47 @@
+=== expected repo log files ===
+-rw-rw-r-- 1 ubuntu ubuntu 918 Apr 28 23:10 /home/ubuntu/VIYO/docs/internal/phase6-repair/task63_trufflehog_install_output.txt
+=== accidental tmp log files ===
+=== direct trufflehog check ===
+/usr/local/bin/trufflehog
+trufflehog 3.95.2
+=== task 63 status ===
+(node:179241) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+      tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+
+    Task: #63 - T49: Phase 0 Secret-Exposure Controls
+
+
+    ID:                    63
+    Title:                 T49: Phase 0 Secret-Exposure Controls
+    Status:                    in-progress
+    Priority:              high
+    Dependencies:          62
+    Complexity:            N/A
+    Category:              N/A
+    Skills:                N/A
+    Description:           Install and verify immediate secret-exposure controls before the next commit.
+
+
+
+
+      Implementation Details:
+
+      Source: PO Combined Directive v2 Section 3 and Doc 11 Security Phase Triggers Addendum.
+      Install TruffleHog or equivalent pre-commit secret scanning; enable GitHub secret scanning
+      if available; audit .gitignore for .env, .env.local, .env.production, key files, and
+      generated secret artifacts; run git log --all --full-history -- '.env' and save evidence.
+      This is immediate Phase 0 scope and precedes product-code commits.
+
+
+
+
+
+
+      Suggested Actions:
+
+      1. Run task-master set-status --id=63 --status=in-progress to start working
+      2. Run task-master expand --id=63 to break down into subtasks
+      3. Run task-master update-task --id=63 --prompt="..." to update details

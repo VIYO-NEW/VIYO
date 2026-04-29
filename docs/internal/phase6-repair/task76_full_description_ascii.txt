@@ -1,0 +1,49 @@
+(node:182743) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+      tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+
+    Task: #76 - T59: Generation Mode Matrix with Explicit v6.1 Multi-Model Flows
+
+
+    ID:                    76
+    Title:                 T59: Generation Mode Matrix with Explicit v6.1 Multi-Model Flows
+    Status:                    pending
+    Priority:              high
+    Dependencies:          75, 70, 71
+    Complexity:            N/A
+    Category:              N/A
+    Skills:                N/A
+    Description:           Cover all A1-A22 generation modes and explicit v6.1 multi-model UI acceptance
+                           criteria.
+
+
+
+
+      Implementation Details:
+
+      PO Modification C. Cover all A1-A22 modes and explicitly implement UI requirements for A3
+      compositional poster, A4 brand mockup, A8 platform-specific social templates, A9 palette
+      extraction, A13 style invention, A14 seasonal themes, A15 unified brand kit, and A16
+      before/after comparison. A3 collects prompt and optional product @mention and discloses
+      RMBG, Flux, Ideogram, and compositing lifecycle. A4 collects base image, brand asset
+      @mention, and target region and supports SAM mask, ControlNet warp, and Sharp compositing
+      lifecycle. A8 requires target platform such as IG, FB, Pinterest, or YouTube and exposes
+      correct aspect/platform sizing before generation. A9 accepts image URL/upload or prompt
+      source and surfaces BLIP-2, node-vibrant hex extraction, and Claude naming output. A13
+      presents four MCoT prompt branches and four-image selection flow. A14 surfaces Pattern DB
+      template lookup before Nano Banana Pro Edit. A15 groups logo, palette, and imagery output
+      from Recraft, Claude palette, and Flux. A16 requires side-by-side before/after output
+      handling.
+
+
+
+
+
+
+      Suggested Actions:
+
+      1. Run task-master set-status --id=76 --status=in-progress to start working
+      2. Run task-master expand --id=76 to break down into subtasks
+      3. Run task-master update-task --id=76 --prompt="..." to update details

@@ -1,0 +1,63 @@
+=== Task 63 completion evidence files ===
+ls: cannot access 'docs/internal/phase6-repair/task63_trufflehog_install_output_ascii.txt': No such file or directory
+docs/internal/phase6-repair/task63_env_history_audit_ascii.txt
+docs/internal/phase6-repair/task63_github_secret_scanning_evidence_ascii.txt
+docs/internal/phase6-repair/task63_precommit_dry_run_evidence_ascii.txt
+docs/internal/phase6-repair/task63_precommit_hook_install_evidence_ascii.txt
+docs/internal/phase6-repair/task63_secret_file_audit_ascii.txt
+docs/internal/phase6-repair/task63_trufflehog_scan_evidence_ascii.txt
+=== set Task 63 done ===
+(node:181011) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+╭─────────────────────────────────────╮
+│                                     │
+│   ✅ Successfully updated task 63   │
+│                                     │
+│   From: in-progress                 │
+│   To:   done                        │
+│                                     │
+╰─────────────────────────────────────╯
+=== Task 63 after status update ===
+(node:181035) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+🏷  tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+╭───────────────────────────────────────────────────╮
+│ Task: #63 - T49: Phase 0 Secret-Exposure Controls │
+╰───────────────────────────────────────────────────╯
+[90m┌────────────────────[39m[90m┬────────────────────────────────────────────────────────────────────────────────┐[39m
+[90m│[39m ID:                [90m│[39m 63                                                                             [90m│[39m
+[90m│[39m Title:             [90m│[39m T49: Phase 0 Secret-Exposure Controls                                          [90m│[39m
+[90m│[39m Status:            [90m│[39m ✓ done                                                                         [90m│[39m
+[90m│[39m Priority:          [90m│[39m high                                                                           [90m│[39m
+[90m│[39m Dependencies:      [90m│[39m 62                                                                             [90m│[39m
+[90m│[39m Complexity:        [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Category:          [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Skills:            [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Description:       [90m│[39m Install and verify immediate secret-exposure controls before the next commit.  [90m│[39m
+[90m└────────────────────[39m[90m┴────────────────────────────────────────────────────────────────────────────────┘[39m
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Implementation Details:                                                                        │
+│                                                                                                  │
+│   Source: PO Combined Directive v2 Section 3 and Doc 11 Security Phase Triggers Addendum.        │
+│   Install TruffleHog or equivalent pre-commit secret scanning; enable GitHub secret scanning     │
+│   if available; audit .gitignore for .env, .env.local, .env.production, key files, and           │
+│   generated secret artifacts; run git log --all --full-history -- '.env' and save evidence.      │
+│   This is immediate Phase 0 scope and precedes product-code commits.                             │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Suggested Actions:                                                                             │
+│                                                                                                  │
+│   1. Run task-master set-status --id=63 --status=in-progress to start working                    │
+│   2. Run task-master expand --id=63 to break down into subtasks                                  │
+│   3. Run task-master update-task --id=63 --prompt="..." to update details                        │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯

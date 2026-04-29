@@ -1,0 +1,9 @@
+=== Required v6.1 multi-model mode verification for Task 76 ===
+A3: present
+A4: present
+A8: present
+A9: present
+A13: present
+A14: present
+A15: present
+A16: present

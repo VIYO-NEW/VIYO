@@ -5,10 +5,36 @@ node_modules/
 dist/
 .turbo/
 
-# Environment
+# Environment and secret-bearing artifacts
 .env
+.env.*
+!.env.example
+!.env.sample
 .env.local
+.env.development
+.env.production
+.env.test
 .env.*.local
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cert
+*.keystore
+*.jks
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+*_rsa
+*_dsa
+*_ecdsa
+*_ed25519
+secrets/
+.secret/
+*.secret
+*.secrets
 
 # IDE
 .vscode/
@@ -31,7 +57,6 @@ coverage/
 # Taskmaster
 .taskmaster/tasks/
 .vercel
-.env*.local
 
 # Google Drive docs — single source of truth lives on Drive, not in repo
 docs/foundation/VIYO_Final_Doc9_*.md

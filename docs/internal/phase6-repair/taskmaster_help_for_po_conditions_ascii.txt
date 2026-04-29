@@ -1,0 +1,136 @@
+
+
+
+      Task Master CLI
+
+
+
+
+
+     Project Setup & Configuration
+
+    init                      [--name=<name>]                          Initialize a new project with Task
+                              [--description=<desc>] [-y]              Master structure
+    models                                                             View current AI model configuration and
+                                                                       available models
+    models --setup                                                     Run interactive setup to configure AI
+                                                                       models
+    models --set-main         <model_id>                               Set the primary model for task
+                                                                       generation
+    models                    <model_id>                               Set the model for research operations
+    --set-research
+    models                    <model_id>                               Set the fallback model (optional)
+    --set-fallback
+
+
+
+     Task Generation
+
+    parse-prd                 --input=<file.txt> [--num-tasks=10]      Generate tasks from a PRD document
+    generate                                                           Create individual task files from
+                                                                       tasks.json
+
+
+
+     Task Management
+
+    list                      [<status>|all] [-s <status>] [-t         List all tasks - use "all" to show with
+                              <tag>]                                   subtasks
+    list                      [--with-subtasks] [-f <format>]          Options: format (text/json/compact),
+                              [--json] [-c]                            subtasks
+    list                      [-w] [--ready] [--blocking]              Options: watch mode, ready/blocking
+                              [--all-tags]                             filters, all tags
+    set-status                <id> <status>                            Update task status (pending, done,
+                                                                       in-progress, review, deferred,
+                                                                       cancelled)
+    sync-readme               [--with-subtasks]                        Export tasks to README.md with
+                              [--status=<status>]                      professional formatting
+    update                    --from=<id> --prompt="<context>"         Update multiple tasks based on new
+                                                                       requirements
+    update-task               <id> <prompt...>                         Update a single task (no quotes needed
+                                                                       for multi-word prompts)
+    update-subtask            --id=<parentId.subtaskId>                Append additional information to a
+                              --prompt="<context>"                     subtask
+    add-task                  --prompt="<text>"                        Add a new task using AI
+                              [--dependencies=<ids>]
+                              [--priority=<priority>]
+    remove-task               --id=<id> [-y]                           Permanently remove a task or subtask
+
+
+
+     Subtask Management
+
+    add-subtask               --parent=<id> --title="<title>"          Add a new subtask to a parent task
+                              [--description="<desc>"]
+    add-subtask               --parent=<id> --task-id=<id>             Convert an existing task into a subtask
+    remove-subtask            --id=<parentId.subtaskId>                Remove a subtask (optionally convert to
+                              [--convert]                              standalone task)
+    clear-subtasks            --id=<id>                                Remove all subtasks from specified tasks
+    clear-subtasks --all                                               Remove subtasks from all tasks
+
+
+
+     Task Analysis & Breakdown
+
+    analyze-complexity        [--research] [--threshold=5]             Analyze tasks and generate expansion
+                                                                       recommendations
+    complexity-report         [--file=<path>]                          Display the complexity analysis report
+    expand                    --id=<id> [--num=5] [--research]         Break down tasks into detailed subtasks
+                              [--prompt="<context>"]
+    expand --all              [--force] [--research]                   Expand all pending tasks with subtasks
+    research                  "<prompt>" [-i=<task_ids>]               Perform AI-powered research queries with
+                              [-f=<file_paths>] [-c="<context>"]       project context
+                              [--tree] [-s=<save_file>]
+                              [-d=<detail_level>]
+
+
+
+     Task Navigation & Viewing
+
+    next                                                               Show the next task to work on based on
+                                                                       dependencies
+    show                      <id>                                     Display detailed information about a
+                                                                       specific task
+
+
+
+     Tag Management
+
+    tags                      [list] [--show-metadata] [--ready]       List all available tags with task counts
+    tags add                  <name> [--description <desc>]            Create a new tag (--from-branch for git
+                              [--copy-from <tag>]                      branch name)
+    tags use                  <name>                                   Switch to a different tag context
+    tags remove               <name> [-y]                              Delete an existing tag and all its tasks
+    tags rename               <oldName> <newName>                      Rename an existing tag
+    tags copy                 <source> <target> [--description         Copy a tag with all its tasks
+                              <desc>]
+
+
+
+     Dependency Management
+
+    add-dependency            --id=<id> --depends-on=<id>              Add a dependency to a task
+    remove-dependency         --id=<id> --depends-on=<id>              Remove a dependency from a task
+    validate-dependenci                                                  Identify invalid dependencies without
+                                                                       fixing them
+    fix-dependencies                                                   Fix invalid dependencies automatically
+
+
+
+     Configuration
+
+    .taskmaster/config.json        AI model configuration file (project root)         Managed by models cmd
+    API Keys (.env)                API keys for AI providers (ANTHROPIC_API_KEY,      Required in .env file
+                                   etc.)
+    MCP Keys (mcp.json)            API keys for Cursor integration                    Required in .cursor/
+
+
+
+
+      Quick Start:
+
+      1. Create Project: task-master init
+      2. Setup Models: task-master models --setup
+      3. Parse PRD: task-master parse-prd --input=<prd-file>
+      4. List Tasks: task-master list
+      5. Find Next Task: task-master next

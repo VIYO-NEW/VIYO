@@ -1,0 +1,144 @@
+=== git status ===
+ M .taskmaster/config.json
+ M .taskmaster/tasks/tasks.json
+?? docs/internal/phase6-repair/
+=== branch ===
+main
+=== task 62 ===
+(node:176057) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+🏷  tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+╭────────────────────────────────────────────────╮
+│ Task: #62 - T48: SEC-18 Branch Protection Gate │
+╰────────────────────────────────────────────────╯
+[90m┌────────────────────[39m[90m┬────────────────────────────────────────────────────────────────────────────────┐[39m
+[90m│[39m ID:                [90m│[39m 62                                                                             [90m│[39m
+[90m│[39m Title:             [90m│[39m T48: SEC-18 Branch Protection Gate                                             [90m│[39m
+[90m│[39m Status:            [90m│[39m ○ pending                                                                      [90m│[39m
+[90m│[39m Priority:          [90m│[39m high                                                                           [90m│[39m
+[90m│[39m Dependencies:      [90m│[39m 61                                                                             [90m│[39m
+[90m│[39m Complexity:        [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Category:          [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Skills:            [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Description:       [90m│[39m Enable the immediate Phase 0 branch-protection governance required before the  [90m│[39m
+[90m│[39m                    [90m│[39m next commit.                                                                   [90m│[39m
+[90m└────────────────────[39m[90m┴────────────────────────────────────────────────────────────────────────────────┘[39m
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Implementation Details:                                                                        │
+│                                                                                                  │
+│   Source: PO Combined Directive v2 Section 3 and Architecture Lock Security Phase Gate           │
+│   Addendum. Main branch must require PR review, required status checks, and force-push           │
+│   prevention. Direct pushes to main must be blocked. Capture evidence from GitHub settings,      │
+│   CLI, or API output before any next commit.                                                     │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Suggested Actions:                                                                             │
+│                                                                                                  │
+│   1. Run task-master set-status --id=62 --status=in-progress to start working                    │
+│   2. Run task-master expand --id=62 to break down into subtasks                                  │
+│   3. Run task-master update-task --id=62 --prompt="..." to update details                        │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+=== task 63 ===
+(node:176084) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+🏷  tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+╭───────────────────────────────────────────────────╮
+│ Task: #63 - T49: Phase 0 Secret-Exposure Controls │
+╰───────────────────────────────────────────────────╯
+[90m┌────────────────────[39m[90m┬────────────────────────────────────────────────────────────────────────────────┐[39m
+[90m│[39m ID:                [90m│[39m 63                                                                             [90m│[39m
+[90m│[39m Title:             [90m│[39m T49: Phase 0 Secret-Exposure Controls                                          [90m│[39m
+[90m│[39m Status:            [90m│[39m ○ pending                                                                      [90m│[39m
+[90m│[39m Priority:          [90m│[39m high                                                                           [90m│[39m
+[90m│[39m Dependencies:      [90m│[39m 62                                                                             [90m│[39m
+[90m│[39m Complexity:        [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Category:          [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Skills:            [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Description:       [90m│[39m Install and verify immediate secret-exposure controls before the next commit.  [90m│[39m
+[90m└────────────────────[39m[90m┴────────────────────────────────────────────────────────────────────────────────┘[39m
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Implementation Details:                                                                        │
+│                                                                                                  │
+│   Source: PO Combined Directive v2 Section 3 and Doc 11 Security Phase Triggers Addendum.        │
+│   Install TruffleHog or equivalent pre-commit secret scanning; enable GitHub secret scanning     │
+│   if available; audit .gitignore for .env, .env.local, .env.production, key files, and           │
+│   generated secret artifacts; run git log --all --full-history -- '.env' and save evidence.      │
+│   This is immediate Phase 0 scope and precedes product-code commits.                             │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Suggested Actions:                                                                             │
+│                                                                                                  │
+│   1. Run task-master set-status --id=63 --status=in-progress to start working                    │
+│   2. Run task-master expand --id=63 to break down into subtasks                                  │
+│   3. Run task-master update-task --id=63 --prompt="..." to update details                        │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+=== task 76 ===
+(node:176114) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+🏷  tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│ Task: #76 - T59: Generation Mode Matrix with Explicit v6.1 Multi-Model Flows │
+╰──────────────────────────────────────────────────────────────────────────────╯
+[90m┌────────────────────[39m[90m┬────────────────────────────────────────────────────────────────────────────────┐[39m
+[90m│[39m ID:                [90m│[39m 76                                                                             [90m│[39m
+[90m│[39m Title:             [90m│[39m T59: Generation Mode Matrix with Explicit v6.1 Multi-Model Flows               [90m│[39m
+[90m│[39m Status:            [90m│[39m ○ pending                                                                      [90m│[39m
+[90m│[39m Priority:          [90m│[39m high                                                                           [90m│[39m
+[90m│[39m Dependencies:      [90m│[39m 75, 70, 71                                                                     [90m│[39m
+[90m│[39m Complexity:        [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Category:          [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Skills:            [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Description:       [90m│[39m Cover all A1-A22 generation modes and explicit v6.1 multi-model UI acceptance  [90m│[39m
+[90m│[39m                    [90m│[39m criteria.                                                                      [90m│[39m
+[90m└────────────────────[39m[90m┴────────────────────────────────────────────────────────────────────────────────┘[39m
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Implementation Details:                                                                        │
+│                                                                                                  │
+│   PO Modification C. Cover all A1-A22 modes and explicitly implement UI requirements for A3      │
+│   compositional poster, A4 brand mockup, A8 platform-specific social templates, A9 palette       │
+│   extraction, A13 style invention, A14 seasonal themes, A15 unified brand kit, and A16           │
+│   before/after comparison. A3 collects prompt and optional product @mention and discloses        │
+│   RMBG, Flux, Ideogram, and compositing lifecycle. A4 collects base image, brand asset           │
+│   @mention, and target region and supports SAM mask, ControlNet warp, and Sharp compositing      │
+│   lifecycle. A8 requires target platform such as IG, FB, Pinterest, or YouTube and exposes       │
+│   correct aspect/platform sizing before generation. A9 accepts image URL/upload or prompt        │
+│   source and surfaces BLIP-2, node-vibrant hex extraction, and Claude naming output. A13         │
+│   presents four MCoT prompt branches and four-image selection flow. A14 surfaces Pattern DB      │
+│   template lookup before Nano Banana Pro Edit. A15 groups logo, palette, and imagery output      │
+│   from Recraft, Claude palette, and Flux. A16 requires side-by-side before/after output          │
+│   handling.                                                                                      │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Suggested Actions:                                                                             │
+│                                                                                                  │
+│   1. Run task-master set-status --id=76 --status=in-progress to start working                    │
+│   2. Run task-master expand --id=76 to break down into subtasks                                  │
+│   3. Run task-master update-task --id=76 --prompt="..." to update details                        │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯

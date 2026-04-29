@@ -1,0 +1,149 @@
+=== Task 62 branch protection apply output ===
+=== applying branch protection payload ===
+{"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection","required_status_checks":{"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_status_checks","strict":true,"contexts":["ci"],"contexts_url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_status_checks/contexts","checks":[{"context":"ci","app_id":null}]},"required_pull_request_reviews":{"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_pull_request_reviews","dismiss_stale_reviews":true,"require_code_owner_reviews":false,"require_last_push_approval":true,"required_approving_review_count":1},"required_signatures":{"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_signatures","enabled":false},"enforce_admins":{"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/enforce_admins","enabled":true},"required_linear_history":{"enabled":false},"allow_force_pushes":{"enabled":false},"allow_deletions":{"enabled":false},"block_creations":{"enabled":false},"required_conversation_resolution":{"enabled":true},"lock_branch":{"enabled":false},"allow_fork_syncing":{"enabled":false}}
+=== verified branch protection after apply ===
+{"allow_deletions":{"enabled":false},"allow_force_pushes":{"enabled":false},"enforce_admins":{"enabled":true,"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/enforce_admins"},"required_conversation_resolution":{"enabled":true},"required_pull_request_reviews":{"dismiss_stale_reviews":true,"require_code_owner_reviews":false,"require_last_push_approval":true,"required_approving_review_count":1,"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_pull_request_reviews"},"required_status_checks":{"checks":[{"app_id":null,"context":"ci"}],"contexts":["ci"],"contexts_url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_status_checks/contexts","strict":true,"url":"https://api.github.com/repos/VIYO-NEW/VIYO/branches/main/protection/required_status_checks"}}
+=== Task 62 taskmaster status ===
+=== mark Task 62 done ===
+(node:177725) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 62
+
+      From: done
+      To:   done
+
+
+=== Task 62 after status update ===
+(node:177755) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+      tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+
+    Task: #62 - T48: SEC-18 Branch Protection Gate
+
+
+    ID:                    62
+    Title:                 T48: SEC-18 Branch Protection Gate
+    Status:                    done
+    Priority:              high
+    Dependencies:          61
+    Complexity:            N/A
+    Category:              N/A
+    Skills:                N/A
+    Description:           Enable the immediate Phase 0 branch-protection governance required before the
+                           next commit.
+
+
+
+
+      Implementation Details:
+
+      Source: PO Combined Directive v2 Section 3 and Architecture Lock Security Phase Gate
+      Addendum. Main branch must require PR review, required status checks, and force-push
+      prevention. Direct pushes to main must be blocked. Capture evidence from GitHub settings,
+      CLI, or API output before any next commit.
+
+
+
+
+
+
+      Suggested Actions:
+
+      1. Run task-master set-status --id=62 --status=in-progress to start working
+      2. Run task-master expand --id=62 to break down into subtasks
+      3. Run task-master update-task --id=62 --prompt="..." to update details
+
+
+=== Task 63 pre-commit hook install ===
+=== updated hook installation evidence ===
+-rwxr-xr-x 1 ubuntu ubuntu 1203 Apr 28 23:13 .git/hooks/pre-commit
+-rwxr-xr-x 1 ubuntu ubuntu 1203 Apr 28 23:13 .githooks/pre-commit
+-rwxr-xr-x 1 ubuntu ubuntu 1203 Apr 28 23:13 scripts/security/trufflehog-pre-commit.sh
+=== updated hook sha256 ===
+f144a9943ad672a940db853539cb07a97c2cb83b5a2ba84468e0eefe5269740b  scripts/security/trufflehog-pre-commit.sh
+f144a9943ad672a940db853539cb07a97c2cb83b5a2ba84468e0eefe5269740b  .githooks/pre-commit
+f144a9943ad672a940db853539cb07a97c2cb83b5a2ba84468e0eefe5269740b  .git/hooks/pre-commit
+=== updated git hook first lines ===
+#!/usr/bin/env bash
+set -euo pipefail
+
+# VIYO Phase 0 secret-exposure control.
+# Runs before commits to prevent verified secrets from entering Git history.
+# Requires the official TruffleHog CLI to be available on PATH.
+
+ROOT_DIR="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+cd "$ROOT_DIR"
+
+if ! command -v trufflehog >/dev/null 2>&1; then
+  echo "ERROR: trufflehog is not installed or not on PATH." >&2
+  echo "Install the official TruffleHog CLI before committing." >&2
+  exit 1
+fi
+
+BASE_REF="${TRUFFLEHOG_BASE_REF:-HEAD}"
+
+# Scan the staged snapshot through the Git working tree and require failure on verified secrets.
+# --only-verified reduces false positives while still blocking confirmed credential exposure.
+trufflehog git "file://$ROOT_DIR" --since-commit "$BASE_REF" --only-verified --fail --no-update
+
+# Also scan staged file content paths to catch newly-added uncommitted files.
+STAGED_FILES="$(git diff --cached --name-only --diff-filter=ACMR || true)"
+if [ -n "$STAGED_FILES" ]; then
+  printf '%s\n' "$STAGED_FILES" | while IFS= read -r file_path; do
+    [ -f "$file_path" ] || continue
+    trufflehog filesystem "$file_path" --only-verified --fail --no-update
+  done
+fi
+
+exit 0
+=== Task 63 TruffleHog scan ===
+=== TruffleHog version ===
+trufflehog 3.95.2
+=== TruffleHog git repo scan: only verified secrets, fail on verified findings ===
+              TruffleHog. Unearth your secrets.
+
+2026-04-28T23:13:38-04:00	info-0	trufflehog	running source	{"source_manager_worker_id": "fADhZ", "with_units": true}
+2026-04-28T23:13:38-04:00	info-0	trufflehog	scanning repo	{"source_manager_worker_id": "fADhZ", "unit_kind": "dir", "unit": "/tmp/trufflehog-180342-3691048337", "repo": "file:///home/ubuntu/VIYO"}
+2026-04-28T23:13:39-04:00	info-0	trufflehog	finished scanning	{"chunks": 1158, "bytes": 4322445, "verified_secrets": 0, "unverified_secrets": 0, "scan_duration": "420.565993ms", "trufflehog_version": "3.95.2", "verification_caching": {"Hits":0,"Misses":0,"HitsWasted":0,"AttemptsSaved":0,"VerificationTimeSpentMS":0}}
+=== TruffleHog git repo scan exit code: 0 ===
+=== Task 63 pre-commit dry run ===
+=== pre-commit hook dry run ===
+              TruffleHog. Unearth your secrets.
+
+2026-04-28T23:13:42-04:00	info-0	trufflehog	running source	{"source_manager_worker_id": "dH5Oc", "with_units": true}
+2026-04-28T23:13:42-04:00	info-0	trufflehog	scanning repo	{"source_manager_worker_id": "dH5Oc", "unit_kind": "dir", "unit": "/tmp/trufflehog-180395-3063217981", "repo": "file:///home/ubuntu/VIYO", "base": "f5a8c2e3e7b9915707ab5d23e8a774139df8235e"}
+2026-04-28T23:13:42-04:00	info-0	trufflehog	finished scanning	{"chunks": 0, "bytes": 0, "verified_secrets": 0, "unverified_secrets": 0, "scan_duration": "225.747253ms", "trufflehog_version": "3.95.2", "verification_caching": {"Hits":0,"Misses":0,"HitsWasted":0,"AttemptsSaved":0,"VerificationTimeSpentMS":0}}
+=== pre-commit hook dry run exit code: 0 ===
+=== Task 63 GitHub secret scanning ===
+=== git remotes ===
+github	https://github.com/VIYO-NEW/VIYO.git (fetch)
+github	https://github.com/VIYO-NEW/VIYO.git (push)
+=== repository security settings ===
+{"default_branch":"main","secret_scanning":"enabled","secret_scanning_push_protection":"enabled","visibility":"private"}
+=== Task 63 env history audit ===
+=== Task 63 .env history audit ===
+=== Task 63 completion check ===
+=== Task 63 final completion check ===
+Taskmaster status:
+(node:181252) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #63 - T49: Phase 0 Secret-Exposure Controls
+    ID:                    63
+    Title:                 T49: Phase 0 Secret-Exposure Controls
+    Status:                    done
+TruffleHog version:
+trufflehog 3.95.2
+Required evidence files:
+-rw-rw-r-- 1 ubuntu ubuntu   35 Apr 28 23:13 docs/internal/phase6-repair/task63_env_history_audit_ascii.txt
+-rw-rw-r-- 1 ubuntu ubuntu  281 Apr 28 23:13 docs/internal/phase6-repair/task63_github_secret_scanning_evidence_ascii.txt
+-rw-rw-r-- 1 ubuntu ubuntu  814 Apr 28 23:13 docs/internal/phase6-repair/task63_precommit_dry_run_evidence_ascii.txt
+-rw-rw-r-- 1 ubuntu ubuntu 1814 Apr 28 23:13 docs/internal/phase6-repair/task63_precommit_hook_install_evidence_ascii.txt
+-rw-rw-r-- 1 ubuntu ubuntu 5025 Apr 28 23:13 docs/internal/phase6-repair/task63_secret_file_audit_ascii.txt
+-rw-rw-r-- 1 ubuntu ubuntu 6506 Apr 28 23:14 docs/internal/phase6-repair/task63_taskmaster_done_evidence_ascii.txt
+-rw-rw-r-- 1 ubuntu ubuntu  918 Apr 28 23:14 docs/internal/phase6-repair/task63_trufflehog_install_output_ascii.txt
+-rw-rw-r-- 1 ubuntu ubuntu  868 Apr 28 23:13 docs/internal/phase6-repair/task63_trufflehog_scan_evidence_ascii.txt

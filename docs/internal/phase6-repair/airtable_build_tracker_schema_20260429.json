@@ -1,0 +1,3 @@
+Tool execution result saved to: /home/ubuntu/.mcp/tool-results/2026-04-29_09-42-27_airtable_describe_table.json
+Tool execution result:
+{"id":"tblIJUzJoCCjWXaMQ","name":"Build Tracker","fields":[{"id":"fldLeiD5GlxxTjjOH","name":"Feature ID"},{"id":"fldFfxVYJoI2JLi9o","name":"Feature Name"},{"id":"fldveBLeBzpfwNWcd","name":"Status"},{"id":"fldlxN9xw31fkMlee","name":"Version"},{"id":"fldy3rCvFSMJOf6s6","name":"Phase"},{"id":"fldHwUC4F6GUo96XG","name":"PRD Section"},{"id":"fldjv9Xj1Odgfw2GT","name":"Dependencies"},{"id":"fld7GgSYxQcXAIAkv","name":"Notes"},{"id":"fld7e1CxgX31tNeKI","name":"Build Order"}],"views":[{"id":"viwyf5mswbpNMkrAM","name":"Grid view"}]}

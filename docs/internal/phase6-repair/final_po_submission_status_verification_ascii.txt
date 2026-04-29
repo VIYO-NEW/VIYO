@@ -1,0 +1,47 @@
+=== Phase 0 Taskmaster statuses ===
+Task 62: status=done | title=T48: SEC-18 Branch Protection Gate
+Task 63: status=done | title=T49: Phase 0 Secret-Exposure Controls
+
+=== Superseded old graph statuses ===
+Task 21: status=cancelled | title=Implement Art Director Router 4D Scoring Matrix
+Task 22: status=cancelled | title=Implement Art Director Router Zero-Shot Fallback
+Task 23: status=cancelled | title=Implement Provider Tier Routing in Art Director Router
+Task 24: status=cancelled | title=Build Image Studio Page Layout
+Task 25: status=cancelled | title=Implement Image Studio Generation Flow Backend
+Task 26: status=cancelled | title=Implement Image Studio Generation Flow Frontend
+Task 27: status=cancelled | title=Implement Image Studio Editing Tools: Touch Edit
+Task 28: status=cancelled | title=Implement Image Studio Editing Tools: Layer Splitting
+Task 29: status=cancelled | title=Implement Image Studio Editing Tools: Background Swap
+Task 30: status=cancelled | title=Implement Image Studio Version History Panel
+Task 31: status=cancelled | title=Implement Brand Vault @ Mention System in AI Command Panel
+Task 32: status=cancelled | title=Auto-Save Generated Images to Brand Vault Assets Table
+Task 33: status=cancelled | title=Build Brand Chat Panel Component
+Task 34: status=cancelled | title=Implement Pin-on-Canvas Comments Overlay in Image Studio
+Task 35: status=cancelled | title=Implement Section-Anchored Comments in Email Editor
+Task 36: status=cancelled | title=Implement Brand Chat Panel Super-Search
+Task 37: status=cancelled | title=Build Webhook Management API Endpoints
+Task 38: status=cancelled | title=Implement Webhook Dispatcher Inngest Function
+Task 39: status=cancelled | title=Add Inngest Event Emission Points for Webhooks
+Task 40: status=cancelled | title=Integration Tests for Token Engine + Stripe Webhooks
+Task 41: status=cancelled | title=Build Style/Prompt Library UI Surface
+Task 42: status=cancelled | title=Add Remaining Image Editing Tools with fal.ai Integrations
+Task 43: status=cancelled | title=Build @mention Notification Dispatch with Preference-Based Routing
+Task 44: status=cancelled | title=Add React/TSX-Aware Heuristics to VIYO Quality-Gate Skill
+
+=== Task 76 Description ===
+Title: T59: Generation Mode Matrix with Explicit v6.1 Multi-Model Flows
+Status: pending
+Description:
+Cover all A1-A22 generation modes and explicit v6.1 multi-model UI acceptance criteria.
+Details:
+PO Modification C. Cover all A1-A22 modes and explicitly implement UI requirements for A3 compositional poster, A4 brand mockup, A8 platform-specific social templates, A9 palette extraction, A13 style invention, A14 seasonal themes, A15 unified brand kit, and A16 before/after comparison. A3 collects prompt and optional product @mention and discloses RMBG, Flux, Ideogram, and compositing lifecycle. A4 collects base image, brand asset @mention, and target region and supports SAM mask, ControlNet warp, and Sharp compositing lifecycle. A8 requires target platform such as IG, FB, Pinterest, or YouTube and exposes correct aspect/platform sizing before generation. A9 accepts image URL/upload or prompt source and surfaces BLIP-2, node-vibrant hex extraction, and Claude naming output. A13 presents four MCoT prompt branches and four-image selection flow. A14 surfaces Pattern DB template lookup before Nano Banana Pro Edit. A15 groups logo, palette, and imagery output from Recraft, Claude palette, and Flux. A16 requires side-by-side before/after output handling.
+
+=== Required mode verification ===
+A3: present
+A4: present
+A8: present
+A9: present
+A13: present
+A14: present
+A15: present
+A16: present

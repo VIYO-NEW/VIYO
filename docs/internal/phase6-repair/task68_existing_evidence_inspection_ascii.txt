@@ -1,0 +1,172 @@
+=== retry output type and excerpt ===
+docs/internal/phase6-repair/taskmaster_parse_prd_phase6_2_retry_command_output.txt: Unicode text, UTF-8 text, with very long lines (14330), with escape sequences
+
+--- taskmaster_parse_prd_phase6_2_retry_command_output.txt ---
+[tag] master
+
+Your tasks are only as good as the context behind them.
+
+Parse locally and tasks will be stored in a JSON file. Bring it to Hamster and your brief
+becomes part of a living system connected to your team, your codebase and your agents.
+Now your entire team can go as fast as you can with Taskmaster.
+
+[34m?[39m [1mHow would you like to parse your PRD?
+[22m
+[36m❯ Parse locally
+
+   • Your PRD becomes a task list in a local JSON file
+   • Great for quick prototyping and for vibing on your own
+   • You can always export to Hamster later
+[39m
+  Bring it to Hamster
+
+   • Your PRD will become a living brief you can refine with your team
+   • Hamster will generate tasks automatically, ready to execute in Taskmaster
+   • Hamster will automatically analyze complexity and expand tasks as needed
+   • Invite your teammates to collaborate on a single source of truth
+   • AI inference handled by Hamster, no API keys needed - just a Hamster
+account!
+
+
+[1m↑↓[22m [2mnavigate[22m[2m • [22m[1m⏎[22m [2mselect[22m[?25l[23G(node:172322) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[24G[25G[26G[27G[28G[29G[30G[31G[32G[33G[34G[35G[36G[37G[38G[39G[40G[41G[42G[43G[44G[45G[46G[23G[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[G[32m✔[39m [1mHow would you like to parse your PRD?
+[22m [36mParse locally[39m[15G[16G[17G[18G[19G[20G[21G[22G[23G[24G[25G[26G[27G[28G[29G[30G[31G[32G[33G[34G[35G[36G[37G[38G[39G[40G[41G[42G[43G[44G[45G[46G[47G[48G[49G[50G[51G[52G[53G[54G[55G[56G[57G[58G[59G[60G[61G[62G[63G[64G[65G[66G[67G[68G[69G[70G[71G[72G[73G[74G[75G[76G[77G[78G[79G[80G[81G[82G[83G[84G[85G[86G[87G[88G[89G[90G[91G[92G[93G[94G[95G[96G[97G[98G[99G[100G[101G[102G[103G[104G[105G[106G[107G[108G[109G[110G[111G[15G[16G[17G[18G[19G[20G[21G[22G[23G[24G[25G[26G[27G[15G
+[?25hParsing PRD file: /home/ubuntu/VIYO/docs/internal/phase6-repair/TASKMASTER_PHASE6_2_REINGESTION_INPUT.md
+Generating 30 tasks...
+[INFO] Tag 'master' is empty or doesn't exist. Creating/updating tag with new tasks.
+- Parsing PRD and generating tasks...
+
+[INFO] Calling AI service to generate tasks from PRD...
+[ERROR] OpenAI object generation failed: Invalid JSON response {"error":{"name":"AI_APICallError","cause":{"name":"AI_TypeValidationError","cause":{"name":"ZodError","message":"[\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"error\"\n    ],\n    \"message\": \"Invalid input: expected object, received string\"\n  }\n]"},"value":{"error":"Invalid request format"}},"url":"https://api.manus.im/api/llm-proxy/v1/responses","requestBodyValues":{"model":"gpt-4.1-mini","input":[{"role":"system","content":"You are an AI assistant specialized in analyzing Product Requirements Documents (PRDs) and generating a structured, logically ordered, dependency-aware and sequenced list of development tasks in JSON format.\n\nAnalyze the provided PRD content and generate approximately 30 top-level development tasks. If the complexity or the level of detail of the PRD is high, generate more tasks relative to the complexity of the PRD\nEach task should represent a logical unit of work needed to implement the requirements and focus on the most direct and effective way to implement the requirements without unnecessary complexity or overengineering. Include pseudo-code, implementation details, and test strategy for each task. Find the most up to date information to implement each task.\nAssign sequential IDs starting from 1. Infer title, description, details, and test strategy for each task based *only* on the PRD content.\nSet status to 'pending', dependencies to an empty array [], and priority to 'medium' initially for all tasks.\nGenerate a response containing a single key \"tasks\", where the value is an array of task objects adhering to the provided schema.\n\nEach task should follow this JSON structure:\n{\n\t\"id\": number,\n\t\"title\": string,\n\t\"description\": string,\n\t\"status\": \"pending\",\n\t\"dependencies\": number[] (IDs of tasks this depends on),\n\t\"priority\": \"high\" | \"medium\" | \"low\",\n\t\"details\": string (implementation details),\n\t\"testStrategy\": string (validation approach)\n}\n\nGuidelines:\n1. Unless complexity warrants otherwise, create exactly 30 tasks, numbered sequentially starting from 1\n2. Each task should be atomic and focused on a single responsibility following the most up to date best practices and standards\n3. Order tasks logically - consider dependencies and implementation sequence\n4. Early tasks should focus on setup, core functionality first, then advanced features\n5. Include clear validation/tes
+
+--- taskmaster_parse_prd_phase6_2_output.json ---
+{"tasks":[]}
+
+--- BUILDER_DIFF_OUTPUT_PHASE6_2_MANUAL_EXECUTED.md ---
+# Builder Diff Output — Phase 6.2 Manual Taskmaster Graph Created
+
+**Prepared by:** Manus AI
+**Date:** 2026-04-28
+**Architecture Broadcast Record:** `recqGyk0oIekpYEe9`
+**Directive:** PO Combined Directive v2 — Phase 6 Correction + Phased Security
+**Action Taken:** Manual `task-master add-task` execution, per PO instruction to stop attempting `parse-prd`.
+
+## 1. Execution Summary
+
+The PO instructed: **“Stop trying to make `parse-prd` work. It is not blocking. Manually create the task graph from the PO Combined Directive v2 using `task-master add-task` for each task.”** I followed that instruction and created the Phase 6.2 correction/security task graph manually using Taskmaster’s manual `add-task` fields.
+
+The proposed logical graph in the prior builder diff used PO logical IDs **T47–T72**, but the repository already had top-level Taskmaster tasks **T47–T60** allocated to existing composite/R32 work. To avoid overwriting or duplicating existing tasks, I preserved the PO logical IDs in each title and created the new graph at the next available Taskmaster IDs: **T61–T89**.
+
+| Evidence Artifact | Path |
+|---|---|
+| Manual add-task script | `docs/internal/phase6-repair/add_phase6_2_manual_tasks.py` |
+| Manual add-task command log | `docs/internal/phase6-repair/add_phase6_2_manual_tasks_output.txt` |
+| Taskmaster list after manual additions | `docs/internal/phase6-repair/taskmaster_list_after_manual_add.txt` |
+| Prior deterministic proposed diff | `docs/internal/phase6-repair/BUILDER_DIFF_OUTPUT_PHASE6_2.md` |
+
+## 2. Actual Taskmaster ID Mapping
+
+| PO Logical Task | Actual Taskmaster ID | Title | Dependencies |
+|---|---:|---|---|
+| T47 | 61 | Architecture Broadcast Ingestion Handshake | None |
+| T48 | 62 | SEC-18 Branch Protection Gate | 61 |
+| T49 | 63 | Phase 0 Secret-Exposure Controls | 62 |
+| T50 | 64 | SEC-02 Encryption Foundation Readiness | 63 |
+| T51a | 65 | SEC-14 and SEC-15 Auth Hardening | 64 |
+| T51b | 66 | SEC-04 and SEC-05 Network Hardening | 64 |
+| T51c | 67 | SEC-07 and SEC-08 CI Hardening | 63 |
+| T51d | 68 | Explicit Taskmaster Re-Parse Evidence Gate | 61 |
+| T52 | 69 | T46 Gap Repair — Provider Registry and Shared Contracts | 68 |
+| T53 | 70 | T46 Gap Repair — Cache-First Router and Pattern DB Integration | 69 |
+| T54 | 71 | Billing and Token Economics Foundation | 69 |
+| T55 | 72 | R2 Auto-Save and Brand Vault Asset Contract | 69 |
+| T56 | 73 | Editing Router Coverage for 10 Tools | 69 |
+| T57 | 74 | Standalone Studio Route, Navigation, and Brand Scope | 69 |
+| T58 | 75 | Conversational Studio Shell and Slash Commands | 74 |
+| T59 | 76 | Generation Mode Matrix with Explicit v6.1 Multi-Model Flows | 75, 70, 71 |
+| T60 | 77 | Aspect Ratio, Platform Sizing, and Output-Shape Controls | 76 |
+| T61 | 78 | Style and Prompt Library | 75 |
+| T62 | 79 | Error, Timeout, Scoring, and Feature-Flag Visibility | 75, 70 |
+| T63 | 80 | Multi-Format Export and Resolution Choices | 72, 76 |
+| T64 | 81 | Version History and Multi-Image Project Organization | 74, 72 |
+| T65 | 82 | Accessibility and No-Placeholder UI Compliance | 74–81 |
+| T66 | 83 | Unit and Integration Test Expansion | 74–82 |
+| T67 | 84 | Static Wiring and Type Validation | 69–83 |
+| T68 | 85 | Browser Validation and Visual Evidence | 74–84 |
+| T69 | 86 | Security Trigger Verification Matrix | 62–85 |
+| T70 | 87 | Airtable Build Tracker Sync After PO Diff Approval | 61–86 |
+| T71 | 88 | Final Quality Gate and Source-of-Truth Reconciliation | 83–87 |
+| T72 | 89 | PO Approval Stop Before Phase 7 | 88 |
+
+## 3. PO Modifications Confirmed in the Created Graph
+
+| PO Required Modification | Created Task Coverage |
+|---|---|
+| Replace grouped T51 with T51a, T51b, and T51c | Actual tasks **65**, **66**, **67** preserve the split security trigger semantics. |
+| Add explicit pre-T52 Taskmaster re-parse evidence gate T51d | Actual task **68** records the parse evidence gate and the PO override that manual task creation is not blocked by provider failure. |
+| Update T59 with explicit A3/A4/A8/A9/A13/A14/A15/A16 multi-model UI acceptance criteria | Actual task **76** includes the full v6.1 multi-model acceptance text. |
+| Defer T64 Freeform Canvas and T65 Collaboration Pins to V1.1 | Actual task **81** narrows active T64 to version history/multi-image organization; actual task **82** enforces no-placeholder UI and records collaboration pins as V1.1 deferred scope. |
+
+## 4. Security Phasing Confirmed in the Created Graph
+
+The manual graph includes the phased security sequence required by Section 3 of the directive. **Phase 0** security work is represented by branch protection and secret-exposure controls before the next commit. Later security controls remain trigger-bound and must not be prematurely implemented outside their attack-surface trigger.
+
+| Security Area | Actual Taskmaster Coverage | Trigger |
+|---|---|---|
+| SEC-18 branch protection | 62 | Phase 0 / before next commit |
+| Secret-exposure controls | 63 | Phase 0 / before next commit |
+| SE
+
+--- BUILDER_DIFF_OUTPUT_PHASE6_2.md ---
+# Builder Diff Output — Phase 6.2 Image Studio Correction + Phased Security
+
+**Prepared by:** Manus AI
+**Date:** 2026-04-28
+**Broadcast Record:** `recqGyk0oIekpYEe9`
+**Broadcast Status Target:** `Diff Proposed`
+**Scope:** Proposed Taskmaster graph diff only. No product-code implementation is included.
+
+## 1. Required Accountability Answer
+
+The PO directive asks: **“Why did you not run `task-master parse-prd` on the PRD V5 Addendum before building Phase 6?”**
+
+The honest answer is scenario **10**: **the PRD V5 Addendum was read manually, but its requirements were not operationalized into Taskmaster before Phase 6 UI work proceeded.** The failure was not absence of the document and not a pre-build parse error. The failure was treating the existing T24–T34 graph as sufficient after manual source review, which allowed PRD V5 Addendum §26’s full standalone Image Studio scope to remain outside the execution graph.
+
+## 2. Taskmaster Parse-PRD Evidence
+
+The directive required Taskmaster re-ingestion. I created a combined ingestion source at:
+
+`docs/internal/phase6-repair/TASKMASTER_PHASE6_2_REINGESTION_INPUT.md`
+
+The required `task-master parse-prd` command was executed twice:
+
+| Attempt | Command Evidence | Result |
+|---|---|---|
+| 1 | `docs/internal/phase6-repair/taskmaster_parse_prd_phase6_2_command_output.txt` | Failed because the output JSON path had to exist before Taskmaster would use it. |
+| 2 | `docs/internal/phase6-repair/taskmaster_parse_prd_phase6_2_retry_command_output.txt` | Failed after provider retries with `OpenAI API error during object generation: Invalid JSON response`. The original Taskmaster model config was restored after the retry. |
+
+Because Taskmaster’s provider call failed externally after the mandated parse was attempted, this Builder Diff Output provides the proposed graph deterministically from the PO directive, PRD V5 Addendum, Architecture Lock v6.1, T46 Gap Addendum, and security addenda. Product-code work remains blocked until the PO approves the diff.
+
+## 3. Proposed Task Graph Diff Summary
+
+| Change Type | Proposed Change |
+|---|---|
+| Approved prior graph retained | Keep the prior Phase 6.2 corrective direction: re-ingest sources, repair T46 routing/schema gaps, rebuild Image Studio as a standalone design tool, and verify against PRD §26 and Architecture Lock v6.1. |
+| Modification A applied | Replace grouped T51 with T51a, T51b, and T51c. |
+| Modification B applied | Add T51d as the explicit pre-T52 Taskmaster re-parse evidence gate. |
+| Modification C applied | Update T59 with explicit A3, A4, A8, A9, A13, A14, A15, and A16 multi-model UI acceptance criteria from Architecture Lock v6.1 §3.1.1. |
+| Modification D applied | Defer T64 Freeform Canvas and T65 Collaboration Pins to V1.1; remove both from active sprint execution. |
+| Security directive applied | Phase 0 security is immediate before next commit; later security controls are triggered by first auth/database code, first public deployment, Image Studio/Brand Vault live upload/fetch, and first paying customer. |
+
+## 4. Proposed Active Task Graph
+
+| ID | Title | Dependencies | Trigger | Acceptance Criteria |
+|---|---|---|---|---|
+| T47 | Architecture Broadcast Ingestion Handshake | None | Start of every task session | Query Architecture Broadcasts; if pending, halt planned work, download attached Drive docs, run ingestion, write diff to Builder Diff Output, set status to `Diff Proposed`, and stop for PO approval. |
+| T48 | SEC-18 Branch Protection Gate | T47 after PO approval | Phase 0 / before next commit | Main branch requires PR review, required status checks, and force-push prevention. Direct pushes to main are blocked. Evidence is captured from GitHub settings or CLI/API output. |
+| T49 | Phase 0 Secret-Exposure Controls | T48 | Phase 0 / before next commit | Install TruffleHog pre-commit hook; enable GitHub secret scanning if available; audit `.gitignore` for `.env`, `.env.local`, `.env.production`, key files; run `git log --all --full-history -- '*.env*'` and save evidence. |
+| T50 | SEC-02 Encryption Foundation Readiness | T49 | Foundation before sensitive-token storage | Confirm AES-256-GCM implementation path for OAuth tokens, API keys, webhook secrets, and other Restricted-class data. No plaintext secret persistence may be introduced by Phase 6. |
+| T51a | SEC-14 and SEC-15 Auth Hardening | T50 | First auth/database code | Implement password complexity, bcrypt cost 10+, HaveIBeenPwned k-anonymity check, last-5 password reuse prevention, and brute-force lockout controls when auth surface is built. |
+| T51b | SEC-04 and SEC-05 Network Hardening | T50 | Split trigger: first auth/database code and first public deployment | Implement security headers with the first auth/database surface; implement rate limiting at first public deployment using the directive’s limits. Preserve trigger notes so headers are not delayed until deployment and rate limiting is not exposed prematurely without infrastructure. |
+| T5

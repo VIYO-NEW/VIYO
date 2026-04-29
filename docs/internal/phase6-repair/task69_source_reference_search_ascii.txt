@@ -1,0 +1,301 @@
+=== provider/model/art director/source references ===
+apps/admin/src/App.tsx:17:import { RouterProvider } from '@tanstack/react-router';
+apps/admin/src/App.tsx:104:      <RouterProvider router={router} />
+apps/admin/src/pages/CostReconciliation.tsx:8: * - Provider Price Registry
+apps/admin/src/pages/CostReconciliation.tsx:29:    monthlyProviderCost: number;
+apps/admin/src/pages/CostReconciliation.tsx:99:              <th className="px-4 py-3 text-right font-medium text-slate-300">Provider Cost</th>
+apps/admin/src/pages/CostReconciliation.tsx:114:                  ${margin.monthlyProviderCost.toFixed(2)}
+apps/web/src/App.tsx:2: * Defines the VIYO web application root component and preserves the T12 Sentry error boundary while mounting the T15 router provider.
+apps/web/src/App.tsx:7:import { AppRouterProvider } from './router.js';
+apps/web/src/App.tsx:33: * T15: TanStack Router provider is mounted inside Sentry so global React
+apps/web/src/App.tsx:39:      <AppRouterProvider />
+apps/web/src/components/studio/ImageStudio.tsx:34:  providerTier: string;
+apps/web/src/components/studio/ImageStudio.tsx:82:    providerTier: response.providerTier,
+apps/web/src/components/studio/ImageStudio.tsx:111:  const [statusMessage, setStatusMessage] = useState('Ready to create with the v6.1 Art Director Router.');
+apps/web/src/components/studio/ImageStudio.tsx:129:    setStatusMessage('Routing request through Art Director v6.1…');
+apps/web/src/components/studio/ImageStudio.tsx:174:            <h1 className="mt-2 text-3xl font-bold tracking-tight text-white">Art Director Studio</h1>
+apps/web/src/components/studio/ImageStudio.tsx:176:              Select any A1–A22 generation mode, optionally trigger a Visual Engine V2 editing tool, and inspect the returned R2 asset metadata from the repaired v6.1 router.
+apps/web/src/components/studio/ImageStudio.tsx:190:            <h2 id="mode-picker-heading" className="mt-2 text-xl font-semibold text-white">22 generation modes</h2>
+apps/web/src/components/studio/ImageStudio.tsx:191:            <p className="mt-2 text-sm text-slate-400">Modes are rendered from the repaired Art Director schema inventory.</p>
+apps/web/src/components/studio/ImageStudio.tsx:255:                    <img src={asset.assetUrl} alt={`Art Director output for ${asset.mode}`} className="h-80 w-full object-cover" />
+apps/web/src/components/studio/ImageStudio.test.ts:8:  providerTier: 'tier_2',
+apps/web/src/components/studio/ImageStudio.test.ts:26:    providerGateway: 'openai',
+apps/web/src/components/studio/ImageStudio.test.ts:120:      providerTier: 'tier_2',
+apps/web/src/lib/studio-contract.ts:2:  artDirectorAspectRatioSchema,
+apps/web/src/lib/studio-contract.ts:3:  artDirectorEditingToolSchema,
+apps/web/src/lib/studio-contract.ts:4:  artDirectorGenerationModeSchema,
+apps/web/src/lib/studio-contract.ts:190:export const studioModeDefinitions: StudioModeDefinition[] = artDirectorGenerationModeSchema.options.map((mode) => ({
+apps/web/src/lib/studio-contract.ts:195:export const studioEditingToolDefinitions: StudioEditingToolDefinition[] = artDirectorEditingToolSchema.options.map((tool) => ({
+apps/web/src/lib/studio-contract.ts:200:export const studioAspectRatios = artDirectorAspectRatioSchema.options satisfies ArtDirectorAspectRatio[];
+apps/web/src/lib/studio-api.ts:9:const ART_DIRECTOR_ROUTE_PATH = '/api/trpc/artDirector.routeGeneration';
+apps/web/src/lib/studio-api.ts:63:    const error = new Error(body.error?.message ?? `Art Director request failed with ${status}`);
+apps/web/src/lib/studio-api.ts:73:      : `Art Director request failed with ${status}`;
+apps/web/src/router.tsx:9:  RouterProvider,
+apps/web/src/router.tsx:118:export function AppRouterProvider() {
+apps/web/src/router.tsx:119:  return <RouterProvider router={router} />;
+apps/worker/src/index.ts:90:// --- tRPC API Island — T46 Art Director Routing Suite ---
+apps/worker/src/inngest/billing.ts:9: * - Provider price monitor (weekly cron)
+apps/worker/src/inngest/billing.ts:298: * Provider Price Monitor — T9 §10
+apps/worker/src/inngest/billing.ts:299: * Weekly cron: Checks provider pricing changes.
+apps/worker/src/inngest/billing.ts:301:export const providerPriceMonitor = inngest.createFunction(
+apps/worker/src/inngest/billing.ts:302:  { id: 'billing-provider-price-monitor', name: 'Billing: Provider Price Monitor' },
+apps/worker/src/inngest/billing.ts:305:    const results = await step.run('check-provider-prices', async () => {
+apps/worker/src/inngest/billing.ts:307:      // Compare against provider_pricing_registry
+apps/worker/src/inngest/billing.ts:310:      console.log('[VIYO] Provider price monitor check — placeholder');
+apps/worker/src/inngest/billing.ts:326:  providerPriceMonitor,
+apps/worker/src/lib/ai/router-config.ts:2: * Art Director Router Configuration — T46
+apps/worker/src/lib/ai/router-config.ts:5: * provider/model validation; this worker helper keeps request-time logic
+apps/worker/src/lib/ai/router-config.ts:14:  providerTimeoutMs: number;
+apps/worker/src/lib/ai/router-config.ts:16:  tier1Provider: Extract<ArtDirectorGenerationModel, 'gpt-image-2' | 'ideogram-v3' | 'imagen-4'>;
+apps/worker/src/lib/ai/router-config.ts:17:  tier2Provider: Extract<
+apps/worker/src/lib/ai/router-config.ts:29:  tier3Provider: Extract<ArtDirectorGenerationModel, 'stable-diffusion-3.5' | 'sdxl-lightning' | 'kolors'>;
+apps/worker/src/lib/ai/router-config.ts:30:  rollbackProvider: Extract<ArtDirectorGenerationModel, 'nano-banana-pro'>;
+apps/worker/src/lib/ai/router-config.ts:86:    providerTimeoutMs: parseNumber(
+apps/worker/src/lib/ai/router-config.ts:93:    tier1Provider: 'gpt-image-2',
+apps/worker/src/lib/ai/router-config.ts:94:    tier2Provider: 'flux-2-pro',
+apps/worker/src/lib/ai/router-config.ts:95:    tier3Provider: 'stable-diffusion-3.5',
+apps/worker/src/lib/ai/router-config.ts:96:    rollbackProvider: 'nano-banana-pro',
+apps/worker/src/lib/ai/provider-registry.ts:2: * Art Director Provider Registry — T46
+apps/worker/src/lib/ai/provider-registry.ts:5: * decisions, and rollback behavior for the Art Director router. Provider
+apps/worker/src/lib/ai/provider-registry.ts:7: * tests do not infer provider tiers from scattered environment checks.
+apps/worker/src/lib/ai/provider-registry.ts:13:  ArtDirectorProviderTier,
+apps/worker/src/lib/ai/provider-registry.ts:17:export interface ProviderDescriptor {
+apps/worker/src/lib/ai/provider-registry.ts:19:  tier: ArtDirectorProviderTier;
+apps/worker/src/lib/ai/provider-registry.ts:32:export interface ProviderSelectionInput {
+apps/worker/src/lib/ai/provider-registry.ts:39:type RegistryEntry = Omit<ProviderDescriptor, 'timeoutMs' | 'costTokens' | 'available' | 'unavailableReason'> & {
+apps/worker/src/lib/ai/provider-registry.ts:89:    displayName: 'Ideogram v3',
+apps/worker/src/lib/ai/provider-registry.ts:98:      ['flux-2-pro', 'Flux 2 Pro', true],
+apps/worker/src/lib/ai/provider-registry.ts:99:      ['flux-2-ultra', 'Flux 2 Ultra', false],
+apps/worker/src/lib/ai/provider-registry.ts:100:      ['nano-banana-pro', 'Nano Banana Pro', false],
+apps/worker/src/lib/ai/provider-registry.ts:101:      ['nano-banana-pro-edit', 'Nano Banana Pro Edit', false],
+apps/worker/src/lib/ai/provider-registry.ts:104:      ['recraft-v3', 'Recraft v3', false],
+apps/worker/src/lib/ai/provider-registry.ts:123:      ['sam-2', 'SAM 2'],
+apps/worker/src/lib/ai/provider-registry.ts:125:      ['controlnet', 'ControlNet'],
+apps/worker/src/lib/ai/provider-registry.ts:129:      ['blip-2', 'BLIP-2'],
+apps/worker/src/lib/ai/provider-registry.ts:131:      ['rmbg', 'RMBG Background Removal'],
+apps/worker/src/lib/ai/provider-registry.ts:203:function descriptor(entry: RegistryEntry, config: ArtDirectorRouterConfig): ProviderDescriptor {
+apps/worker/src/lib/ai/provider-registry.ts:209:    timeoutMs: config.providerTimeoutMs,
+apps/worker/src/lib/ai/provider-registry.ts:216:export function listProviderDescriptors(config: ArtDirectorRouterConfig): ProviderDescriptor[] {
+apps/worker/src/lib/ai/provider-registry.ts:220:export function listGenerationProviderDescriptors(config: ArtDirectorRouterConfig): ProviderDescriptor[] {
+apps/worker/src/lib/ai/provider-registry.ts:221:  return listProviderDescriptors(config).filter((provider) => !provider.editingCapable || provider.model.endsWith('-edit'));
+apps/worker/src/lib/ai/provider-registry.ts:224:export function listEditingProviderDescriptors(config: ArtDirectorRouterConfig): ProviderDescriptor[] {
+apps/worker/src/lib/ai/provider-registry.ts:225:  return listProviderDescriptors(config).filter((provider) => provider.editingCapable);
+apps/worker/src/lib/ai/provider-registry.ts:228:export function resolveModeProviderCandidates(
+apps/worker/src/lib/ai/provider-registry.ts:231:): ProviderDescriptor[] {
+apps/worker/src/lib/ai/provider-registry.ts:233:  const descriptors = listProviderDescriptors(config);
+apps/worker/src/lib/ai/provider-registry.ts:235:    .map((model) => descriptors.find((provider) => provider.model === model))
+apps/worker/src/lib/ai/provider-registry.ts:236:    .filter((provider): provider is ProviderDescriptor => Boolean(provider));
+apps/worker/src/lib/ai/provider-registry.ts:239:export function selectProvider(input: ProviderSelectionInput): ProviderDescriptor {
+apps/worker/src/lib/ai/provider-registry.ts:240:  const descriptors = listProviderDescriptors(input.config);
+apps/worker/src/lib/ai/provider-registry.ts:243:    descriptors.some((provider) => provider.model === model),
+apps/worker/src/lib/ai/provider-registry.ts:247:    ? descriptors.filter((provider) => preferredModels.includes(provider.model))
+apps/worker/src/lib/ai/provider-registry.ts:253:        ...allowed.filter((provider) => typographyModels.includes(provider.model)),
+apps/worker/src/lib/ai/provider-registry.ts:254:        ...allowed.filter((provider) => provider.tier === 'tier_2'),
+apps/worker/src/lib/ai/provider-registry.ts:255:        ...allowed.filter((provider) => provider.tier === 'tier_1' && !typographyModels.includes(provider.model)),
+apps/worker/src/lib/ai/provider-registry.ts:256:        ...allowed.filter((provider) => provider.tier === 'tier_3'),
+apps/worker/src/lib/ai/provider-registry.ts:259:        ...allowed.filter((provider) => provider.tier === 'tier_2'),
+apps/worker/src/lib/ai/provider-registry.ts:260:        ...allowed.filter((provider) => provider.tier === 'tier_1'),
+apps/worker/src/lib/ai/provider-registry.ts:261:        ...allowed.filter((provider) => provider.tier === 'tier_3'),
+apps/worker/src/lib/ai/provider-registry.ts:264:  return ordered.find((provider) => provider.available) ?? ordered[0] ?? descriptors[0];
+apps/worker/src/lib/ai/provider-registry.ts:267:export function rollbackProvider(config: ArtDirectorRouterConfig): ProviderDescriptor {
+apps/worker/src/lib/ai/provider-registry.ts:268:  const provider = listProviderDescriptors(config).find((entry) => entry.model === config.rollbackProvider);
+apps/worker/src/lib/ai/provider-registry.ts:269:  if (!provider) {
+apps/worker/src/lib/ai/provider-registry.ts:270:    throw new Error('T46 provider registry invariant failed: missing Tier 2 Nano Banana Pro rollback provider');
+apps/worker/src/lib/ai/provider-registry.ts:272:  return provider;
+apps/worker/src/lib/ai/embeddings.ts:5: * absent or the provider fails, callers receive a typed unavailable result and
+apps/worker/src/lib/ai/embeddings.ts:30:  const timeout = setTimeout(() => controller.abort(), config.providerTimeoutMs);
+apps/worker/src/lib/ai/fallback-prompts.ts:21:  providerModel: typeof CLAUDE_MODEL_ID;
+apps/worker/src/lib/ai/fallback-prompts.ts:41:    'You are VIYO Visual Engine V2 Art Director.',
+apps/worker/src/lib/ai/fallback-prompts.ts:43:    'Return only the final provider-ready prompt, without hidden reasoning, analysis headings, or markdown.',
+apps/worker/src/lib/ai/fallback-prompts.ts:118:      providerModel: CLAUDE_MODEL_ID,
+apps/worker/src/lib/ai/fallback-prompts.ts:157:        providerModel: CLAUDE_MODEL_ID,
+apps/worker/src/lib/ai/fallback-prompts.ts:170:      providerModel: CLAUDE_MODEL_ID,
+apps/worker/src/lib/ai/fallback-prompts.ts:181:      providerModel: CLAUDE_MODEL_ID,
+apps/worker/src/lib/ai/router-observability.ts:8:import type { ArtDirectorFallbackReason, ArtDirectorModel, ArtDirectorProviderTier } from '@viyo/shared';
+apps/worker/src/lib/ai/router-observability.ts:15:  providerTier: ArtDirectorProviderTier;
+apps/worker/src/lib/ai/image-router.ts:2: * Art Director Image Router — T46
+apps/worker/src/lib/ai/image-router.ts:4: * Orchestrates synchronous routing for artDirector.routeGeneration using the
+apps/worker/src/lib/ai/image-router.ts:5: * v6.1 provider inventory, A1–A22 mode contracts, Visual Engine V2 editing-tool
+apps/worker/src/lib/ai/image-router.ts:28:  rollbackProvider,
+apps/worker/src/lib/ai/image-router.ts:29:  resolveModeProviderCandidates,
+apps/worker/src/lib/ai/image-router.ts:30:  selectProvider,
+apps/worker/src/lib/ai/image-router.ts:31:  type ProviderDescriptor,
+apps/worker/src/lib/ai/image-router.ts:32:} from './provider-registry.js';
+apps/worker/src/lib/ai/image-router.ts:33:import { getEditingToolPlan, selectPrimaryEditingProvider } from './editing-router.js';
+apps/worker/src/lib/ai/image-router.ts:62:  selectedProvider: ProviderDescriptor;
+apps/worker/src/lib/ai/image-router.ts:92:function typographyMultiplier(input: RouteGenerationInput, selectedProvider: ProviderDescriptor): number {
+apps/worker/src/lib/ai/image-router.ts:94:  return selectedProvider.typographyOptimized ? 1.1 : 0.9;
+apps/worker/src/lib/ai/image-router.ts:104:  selectedProvider: ProviderDescriptor,
+apps/worker/src/lib/ai/image-router.ts:110:  const typography = typographyMultiplier(input as RouteGenerationInput, selectedProvider);
+apps/worker/src/lib/ai/image-router.ts:125:    selectedProvider,
+apps/worker/src/lib/ai/image-router.ts:249:  const candidates = resolveModeProviderCandidates(input.mode, {
+apps/worker/src/lib/ai/image-router.ts:252:    providerTimeoutMs: 0,
+apps/worker/src/lib/ai/image-router.ts:254:    tier1Provider: 'gpt-image-2',
+apps/worker/src/lib/ai/image-router.ts:255:    tier2Provider: 'flux-2-pro',
+apps/worker/src/lib/ai/image-router.ts:256:    tier3Provider: 'stable-diffusion-3.5',
+apps/worker/src/lib/ai/image-router.ts:257:    rollbackProvider: 'nano-banana-pro',
+apps/worker/src/lib/ai/image-router.ts:260:  return candidates.map((provider) => provider.model);
+apps/worker/src/lib/ai/image-router.ts:268:  provider: ProviderDescriptor;
+apps/worker/src/lib/ai/image-router.ts:289:      selectedModel: params.provider.model,
+apps/worker/src/lib/ai/image-router.ts:290:      providerGateway: params.provider.gateway,
+apps/worker/src/lib/ai/image-router.ts:307:      model: params.provider.model,
+apps/worker/src/lib/ai/image-router.ts:330:      sourceModel: params.provider.model,
+apps/worker/src/lib/ai/image-router.ts:337:        providerGateway: params.provider.gateway,
+apps/worker/src/lib/ai/image-router.ts:338:        fallbackGateway: params.provider.fallbackGateway ?? null,
+apps/worker/src/lib/ai/image-router.ts:354:  provider: ProviderDescriptor;
+apps/worker/src/lib/ai/image-router.ts:368:  const costTokens = params.isCached ? 0 : params.provider.costTokens;
+apps/worker/src/lib/ai/image-router.ts:371:    selectedModel: params.provider.model,
+apps/worker/src/lib/ai/image-router.ts:372:    providerTier: params.provider.tier,
+apps/worker/src/lib/ai/image-router.ts:388:      providerGateway: params.provider.gateway,
+apps/worker/src/lib/ai/image-router.ts:389:      fallbackGateway: params.provider.fallbackGateway ?? null,
+apps/worker/src/lib/ai/image-router.ts:414:    providerTier: response.providerTier,
+apps/worker/src/lib/ai/image-router.ts:432:    const provider = selectProvider({
+apps/worker/src/lib/ai/image-router.ts:438:    return calculateArtDirectorScore(candidate, provider, input);
+apps/worker/src/lib/ai/image-router.ts:444:function selectRouteProvider(
+apps/worker/src/lib/ai/image-router.ts:447:): ProviderDescriptor {
+apps/worker/src/lib/ai/image-router.ts:450:      selectPrimaryEditingProvider(input.editingTool, config) ??
+apps/worker/src/lib/ai/image-router.ts:451:      selectProvider({ typographyRequired: input.typographyRequired, mode: input.mode, config })
+apps/worker/src/lib/ai/image-router.ts:455:  return selectProvider({ typographyRequired: input.typographyRequired, mode: input.mode, config });
+apps/worker/src/lib/ai/image-router.ts:470:    const provider = rollbackProvider(config);
+apps/worker/src/lib/ai/image-router.ts:473:      timeoutMs: config.providerTimeoutMs,
+apps/worker/src/lib/ai/image-router.ts:480:      provider,
+apps/worker/src/lib/ai/image-router.ts:499:      provider,
+apps/worker/src/lib/ai/image-router.ts:528:      provider: best.selectedProvider,
+apps/worker/src/lib/ai/image-router.ts:545:    timeoutMs: config.providerTimeoutMs,
+apps/worker/src/lib/ai/image-router.ts:547:  const provider = selectRouteProvider(effectiveInput, config);
+apps/worker/src/lib/ai/image-router.ts:557:    provider,
+apps/worker/src/lib/ai/image-router.ts:577:    provider,
+apps/worker/src/lib/ai/image-router.ts:581:    fallbackReason: provider.available ? fallbackReason : 'provider_unavailable',
+apps/worker/src/lib/ai/art-director-routing.test.ts:10:  listProviderDescriptors,
+apps/worker/src/lib/ai/art-director-routing.test.ts:11:  resolveModeProviderCandidates,
+apps/worker/src/lib/ai/art-director-routing.test.ts:12:  rollbackProvider,
+apps/worker/src/lib/ai/art-director-routing.test.ts:13:  selectProvider,
+apps/worker/src/lib/ai/art-director-routing.test.ts:14:} from './provider-registry.js';
+apps/worker/src/lib/ai/art-director-routing.test.ts:18:  selectPrimaryEditingProvider,
+apps/worker/src/lib/ai/art-director-routing.test.ts:25:  providerTimeoutMs: 30_000,
+apps/worker/src/lib/ai/art-director-routing.test.ts:27:  tier1Provider: 'gpt-image-2',
+apps/worker/src/lib/ai/art-director-routing.test.ts:28:  tier2Provider: 'flux-2-pro',
+apps/worker/src/lib/ai/art-director-routing.test.ts:29:  tier3Provider: 'stable-diffusion-3.5',
+apps/worker/src/lib/ai/art-director-routing.test.ts:30:  rollbackProvider: 'nano-banana-pro',
+apps/worker/src/lib/ai/art-director-routing.test.ts:77:describe('T46 v6.1 Art Director provider registry', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:78:  it('exposes the full three-tier inventory with Tier 2 Flux as the default non-typography selection', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:79:    const providers = listProviderDescriptors(enabledConfig);
+apps/worker/src/lib/ai/art-director-routing.test.ts:80:    const models = providers.map((provider) => provider.model);
+apps/worker/src/lib/ai/art-director-routing.test.ts:81:    const provider = selectProvider({ typographyRequired: false, config: enabledConfig });
+apps/worker/src/lib/ai/art-director-routing.test.ts:112:    expect(providers).toHaveLength(25);
+apps/worker/src/lib/ai/art-director-routing.test.ts:113:    expect(provider.model).toBe('flux-2-pro');
+apps/worker/src/lib/ai/art-director-routing.test.ts:114:    expect(provider.tier).toBe('tier_2');
+apps/worker/src/lib/ai/art-director-routing.test.ts:115:    expect(provider.gateway).toBe('atlas-cloud');
+apps/worker/src/lib/ai/art-director-routing.test.ts:116:    expect(provider.available).toBe(true);
+apps/worker/src/lib/ai/art-director-routing.test.ts:120:    const provider = selectProvider({ typographyRequired: true, config: enabledConfig });
+apps/worker/src/lib/ai/art-director-routing.test.ts:122:    expect(provider.model).toBe('gpt-image-2');
+apps/worker/src/lib/ai/art-director-routing.test.ts:123:    expect(provider.tier).toBe('tier_1');
+apps/worker/src/lib/ai/art-director-routing.test.ts:124:    expect(provider.available).toBe(true);
+apps/worker/src/lib/ai/art-director-routing.test.ts:127:  it('preserves Nano Banana Pro as the rollback provider even when the router is disabled', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:128:    const provider = rollbackProvider({ ...enabledConfig, enabled: false });
+apps/worker/src/lib/ai/art-director-routing.test.ts:130:    expect(provider.model).toBe('nano-banana-pro');
+apps/worker/src/lib/ai/art-director-routing.test.ts:131:    expect(provider.tier).toBe('tier_2');
+apps/worker/src/lib/ai/art-director-routing.test.ts:134:  it('falls through to the self-hosted Tier 3 provider when preferred cached models exclude Tier 1 and Tier 2', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:135:    const provider = selectProvider({
+apps/worker/src/lib/ai/art-director-routing.test.ts:141:    expect(provider.model).toBe('stable-diffusion-3.5');
+apps/worker/src/lib/ai/art-director-routing.test.ts:142:    expect(provider.tier).toBe('tier_3');
+apps/worker/src/lib/ai/art-director-routing.test.ts:145:  it('maps all A1–A22 generation modes and marks the original pipeline modes for PO review', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:147:    expect(resolveModeProviderCandidates('A1', enabledConfig).map((provider) => provider.model)).toEqual([
+apps/worker/src/lib/ai/art-director-routing.test.ts:151:    expect(resolveModeProviderCandidates('A3', enabledConfig).map((provider) => provider.model)).toEqual([
+apps/worker/src/lib/ai/art-director-routing.test.ts:160:describe('T46 v6.1 editing tool router', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:161:  it('maps all ten Visual Engine V2 editing tools to deterministic tool plans', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:182:  it('selects the primary editing backend for a non-local editing tool', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:183:    const provider = selectPrimaryEditingProvider('touch_edit', enabledConfig);
+apps/worker/src/lib/ai/art-director-routing.test.ts:185:    expect(provider?.model).toBe('sam-2');
+apps/worker/src/lib/ai/art-director-routing.test.ts:186:    expect(provider?.editingCapable).toBe(true);
+apps/worker/src/lib/ai/art-director-routing.test.ts:190:describe('T46 v6.1 shared Art Director contract', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:191:  it('accepts mode, editing tool, Brand Vault mentions, source assets, and R2 response fields', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:211:      providerTier: 'tier_1',
+apps/worker/src/lib/ai/art-director-routing.test.ts:225:        providerGateway: 'openai',
+apps/worker/src/lib/ai/art-director-routing.test.ts:266:  it('uses Claude text when the configured Claude-compatible endpoint returns provider-ready content', async () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:283:describe('T46 v6.1 corrected Art Director scoring', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:285:    const provider = selectProvider({ typographyRequired: false, config: enabledConfig });
+apps/worker/src/lib/ai/art-director-routing.test.ts:287:    const result = calculateArtDirectorScore(candidate(), provider);
+apps/worker/src/lib/ai/art-director-routing.test.ts:296:  it('applies a typography boost only when the selected provider is typography optimized', () => {
+apps/worker/src/lib/ai/art-director-routing.test.ts:297:    const provider = selectProvider({ typographyRequired: true, config: enabledConfig });
+apps/worker/src/lib/ai/art-director-routing.test.ts:301:      provider,
+apps/worker/src/lib/ai/art-director-routing.test.ts:305:    expect(provider.typographyOptimized).toBe(true);
+apps/worker/src/lib/ai/editing-router.ts:2: * Art Director Editing Router — T46 v6.1
+apps/worker/src/lib/ai/editing-router.ts:4: * Contract-only routing layer for the 10 Visual Engine V2 editing tools. The
+apps/worker/src/lib/ai/editing-router.ts:5: * actual provider adapters remain behind the image-router execution boundary;
+apps/worker/src/lib/ai/editing-router.ts:11:import { listProviderDescriptors, type ProviderDescriptor } from './provider-registry.js';
+apps/worker/src/lib/ai/editing-router.ts:98:export function selectEditingProviders(
+apps/worker/src/lib/ai/editing-router.ts:101:): ProviderDescriptor[] {
+apps/worker/src/lib/ai/editing-router.ts:103:  const descriptors = listProviderDescriptors(config);
+apps/worker/src/lib/ai/editing-router.ts:106:    .map((model) => descriptors.find((provider) => provider.model === model))
+apps/worker/src/lib/ai/editing-router.ts:107:    .filter((provider): provider is ProviderDescriptor => Boolean(provider));
+apps/worker/src/lib/ai/editing-router.ts:110:export function selectPrimaryEditingProvider(
+apps/worker/src/lib/ai/editing-router.ts:113:): ProviderDescriptor | null {
+apps/worker/src/lib/ai/editing-router.ts:114:  const providers = selectEditingProviders(tool, config);
+apps/worker/src/lib/ai/editing-router.ts:115:  return providers.find((provider) => provider.available) ?? providers[0] ?? null;
+apps/worker/src/lib/ai/art-director-route-generation.test.ts:172:    expect(response.providerTier).toBe('tier_1');
+apps/worker/src/lib/ai/art-director-route-generation.test.ts:195:      providerGateway: 'openai',
+apps/worker/src/routes/v1/admin-billing.ts:10: * - Provider pricing registry
+apps/worker/src/routes/v1/admin-billing.ts:19:  providerPricingRegistry,
+apps/worker/src/routes/v1/admin-billing.ts:242: * GET /api/v1/admin/billing/provider-pricing
+apps/worker/src/routes/v1/admin-billing.ts:243: * List all provider pricing entries.
+apps/worker/src/routes/v1/admin-billing.ts:245:adminBillingRoutes.get('/provider-pricing', async (c) => {
+apps/worker/src/routes/v1/admin-billing.ts:250:    .from(providerPricingRegistry)
+apps/worker/src/routes/v1/admin-billing.ts:251:    .orderBy(providerPricingRegistry.provider, providerPricingRegistry.modelId);
+apps/worker/src/routes/v1/credentials.ts:69:      provider: parsed.data.provider,
+apps/worker/src/services/credential.service.ts:28:  provider: string;
+apps/worker/src/services/credential.service.ts:68:  provider: string;
+apps/worker/src/services/credential.service.ts:82:      provider: input.provider,
+apps/worker/src/services/credential.service.ts:111:      provider: espConnections.provider,
+apps/worker/src/services/credential.service.ts:124:    provider: r.provider,
+apps/worker/src/services/credential.service.ts:147:      provider: espConnections.provider,
+apps/worker/src/services/credential.service.ts:167:    provider: row.provider,
+apps/worker/src/services/credential.service.ts:291:    provider: row.provider,
+apps/worker/src/trpc/context.ts:5: * context required by artDirector.routeGeneration. The mount lives behind the
+apps/worker/src/trpc/routers/art-director.ts:2: * Art Director tRPC Router — T46
+apps/worker/src/trpc/routers/art-director.ts:4: * Exposes the PO-locked artDirector.routeGeneration procedure. Procedure logic
+apps/worker/src/trpc/routers/art-director.ts:14:export const artDirectorRouter = router({
+apps/worker/src/trpc/index.ts:8:import { artDirectorRouter } from './routers/art-director.js';
+apps/worker/src/trpc/index.ts:12:  artDirector: artDirectorRouter,
+packages/db/drizzle/0002_tables.sql:129:    provider VARCHAR(50) NOT NULL
+packages/db/drizzle/0002_tables.sql:130:        CHECK (provider IN ('klaviyo','mailchimp','sendgrid','brevo','hubspot','activecampaign','drip','customer_io')),
+packages/db/drizzle/0002_tables.sql:144:    provider VARCHAR(50) NOT NULL,
+packages/db/drizzle/0006_t9_billing.sql:165:-- 7. provider_pricing_registry — Model cost tracking
+packages/db/drizzle/0006_t9_billing.sql:167:CREATE TABLE IF NOT EXISTS provider_pricing_registry (
+packages/db/drizzle/0006_t9_billing.sql:170:  provider VARCHAR(50) NOT NULL,
+packages/db/drizzle/0006_t9_billing.sql:180:ALTER TABLE provider_pricing_registry ENABLE ROW LEVEL SECURITY;
+packages/db/drizzle/0006_t9_billing.sql:183:  ON provider_pricing_registry FOR ALL
+packages/db/drizzle/0006_t9_billing.sql:322:-- provider_pricing_registry seed (per-1M token costs)
+packages/db/drizzle/0006_t9_billing.sql:323:INSERT INTO provider_pricing_registry (model_id, provider, input_cost_per_1m, output_cost_per_1m, cost_per_image) VALUES
+packages/db/drizzle/0007_t45_composite_database_foundation.sql:265:  provider VARCHAR(50) NOT NULL,
+packages/db/drizzle/0007_t45_composite_database_foundation.sql:276:  CONSTRAINT uq_integration_connections_provider UNIQUE (workspace_id, provider),
+packages/db/drizzle/0007_t45_composite_database_foundation.sql:277:  CONSTRAINT chk_integration_connections_provider CHECK (provider IN ('slack', 'discord', 'teams', 'zapier', 'make')),
+packages/db/drizzle/0007_t45_composite_database_foundation.sql:281:CREATE INDEX IF NOT EXISTS idx_integration_connections_workspace_provider
+packages/db/drizzle/0007_t45_composite_database_foundation.sql:282:  ON public.integration_connections(workspace_id, provider);
+packages/db/drizzle/0007_t45_composite_database_foundation.sql:365:COMMENT ON COLUMN public.image_prompt_patterns.supports_typography IS 'T20 deterministic typography-capability flag for future Art Director Router scoring.';
+packages/db/src/schema/billing.ts:4: *         system_config, system_config_audit_log, provider_pricing_registry,
+packages/db/src/schema/billing.ts:112:export const providerPricingRegistry = pgTable('provider_pricing_registry', {
+packages/db/src/schema/billing.ts:115:  provider: varchar('provider', { length: 50 }).notNull(),
+packages/db/src/schema/cost.ts:18: * TOKEN_USAGE_LOGS — AI provider cost tracking
+packages/db/src/schema/cost.ts:28:  provider: varchar('provider', { length: 50 }).notNull(),
+packages/db/src/schema/email.ts:41: * ESP_CONNECTIONS — Email Service Provider credentials
+packages/db/src/schema/email.ts:44: * R20 Enum: provider IN ('klaviyo','mailchimp','sendgrid','brevo',
+packages/db/src/schema/email.ts:50:  provider: varchar('provider', { length: 50 }).notNull(),
+packages/db/src/schema/integrations.ts:26:  provider: varchar('provider', { length: 50 }).notNull(),
+packages/db/src/schema/integrations.ts:38:  idxIntegrationConnectionsWorkspaceProvider: index('idx_integration_connections_workspace_provider').on(
+packages/db/src/schema/integrations.ts:40:    table.provider,
+packages/db/src/schema/integrations.ts:43:  uqIntegrationConnectionsProvider: uniqueIndex('uq_integration_connections_provider').on(table.workspaceId, table.provider),
+packages/shared/src/config/env.ts:50:  // Art Director Router — T46 v6.1
+packages/shared/src/schemas/credential.ts:5: * Provider enum aligned with R20 esp_connections CHECK constraint.
+packages/shared/src/schemas/credential.ts:12: * ESP providers — aligned with R20 esp_connections CHECK constraint.
+packages/shared/src/schemas/credential.ts:33:export const espProviderSchema = z.enum(ESP_PROVIDERS);
+packages/shared/src/schemas/credential.ts:34:export const extendedProviderSchema = z.enum(EXTENDED_PROVIDERS);
+packages/shared/src/schemas/credential.ts:41:  provider: extendedProviderSchema,
+packages/shared/src/schemas/credential.ts:90:  provider: extendedProviderSchema,
+packages/shared/src/schemas/index.ts:26:  espProviderSchema,
+packages/shared/src/schemas/index.ts:27:  extendedProviderSchema,
+packages/shared/src/schemas/index.ts:74:  artDirectorAspectRatioSchema,
+packages/shared/src/schemas/index.ts:75:  artDirectorProviderTierSchema,
+packages/shared/src/schemas/index.ts:76:  artDirectorGatewaySchema,
+packages/shared/src/schemas/index.ts:77:  artDirectorGenerationModelSchema,
+packages/shared/src/schemas/index.ts:78:  artDirectorEditingModelSchema,

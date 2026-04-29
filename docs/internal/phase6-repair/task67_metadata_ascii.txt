@@ -1,0 +1,13 @@
+{
+  "id": "67",
+  "title": "T51c: SEC-07 and SEC-08 CI Hardening",
+  "description": "Separate Phase 0 push-time scanning from pre-paying-customer SAST/SCA requirements.",
+  "details": "PO Modification A split task. Phase 0 includes push-time secret scanning controls. SAST/SCA with CodeQL and Dependabot is required before first paying customer, with Critical/High findings blocking merge. This task must retain both trigger notes explicitly.",
+  "testStrategy": "",
+  "status": "pending",
+  "dependencies": [
+    "63"
+  ],
+  "priority": "high",
+  "subtasks": []
+}
