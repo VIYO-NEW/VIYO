@@ -1,0 +1,46 @@
+=== top-level ===
+.
+./.git
+./.git/branches
+./.git/hooks
+./.git/info
+./.git/logs
+./.git/objects
+./.git/refs
+./.githooks
+./.github
+./.github/workflows
+./.taskmaster
+./.taskmaster/docs
+./.taskmaster/tasks
+./.turbo
+./.turbo/cache
+./apps
+./apps/admin
+./apps/web
+./apps/worker
+./docs
+./docs/architecture
+./docs/foundation
+./docs/internal
+./docs/research_specs
+./docs/runbooks
+./node_modules
+./node_modules/.bin
+./node_modules/.pnpm
+./node_modules/@eslint
+./node_modules/@eslint-community
+./node_modules/@typescript-eslint
+./packages
+./packages/db
+./packages/shared
+./packages/ui
+./scripts
+./scripts/security
+
+=== pnpm workspace ===
+packages:
+  - "apps/*"
+  - "packages/*"
+
+=== @viyo/shared locations ===

@@ -1,0 +1,22 @@
+=== Task 69 branch and working tree preflight ===
+UTC 2026-04-29T14:39:59Z
+=== current branch ===
+feat/phase6-2-task69-provider-registry
+=== all local branches containing HEAD ===
+* feat/phase6-2-task69-provider-registry
+  main
+=== short status ===
+ M .gitignore
+ M .taskmaster/config.json
+ M .taskmaster/tasks/tasks.json
+?? .githooks/
+?? docs/internal/phase6-repair/
+?? scripts/
+=== tracked/untracked high-level status ===
+## feat/phase6-2-task69-provider-registry
+ M .gitignore
+ M .taskmaster/config.json
+ M .taskmaster/tasks/tasks.json
+?? .githooks/
+?? docs/internal/phase6-repair/
+?? scripts/

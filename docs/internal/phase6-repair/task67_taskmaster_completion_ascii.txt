@@ -1,0 +1,54 @@
+=== set Task 67 done ===
+(node:197242) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+╭─────────────────────────────────────╮
+│                                     │
+│   ✅ Successfully updated task 67   │
+│                                     │
+│   From: pending                     │
+│   To:   done                        │
+│                                     │
+╰─────────────────────────────────────╯
+=== show Task 67 ===
+(node:197266) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+🏷  tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+╭──────────────────────────────────────────────────╮
+│ Task: #67 - T51c: SEC-07 and SEC-08 CI Hardening │
+╰──────────────────────────────────────────────────╯
+[90m┌────────────────────[39m[90m┬────────────────────────────────────────────────────────────────────────────────┐[39m
+[90m│[39m ID:                [90m│[39m 67                                                                             [90m│[39m
+[90m│[39m Title:             [90m│[39m T51c: SEC-07 and SEC-08 CI Hardening                                           [90m│[39m
+[90m│[39m Status:            [90m│[39m ✓ done                                                                         [90m│[39m
+[90m│[39m Priority:          [90m│[39m high                                                                           [90m│[39m
+[90m│[39m Dependencies:      [90m│[39m 63                                                                             [90m│[39m
+[90m│[39m Complexity:        [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Category:          [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Skills:            [90m│[39m N/A                                                                            [90m│[39m
+[90m│[39m Description:       [90m│[39m Separate Phase 0 push-time scanning from pre-paying-customer SAST/SCA          [90m│[39m
+[90m│[39m                    [90m│[39m requirements.                                                                  [90m│[39m
+[90m└────────────────────[39m[90m┴────────────────────────────────────────────────────────────────────────────────┘[39m
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Implementation Details:                                                                        │
+│                                                                                                  │
+│   PO Modification A split task. Phase 0 includes push-time secret scanning controls. SAST/SCA    │
+│   with CodeQL and Dependabot is required before first paying customer, with Critical/High        │
+│   findings blocking merge. This task must retain both trigger notes explicitly.                  │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Suggested Actions:                                                                             │
+│                                                                                                  │
+│   1. Run task-master set-status --id=67 --status=in-progress to start working                    │
+│   2. Run task-master expand --id=67 to break down into subtasks                                  │
+│   3. Run task-master update-task --id=67 --prompt="..." to update details                        │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯

@@ -1,0 +1,31 @@
+| ID | Status | Dependencies | Title |
+|---|---|---|---|
+| 61 | done | None | T47: Architecture Broadcast Ingestion Handshake |
+| 62 | done | 61 | T48: SEC-18 Branch Protection Gate |
+| 63 | done | 62 | T49: Phase 0 Secret-Exposure Controls |
+| 64 | done | 63 | T50: SEC-02 Encryption Foundation Readiness |
+| 65 | deferred | 64 | T51a: SEC-14 and SEC-15 Auth Hardening |
+| 66 | deferred | 64 | T51b: SEC-04 and SEC-05 Network Hardening |
+| 67 | done | 63 | T51c: SEC-07 and SEC-08 CI Hardening |
+| 68 | in-progress | 61 | T51d: Explicit Taskmaster Re-Parse Evidence Gate |
+| 69 | pending | 68 | T52: T46 Gap Repair — Provider Registry and Shared Contracts |
+| 70 | pending | 69 | T53: T46 Gap Repair — Cache-First Router and Pattern DB Integration |
+| 71 | pending | 69 | T54: Billing and Token Economics Foundation |
+| 72 | pending | 69 | T55: R2 Auto-Save and Brand Vault Asset Contract |
+| 73 | pending | 69 | T56: Editing Router Coverage for 10 Tools |
+| 74 | pending | 69 | T57: Standalone Studio Route, Navigation, and Brand Scope |
+| 75 | pending | 74 | T58: Conversational Studio Shell and Slash Commands |
+| 76 | pending | 75, 70, 71 | T59: Generation Mode Matrix with Explicit v6.1 Multi-Model Flows |
+| 77 | pending | 76 | T60: Aspect Ratio, Platform Sizing, and Output-Shape Controls |
+| 78 | pending | 75 | T61: Style and Prompt Library |
+| 79 | pending | 75, 70 | T62: Error, Timeout, Scoring, and Feature-Flag Visibility |
+| 80 | pending | 72, 76 | T63: Multi-Format Export and Resolution Choices |
+| 81 | pending | 74, 72 | T64: Version History and Multi-Image Project Organization |
+| 82 | pending | 74, 75, 76, 77, 78, 79, 80, 81 | T65: Accessibility and No-Placeholder UI Compliance |
+| 83 | pending | 74, 75, 76, 77, 78, 79, 80, 81, 82 | T66: Unit and Integration Test Expansion |
+| 84 | pending | 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83 | T67: Static Wiring and Type Validation |
+| 85 | pending | 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84 | T68: Browser Validation and Visual Evidence |
+| 86 | pending | 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85 | T69: Security Trigger Verification Matrix |
+| 87 | pending | 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86 | T70: Airtable Build Tracker Sync After PO Diff Approval |
+| 88 | pending | 83, 84, 85, 86, 87 | T71: Final Quality Gate and Source-of-Truth Reconciliation |
+| 89 | pending | 88 | T72: PO Approval Stop Before Phase 7 |

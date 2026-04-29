@@ -1,0 +1,13 @@
+{
+  "id": "66",
+  "title": "T51b: SEC-04 and SEC-05 Network Hardening",
+  "description": "Split security-header and rate-limiting implementation according to their distinct triggers.",
+  "details": "PO Modification A split task. Implement security headers with the first auth/database surface. Implement rate limiting at first public deployment using the directive's limits. Preserve trigger notes so headers are not delayed until deployment and rate limiting is not exposed prematurely without infrastructure.",
+  "testStrategy": "",
+  "status": "pending",
+  "dependencies": [
+    "64"
+  ],
+  "priority": "high",
+  "subtasks": []
+}

@@ -1,0 +1,14 @@
+{
+  "id": "64",
+  "title": "T50: SEC-02 Encryption Foundation Readiness",
+  "description": "Confirm encryption design readiness before sensitive-token persistence is introduced.",
+  "details": "Source: PO Combined Directive v2 Section 3. Confirm AES-256-GCM implementation path for OAuth tokens, API keys, webhook secrets, and other Restricted-class data. No plaintext secret persistence may be introduced by Phase 6. This is a readiness and architecture gate unless implementation is triggered by sensitive-token storage.",
+  "testStrategy": "",
+  "status": "in-progress",
+  "dependencies": [
+    "63"
+  ],
+  "priority": "high",
+  "subtasks": [],
+  "updatedAt": "2026-04-29T13:48:02.906Z"
+}

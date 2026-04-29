@@ -1,0 +1,41 @@
+=== addendum required strings ===
+11:The deep review identified three findings: an empty/mislabeled Task 63 `.env` history file, the absence of explicit `git log --all -- .env` proof, and the need to account for previously landed Task 24 Image Studio code even though the old task graph has now been cancelled. This addendum resolves the first two findings with a repaired audit artifact and converts the Task 24 concern into a mandatory implementation-start guardrail for the Phase 6.2 replacement graph.[1] [2]
+16:| No explicit `git log --all -- .env` proof | Medium | Added exact command output proving no root `.env` commit history exists, plus broader env-pattern history and tracked-file inventory. | Resolved. |
+17:| Task 24 was `done` before cancellation | Medium | Added a formal Task 24 legacy-code compatibility guardrail requiring audit/reuse/refactor classification before product-code implementation begins. | Guardrail established; implementation remains paused. |
+23:> **Exact proof now captured:** `git log --all -- .env` printed no commits. This means Git has no commit history entries for a repository-root file named `.env`.[1]
+27:| `git log --all -- .env` | No commits printed. | No repository-root `.env` file appears in Git commit history. |
+34:## 3. Task 24 Legacy-Code Guardrail
+36:The review also correctly flagged that old Task 24 had been completed before cancellation. The old graph cancellation removes Tasks 21–44 as active execution authorities, but it does not erase already-landed Image Studio code. The repository contains a current `ImageStudio` implementation, route mount, tests, and supporting Studio contract/API files created during the earlier schema-bound UI pass.[2] [4] [5] [6]
+54:| Product-code implementation | Not started. |
+62:A compact corrective package has been assembled for review. It contains the addendum, repaired Task 63 `.env` audit, Task 24 guardrail, and the inventory file with artifact hashes.
+68:| `TASK24_LEGACY_CODE_IMPLEMENTATION_GUARDRAIL.md` | Formal guardrail for handling old Task 24 code before implementation. |
+71:## References
+74:[2]: ./TASK24_LEGACY_CODE_IMPLEMENTATION_GUARDRAIL.md "Task 24 legacy-code implementation guardrail"
+
+=== guardrail required strings ===
+1:# Task 24 Legacy-Code Implementation Guardrail
+12:> **Guardrail:** Before starting product-code work for the replacement Phase 6.2 graph, especially Task 57 and the downstream Studio UI tasks, the implementer must audit the existing Task 24 Image Studio route, component, tests, and supporting contract files. Reusable schema-bound foundation should be preserved where it remains compatible, while rejected thin-wrapper behavior must be refactored into the approved standalone design workspace.
+18:| Existing artifact | Current relevance | Guardrail implication |
+20:| `apps/web/src/router.tsx` | Mounts `/brand/$brandId/studio` and renders `ImageStudio` with `brandId` route params.[3] | Task 57 must verify whether the existing route shape satisfies the approved standalone Studio route requirement or whether navigation/route naming must be adjusted without breaking brand scoping. |
+21:| `apps/web/src/components/studio/ImageStudio.tsx` | Implements the current monolithic three-zone UI with A1–A22 mode selection, canvas result cards, prompt submission, editing-tool selection, Brand Vault mention parsing, and R2 metadata display.[4] | Replacement UI work must refactor this component intentionally rather than layering superficial controls over the rejected command-panel pattern. |
+22:| `apps/web/src/components/studio/ImageStudio.test.ts` | Tests the current schema-derived inventories, mention parsing, delimited source parsing, and R2 canvas mapping.[5] | Tests should be retained and expanded so Phase 6.2 verifies the new acceptance matrix instead of losing existing contract coverage. |
+38:## 4. Required Pre-Implementation Checklist
+45:| Audit old route/component/tests | Record the current behavior of `router.tsx`, `ImageStudio.tsx`, and `ImageStudio.test.ts`. | Do not overwrite or bypass legacy code blindly. |
+52:The best next implementation approach is to treat Task 24 code as a **refactor substrate**. The route and typed contract wiring should be preserved if they pass the Task 57 authority check, while the monolithic `ImageStudio` component should be decomposed around the approved Phase 6.2 workspace model. This avoids both extremes: it prevents a false greenfield rewrite that discards useful validated foundation, and it prevents a false completion claim that merely extends the rejected schema-bound command panel.
+54:No product-code changes were made while producing this guardrail. This document is a corrective evidence artifact only.
+61:[4]: ../../apps/web/src/components/studio/ImageStudio.tsx "Current Image Studio component"
+62:[5]: ../../apps/web/src/components/studio/ImageStudio.test.ts "Current Image Studio tests"
+
+=== env audit exact command proof ===
+=== Task 63 .env history audit corrective evidence ===
+Generated: 2026-04-29T09:03:27-04:00
+
+=== Exact PO-review command: git log --all -- .env ===
+=== End exact command output ===
+
+Interpretation: no commits were printed by the exact command above, which means Git has no commit history entries for a repository-root file named .env.
+
+=== Broader env-pattern history check: git log --all --name-status -- .env .env.* **/.env **/.env.* ===
+commit b15ddf4213ec3a23f6257344e0506268ac6544e3
+Author: viyo-ai <278984973+viyo-ai@users.noreply.github.com>
+Date:   Sat Apr 25 16:31:54 2026 -0400

@@ -1,0 +1,19 @@
+=== pnpm --filter @viyo/shared test ===
+
+> @viyo/shared@0.0.1 test /home/ubuntu/VIYO/packages/shared
+> vitest run
+
+
+ RUN  v2.1.9 /home/ubuntu/VIYO/packages/shared
+
+include: **/*.{test,spec}.?(c|m)[jt]s?(x)
+exclude:  **/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*
+
+No test files found, exiting with code 1
+/home/ubuntu/VIYO/packages/shared:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @viyo/shared@0.0.1 test: `vitest run`
+Exit status 1
+=== pnpm --filter @viyo/shared type-check ===
+
+> @viyo/shared@0.0.1 type-check /home/ubuntu/VIYO/packages/shared
+> tsc --noEmit

@@ -1,0 +1,307 @@
+Tools list saved to: /home/ubuntu/.mcp/tool-lists/2026-04-29_09-39-32_airtable_tools.txt
+Tip: Use 'tool get <tool_name>' to get detailed information about a specific tool
+
+Tools Summary:
+Tools available on server 'airtable' - 13 tools:
+Tool: list_records
+  Description:
+    List records from a table...
+Tool: search_records
+  Description:
+    Search for records containing specific text...
+Tool: list_bases
+  Description:
+    List all accessible Airtable bases...
+Tool: list_tables
+  Description:
+    List all tables in a specific base...
+Tool: describe_table
+  Description:
+    Get detailed information about a specific table...
+Tool: get_record
+  Description:
+    Get a specific record by ID...
+Tool: create_record
+  Description:
+    Create a new record in a table...
+Tool: update_records
+  Description:
+    Update up to 10 records in a table...
+Tool: delete_records
+  Description:
+    Delete records from a table...
+Tool: create_table
+  Description:
+    Create a new table in a base...
+Tool: update_table
+  Description:
+    Update a table's name or description...
+Tool: create_field
+  Description:
+    Create a new field in a table...
+Tool: update_field
+  Description:
+    Update a field's name or description...
+
+Tools Details:
+Tool: list_records
+  Description:
+    List records from a table
+  Inputs:
+    - tableId:
+        Type: string
+        Description: The ID or name of the table
+        Required: true
+    - view:
+        Type: string
+        Description: The name or ID of a view in the table
+        Required: false
+    - maxRecords:
+        Type: number
+        Description: The maximum total number of records that will be returned
+        Required: false
+    - filterByFormula:
+        Type: string
+        Description: A formula used to filter records
+        Required: false
+    - sort:
+        Type: array
+        Description: A list of sort objects that specifies how the records will be ordered
+        Required: false
+        Array Items:
+          Type: object
+          Properties:
+            - field:
+                Type: string
+                Required: true
+            - direction:
+                Type: string
+                Required: false
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+Tool: search_records
+  Description:
+    Search for records containing specific text
+  Inputs:
+    - searchTerm:
+        Type: string
+        Description: The text to search for
+        Required: true
+    - fieldIds:
+        Type: array
+        Description: Optional array of field IDs to search in
+        Required: false
+        Array Items:
+          Type: string
+    - maxRecords:
+        Type: number
+        Description: The maximum total number of records that will be returned
+        Required: false
+    - view:
+        Type: string
+        Description: The name or ID of a view in the table
+        Required: false
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+    - tableId:
+        Type: string
+        Description: The ID or name of the table
+        Required: true
+Tool: list_bases
+  Description:
+    List all accessible Airtable bases
+  Inputs:
+    Takes an object, but no specific properties defined (or empty properties section).
+Tool: list_tables
+  Description:
+    List all tables in a specific base
+  Inputs:
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+    - detailLevel:
+        Type: string
+        Description: Level of detail to return
+        Required: false
+Tool: describe_table
+  Description:
+    Get detailed information about a specific table
+  Inputs:
+    - tableId:
+        Type: string
+        Description: The ID or name of the table
+        Required: true
+    - detailLevel:
+        Type: string
+        Description: Level of detail to return
+        Required: false
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+Tool: get_record
+  Description:
+    Get a specific record by ID
+  Inputs:
+    - recordId:
+        Type: string
+        Description: The ID of the record
+        Required: true
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+    - tableId:
+        Type: string
+        Description: The ID or name of the table
+        Required: true
+Tool: create_record
+  Description:
+    Create a new record in a table
+  Inputs:
+    - tableId:
+        Type: string
+        Description: The ID or name of the table
+        Required: true
+    - fields:
+        Type: object
+        Description: The fields for the new record
+        Required: true
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+Tool: update_records
+  Description:
+    Update up to 10 records in a table
+  Inputs:
+    - tableId:
+        Type: string
+        Description: The ID or name of the table
+        Required: true
+    - records:
+        Type: array
+        Description: Array of records to update (max 10)
+        Required: true
+        Array Items:
+          Type: object
+          Properties:
+            - id:
+                Type: string
+                Required: true
+            - fields:
+                Type: object
+                Required: true
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+Tool: delete_records
+  Description:
+    Delete records from a table
+  Inputs:
+    - tableId:
+        Type: string
+        Description: The ID or name of the table
+        Required: true
+    - recordIds:
+        Type: array
+        Description: Array of record IDs to delete
+        Required: true
+        Array Items:
+          Type: string
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+Tool: create_table
+  Description:
+    Create a new table in a base
+  Inputs:
+    - description:
+        Type: string
+        Description: Optional description for the table
+        Required: false
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+    - name:
+        Type: string
+        Description: The name of the table
+        Required: true
+    - fields:
+        Type: array
+        Description: Array of field definitions
+        Required: true
+        Array Items:
+          Type: object
+Tool: update_table
+  Description:
+    Update a table's name or description
+  Inputs:
+    - description:
+        Type: string
+        Description: New description for the table
+        Required: false
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+    - tableId:
+        Type: string
+        Description: The ID or name of the table
+        Required: true
+    - name:
+        Type: string
+        Description: New name for the table
+        Required: false
+Tool: create_field
+  Description:
+    Create a new field in a table
+  Inputs:
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+    - tableId:
+        Type: string
+        Description: The ID or name of the table
+        Required: true
+    - nested:
+        Type: object
+        Required: true
+        Properties:
+          - field:
+              Type: object
+              Description: Field definition
+              Required: true
+Tool: update_field
+  Description:
+    Update a field's name or description
+  Inputs:
+    - baseId:
+        Type: string
+        Description: The ID of the base
+        Required: true
+    - tableId:
+        Type: string
+        Description: The ID or name of the table
+        Required: true
+    - fieldId:
+        Type: string
+        Description: The ID of the field
+        Required: true
+    - name:
+        Type: string
+        Description: New name for the field
+        Required: false
+    - description:
+        Type: string
+        Description: New description for the field
+        Required: false

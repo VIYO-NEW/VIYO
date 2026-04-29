@@ -1,0 +1,11 @@
+=== branch ===
+main
+=== status porcelain ===
+ M .gitignore
+ M .taskmaster/config.json
+ M .taskmaster/tasks/tasks.json
+?? .githooks/
+?? docs/internal/phase6-repair/
+?? scripts/
+=== recent branches ===
+* main

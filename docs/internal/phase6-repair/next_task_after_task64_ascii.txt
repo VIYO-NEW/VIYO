@@ -1,0 +1,3 @@
+/home/ubuntu/VIYO/docs/internal/phase6-repair/next_task_dependency_inspection_20260429.md
+NEXT_TASK_ID=65
+NEXT_TASK_TITLE=T51a: SEC-14 and SEC-15 Auth Hardening

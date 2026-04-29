@@ -1,0 +1,5 @@
+=== go ===
+=== trufflehog ===
+=== pre-commit ===
+=== latest trufflehog release ===
+v3.95.2

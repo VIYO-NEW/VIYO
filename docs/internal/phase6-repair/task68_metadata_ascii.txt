@@ -1,0 +1,13 @@
+{
+  "id": "68",
+  "title": "T51d: Explicit Taskmaster Re-Parse Evidence Gate",
+  "description": "Record the required Taskmaster re-parse evidence before Phase 6.2 implementation foundations begin.",
+  "details": "PO Modification B. Before T52-equivalent work, run task-master parse-prd on the PRD V5 Addendum and Architecture Lock v6.1 ingestion bundle, save command output, and reconcile local .taskmaster state with the approved Airtable graph. If provider failure occurs, record failure evidence and use a PO-approved deterministic diff. Current directive from PO says parse-prd is not blocking and manual add-task creation is acceptable after evidence has been captured.",
+  "testStrategy": "",
+  "status": "pending",
+  "dependencies": [
+    "61"
+  ],
+  "priority": "high",
+  "subtasks": []
+}

@@ -1,0 +1,9 @@
+trufflehog_3.95.2_checksums.txt
+trufflehog_3.95.2_checksums.txt.pem
+trufflehog_3.95.2_checksums.txt.sig
+trufflehog_3.95.2_darwin_amd64.tar.gz
+trufflehog_3.95.2_darwin_arm64.tar.gz
+trufflehog_3.95.2_linux_amd64.tar.gz
+trufflehog_3.95.2_linux_arm64.tar.gz
+trufflehog_3.95.2_windows_amd64.tar.gz
+trufflehog_3.95.2_windows_arm64.tar.gz

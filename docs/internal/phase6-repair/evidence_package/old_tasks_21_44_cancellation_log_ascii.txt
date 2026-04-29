@@ -1,0 +1,436 @@
+=== PO Condition 2: Old graph cleanup start ===
+Replacement reference: Tasks 21-44 are superseded by the PO-approved Phase 6.2 task graph T61-T89, with Image Studio repair work continuing through T64-T89 after Phase 0 and PO conditions.
+--- cancelling old task 21; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183386) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 21
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 22; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183410) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 22
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 23; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183440) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 23
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 24; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183464) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 24
+
+      From: done
+      To:   cancelled
+
+
+--- cancelling old task 25; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183494) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 25
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 26; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183524) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 26
+
+      From: in-progress
+      To:   cancelled
+
+
+--- cancelling old task 27; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183548) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 27
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 28; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183578) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 28
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 29; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183605) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 29
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 30; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183632) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 30
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 31; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183662) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 31
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 32; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183686) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 32
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 33; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183716) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 33
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 34; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183746) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 34
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 35; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183770) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 35
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 36; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183800) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 36
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 37; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183824) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 37
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 38; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183854) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 38
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 39; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183878) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 39
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 40; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183908) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 40
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 41; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183938) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 41
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 42; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183962) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 42
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 43; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:183992) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 43
+
+      From: pending
+      To:   cancelled
+
+
+--- cancelling old task 44; replacement reference: T61-T89 Phase 6.2 graph ---
+(node:184016) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+
+          Successfully updated task 44
+
+      From: pending
+      To:   cancelled
+
+
+=== Post-cleanup status check ===
+(node:184048) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #21 - Implement Art Director Router 4D Scoring Matrix
+    ID:                    21
+    Title:                 Implement Art Director Router 4D Scoring Matrix
+    Status:                x cancelled
+(node:184079) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #22 - Implement Art Director Router Zero-Shot Fallback
+    ID:                    22
+    Title:                 Implement Art Director Router Zero-Shot Fallback
+    Status:                x cancelled
+(node:184104) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #23 - Implement Provider Tier Routing in Art Director Router
+    ID:                    23
+    Title:                 Implement Provider Tier Routing in Art Director Router
+    Status:                x cancelled
+(node:184135) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #24 - Build Image Studio Page Layout
+    ID:                    24
+    Title:                 Build Image Studio Page Layout
+    Status:                x cancelled
+(node:184160) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #25 - Implement Image Studio Generation Flow Backend
+    ID:                    25
+    Title:                 Implement Image Studio Generation Flow Backend
+    Status:                x cancelled
+(node:184191) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #26 - Implement Image Studio Generation Flow Frontend
+    ID:                    26
+    Title:                 Implement Image Studio Generation Flow Frontend
+    Status:                x cancelled
+(node:184216) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #27 - Implement Image Studio Editing Tools: Touch Edit
+    ID:                    27
+    Title:                 Implement Image Studio Editing Tools: Touch Edit
+    Status:                x cancelled
+(node:184247) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #28 - Implement Image Studio Editing Tools: Layer Splitting
+    ID:                    28
+    Title:                 Implement Image Studio Editing Tools: Layer Splitting
+    Status:                x cancelled
+(node:184272) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #29 - Implement Image Studio Editing Tools: Background Swap
+    ID:                    29
+    Title:                 Implement Image Studio Editing Tools: Background Swap
+    Status:                x cancelled
+(node:184303) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #30 - Implement Image Studio Version History Panel
+    ID:                    30
+    Title:                 Implement Image Studio Version History Panel
+    Status:                x cancelled
+(node:184334) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #31 - Implement Brand Vault @ Mention System in AI Command Panel
+    ID:                    31
+    Title:                 Implement Brand Vault @ Mention System in AI Command Panel
+    Status:                x cancelled
+(node:184359) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #32 - Auto-Save Generated Images to Brand Vault Assets Table
+    ID:                    32
+    Title:                 Auto-Save Generated Images to Brand Vault Assets Table
+    Status:                x cancelled
+(node:184390) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #33 - Build Brand Chat Panel Component
+    ID:                    33
+    Title:                 Build Brand Chat Panel Component
+    Status:                x cancelled
+(node:184415) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #34 - Implement Pin-on-Canvas Comments Overlay in Image Studio
+    ID:                    34
+    Title:                 Implement Pin-on-Canvas Comments Overlay in Image Studio
+    Status:                x cancelled
+(node:184446) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #35 - Implement Section-Anchored Comments in Email Editor
+    ID:                    35
+    Title:                 Implement Section-Anchored Comments in Email Editor
+    Status:                x cancelled
+(node:184477) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #36 - Implement Brand Chat Panel Super-Search
+    ID:                    36
+    Title:                 Implement Brand Chat Panel Super-Search
+    Status:                x cancelled
+(node:184502) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #37 - Build Webhook Management API Endpoints
+    ID:                    37
+    Title:                 Build Webhook Management API Endpoints
+    Status:                x cancelled
+(node:184533) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #38 - Implement Webhook Dispatcher Inngest Function
+    ID:                    38
+    Title:                 Implement Webhook Dispatcher Inngest Function
+    Status:                x cancelled
+      Function ID: dispatch-webhook. Trigger on internal/* events. Query webhook_endpoints
+(node:184559) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #39 - Add Inngest Event Emission Points for Webhooks
+    ID:                    39
+    Title:                 Add Inngest Event Emission Points for Webhooks
+    Status:                x cancelled
+(node:184590) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #40 - Integration Tests for Token Engine + Stripe Webhooks
+    ID:                    40
+    Title:                 Integration Tests for Token Engine + Stripe Webhooks
+    Status:                x cancelled
+(node:184621) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #41 - Build Style/Prompt Library UI Surface
+    ID:                    41
+    Title:                 Build Style/Prompt Library UI Surface
+    Status:                x cancelled
+(node:184646) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #42 - Add Remaining Image Editing Tools with fal.ai Integrations
+    ID:                    42
+    Title:                 Add Remaining Image Editing Tools with fal.ai Integrations
+    Status:                x cancelled
+(node:184677) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #43 - Build @mention Notification Dispatch with Preference-Based
+    ID:                    43
+    Title:                 Build @mention Notification Dispatch with Preference-Based Routing
+    Status:                x cancelled
+(node:184704) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+    Task: #44 - Add React/TSX-Aware Heuristics to VIYO Quality-Gate Skill
+    ID:                    44
+    Title:                 Add React/TSX-Aware Heuristics to VIYO Quality-Gate Skill
+    Status:                x cancelled

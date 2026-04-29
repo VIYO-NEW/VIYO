@@ -1,0 +1,9 @@
+=== TruffleHog version ===
+trufflehog 3.95.2
+=== TruffleHog git repo scan: only verified secrets, fail on verified findings ===
+              TruffleHog. Unearth your secrets.
+
+2026-04-28T23:13:38-04:00	info-0	trufflehog	running source	{"source_manager_worker_id": "fADhZ", "with_units": true}
+2026-04-28T23:13:38-04:00	info-0	trufflehog	scanning repo	{"source_manager_worker_id": "fADhZ", "unit_kind": "dir", "unit": "/tmp/trufflehog-180342-3691048337", "repo": "file:///home/ubuntu/VIYO"}
+2026-04-28T23:13:39-04:00	info-0	trufflehog	finished scanning	{"chunks": 1158, "bytes": 4322445, "verified_secrets": 0, "unverified_secrets": 0, "scan_duration": "420.565993ms", "trufflehog_version": "3.95.2", "verification_caching": {"Hits":0,"Misses":0,"HitsWasted":0,"AttemptsSaved":0,"VerificationTimeSpentMS":0}}
+=== TruffleHog git repo scan exit code: 0 ===

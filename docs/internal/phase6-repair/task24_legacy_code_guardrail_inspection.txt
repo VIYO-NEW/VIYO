@@ -1,0 +1,94 @@
+=== Task 24 local Taskmaster metadata ===
+{
+  "id": "24",
+  "title": "Build Image Studio Page Layout",
+  "status": "cancelled",
+  "description": "Create the /brand/[brandId]/studio route with a three-zone layout: mode picker sidebar, freeform canvas, and AI command panel.",
+  "details": "Implement React components for ModePickerSidebar, FreeformCanvas, and AICommandPanel. Use TanStack Router for route. Ensure brandId param is used to scope data. Follow WCAG 2.1 AA accessibility standards. Use CSS grid/flexbox for layout.",
+  "dependencies": [
+    "15",
+    "21"
+  ]
+}
+
+=== Files containing Image Studio references (excluding dependencies/build output) ===
+./apps/web/src/components/studio/ImageStudio.test.ts
+./apps/web/src/components/studio/ImageStudio.tsx
+./apps/web/src/router.tsx
+./docs/architecture/README.md
+./docs/architecture/brand-chat-comments-subsystem.md
+./docs/architecture/studio-editing-tools.md
+./docs/internal/build-journal.md
+./docs/internal/integration-map.md
+./docs/internal/phase6-repair/BUILDER_DIFF_OUTPUT_PHASE6_2.md
+./docs/internal/phase6-repair/BUILDER_DIFF_OUTPUT_PHASE6_2_MANUAL_EXECUTED.md
+./docs/internal/phase6-repair/PHASE6_IMAGE_STUDIO_REPAIR_ARCHITECTURE_PLAN.md
+./docs/internal/phase6-repair/PHASE6_ROOT_CAUSE_CORRECTION_DELIVERABLES.md
+./docs/internal/phase6-repair/PO_COMBINED_DIRECTIVE_V2_EXTRACTION.md
+./docs/internal/phase6-repair/PO_DIRECTIVE_PHASE6_ROOT_CAUSE_CORRECTION_EXTRACT.md
+./docs/internal/phase6-repair/PROPOSED_TASKMASTER_TODO_PHASE6_2.md
+./docs/internal/phase6-repair/TASKMASTER_PHASE6_2_REINGESTION_INPUT.md
+./docs/internal/phase6-repair/UPDATED_VIYO_PROTOCOL_IMPACT_MEMO.md
+./docs/internal/phase6-repair/add_phase6_2_manual_tasks.py
+./docs/internal/phase6-repair/add_phase6_2_manual_tasks_output.txt
+./docs/internal/phase6-repair/airtable_manual_diff_update_output.json
+./docs/internal/phase6-repair/architecture_broadcast_after_manual_diff.json
+./docs/internal/phase6-repair/current-audit-context.txt
+./docs/internal/phase6-repair/evidence_package/PO_COMBINED_DIRECTIVE_V2_EXTRACTION.md
+./docs/internal/phase6-repair/evidence_package/final_po_submission_status_verification_ascii.txt
+./docs/internal/phase6-repair/evidence_package/old_tasks_21_44_cancellation_log_ascii.txt
+./docs/internal/phase6-repair/evidence_package/po_condition_accountability_correction_evidence_ascii.txt
+./docs/internal/phase6-repair/final_po_submission_status_verification_ascii.txt
+./docs/internal/phase6-repair/final_po_submission_status_verification_raw.txt
+./docs/internal/phase6-repair/old_tasks_21_44_cancellation_log_ascii.txt
+./docs/internal/phase6-repair/old_tasks_21_44_cancellation_log_raw.txt
+./docs/internal/phase6-repair/phase6_2_architecture_broadcast_po_approval.json
+./docs/internal/phase6-repair/po_condition_accountability_correction_evidence.txt
+./docs/internal/phase6-repair/po_condition_accountability_correction_evidence_ascii.txt
+./docs/internal/phase6-repair/po_conditions_inspection_ascii.txt
+./docs/internal/phase6-repair/po_conditions_inspection_raw.txt
+./docs/internal/phase6-repair/po_conditions_task76_accountability_evidence_ascii.txt
+./docs/internal/phase6-repair/po_conditions_task76_accountability_evidence_raw.txt
+./docs/internal/phase6-repair/task24_legacy_code_guardrail_inspection.txt
+./docs/internal/phase6-repair/taskmaster_all_tasks_before_old_graph_cleanup_ascii.txt
+./docs/internal/phase6-repair/taskmaster_all_tasks_before_old_graph_cleanup_raw.txt
+./docs/internal/phase6-repair/taskmaster_list_after_manual_add.txt
+./docs/internal/phase6-repair/taskmaster_list_before_manual_add.txt
+./docs/internal/phase6-repair/taskmaster_parse_prd_phase6_2_command_output.txt
+./docs/internal/phase6-repair/taskmaster_parse_prd_phase6_2_retry_command_output.txt
+./docs/internal/phase6-repair/update_taskmaster_phase2_note.py
+./docs/internal/phase6-ui/airtable-search-image-studio.txt
+./docs/internal/phase6-ui/airtable-update-output.txt
+./docs/internal/phase6-ui/airtable-update-phase6.txt
+./docs/internal/phase6-ui/live-browser-validation-notes.md
+./docs/internal/phase6-ui/phase6-ui-completion-record.md
+./docs/internal/phase6-ui/phase6-ui-implementation-plan.md
+./docs/internal/phase6-ui/taskmaster-image-studio-task-details.txt
+./docs/internal/phase6-ui/taskmaster-phase6-guidance.txt
+./docs/internal/phase6-ui/taskmaster-remaining-phase6-task-details.txt
+./docs/internal/phase6-ui/taskmaster-status-after-sync.txt
+./docs/internal/phase6-ui/taskmaster-status-before-sync.txt
+./docs/internal/phase6-ui/taskmaster-sync-output.txt
+./docs/internal/r32-ingestion/tasks-before-r32-fallback-ingestion.json
+./docs/internal/source-map.md
+./docs/internal/t15-router-phase1-architecture-plan.md
+./docs/internal/t15-router-phase2-wiring-blueprint.md
+./docs/internal/t15-router-phase3-implementation-record.md
+./docs/internal/t15-router-phase4-code-review-record.md
+./docs/internal/t15-router-phase5-live-validation-record.md
+./docs/internal/t15-router-phase7-deploy-gate-summary.md
+./docs/internal/t15-router-phase8-post-build-completion-record.md
+./docs/internal/t45-database-foundation-phase3-wiring-blueprint.md
+./docs/internal/t46-phase3-global-wiring-blueprint.md
+./todo.md
+
+=== Git log evidence for Task 24 / Image Studio old graph commits ===
+f5a8c2e (HEAD -> main, github/main, github/HEAD) Implement Phase 6 Image Studio UI
+
+=== Current git status summary ===
+ M .gitignore
+ M .taskmaster/config.json
+ M .taskmaster/tasks/tasks.json
+?? .githooks/
+?? docs/internal/phase6-repair/
+?? scripts/

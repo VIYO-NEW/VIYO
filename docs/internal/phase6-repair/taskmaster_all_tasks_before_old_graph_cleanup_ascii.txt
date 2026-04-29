@@ -1,0 +1,277 @@
+(node:183161) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+      tag: master
+Listing tasks from: /home/ubuntu/VIYO/.taskmaster/tasks/tasks.json
+
+
+      Project Dashboard
+      Tasks Progress:                                                                                            16% 12/76
+      Done: 12  Cancelled: 0  Deferred: 0
+      In Progress: 1  Review: 1  Pending: 62  Blocked: 0
+
+      Subtasks Progress:                                                                                            0% 0/0
+      Completed: 0/0  Cancelled: 0  Deferred: 0
+      In Progress: 0  Review: 0  Pending: 0  Blocked: 0
+
+      Priority Breakdown:
+          High priority: 51
+          Medium priority: 24
+          Low priority: 1
+
+
+
+
+
+      Dependency Status & Next Task
+      Dependency Metrics:
+          Tasks with no dependencies: 0
+          Tasks ready to work on: 13
+          Tasks blocked by dependencies: 51
+          Most depended-on task: #75 (9 dependents)
+          Avg dependencies per task: 2.6
+
+      Next Task to Work On:
+      ID: 64 - T50: SEC-02 Encryption Foundation Readiness
+      Priority: high  Dependencies: 63
+      Complexity: N/A
+
+
+
+
+    ID        Title                            Status         Priority     Dependencies     Blocks           Complex
+
+    9         Stripe Billing Foundation            done         high         -                16, 17, 18,      N/A
+                                                                                            19, 20, 25,
+                                                                                            40, 45
+
+    15        Install TanStack Router ...          done         high         -                24, 26, 31,      N/A
+                                                                                            33, 44
+
+    16        Database Migration: Crea...          done         high         9                21, 25, 31,      N/A
+                                                                                            33, 34, 35,
+                                                                                            39
+
+    17        Database Migration: Crea...          done         high         9                37, 38           N/A
+
+    18        Database Migration: Crea...          done         medium       9                43               N/A
+
+    19        Database Migration: Crea...          done         medium       9                -                N/A
+
+    20        Database Migration: Upda...          done         high         9                21               N/A
+
+    21        Implement Art Director R...          pending      high         16, 20           22, 23, 24,      N/A
+                                                                                            25, 41
+
+    22        Implement Art Director R...          pending      high         21               -                N/A
+
+    23        Implement Provider Tier ...          pending      high         21               -                N/A
+
+    24        Build Image Studio Page ...          done         high         15, 21           26, 27, 28,      N/A
+                                                                                            29, 31, 34,
+                                                                                            47
+
+    25        Implement Image Studio G...          pending      high         21, 16, 9        26, 27, 29,      N/A
+                                                                                            32, 39, 40,
+                                                                                            42, 47
+
+    26        Implement Image Studio G...                       high         15, 24, 25       41               N/A
+                                               in-progre
+
+    27        Implement Image Studio E...          pending      high         25, 24           30, 42           N/A
+
+    28        Implement Image Studio E...          pending      medium       24               30, 42           N/A
+
+    29        Implement Image Studio E...          pending      medium       25, 24           30, 42           N/A
+
+    30        Implement Image Studio V...          pending      medium       27, 28, 29       42               N/A
+
+    31        Implement Brand Vault @ ...          pending      high         15, 24, 16       -                N/A
+
+    32        Auto-Save Generated Imag...          pending      high         25               -                N/A
+
+    33        Build Brand Chat Panel C...          pending      medium       15, 16           34, 36           N/A
+
+    34        Implement Pin-on-Canvas ...          pending      medium       24, 16, 33       -                N/A
+
+    35        Implement Section-Anchor...          pending      medium       16               -                N/A
+
+    36        Implement Brand Chat Pan...          pending      medium       33               -                N/A
+
+    37        Build Webhook Management...          pending      medium       17               -                N/A
+
+    38        Implement Webhook Dispat...          pending      medium       17               39, 43           N/A
+
+    39        Add Inngest Event Emissi...          pending      medium       38, 25, 16       -                N/A
+
+    40        Integration Tests for To...          pending      high         25, 9            -                N/A
+
+    41        Build Style/Prompt Libra...          pending      medium       21, 26           -                N/A
+
+    42        Add Remaining Image Edit...          pending      medium       25, 27, 28,      -                N/A
+                                                                           29, 30
+
+    43        Build @mention Notificat...          pending      medium       18, 38           -                N/A
+
+    44        Add React/TSX-Aware Heur...          pending      low          15               -                N/A
+
+    45        T45: Composite Database ...          done         high         9                46, 48           N/A
+
+    46        T46: Composite Art Direc...      ? review       high         45               -                N/A
+
+    47        T47: Composite Studio Ed...          pending      medium       24, 25           -                N/A
+
+    48        T48: Composite Webhook P...          pending      medium       45               49               N/A
+
+    49        R32: Procure Intelligent...          pending      high         48               50               N/A
+
+    50        R32: Architecture Plan f...          pending      high         49               51               N/A
+
+    51        R32: Global Wiring Bluep...          pending      high         50               52               N/A
+
+    52        R32: Global Wiring Bluep...          pending      medium       51               53               N/A
+
+    53        R32: Global Wiring Bluep...          pending      high         52               54               N/A
+
+    54        R32: Implement Intellige...          pending      high         53               55               N/A
+
+    55        R32: Implement Standard ...          pending      medium       54               56               N/A
+
+    56        R32: Implement Super Tem...          pending      high         55               57               N/A
+
+    57        R32: Implement Agency Da...          pending      medium       56               58               N/A
+
+    58        R32: Implement Tracking,...          pending      medium       57               59               N/A
+
+    59        R32: Validate Unit Econo...          pending      medium       58               60               N/A
+
+    60        R32: End-to-End Release ...          pending      high         59               -                N/A
+
+    61        T47: Architecture Broadc...          done         high         -                62, 68, 87       N/A
+
+    62        T48: SEC-18 Branch Prote...          done         high         61               63, 86, 87       N/A
+
+    63        T49: Phase 0 Secret-Expo...          done         high         62               64, 67, 86,      N/A
+                                                                                            87
+
+    64        T50: SEC-02 Encryption F...          pending      high         63               65, 66, 86,      N/A
+                                                                                            87
+
+    65        T51a: SEC-14 and SEC-15 ...          pending      high         64               86, 87           N/A
+
+    66        T51b: SEC-04 and SEC-05 ...          pending      high         64               86, 87           N/A
+
+    67        T51c: SEC-07 and SEC-08 ...          pending      high         63               86, 87           N/A
+
+    68        T51d: Explicit Taskmaste...          pending      high         61               69, 86, 87       N/A
+
+    69        T52: T46 Gap Repair     Pr...          pending      high         68               70, 71, 72,      N/A
+                                                                                            73, 74, 84,
+                                                                                            86, 87
+
+    70        T53: T46 Gap Repair     Ca...          pending      high         69               76, 79, 84,      N/A
+                                                                                            86, 87
+
+    71        T54: Billing and Token E...          pending      high         69               76, 84, 86,      N/A
+                                                                                            87
+
+    72        T55: R2 Auto-Save and Br...          pending      high         69               80, 81, 84,      N/A
+                                                                                            86, 87
+
+    73        T56: Editing Router Cove...          pending      high         69               84, 86, 87       N/A
+
+    74        T57: Standalone Studio R...          pending      high         69               75, 81, 82,      N/A
+                                                                                            83, 84, 85,
+                                                                                            86, 87
+
+    75        T58: Conversational Stud...          pending      high         74               76, 78, 79,      N/A
+                                                                                            82, 83, 84,
+                                                                                            85, 86, 87
+
+    76        T59: Generation Mode Mat...          pending      high         75, 70, 71       77, 80, 82,      N/A
+                                                                                            83, 84, 85,
+                                                                                            86, 87
+
+    77        T60: Aspect Ratio, Platf...          pending      high         76               82, 83, 84,      N/A
+                                                                                            85, 86, 87
+
+    78        T61: Style and Prompt Li...          pending      high         75               82, 83, 84,      N/A
+                                                                                            85, 86, 87
+
+    79        T62: Error, Timeout, Sco...          pending      high         75, 70           82, 83, 84,      N/A
+                                                                                            85, 86, 87
+
+    80        T63: Multi-Format Export...          pending      high         72, 76           82, 83, 84,      N/A
+                                                                                            85, 86, 87
+
+    81        T64: Version History and...          pending      medium       74, 72           82, 83, 84,      N/A
+                                                                                            85, 86, 87
+
+    82        T65: Accessibility and N...          pending      high         74, 75, 76,      83, 84, 85,      N/A
+                                                                           77, 78, 79,      86, 87
+                                                                           80, 81
+
+    83        T66: Unit and Integratio...          pending      high         74, 75, 76,      84, 85, 86,      N/A
+                                                                           77, 78, 79,      87, 88
+                                                                           80, 81, 82
+
+    84        T67: Static Wiring and T...          pending      high         69, 70, 71,      85, 86, 87,      N/A
+                                                                           72, 73, 74,      88
+                                                                           75, 76, 77,
+                                                                           78, 79, 80,
+                                                                           81, 82, 83
+
+    85        T68: Browser Validation ...          pending      high         74, 75, 76,      86, 87, 88       N/A
+                                                                           77, 78, 79,
+                                                                           80, 81, 82,
+                                                                           83, 84
+
+    86        T69: Security Trigger Ve...          pending      high         62, 63, 64,      87, 88           N/A
+                                                                           65, 66, 67,
+                                                                           68, 69, 70,
+                                                                           71, 72, 73,
+                                                                           74, 75, 76,
+                                                                           77, 78, 79,
+                                                                           80, 81, 82,
+                                                                           83, 84, 85
+
+    87        T70: Airtable Build Trac...          pending      medium       61, 62, 63,      88               N/A
+                                                                           64, 65, 66,
+                                                                           67, 68, 69,
+                                                                           70, 71, 72,
+                                                                           73, 74, 75,
+                                                                           76, 77, 78,
+                                                                           79, 80, 81,
+                                                                           82, 83, 84,
+                                                                           85, 86
+
+    88        T71: Final Quality Gate ...          pending      high         83, 84, 85,      89               N/A
+                                                                           86, 87
+
+    89        T72: PO Approval Stop Be...          pending      high         88               -                N/A
+
+
+                                                                             RECOMMENDED NEXT TASK
+
+           Next Task to Work On: #64 - T50: SEC-02 Encryption Foundation
+      Readiness
+
+      Priority: high  Status:     pending
+      Dependencies: 63
+
+      Description: Confirm encryption design readiness before
+      sensitive-token persistence is introduced.
+
+      Start working: task-master set-status --id=64 --status=in-progress
+      View details: task-master show 64
+
+
+
+
+
+      Suggested Next Steps:
+
+      1. Run task-master next to see what to work on next
+      2. Run task-master expand --id=<id> to break down a task into
+      subtasks
+      3. Run task-master set-status --id=<id> --status=done to mark a task
+      as complete
