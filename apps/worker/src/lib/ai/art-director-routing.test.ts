@@ -196,6 +196,8 @@ describe('T46 v6.1 editing tool router', () => {
       'tier-2-background-generation',
       'sharp-composite',
     ]);
+    expect(getEditingToolPlan('upscale').primaryModels).toEqual(['real-esrgan', 'imagen-4.0-generate-001']);
+    expect(getEditingToolPlan('upscale').pipelineSteps).toEqual(['provider-selected-upscale']);
     expect(getEditingToolPlan('quick_edit').localOnly).toBe(true);
     expect(getEditingToolPlan('quick_edit').providerRequired).toBe(false);
     expect(ART_DIRECTOR_EDITING_TOOL_CONTRACTS.text_edit.primaryModels).toEqual([

@@ -230,7 +230,7 @@ const artDirectorEditingToolContractRows = [
   ['background_swap', 'Replace the background while preserving the subject.', ['rmbg', 'flux-2-pro', 'flux-kontext-max'], ['rmbg-subject-cutout', 'tier-2-background-generation', 'sharp-composite'], false, true],
   ['object_removal', 'Remove unwanted objects and fill the gap.', ['sdxl-inpainting'], ['sdxl-inpainting-object-removal'], false, true],
   ['canvas_expand', 'Extend the image in any direction.', ['sdxl-outpainting'], ['sdxl-outpainting-canvas-expand'], false, true],
-  ['upscale', 'Enhance resolution by 2x or 4x.', ['real-esrgan', 'imagen-4.0-generate-001'], ['real-esrgan-upscale'], false, true],
+  ['upscale', 'Enhance resolution by 2x or 4x.', ['real-esrgan', 'imagen-4.0-generate-001'], ['provider-selected-upscale'], false, true],
   ['quick_edit', 'One-click brightness, contrast, saturation, and crop adjustments.', [], ['local-sharp-canvas-adjustment'], true, false],
   ['style_transfer', 'Apply the visual style of one image to another.', ['ip-adapter', 'gemini-3.1-flash-image'], ['ip-adapter-style-conditioning'], false, true],
   ['material_swap', 'Change material or texture of objects while preserving geometry.', ['controlnet', 'flux-2-pro', 'flux-kontext-max'], ['controlnet-structure-lock', 'tier-2-generation-material-swap'], false, true],
