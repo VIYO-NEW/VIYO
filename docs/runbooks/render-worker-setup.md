@@ -57,37 +57,37 @@ PORT=3001
 ### Database (from Supabase Dashboard → Settings → Database)
 
 ```
-DATABASE_URL=<set-in-provider-secret-store>
-DIRECT_URL=<set-in-provider-secret-store>
+DATABASE_URL=${DATABASE_URL}
+DIRECT_URL=${DIRECT_URL}
 ```
 
 ### Supabase Auth (from Supabase Dashboard → Settings → API)
 
 ```
 SUPABASE_URL=https://[project-ref].supabase.co
-SUPABASE_ANON_KEY=[your-anon-key]
-SUPABASE_SERVICE_ROLE_KEY=[your-service-role-key]
+SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
 ```
 
 ### Credential Vault (generate with: `openssl rand -hex 32`)
 
 ```
-VIYO_VAULT_KEY=[64-char hex string]
+VIYO_VAULT_KEY=${VIYO_VAULT_KEY}
 VIYO_VAULT_KEY_PREVIOUS=
 ```
 
 ### Inngest
 
 ```
-INNGEST_EVENT_KEY=<set-in-provider-secret-store>
-INNGEST_SIGNING_KEY=<set-in-provider-secret-store>
+INNGEST_EVENT_KEY=${INNGEST_EVENT_KEY}
+INNGEST_SIGNING_KEY=${INNGEST_SIGNING_KEY}
 ```
 
 ### Upstash Redis (for rate limiting)
 
 ```
-UPSTASH_REDIS_REST_URL=https://evident-dory-67160.upstash.io
-UPSTASH_REDIS_REST_TOKEN=gQAAAAAAAQZYAAIgcDIzMjgxYTYyMzY4NTA0Y2FiOGQ1ZWMwZGZlNTYyNTgxNQ
+UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL}
+UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN}
 ```
 
 ### OpenTelemetry (optional — leave empty to disable)
