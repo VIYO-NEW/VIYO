@@ -16,7 +16,7 @@ import {
   uniqueIndex,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
-import { users, workspaces } from './identity';
+import { users, workspaces } from './identity.js';
 
 /** Exact PO-approved 11-value comment target taxonomy. */
 export const commentTargetTypeEnum = pgEnum('comment_target_type', [

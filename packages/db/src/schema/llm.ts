@@ -12,7 +12,7 @@ import {
   integer,
   timestamp,
 } from 'drizzle-orm/pg-core';
-import { workspaces } from './identity';
+import { workspaces } from './identity.js';
 
 /* ──────────────────────────────────────────────
  * COUNCIL_DECISIONS — Council of Brains decision log

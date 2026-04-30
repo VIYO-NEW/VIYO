@@ -14,7 +14,7 @@ import {
   uniqueIndex,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
-import { users, workspaces } from './identity';
+import { users, workspaces } from './identity.js';
 
 /* ──────────────────────────────────────────────
  * INTEGRATION_CONNECTIONS — Encrypted OAuth/platform credentials

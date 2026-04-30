@@ -29,6 +29,11 @@ RUN pnpm --filter @viyo/shared build && \
     pnpm --filter @viyo/db build && \
     pnpm --filter @viyo/worker build
 
+# Produce a self-contained production runtime tree with resolved pnpm deps.
+# This avoids copying workspace-level pnpm symlinks that do not exist in the
+# final image and matches the locally validated production start path.
+RUN pnpm --filter @viyo/worker deploy --prod /prod/worker
+
 # ---- Stage 2: Production Runner ----
 FROM node:22-alpine AS runner
 
@@ -37,16 +42,8 @@ WORKDIR /app
 # Add non-root user for security
 RUN addgroup --system viyo && adduser --system --ingroup viyo viyo
 
-# Copy built artifacts
-COPY --from=builder /app/apps/worker/dist ./dist
-COPY --from=builder /app/apps/worker/package.json ./
-
-# Copy node_modules (includes workspace dependencies)
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/packages/shared/dist ./node_modules/@viyo/shared/dist
-COPY --from=builder /app/packages/shared/package.json ./node_modules/@viyo/shared/package.json
-COPY --from=builder /app/packages/db/dist ./node_modules/@viyo/db/dist
-COPY --from=builder /app/packages/db/package.json ./node_modules/@viyo/db/package.json
+# Copy self-contained production runtime bundle
+COPY --from=builder /prod/worker ./
 
 # Set ownership
 RUN chown -R viyo:viyo /app

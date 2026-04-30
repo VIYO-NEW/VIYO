@@ -20,7 +20,7 @@ import {
   index,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
-import { workspaces } from './identity';
+import { workspaces } from './identity.js';
 
 /* ──────────────────────────────────────────────
  * TOKEN_BALANCES — Materialized O(1) balance lookups
