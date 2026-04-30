@@ -4,8 +4,9 @@
  * MUST be imported BEFORE any other module in index.ts so that
  * all HTTP and PostgreSQL operations are automatically traced.
  *
- * The SDK only activates when OTEL_EXPORTER_OTLP_ENDPOINT is set.
- * When unset, this module is a no-op — zero overhead in dev.
+ * The SDK only activates when OTEL_EXPORTER_OTLP_ENDPOINT is set to a valid
+ * HTTP(S) URL. When unset or invalid, this module is a no-op for OTel so
+ * malformed deployment placeholders cannot block worker startup.
  *
  * T12 Addition: When SENTRY_DSN_WORKER is also set, the Sentry OTel
  * bridge (SentrySpanProcessor + SentryPropagator + SentrySampler) is
@@ -24,12 +25,43 @@ import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { PgInstrumentation } from '@opentelemetry/instrumentation-pg';
 // Types from the OTel packages already in our dependency tree
 
-const otlpEndpoint = process.env.OTEL_EXPORTER_OTLP_ENDPOINT;
+const rawOtlpEndpoint = process.env.OTEL_EXPORTER_OTLP_ENDPOINT;
 const sentryDsn = process.env.SENTRY_DSN_WORKER;
 const serviceName = process.env.OTEL_SERVICE_NAME ?? 'viyo-worker';
 
-
 let sdk: NodeSDK | null = null;
+
+/**
+ * Normalize the OTLP endpoint into the trace export URL expected by the HTTP exporter.
+ */
+function normalizeOtlpTraceUrl(endpoint: string | undefined): string | null {
+  const trimmedEndpoint = endpoint?.trim();
+  if (!trimmedEndpoint) return null;
+
+  // WHY: Render staging once carried the literal placeholder value
+  // `<STAGING_OTEL_EXPORTER_OTLP_ENDPOINT>`. OTel throws during module import for
+  // malformed URLs, so placeholders must degrade safely instead of blocking boot.
+  if (trimmedEndpoint.startsWith('<') && trimmedEndpoint.endsWith('>')) {
+    console.warn(`[VIYO] OpenTelemetry disabled — invalid placeholder OTLP endpoint: ${trimmedEndpoint}`);
+    return null;
+  }
+
+  const traceUrl = trimmedEndpoint.endsWith('/v1/traces')
+    ? trimmedEndpoint
+    : `${trimmedEndpoint.replace(/\/+$/, '')}/v1/traces`;
+
+  try {
+    const parsedUrl = new URL(traceUrl);
+    if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+      console.warn(`[VIYO] OpenTelemetry disabled — unsupported OTLP endpoint protocol: ${parsedUrl.protocol}`);
+      return null;
+    }
+    return parsedUrl.toString();
+  } catch {
+    console.warn(`[VIYO] OpenTelemetry disabled — invalid OTLP endpoint URL: ${trimmedEndpoint}`);
+    return null;
+  }
+}
 
 /**
  * Load Sentry OTel bridge components when Sentry DSN is configured.
@@ -55,11 +87,11 @@ async function loadSentryBridge(): Promise<{
   }
 }
 
-if (otlpEndpoint) {
+const otlpTraceUrl = normalizeOtlpTraceUrl(rawOtlpEndpoint);
+
+if (otlpTraceUrl) {
   const traceExporter = new OTLPTraceExporter({
-    url: otlpEndpoint.endsWith('/v1/traces')
-      ? otlpEndpoint
-      : `${otlpEndpoint}/v1/traces`,
+    url: otlpTraceUrl,
   });
 
   // T12: Wire Sentry OTel bridge when both OTel and Sentry are active
@@ -95,9 +127,9 @@ if (otlpEndpoint) {
 
   sdk = new NodeSDK(sdkConfig);
   sdk.start();
-  console.log(`[VIYO] OpenTelemetry started → ${otlpEndpoint} (service: ${serviceName})`);
+  console.log(`[VIYO] OpenTelemetry started → ${otlpTraceUrl} (service: ${serviceName})`);
 } else {
-  console.log('[VIYO] OpenTelemetry disabled — OTEL_EXPORTER_OTLP_ENDPOINT not set');
+  console.log('[VIYO] OpenTelemetry disabled — OTEL_EXPORTER_OTLP_ENDPOINT not set to a valid URL');
 
   // T12: Even without OTel, initialize Sentry standalone for error capture
   if (sentryDsn) {
