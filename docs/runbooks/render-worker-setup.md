@@ -57,8 +57,8 @@ PORT=3001
 ### Database (from Supabase Dashboard → Settings → Database)
 
 ```
-DATABASE_URL=postgresql://postgres.[project-ref]:[password]@aws-0-us-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true
-DIRECT_URL=postgresql://postgres.[project-ref]:[password]@aws-0-us-west-1.pooler.supabase.com:5432/postgres
+DATABASE_URL=<set-in-provider-secret-store>
+DIRECT_URL=<set-in-provider-secret-store>
 ```
 
 ### Supabase Auth (from Supabase Dashboard → Settings → API)
@@ -79,8 +79,8 @@ VIYO_VAULT_KEY_PREVIOUS=
 ### Inngest
 
 ```
-INNGEST_EVENT_KEY=ve4MPukuTUZ1f7nYyMV-F0GJhIgwif0vQqiyLA9isvnKjS2KwS6MtftwF05qFrA1Jh0xuZsrFj6syCX1Bx2Xaw
-INNGEST_SIGNING_KEY=signkey-prod-d29863204a1a84a108f02690429510cd7738a97a4314d5a59337e55bb76fa963
+INNGEST_EVENT_KEY=<set-in-provider-secret-store>
+INNGEST_SIGNING_KEY=<set-in-provider-secret-store>
 ```
 
 ### Upstash Redis (for rate limiting)

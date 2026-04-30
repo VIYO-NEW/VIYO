@@ -42,7 +42,7 @@ VIYO_API_URL="https://api.viyo.ai"
 NEXT_PUBLIC_SUPABASE_URL="https://[PROJECT_REF].supabase.co"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJhb..."
 SUPABASE_SERVICE_ROLE_KEY="eyJhb..." # NEVER EXPOSE TO FRONTEND
-DATABASE_URL="postgres://postgres.[PROJECT_REF]:[PASSWORD]@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+DATABASE_URL=<set-in-provider-secret-store>
 ```
 
 ### 3.3 External APIs (Render Workers Only)
@@ -53,8 +53,8 @@ IDEOGRAM_API_KEY="..."
 GOOGLE_CLOUD_API_KEY="..." # For NanoBanana/Gemini
 STRIPE_SECRET_KEY="sk_live_..."
 STRIPE_WEBHOOK_SECRET="whsec_..."
-INNGEST_EVENT_KEY="..."
-INNGEST_SIGNING_KEY="..."
+INNGEST_EVENT_KEY=<set-in-provider-secret-store>
+INNGEST_SIGNING_KEY=<set-in-provider-secret-store>
 UPSTASH_REDIS_REST_URL="https://..."
 UPSTASH_REDIS_REST_TOKEN="..."
 ```
