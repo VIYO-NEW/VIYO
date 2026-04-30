@@ -1,96 +1,133 @@
 # Vercel Setup Runbook
 
-**Projects:** viyo-web, viyo-admin
-**Target URLs:** app.viyo.new, admin.viyo.new
-**Authority:** R21 §3, Doc4 §0.3
+**Projects:** `viyo-web`, `viyo-admin`
+**Canonical domains:** `viyo.new`, `www.viyo.new`, `staging.viyo.new`, `app.viyo.new`, `app.staging.viyo.new`, `admin.viyo.new`, `admin.staging.viyo.new`
+**Authority:** Uploaded VIYO Complete Domain Map, R21 §3, Doc4 §0.3
 
 ---
 
-## Current Status
+## Current Domain Model
 
-Both Vercel projects are created and deployed:
+VIYO uses Vercel for browser-facing surfaces and Render for API surfaces. The Vercel domain model is split by product surface so the public website, logged-in Brands app, and internal admin portal can each have production and staging hostnames.
 
-| Project | Vercel URL | Custom Domain (pending) |
-|---------|-----------|------------------------|
-| viyo-web | https://viyo-web.vercel.app | app.viyo.new |
-| viyo-admin | https://viyo-admin.vercel.app | admin.viyo.new |
+| Surface | Vercel Project | Production Domain | Staging Domain | Vercel Environment / Branch |
+|---|---|---|---|---|
+| Public marketing website | `viyo-web` | `https://viyo.new`, `https://www.viyo.new` | `https://staging.viyo.new` | Production on `main`; Preview branch domain on `develop` |
+| Logged-in Brands app | `viyo-web` | `https://app.viyo.new` | `https://app.staging.viyo.new` | Production on `main`; Preview branch domain on `develop` |
+| Internal admin portal | `viyo-admin` | `https://admin.viyo.new` | `https://admin.staging.viyo.new` | Production on `main`; Preview branch domain on `develop` |
+
+The API domains are intentionally **not** configured in Vercel. `api.viyo.new` and `api.staging.viyo.new` belong to Render and must be added to Cloudflare only after Render supplies the exact custom-domain target.
 
 ---
 
 ## Step 1: Connect GitHub for Auto-Deploy
 
-The projects were created via API without GitHub integration. To enable auto-deploy on push:
+The Vercel projects must be connected to the canonical repository so production and staging deploys are triggered from the correct branches.
 
-1. Go to [https://vercel.com/viyo-ai/viyo-web/settings/git](https://vercel.com/viyo-ai/viyo-web/settings/git)
-2. Click **Connect Git Repository**
-3. Select **GitHub** → authorize Vercel if prompted
-4. Select repository: **viyo-ai/VIYO**
-5. Set **Root Directory**: `apps/web`
-6. Repeat for viyo-admin:
-   - Go to [https://vercel.com/viyo-ai/viyo-admin/settings/git](https://vercel.com/viyo-ai/viyo-admin/settings/git)
-   - Connect to **viyo-ai/VIYO**
-   - Set **Root Directory**: `apps/admin`
+1. Go to [viyo-web Git settings](https://vercel.com/viyo-ai/viyo-web/settings/git).
+2. Connect the GitHub repository `viyo-ai/VIYO` if it is not already connected.
+3. Set **Root Directory** to `apps/web`.
+4. Go to [viyo-admin Git settings](https://vercel.com/viyo-ai/viyo-admin/settings/git).
+5. Connect the GitHub repository `viyo-ai/VIYO` if it is not already connected.
+6. Set **Root Directory** to `apps/admin`.
 
-After connecting, every push to `main` will auto-deploy both apps.
+Production deploys are expected from `main`. Staging domains are configured as Preview branch domains for `develop`, matching the repository staging lane.
 
 ---
 
 ## Step 2: Configure Custom Domains
 
-### For viyo-web (app.viyo.new):
+### `viyo-web` domains
 
-1. Go to [https://vercel.com/viyo-ai/viyo-web/settings/domains](https://vercel.com/viyo-ai/viyo-web/settings/domains)
-2. Add domain: `app.viyo.new`
-3. Add DNS record at your domain registrar:
-   - Type: **CNAME**
-   - Name: `app`
-   - Value: `cname.vercel-dns.com`
+Add or verify the following domains in [viyo-web Domains settings](https://vercel.com/viyo-ai/viyo-web/settings/domains).
 
-### For viyo-admin (admin.viyo.new):
+| Domain | Environment | Branch | Redirect |
+|---|---|---|---|
+| `viyo.new` | Production | `main` | Vercel may link with `www.viyo.new` as the canonical pair |
+| `www.viyo.new` | Production | `main` | Pair with `viyo.new` according to Vercel recommendation |
+| `app.viyo.new` | Production | `main` | No redirect unless product routing requires it |
+| `staging.viyo.new` | Preview / Pre-Production | `develop` | No redirect |
+| `app.staging.viyo.new` | Preview / Pre-Production | `develop` | No redirect |
 
-1. Go to [https://vercel.com/viyo-ai/viyo-admin/settings/domains](https://vercel.com/viyo-ai/viyo-admin/settings/domains)
-2. Add domain: `admin.viyo.new`
-3. Add DNS record at your domain registrar:
-   - Type: **CNAME**
-   - Name: `admin`
-   - Value: `cname.vercel-dns.com`
+### `viyo-admin` domains
 
----
+Add or verify the following domains in [viyo-admin Domains settings](https://vercel.com/viyo-ai/viyo-admin/settings/domains).
 
-## Step 3: Environment Variables (when needed)
-
-Currently the web and admin apps are static SPAs with no server-side env vars needed. When you add Supabase client-side auth:
-
-1. Go to project → **Settings** → **Environment Variables**
-2. Add:
-
-```
-VITE_SUPABASE_URL=https://[project-ref].supabase.co
-VITE_SUPABASE_ANON_KEY=[your-anon-key]
-VITE_API_URL=https://api.viyo.new
-```
-
-Note: Vite requires `VITE_` prefix for client-side env vars.
+| Domain | Environment | Branch | Redirect |
+|---|---|---|---|
+| `admin.viyo.new` | Production | `main` | No redirect |
+| `admin.staging.viyo.new` | Preview / Pre-Production | `develop` | No redirect |
 
 ---
 
-## Step 4: Preview Deployments
+## Step 3: Configure Cloudflare DNS for Vercel Domains
 
-Preview deployments are automatic when GitHub is connected:
-- Every PR gets a unique preview URL
-- Preview URLs follow the pattern: `viyo-web-[hash]-viyo-ai.vercel.app`
-- Comments are posted on the PR with the preview link
+All Vercel-facing records must be **DNS-only** in Cloudflare. Do not proxy these records unless Vercel explicitly supports and validates the chosen mode.
+
+| Hostname | Type | Target | Proxy Mode |
+|---|---|---|---|
+| `viyo.new` | A | `76.76.21.21` | DNS-only |
+| `www.viyo.new` | CNAME | `cname.vercel-dns.com` | DNS-only |
+| `staging.viyo.new` | CNAME | `cname.vercel-dns.com` | DNS-only |
+| `app.viyo.new` | CNAME | `cname.vercel-dns.com` | DNS-only |
+| `app.staging.viyo.new` | CNAME | `cname.vercel-dns.com` | DNS-only |
+| `admin.viyo.new` | CNAME | `cname.vercel-dns.com` | DNS-only |
+| `admin.staging.viyo.new` | CNAME | `cname.vercel-dns.com` | DNS-only |
+
+The canonical staging API hostname is `api.staging.viyo.new`; do not create retired hyphenated staging API aliases.
+
+---
+
+## Step 4: Environment Variables
+
+Configure production variables in the Vercel Production environment and staging variables in the Vercel Preview/Staging environment. Do not copy production Supabase, API, Inngest, Redis, Sentry, or vault values into staging.
+
+| Variable | Production Web/Admin Value | Staging Web/Admin Value |
+|---|---|---|
+| `VITE_SUPABASE_URL` | Production Supabase project URL | Staging Supabase project URL |
+| `VITE_SUPABASE_ANON_KEY` | Production anon key | Staging anon key |
+| `VITE_APP_URL` | `https://app.viyo.new` for web; `https://admin.viyo.new` for admin if admin needs its own base URL | `https://app.staging.viyo.new` for web; `https://admin.staging.viyo.new` for admin if admin needs its own base URL |
+| `VITE_API_URL` | `https://api.viyo.new` | `https://api.staging.viyo.new` |
+| `VITE_SENTRY_DSN_WEB` | Production web Sentry DSN | Staging web Sentry DSN |
+| `VITE_SENTRY_DSN_ADMIN` | Production admin Sentry DSN | Staging admin Sentry DSN |
+
+Vite exposes only variables with the `VITE_` prefix to browser bundles. Treat DSNs as public identifiers but continue to keep auth tokens, service-role keys, Redis tokens, and database URLs out of Vercel client-side variables.
+
+---
+
+## Step 5: Preview and Staging Deployments
+
+Preview deployments are automatic when GitHub is connected. The canonical staging domains must be assigned as Preview branch domains for `develop` so they resolve to the same staging code path every time.
+
+| Branch | Expected Vercel Behavior |
+|---|---|
+| `main` | Production deployments for `viyo.new`, `www.viyo.new`, `app.viyo.new`, and `admin.viyo.new` |
+| `develop` | Staging/Preview deployments for `staging.viyo.new`, `app.staging.viyo.new`, and `admin.staging.viyo.new` |
+| Pull request branches | Ephemeral preview URLs under Vercel-generated hostnames |
 
 ---
 
 ## Verify
 
-```bash
-# Check viyo-web
-curl -s -o /dev/null -w "HTTP: %{http_code}\n" https://viyo-web.vercel.app
-# Expected: 200
+Run these checks after Cloudflare propagation and Vercel SSL provisioning complete.
 
-# Check viyo-admin
-curl -s -o /dev/null -w "HTTP: %{http_code}\n" https://viyo-admin.vercel.app
-# Expected: 200
+```bash
+# Production web and admin
+curl -I https://viyo.new
+curl -I https://www.viyo.new
+curl -I https://app.viyo.new
+curl -I https://admin.viyo.new
+
+# Staging web and admin
+curl -I https://staging.viyo.new
+curl -I https://app.staging.viyo.new
+curl -I https://admin.staging.viyo.new
+
+# DNS shape
+for host in viyo.new www.viyo.new staging.viyo.new app.viyo.new app.staging.viyo.new admin.viyo.new admin.staging.viyo.new; do
+  echo "=== ${host} ==="
+  dig +short "${host}"
+done
 ```
+
+Passing evidence requires Vercel to show valid domain configuration, issued SSL certificates, and the correct environment/branch assignment for each hostname.

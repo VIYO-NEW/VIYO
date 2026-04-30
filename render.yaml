@@ -1,6 +1,6 @@
 # ============================================================
-# Render Blueprint — VIYO Worker Service
-# Authority: R21 §5, Doc4 §2.2
+# Render Blueprint — VIYO Worker Services
+# Authority: R21 §5, Doc4 §2.2, Doc1 lines 9690-9700, T90 / SEC-10 Builder Execution Brief
 # Docs: https://docs.render.com/blueprint-spec
 # ============================================================
 
@@ -45,4 +45,66 @@ services:
       - key: UPSTASH_REDIS_REST_URL
         sync: false
       - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+
+  - type: web
+    name: viyo-worker-staging
+    runtime: docker
+    dockerfilePath: apps/worker/Dockerfile
+    dockerContext: .
+    region: oregon
+    plan: starter
+    branch: develop
+    autoDeploy: true
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3001"
+      - key: DATABASE_URL
+        sync: false # Staging Supabase pooled connection string; set manually in Render dashboard
+      - key: DIRECT_URL
+        sync: false # Staging Supabase direct connection string; set manually in Render dashboard
+      - key: SUPABASE_URL
+        sync: false # Staging Supabase project URL only
+      - key: SUPABASE_ANON_KEY
+        sync: false # Staging Supabase anon key only
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false # Staging Supabase service role key only
+      - key: SUPABASE_JWT_SECRET
+        sync: false # Staging Supabase JWT secret only
+      - key: VIYO_VAULT_KEY
+        sync: false # Staging vault key; do not reuse production key
+      - key: VIYO_VAULT_KEY_PREVIOUS
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false # Staging/test-mode value only
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false # Staging/test-mode value only
+      - key: INNGEST_EVENT_KEY
+        sync: false # Staging Inngest event key only
+      - key: INNGEST_SIGNING_KEY
+        sync: false # Staging Inngest signing key only
+      - key: GOOGLE_AI_API_KEY
+        sync: false
+      - key: IDEOGRAM_API_KEY
+        sync: false
+      - key: R2_ACCOUNT_ID
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET_NAME
+        value: viyo-assets-staging
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+      - key: OTEL_EXPORTER_OTLP_ENDPOINT
+        sync: false
+      - key: OTEL_SERVICE_NAME
+        value: viyo-worker-staging
+      - key: SENTRY_DSN_WORKER
         sync: false
