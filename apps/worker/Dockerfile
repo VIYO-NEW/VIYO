@@ -13,7 +13,7 @@ RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
 # Copy workspace root files first (for pnpm workspace resolution)
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml .nvmrc ./
-COPY turbo.json ./
+COPY turbo.json tsconfig.base.json ./
 
 # Copy all packages (needed for cross-package builds)
 COPY packages/ ./packages/
