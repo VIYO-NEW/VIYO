@@ -12,7 +12,7 @@ services:
     dockerContext: .
     region: oregon
     plan: starter
-    branch: main
+    branch: infra/domain-render-no-workflows
     autoDeploy: true
     healthCheckPath: /health
     envVars:
@@ -31,7 +31,7 @@ services:
     dockerContext: .
     region: oregon
     plan: starter
-    branch: develop
+    branch: infra/domain-render-no-workflows
     autoDeploy: true
     healthCheckPath: /health
     envVars:
