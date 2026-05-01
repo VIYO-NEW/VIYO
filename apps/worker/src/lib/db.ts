@@ -63,6 +63,8 @@ export function getDb(): ReturnType<typeof drizzle<typeof schema>> | null {
     max: 10,
     idle_timeout: 20,
     connect_timeout: 10,
+    // WHY: Supabase transaction pooler does not support session-level prepared statements.
+    prepare: false,
   });
 
   dbInstance = drizzle(pgClient, { schema });
