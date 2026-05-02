@@ -11,137 +11,39 @@
 name: VIYO Deploy Pipeline
 
 on:
-  # Uncomment when Render + DNS are configured:
-  # push:
-  #   branches: [main]
-  workflow_dispatch:
+  # Pre-alpha auto-deploy enabled by PO decision; revert to workflow_dispatch-only at Alpha entry.
+    push:
+        branches: [main]
+          workflow_dispatch:
 
-concurrency:
-  group: deploy-production
-  cancel-in-progress: false # Never cancel in-flight deploys
+          concurrency:
+            group: deploy-production
+              cancel-in-progress: false # Never cancel in-flight deploys
 
-env:
-  NODE_VERSION: "22"
-  PNPM_VERSION: "9.15.4"
-  WORKER_HEALTH_URL: "https://api.viyo.new/health"
-  WEB_URL: "https://app.viyo.new"
-  ADMIN_URL: "https://admin.viyo.new"
+              env:
+                NODE_VERSION: "22"
+                  PNPM_VERSION: "9.15.4"
+                    WORKER_HEALTH_URL: "https://api.viyo.new/health"
+                      WEB_URL: "https://app.viyo.new"
+                        ADMIN_URL: "https://admin.viyo.new"
 
-jobs:
-  # Step 1: Run full CI before deploying
-  ci:
-    name: CI Gate
-    uses: ./.github/workflows/ci.yml
+                        jobs:
+                          # Step 1: Run full CI before deploying
+                            ci:
+                                name: CI Gate
+                                    uses: ./.github/workflows/ci.yml
 
-  # Step 2: Deploy worker to Render (fails fast if secret is missing)
-  deploy-worker:
-    name: Deploy Worker → Render
-    needs: ci
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    outputs:
-      deployed: ${{ steps.trigger.outputs.deployed }}
+                                      # Step 2: Deploy worker to Render (fails fast if secret is missing)
+                                        deploy-worker:
+                                            name: Deploy Worker → Render
+                                                needs: ci
+                                                    runs-on: ubuntu-latest
+                                                        timeout-minutes: 10
+                                                            outputs:
+                                                                  deployed: ${{ steps.trigger.outputs.deployed }}
 
-    steps:
-      - name: Verify Render is configured
-        run: |
-          if [ -z "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
-            echo "::error::RENDER_DEPLOY_HOOK_URL secret is not set."
-            echo "Configure Render and add the deploy hook URL as a GitHub secret before running this workflow."
-            exit 1
-          fi
-          echo "Render deploy hook is configured."
-
-      - name: Trigger Render Deploy
-        id: trigger
-        run: |
-          echo "Triggering Render deploy..."
-          if curl -sf "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"; then
-            echo "Render deploy triggered successfully."
-            echo "deployed=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "::error::Render deploy hook request failed."
-            exit 1
-          fi
-
-      - name: Poll Worker Health (10s intervals, 5min timeout)
-        run: |
-          echo "Waiting for worker to become healthy..."
-          TIMEOUT=300
-          INTERVAL=10
-          ELAPSED=0
-
-          # Initial grace period for Render to start building
-          echo "Grace period: waiting 30s for Render build to start..."
-          sleep 30
-          ELAPSED=30
-
-          while [ $ELAPSED -lt $TIMEOUT ]; do
-            STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.WORKER_HEALTH_URL }}" 2>/dev/null || echo "000")
-
-            if [ "$STATUS" = "200" ]; then
-              echo "Worker is healthy! (HTTP $STATUS after ${ELAPSED}s)"
-              HEALTH=$(curl -sf "${{ env.WORKER_HEALTH_URL }}" 2>/dev/null || echo "{}")
-              echo "Health response: $HEALTH"
-              exit 0
-            fi
-
-            echo "  Attempt at ${ELAPSED}s: HTTP $STATUS — retrying in ${INTERVAL}s..."
-            sleep $INTERVAL
-            ELAPSED=$((ELAPSED + INTERVAL))
-          done
-
-          echo "::error::Worker health check timed out after ${TIMEOUT}s"
-          exit 1
-
-  # Step 3: Verify all services are live
-  verify:
-    name: Verify All Services
-    needs: deploy-worker
-    if: needs.deploy-worker.outputs.deployed == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-
-    steps:
-      - name: Verify Worker (api.viyo.new)
-        run: |
-          STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.WORKER_HEALTH_URL }}" 2>/dev/null || echo "000")
-          if [ "$STATUS" = "200" ]; then
-            echo "✓ Worker: HTTP $STATUS"
-          else
-            echo "✗ Worker: HTTP $STATUS"
-            exit 1
-          fi
-
-      - name: Verify Web App (app.viyo.new)
-        run: |
-          STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.WEB_URL }}" 2>/dev/null || echo "000")
-          if [ "$STATUS" = "200" ] || [ "$STATUS" = "304" ]; then
-            echo "✓ Web App: HTTP $STATUS"
-          else
-            echo "::warning::Web App returned HTTP $STATUS — may not be deployed yet"
-          fi
-
-      - name: Verify Admin App (admin.viyo.new)
-        run: |
-          STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.ADMIN_URL }}" 2>/dev/null || echo "000")
-          if [ "$STATUS" = "200" ] || [ "$STATUS" = "304" ]; then
-            echo "✓ Admin App: HTTP $STATUS"
-          else
-            echo "::warning::Admin App returned HTTP $STATUS — may not be deployed yet"
-          fi
-
-      - name: Summary
-        run: |
-          echo "## Deployment Verification" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Service | URL | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|---------|-----|--------|" >> $GITHUB_STEP_SUMMARY
-
-          WORKER=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.WORKER_HEALTH_URL }}" 2>/dev/null || echo "000")
-          WEB=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.WEB_URL }}" 2>/dev/null || echo "000")
-          ADMIN=$(curl -sf -o /dev/null -w "%{http_code}" "${{ env.ADMIN_URL }}" 2>/dev/null || echo "000")
-
-          echo "| Worker | ${{ env.WORKER_HEALTH_URL }} | HTTP $WORKER |" >> $GITHUB_STEP_SUMMARY
-          echo "| Web | ${{ env.WEB_URL }} | HTTP $WEB |" >> $GITHUB_STEP_SUMMARY
-          echo "| Admin | ${{ env.ADMIN_URL }} | HTTP $ADMIN |" >> $GITHUB_STEP_SUMMARY
+                                                                      steps:
+                                                                            - name: Verify Render is configured
+                                                                                    run: |
+                                                                                              if [ -z "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
+                                                                                                
