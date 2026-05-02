@@ -302,3 +302,24 @@
 
 - [x] Assess whether /viyo-development-protocol-v2 needs a staging-environment update after the new staging setup.
 - [x] If a protocol update is needed, follow the skill update workflow and prepare the proposed change for PO review before editing the skill.
+
+## VIYO Development Protocol Update Inspection — 2026-05-02
+
+- [x] Inspect updated `/viyo-development-protocol-v2` for staging branch/domain isolation, branch-aware push, pipeline polling, and Airtable fallback completeness. Findings saved to `/home/ubuntu/VIYO_branch_lock/viyo_protocol_updated_inspection_2026-05-02.md`.
+- [x] Adopt the updated `/viyo-development-protocol-v2` going forward and assess whether its staging safeguards create any avoidable development-speed concerns. Use going forward with speed override for Direct Answer/Q&A and Ops/Browser tasks; Code Build tasks retain full staging isolation and pre-flight gates.
+
+## VIYO Development Protocol v2.9.11 Review — 2026-05-02
+
+- [x] Review and ingest updated `/viyo-development-protocol-v2` v2.9.11, confirming Architecture Broadcast idempotency, KB-ingestion branch exemption, exact-SHA pipeline polling, and Airtable 404 fallback. Ingestion report saved to `/home/ubuntu/VIYO_branch_lock/viyo_protocol_v2_9_11_ingestion_review_2026-05-02.md`.
+
+## Post-T93 Repair and Build Tracker Backfill — 2026-05-02
+
+- [x] Re-ingest `/viyo-development-protocol-v2` v2.9.11 before acting on the approved post-T93 instructions.
+- [x] Run Architecture Broadcast pre-flight for pending builder ingestion before reading Taskmaster or executing implementation/backfill work. Query returned zero `Pending Builder Ingestion` records in `tblyZdtFjTYIwSzBT`.
+- [x] Resolve the GitHub Actions HTTP 403 pipeline-observability gap for commit `e449c7e`, or formally log and escalate it as an infrastructure blocker. Formal blocker note saved at `/home/ubuntu/VIYO_branch_lock/t93_github_actions_pipeline_observability_infrastructure_blocker_2026-05-02.md`; both `GH_TOKEN` and the persisted `viyo-ai` CLI token return HTTP 403 for exact-SHA Actions run polling.
+- [ ] Re-poll the exact `e449c7e` commit run after PO grants Actions-read/workflow-capable GitHub token access, then append the result to T93 evidence.
+- [x] Create Taskmaster composite tasks T99–T114 exactly from the approved Build Tracker backfill proposal. Deterministic creation result saved to `/home/ubuntu/VIYO_branch_lock/taskmaster_t99_t114_creation_result_2026-05-02.json`.
+- [x] Verify the T99–T114 dependency graph, including the explicitly required downstream dependency relationships. Verification evidence saved to `/home/ubuntu/VIYO_branch_lock/taskmaster_t99_t114_verification_2026-05-02.txt`; `task-master validate-dependencies` returned no invalid dependencies across 101 tasks and 23 subtasks.
+- [x] Batch-update 521 Airtable Build Tracker records in groups of 10 or fewer, changing only the `Taskmaster Task ID` field. Created 60 update batches from `/home/ubuntu/VIYO_branch_lock/airtable_t99_t114_update_manifest_2026-05-02.json`; output validation at `/home/ubuntu/VIYO_branch_lock/airtable_t99_t114_update_output_validation_2026-05-02.json` confirms 60 result files, 521 updated records, and zero malformed update outputs.
+- [x] Verify Build Tracker records with non-empty `Taskmaster Task ID` equals 558 after backfill. Airtable post-update query saved at `/home/ubuntu/VIYO_branch_lock/build_tracker_nonempty_taskmaster_ids_post_update_2026-05-02.json`; verification summary saved at `/home/ubuntu/VIYO_branch_lock/build_tracker_taskmaster_coverage_verification_2026-05-02.json` confirms 558 total non-empty Taskmaster IDs, exact T99–T114 counts, and zero non-Done records missing Taskmaster IDs via `/home/ubuntu/VIYO_branch_lock/build_tracker_missing_non_done_taskmaster_ids_post_update_2026-05-02.json`.
+- [ ] Deliver the backfill completion report and await PM acknowledgment before starting PIA-3 / T94.
