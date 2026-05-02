@@ -1449,23 +1449,129 @@
         "testStrategy": "1. Perform a thorough review of R32 Deployment Operations documentation to confirm staging domains match those specified in Task 90.\n2. Validate that Doc11 explicitly states the synthetic-only staging data policy and that no modifications have altered this policy.\n3. Conduct a peer review of all updated documentation to ensure accuracy and completeness.\n4. Confirm through deployment environment checks that production domains and configurations remain unchanged.\n5. Verify that all documentation changes are committed and published in the appropriate repositories or knowledge bases.\n6. Obtain sign-off from the PM/Architect responsible for Task 90 to confirm alignment and completeness.",
         "status": "pending",
         "dependencies": [
-          90
+          "90"
         ],
         "priority": "medium",
         "subtasks": []
+      },
+      {
+        "id": 92,
+        "title": "PIA-1: R36/R37/R38 Database and Schema Foundation",
+        "description": "Foundation / Phase 0 PIA database work extending T45. Add HYVE consent columns, HYVE anonymized pattern-performance storage, MAAX brand memory preferences, and SYPHON campaign-performance storage with tenant-safe brand/workspace scope.",
+        "details": "Approved foundational architecture update. Scope: add brands.hyve_opt_in and brands.hyve_opt_in_timestamp; create hyve_pattern_performance with prohibited-data controls; create brand_preferences for MAAX brand-scoped preference memory; create campaign_performance for SYPHON aggregated campaign metrics; wire Drizzle exports, indexes, RLS, constraints, and migration tests. Build Tracker Phase: Phase 0. Acceptance: migrations pass; schema exports compile; HYVE table cannot represent PII, raw creative, brand identity, or customer identifiers; MAAX and SYPHON tables are brand/workspace scoped.\n<info added on 2026-05-02T14:12:52.334Z>\nPhase 3 implementation started. First migration file created at packages/db/drizzle/0009_pia1_proprietary_intelligence_foundation.sql. Drizzle schema file added at packages/db/src/schema/proprietary-intelligence.ts and exported via packages/db/src/schema/index.ts. Local database package validation passed: pnpm --filter @viyo/db type-check exited 0, evidence at /home/ubuntu/VIYO_branch_lock/pia1_db_typecheck_fresh_2026-05-02.txt. Task remains in-progress until migration is applied against the target database and remaining acceptance checks are completed.\n</info added on 2026-05-02T14:12:52.334Z>",
+        "testStrategy": "",
+        "status": "in-progress",
+        "dependencies": [
+          "45"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-05-02T14:11:20.879Z"
+      },
+      {
+        "id": 93,
+        "title": "PIA-2: PIA Shared Contracts and Privacy Gates",
+        "description": "Foundation / Phase 0 shared contracts and privacy gates for HYVE, MAAX, and SYPHON payloads after PIA-1 schema exists.",
+        "details": "Approved foundational architecture update. Scope: add typed contracts/services for HYVE consent, MAAX preference writes, SYPHON campaign metric payloads, sanitizers, and prohibited-data enforcement. Build Tracker Phase: Phase 0. Acceptance: contract tests reject prohibited HYVE payloads; MAAX writes require brand_id/workspace scope; SYPHON payloads remain aggregated; naming registry vocabulary is preserved.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "92"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-05-02T13:49:46.498572+00:00"
+      },
+      {
+        "id": 94,
+        "title": "PIA-3: HYVE Admin Settings Consent Surface",
+        "description": "Foundation / Phase 0 settings-only HYVE consent surface with default-off behavior and locked privacy/value-exchange copy.",
+        "details": "Approved foundational architecture update. Scope: add Admin Settings > Intelligence & Privacy with Join the HYVE Intelligence Network toggle; default off; timestamp update semantics; copy must preserve no raw creative, no customer lists, no brand identity, and anonymized pattern-performance claims. This is not a HYVE dashboard. Build Tracker Phase: Phase 0. Acceptance: UI exposes only settings toggle; disabled by default; copy aligns to R36 and handoff brief.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "92",
+          "93"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-05-02T13:49:46.498576+00:00"
+      },
+      {
+        "id": 95,
+        "title": "PIA-4: SYPHON Daily Sync Foundation",
+        "description": "Foundation / Phase 0 SYPHON daily sync scaffold for aggregated ESP campaign metrics with safe backoff and credential reuse.",
+        "details": "Approved foundational architecture update. Scope: register Inngest 02:00 daily job; iterate connected brands; reuse ESP credential service; pull or dry-run aggregated campaign metrics; persist to campaign_performance; implement exponential backoff and Retry-After handling. May reuse T48 webhook/job patterns, but SYPHON domain behavior remains PIA-owned. Build Tracker Phase: Phase 0. Acceptance: worker tests cover no credentials, invalid credentials, provider rate limit, aggregated persistence, and no customer-level PII import.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "92",
+          "93",
+          "48"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-05-02T13:49:46.498579+00:00"
+      },
+      {
+        "id": 96,
+        "title": "PIA-5: MAAX Real-Path Signal Capture Foundation",
+        "description": "Foundation / Phase 0 MAAX signal-capture foundation on active/testable VVOW and PULZE user action paths only.",
+        "details": "Approved foundational architecture update. Scope: define insertion service and wire only active/testable VVOW/PULZE actions for accept, reject, edit, send, selected generation, and approved asset signals. No stub telemetry. Build Tracker Phase: Phase 0. Acceptance: only real action paths write preferences; each write includes brand_id, studio_type, action_type, optional generation_id, context payload, edit delta, and recorded timestamp.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "92",
+          "93"
+        ],
+        "priority": "medium",
+        "subtasks": [],
+        "updatedAt": "2026-05-02T13:49:46.498581+00:00"
+      },
+      {
+        "id": 97,
+        "title": "PIA-6: HYVE Anonymization Insertion Path",
+        "description": "Foundation / Phase 0 HYVE anonymization insertion path that transforms eligible MAAX/SYPHON aggregate metrics only for HYVE opted-in brands.",
+        "details": "Approved foundational architecture update. Scope: transform eligible MAAX/SYPHON aggregate metrics into hyve_pattern_performance only when the source brand has opted into HYVE. Build Tracker Phase: Phase 0. Acceptance: opted-out brands produce no HYVE rows; inserted payloads contain only anonymized vertical, revenue band, pattern, metric, audience segment, and recorded timestamp.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "92",
+          "93",
+          "94",
+          "95",
+          "96"
+        ],
+        "priority": "medium",
+        "subtasks": [],
+        "updatedAt": "2026-05-02T13:49:46.498584+00:00"
+      },
+      {
+        "id": 98,
+        "title": "PIA-7: Deferred Intelligence Surfacing Backlog",
+        "description": "Future/deferred PIA dependency holder for intelligence surfacing and adaptive-learning features not approved for immediate Phase 0 implementation.",
+        "details": "Approved foundational architecture update. Scope: represent HYVE Proven badges, SCOUTT MAAX weighting, FFORGE LoRA trigger, active LoRA reference, MAAX reset/archive lifecycle, and LENZ dashboard surfacing as deferred downstream dependencies. Build Tracker Phase: Future. Acceptance: no implementation before active surfaces and data history exist; downstream homes are amended rather than duplicating foundation tasks.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          "96",
+          "97"
+        ],
+        "priority": "medium",
+        "subtasks": [],
+        "updatedAt": "2026-05-02T13:49:46.498587+00:00"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-04-30T04:52:16.775Z",
-      "taskCount": 77,
+      "lastModified": "2026-05-02T14:11:20.884Z",
+      "taskCount": 85,
       "completedCount": 19,
       "tags": [
         "master"
       ],
-      "created": "2026-04-30T05:01:25.892Z",
-      "description": "Tasks for master context",
-      "updated": "2026-04-30T14:05:28.705Z"
+      "created": "2026-05-02T14:12:49.046Z",
+      "description": "Tasks for master context"
     }
   }
 }

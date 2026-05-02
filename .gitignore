@@ -66,3 +66,4 @@ coverage/
 docs/foundation/VIYO_Final_Doc9_*.md
 docs/research_specs/R17_*.md
 docs/research_specs/VIYO_ARCHITECTURE_LOCK_*.md
+.env*.local

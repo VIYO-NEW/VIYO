@@ -116,3 +116,110 @@
 - [x] Validate the renamed `@viyo/main` app without touching existing apps.
 - [x] Commit and push the rename to `origin/staging`.
 - [x] Report the staging commit hash.
+
+## MAX viyo-main Deployment Instructions Intake — 2026-05-02
+
+- [ ] Review `/home/ubuntu/upload/MAX_viyo-main_Deployment_Instructions.pdf` before any further push.
+- [ ] Extract actionable repository changes that apply to `apps/main`.
+- [ ] Implement only the required `apps/main` and deployment-reference updates.
+- [ ] Validate `@viyo/main` after applying the PDF instructions.
+- [ ] Commit and push only after validation, if code/config changes are required.
+- [ ] Report the resulting commit status and hash.
+
+## Vercel Staging Deployment Execution — 2026-05-02
+
+- [x] Re-read `MAX_viyo-main_Deployment_Instructions.pdf` and follow Steps 1 through 7 only.
+- [x] Complete Vercel login or obtain authenticated CLI access for the correct VIYO team.
+- [x] Create or configure the Vercel project for `apps/main` before any further code changes.
+- [x] Wire only `staging.viyo.new` to the new Vercel project and do not touch `viyo.new` or `www.viyo.new` before PO approval.
+- [x] Configure the Vercel project to deploy from the `staging` branch using the current staged code.
+- [x] Confirm `staging.viyo.new` returns HTTP 200 with the placeholder page.
+- [x] Capture and provide a screenshot of the live staging placeholder.
+- [x] Disable Vercel Authentication for the `viyo-main` project only after PO-confirmed approval.
+- [x] Verify `https://staging.viyo.new/` returns unauthenticated `HTTP 200` without Vercel Authentication.
+- [x] Capture a fresh screenshot of the live `staging.viyo.new` page.
+- [x] Report Step 7 evidence back for PO approval and confirm production domains were not modified.
+
+## Vercel Step 8 production cutover — 2026-05-02
+
+- [x] Confirm the approved staging Coming Soon state is ready to deploy to `main`.
+- [x] Deploy the approved Coming Soon state to the production/main target for `viyo-main`.
+- [x] Switch `viyo.new` to the `viyo-main` Vercel project after PO approval.
+- [x] Switch `www.viyo.new` to the `viyo-main` Vercel project after PO approval.
+- [x] Verify `https://viyo.new/` returns unauthenticated `HTTP 200` with the Coming Soon page.
+- [x] Verify `https://www.viyo.new/` returns unauthenticated `HTTP 200` with the Coming Soon page.
+- [x] Capture production evidence and report final Step 8 status.
+
+## Proprietary Intelligence Architecture Implementation Intake — 2026-05-02
+
+- [ ] Treat the attached Proprietary Intelligence Architecture handoff as PO-approved and locked; do not write or reopen a Phase 2 architecture plan.
+- [ ] Read the full `Execution_Brief_Proprietary_Intelligence_Architecture_Handoff.docx` before creating or modifying Taskmaster tasks.
+- [ ] Extract and read every linked Google Drive source document marked New or Changed in full, with no partial intake or shortcut summarization.
+- [ ] Record a complete source-ingestion ledger covering the handoff and every linked New or Changed document.
+- [ ] Extract complete implementation requirements, acceptance criteria, dependencies, and open questions from the full source set.
+- [ ] Ask the PM for clarification before proceeding on any ambiguous or conflicting requirement.
+- [ ] Create or update Taskmaster tasks only after full source ingestion, with full requirement detail and the most appropriate step-in-time dependency order.
+- [ ] Create matching Airtable Build Tracker tasks and cross-reference them with the corresponding Taskmaster task IDs.
+- [ ] Begin implementation at Phase 3 only after Taskmaster and Airtable intake are complete and dependency order is verified.
+
+### PM Safeguard Update — Existing Task Wiring, QA, and Final Vision Fit — 2026-05-02
+
+- [ ] Before creating any new feature task, search existing Taskmaster and Airtable Build Tracker records and wire the feature to the existing task where a valid task home exists.
+- [ ] Do not create duplicate Taskmaster or Airtable tasks for work already covered by an existing approved task; update the existing task with full requirements instead.
+- [ ] Add explicit QA coverage and acceptance evidence requirements to every implementation task before development starts.
+- [ ] Confirm each implementation item fits the approved final VIYO vision from the locked architecture and linked source documents before coding.
+- [ ] Report back to the PM before implementation if any requirement lacks a clear task home, dependency order, QA path, or final-vision fit.
+
+### PM Clarification — Code and Feature Wiring Safeguard — 2026-05-02
+
+- [ ] When writing code or feature wiring, connect each change to the correct existing task, architectural layer, dependency path, and downstream integration instead of creating isolated or non-functional implementation fragments.
+- [ ] Before coding, define QA evidence that proves the wired feature path works as part of the final VIYO vision, not merely as a local file-level change.
+- [ ] Stop and report back before implementation if a code path, feature owner, dependency, or QA proof cannot be mapped cleanly to the approved architecture.
+
+## Architecture Broadcast v7.1 Verification Pause — 2026-05-02
+
+- [ ] Pause Proprietary Intelligence Architecture implementation until v7.1 Architecture Broadcast ingestion is confirmed.
+- [ ] Verify whether `FOUNDATIONAL UPDATE: PRD V6 Addendum + Architecture Lock V7 + R32-R37` was fully ingested.
+- [ ] Verify whether the v7.1 Architecture Broadcast was applied to the Taskmaster task graph, not merely proposed as a diff.
+- [ ] Inspect Airtable record `rec82zbIbRr7WQP9c` and update its status from `Diff Proposed` to `Executed` only if ingestion and task-graph application are verified.
+- [ ] Verify whether the Branch Protection Gate CI workflow associated with Airtable record `recMKhZ5zphjd3wGQ` is already committed.
+- [ ] Inspect Airtable record `recMKhZ5zphjd3wGQ` and update its status to `Executed` only if the CI workflow is committed and verified.
+- [ ] Report confirmation status to the PM before resuming Proprietary Intelligence Architecture implementation.
+
+### Architecture Broadcast Status Convention Confirmation — 2026-05-02
+
+- [ ] Treat `Executed` in the Architecture Broadcasts table as meaning the broadcast was received, source documents were read, the diff was applied to the task graph or active source-of-truth gate, and the broadcast is closed.
+- [ ] Do not interpret Architecture Broadcast `Executed` as downstream feature implementation completion; downstream work remains tracked separately in Taskmaster and the Build Tracker.
+- [ ] Update Architecture Broadcast record `rec82zbIbRr7WQP9c` to `Executed` based on PM-confirmed status semantics and verified v7.1 ingestion/source-of-truth evidence.
+- [ ] Update Branch Protection Gate record `recMKhZ5zphjd3wGQ` to `Executed` only because CI workflow commit evidence has already been verified.
+- [ ] Capture after-update Airtable evidence for both records and report tracker-update status before resuming Proprietary Intelligence Architecture implementation.
+
+### Duplicate-Prevention Gate Before Resuming Proprietary Intelligence Architecture — 2026-05-02
+
+- [ ] Before creating any Taskmaster task for the Proprietary Intelligence Architecture handoff, confirm whether the requirement is already represented in the active Taskmaster graph.
+- [ ] Before creating any Airtable Build Tracker record, confirm whether a matching Build Tracker feature record already exists or can be cross-referenced from an existing record.
+- [ ] If Taskmaster already ingested the requirement, do not create a duplicate Taskmaster or Airtable record; update the existing task details, acceptance criteria, QA evidence, or cross-reference fields instead.
+- [ ] Preserve the distinction between Architecture Broadcast `Executed` status and downstream implementation completion; use Build Tracker and Taskmaster for downstream execution state.
+- [ ] After Architecture Broadcast status cleanup is complete, resume the Proprietary Intelligence Architecture Handoff from the paused source-ingestion and requirement-mapping point.
+
+### PIA Handoff Resume — 2026-05-02
+
+- [x] Re-read VIYO protocol, Taskmaster, PRD/product-architecture, Google Workspace, and resilience skills before continuing PIA handoff work.
+- [x] Re-ingest the approved R36 HYVE, R37 MAAX, R38 SYPHON, Architecture Lock V8, Naming Registry, PIA Strategy, and Execution Brief source files from `/home/ubuntu/VIYO_branch_lock/pia_source_docs_2026-05-02/`.
+- [x] Extract R36/R37/R38 requirements into a source-cited requirement register.
+- [x] Map each requirement to an existing Taskmaster task where a valid home exists and mark true gaps only after checking all active tasks.
+- [x] Prepare duplicate-safe Taskmaster mutation plan without applying unapproved task graph changes.
+- [x] Prepare Airtable Build Tracker sync plan without creating or updating R36/R37/R38 records until approval boundary is satisfied.
+- [x] Stop for PM/Architect approval or clarification before Phase 3 implementation mutations.
+
+
+### Approved PIA Foundational Mutation and PIA-1 Implementation — 2026-05-02
+
+- [x] Correct PIA planning artifacts so PIA-1 through PIA-6 are classified as Foundation / Phase 0 and PIA-7 is classified as Future/Deferred.
+- [x] Confirm the six Google Drive source documents from the execution brief by exact name and record that each was read in full.
+- [x] Run a final live duplicate check in Taskmaster and Airtable before creating PIA tasks or Build Tracker records.
+- [x] Create approved PIA-1 through PIA-7 Taskmaster chain with dependency order preserved and no duplicate R32/Studio foundation work.
+- [x] Create matching Airtable Build Tracker records with Phase = `Phase 0` for PIA-1 through PIA-6 and Phase = `Future` for PIA-7.
+- [x] Begin Phase 3 implementation with PIA-1 database migration only after Taskmaster and Airtable intake are synced.
+- [x] Validate PIA-1 migration and Drizzle schema changes with database package type-check evidence.
+- [x] Report assigned Taskmaster IDs, Airtable record IDs with correct phase classification, and the first migration file path.
