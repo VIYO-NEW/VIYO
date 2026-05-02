@@ -1,0 +1,236 @@
+/*
+ * VIYO Marketing — Global Styles
+ * Purpose: Styles the small static Coming Soon placeholder for viyo.new.
+ * Spec: White/light platform theme, no external fonts/CDN assets, ADA-conscious contrast and focus states.
+ * Wiring Layer: Frontend presentation only for the standalone viyo-marketing Vercel project.
+ * Design Reminder: Editorial Swiss-modern minimalism with warm white space, precise typography, and restrained ink/accent contrast.
+ */
+:root {
+  color: #16201b;
+  background: #f8f6f1;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --paper: #f8f6f1;
+  --paper-elevated: #fffdf8;
+  --ink: #16201b;
+  --muted: #5c655f;
+  --line: #d8d1c4;
+  --accent: #234236;
+  --accent-strong: #13251e;
+  --focus: #a15c1f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--paper);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 15% 12%, rgba(35, 66, 54, 0.1), transparent 28rem),
+    linear-gradient(135deg, rgba(255, 253, 248, 0.9) 0%, rgba(248, 246, 241, 1) 58%);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.page-shell {
+  display: grid;
+  min-height: 100vh;
+  padding: clamp(1rem, 4vw, 3.5rem);
+  place-items: stretch;
+}
+
+.hero-panel {
+  position: relative;
+  display: grid;
+  width: min(100%, 1120px);
+  min-height: calc(100vh - clamp(2rem, 8vw, 7rem));
+  margin: auto;
+  padding: clamp(1.5rem, 5vw, 5rem);
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: space-between;
+  gap: clamp(2rem, 7vw, 5rem);
+  border: 1px solid rgba(22, 32, 27, 0.14);
+  border-radius: 2px;
+  background:
+    linear-gradient(90deg, rgba(216, 209, 196, 0.5) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(216, 209, 196, 0.42) 1px, transparent 1px),
+    var(--paper-elevated);
+  background-size: 5.5rem 5.5rem;
+  box-shadow: 0 2.5rem 6rem rgba(22, 32, 27, 0.08);
+}
+
+.hero-panel::after {
+  position: absolute;
+  right: clamp(1rem, 4vw, 4rem);
+  bottom: clamp(1rem, 4vw, 4rem);
+  width: min(34vw, 18rem);
+  height: min(34vw, 18rem);
+  content: "";
+  border: 1px solid rgba(35, 66, 54, 0.22);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.wordmark {
+  z-index: 1;
+  width: fit-content;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  color: var(--ink);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 800;
+  letter-spacing: 0.34em;
+  line-height: 1;
+}
+
+.hero-copy {
+  z-index: 1;
+  max-width: 50rem;
+}
+
+.eyebrow {
+  max-width: 34rem;
+  margin: 0 0 1.1rem;
+  color: var(--accent);
+  font-size: clamp(0.85rem, 1.3vw, 0.98rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+h1 {
+  max-width: 13ch;
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.4rem, 12vw, 8.6rem);
+  font-weight: 500;
+  letter-spacing: -0.075em;
+  line-height: 0.86;
+}
+
+.subline {
+  max-width: 33rem;
+  margin: clamp(1.25rem, 3vw, 2rem) 0 0;
+  color: var(--muted);
+  font-size: clamp(1.12rem, 2.2vw, 1.45rem);
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.notify-form {
+  z-index: 1;
+  display: grid;
+  max-width: 44rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.75rem;
+}
+
+.input-group {
+  display: grid;
+  gap: 0.45rem;
+}
+
+label {
+  color: var(--ink);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+input {
+  width: 100%;
+  min-height: 3.4rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: rgba(255, 253, 248, 0.92);
+  color: var(--ink);
+}
+
+input::placeholder {
+  color: #77736b;
+}
+
+button {
+  min-height: 3.4rem;
+  padding: 0.95rem 1.25rem;
+  border: 1px solid var(--accent-strong);
+  border-radius: 0;
+  background: var(--accent);
+  color: #fffdf8;
+  cursor: pointer;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  transition:
+    background 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+button:hover {
+  background: var(--accent-strong);
+  box-shadow: 0 0.9rem 1.8rem rgba(19, 37, 30, 0.14);
+  transform: translateY(-1px);
+}
+
+.form-note {
+  z-index: 1;
+  max-width: 42rem;
+  margin: -1.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .page-shell {
+    padding: 0;
+  }
+
+  .hero-panel {
+    min-height: 100vh;
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .notify-form {
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .form-note {
+    margin-top: -1rem;
+  }
+}

@@ -59,6 +59,14 @@
 
 ## In Review
 
+## Main Coming Soon Site — 2026-05-02
+
+- [x] Build `apps/main` as a minimal static Vite React app on the `staging` branch only.
+- [x] Keep the page self-contained with no backend calls, no external fonts, and no CDN dependencies.
+- [x] Validate local type-check/build for `@viyo/main` without redeploying or editing `apps/web` or `apps/admin`.
+- [x] Commit and push staging-only changes for PO review.
+- [x] Stop before production domain changes until explicit PO approval.
+
 ## Completed
 
 - [x] T46 — Composite Art Director Routing Suite (T21, T22, T23) — DONE 2026-04-29
@@ -100,3 +108,11 @@
   - [x] Image Studio surfaces honest persistence state and Brand Vault availability metadata.
   - [x] Validation passed: targeted Prettier, `pnpm type-check`, `pnpm lint`, `pnpm test`, and `pnpm build`.
   - [x] Taskmaster Task 72 and subtasks marked done; Airtable Build Tracker record `T32-AUTO-SAVE-VAULT` verified Done.
+
+## Marketing App Rename — 2026-05-02
+
+- [x] Confirm the renamed placeholder app exists at `apps/main` on the `staging` branch.
+- [x] Update package and deployment references from marketing path/name to main path/name.
+- [x] Validate the renamed `@viyo/main` app without touching existing apps.
+- [x] Commit and push the rename to `origin/staging`.
+- [x] Report the staging commit hash.
