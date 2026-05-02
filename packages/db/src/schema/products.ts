@@ -18,8 +18,8 @@ import {
   foreignKey,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
-import { brands } from './collaboration';
-import { workspaces } from './identity';
+import { brands } from './collaboration.js';
+import { workspaces } from './identity.js';
 
 /* ──────────────────────────────────────────────
  * VIYO_PRODUCTS — Scraped e-commerce product data

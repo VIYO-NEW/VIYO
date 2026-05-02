@@ -14,7 +14,7 @@ import {
   timestamp,
   index,
 } from 'drizzle-orm/pg-core';
-import { workspaces } from './identity';
+import { workspaces } from './identity.js';
 
 export const WEBHOOK_EVENT_CATALOG = [
   'email.generation.started',

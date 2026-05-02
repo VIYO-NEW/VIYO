@@ -13,8 +13,8 @@ import {
   integer,
   timestamp,
 } from 'drizzle-orm/pg-core';
-import { users } from './identity';
-import { imagePromptPatterns } from './image-intelligence';
+import { users } from './identity.js';
+import { imagePromptPatterns } from './image-intelligence.js';
 
 /* ──────────────────────────────────────────────
  * RLHF_VOTES — Human feedback on generated images

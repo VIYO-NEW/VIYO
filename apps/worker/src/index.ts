@@ -52,8 +52,13 @@ app.use(
     origin: [
       'http://localhost:5173', // apps/web dev
       'http://localhost:5174', // apps/admin dev
-      'https://app.viyo.new',
-      'https://admin.viyo.new',
+      'https://viyo.new', // public production website
+      'https://www.viyo.new', // public production website alias
+      'https://staging.viyo.new', // public staging website
+      'https://app.viyo.new', // logged-in Brands production app
+      'https://app.staging.viyo.new', // logged-in Brands staging app
+      'https://admin.viyo.new', // production admin portal
+      'https://admin.staging.viyo.new', // staging admin portal
     ],
     allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization', 'X-Request-Id'],

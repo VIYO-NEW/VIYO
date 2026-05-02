@@ -20,7 +20,8 @@
     "clean": "rm -rf dist",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "seed:staging": "node scripts/seed-staging.mjs"
   },
   "dependencies": {
     "@viyo/shared": "workspace:*",
@@ -28,6 +29,7 @@
     "postgres": "^3.4.9"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
     "drizzle-kit": "^0.28.1",
     "typescript": "^5.7.0",
     "vitest": "^2.1.0"
