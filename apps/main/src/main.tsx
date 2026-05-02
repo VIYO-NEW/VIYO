@@ -13,7 +13,7 @@ function handlePlaceholderSubmit(event: FormEvent<HTMLFormElement>) {
   event.preventDefault();
 }
 
-/** Renders the static VIYO Coming Soon marketing placeholder. */
+/** Renders the static VIYO Coming Soon main placeholder. */
 function MarketingComingSoon() {
   return (
     <main className="page-shell" aria-labelledby="coming-soon-title">

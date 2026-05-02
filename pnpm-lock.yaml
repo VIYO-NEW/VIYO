@@ -98,7 +98,7 @@ importers:
         specifier: ^2.1.0
         version: 2.1.9(@types/node@22.19.17)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.8.3)
 
-  apps/marketing:
+  apps/main:
     dependencies:
       react:
         specifier: ^18.3.0
