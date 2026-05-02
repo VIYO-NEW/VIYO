@@ -265,3 +265,40 @@
 - [x] Apply `packages/db/drizzle/0009_pia1_proprietary_intelligence_foundation.sql` only to the VIYO staging Supabase project.
 - [x] Verify staging tables, columns, constraints, indexes, RLS policies, and default-off HYVE consent behavior after migration.
 - [x] Record redacted staging verification evidence and report whether production remained untouched.
+
+## PIA-2 / T93 Shared Contracts and Privacy Gates — 2026-05-02
+
+- [x] Re-read VIYO development protocol, quality gate guidance, and R36/R37/R38 source requirements before writing code.
+- [x] Inspect the PIA-1 database migration constraints and existing shared schema conventions before creating `packages/shared/src/schemas/pia.ts`.
+- [x] Implement Brand Preferences Zod schemas and inferred TypeScript types matching the DB action_type and studio_type constraints.
+- [x] Implement Campaign Performance schemas enforcing nonnegative metric and revenue values plus explicit metadata key prohibitions.
+- [x] Implement HYVE Pattern Performance schemas enforcing explicit metadata key prohibitions for brand, workspace, customer, prompt, creative, and raw image identifiers.
+- [x] Implement `packages/worker/src/middleware/hyve.ts` as Hono middleware that rejects non-opted-in brands with `HYVE_OPT_IN_REQUIRED` and HTTP 403.
+- [x] Add a service-role guard for writes to `hyve_pattern_performance` so runtime behavior matches the service-role-only RLS policy.
+- [x] Wire middleware to the relevant HYVE / Intelligence Network endpoints without altering production data or production deployment settings.
+- [x] Run type-checks, focused contract validation, and runtime-style privacy gate validation showing a non-opted-in brand is blocked.
+- [x] Update Taskmaster T93, Airtable Build Tracker, and this checklist with evidence.
+- [ ] Commit and push only validated T93 implementation/tracker changes, with secret scan evidence and no production migration.
+
+## Post-T93 Build Tracker Composite Task-ID Backfill — 2026-05-02
+
+- [ ] Start only after T93 shared contracts and privacy gates are completed, validated, committed, pushed, and reported.
+- [ ] Query Airtable Build Tracker base `appo5mNncCCzKcIRk`, table `tblIJUzJoCCjWXaMQ`, and pull all records missing `Taskmaster Task ID` where status is not `Done`.
+- [ ] Confirm the total record universe and missing-ID subset against the PO-stated 558-feature baseline before making mutations.
+- [ ] Group eligible records into logical composite Taskmaster tasks following established patterns such as T45 grouping T16–T20 and T46 grouping T21–T23.
+- [ ] Add new Taskmaster tasks with correct dependencies, priorities, and initial statuses, without marking any new task `in-progress` before PO approval.
+- [ ] Write each newly created Taskmaster Task ID back to every Airtable Build Tracker record included in its group.
+- [ ] Produce and report the full diff of new tasks, grouped Airtable records, dependencies, priorities, statuses, and record-to-task mappings for PO approval.
+
+## Hard Constraint — Architecture Broadcast Pre-Flight for MAX — 2026-05-02
+
+- [ ] Before any further T93 implementation work, query Airtable base `appo5mNncCCzKcIRk`, table `tblyZdtFjTYIwSzBT`, for records with status `Pending Builder Ingestion`.
+- [ ] For each pending broadcast, inspect `Builder Diff Output`; if populated, treat the broadcast as already ingested and update its status to `Executed` without re-processing.
+- [ ] For each pending broadcast with empty `Builder Diff Output`, inspect the Taskmaster graph for tasks described by `Affected Tasks`; if they already exist, update the broadcast status to `Executed` without re-processing.
+- [ ] For each pending broadcast not confirmed as previously ingested/actioned, process it fully, populate `Builder Diff Output`, and update status to `Diff Proposed` before returning to active T93 work.
+- [ ] Save Airtable and Taskmaster evidence showing the broadcast inbox is clear or already processed before resuming T93 source edits.
+
+## VIYO Development Protocol Staging Environment Assessment — 2026-05-02
+
+- [x] Assess whether /viyo-development-protocol-v2 needs a staging-environment update after the new staging setup.
+- [x] If a protocol update is needed, follow the skill update workflow and prepare the proposed change for PO review before editing the skill.
