@@ -438,3 +438,18 @@
 - [x] Commit and push the verified T103 admin state immediately after completion, without accumulating another completed task.
 - [x] Evidence: `/home/ubuntu/VIYO_branch_lock/t103_airtable_backfill_verification_2026-05-02.json` and `/home/ubuntu/VIYO_branch_lock/taskmaster_T103_status_done_2026-05-02.txt`.
 
+
+## T73 — T56 Editing Router Coverage Implementation — Active
+
+- [ ] Re-ingest `/viyo-development-protocol-v2`, authority-order guidance, Taskmaster workflow, quality gate, and post-build completion requirements before mutating T73 implementation or Taskmaster state.
+- [ ] Confirm Taskmaster T73 is unblocked by the PO decision: dependency T69 is done, and security-lane blockers T100/T101/T103 are done and pushed through commit `395b6c3`.
+- [ ] Read Taskmaster T73 details, test strategy, dependencies, and any existing subtasks before implementation.
+- [ ] Set T73 to `in-progress` only after dependency and protocol gates are documented.
+- [ ] Inspect the existing editing-router architecture, shared contracts, feature flags, and backend-supported capabilities before adding UI or route coverage.
+- [ ] Wire only the ten approved editing tools where backend-supported capability exists: Touch Edit, Text Edit, Layer Splitting, Background Swap, Object Removal, Canvas Expand, Upscale, Quick Edit, Style Transfer, and Material Swap.
+- [ ] Ensure no unwired placeholder buttons are exposed; tool availability must reflect shared contracts and feature flags.
+- [ ] Update `.github/workflows/deploy.yml` for the Pre-Alpha PO decision by uncommenting the `push: branches: [main]` trigger, while preserving manual `workflow_dispatch` support.
+- [ ] Run required validation gates for T73, including lint/type/build/test checks available in the repo, plus targeted inspection proving all ten tools are covered safely.
+- [ ] Complete Taskmaster and Airtable sync for T73 only after validation passes.
+- [ ] Commit and push the verified T73 implementation immediately after completion, following the tightened incremental commit rule.
+
