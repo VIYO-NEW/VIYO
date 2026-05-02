@@ -223,3 +223,45 @@
 - [x] Begin Phase 3 implementation with PIA-1 database migration only after Taskmaster and Airtable intake are synced.
 - [x] Validate PIA-1 migration and Drizzle schema changes with database package type-check evidence.
 - [x] Report assigned Taskmaster IDs, Airtable record IDs with correct phase classification, and the first migration file path.
+
+## PIA-1 Staging Migration Execution — 2026-05-02
+
+- [x] Re-read VIYO protocol and required database/migration guidance before touching the staging database.
+- [x] Confirm the configured project database connection resolves to staging and not production before running any migration command.
+- [x] Apply the PIA-1 migration only against the staging database using the configured repo/environment connection.
+- [x] Verify staging runtime tables, columns, indexes, constraints, RLS policies, and default-off HYVE consent behavior after migration.
+- [x] Record staging verification evidence in `VIYO_branch_lock` and keep production untouched until explicit approval.
+- [x] Report staging migration results, blockers if any, and whether PIA-1 can move beyond In Progress.
+
+## PIA-1 Supabase MCP Staging Migration Execution — 2026-05-02
+
+- [x] Reconfirm VIYO protocol and staging-only database safety requirements before using Supabase MCP mutation tools.
+- [ ] Run `manus-mcp-cli tool list --server supabase` and record available Supabase MCP tools.
+- [ ] Use Supabase MCP to list projects and identify the unambiguous VIYO staging Supabase project while excluding production.
+- [ ] Apply `packages/db/drizzle/0009_pia1_proprietary_intelligence_foundation.sql` directly to the staging Supabase project only.
+- [ ] Verify staging tables, columns, constraints, indexes, RLS policies, and default-off HYVE consent behavior through post-migration SQL checks.
+- [ ] Record staging migration and verification evidence under `VIYO_branch_lock`.
+- [ ] Report staging results and keep production untouched pending explicit approval.
+
+## PIA-1 Supabase MCP Retry — 2026-05-02
+
+- [ ] Retry `manus-mcp-cli tool list --server supabase` and preserve output evidence.
+- [ ] Retry read-only Supabase MCP project and organization discovery.
+- [ ] Identify the VIYO staging project unambiguously before any mutation; stop if authorization or project identity remains unclear.
+- [ ] Apply the PIA-1 migration SQL only to the VIYO staging Supabase project if staging is unambiguous.
+- [ ] Verify staging tables, columns, constraints, indexes, RLS policies, and default-off HYVE consent behavior.
+- [ ] Record retry outcome and report whether production remained untouched.
+
+## PIA-1 Connection-First Supabase MCP Retry — 2026-05-02
+
+- [x] Try Supabase MCP connection and read-only discovery before any migration, verification, tracker update, or mutation.
+- [x] Stop before mutation unless VIYO staging is identified unambiguously and production is excluded.
+- [x] Preserve the connection attempt output under `VIYO_branch_lock` and report whether Supabase MCP is authorized.
+
+## PIA-1 Token-Enabled Supabase Staging Migration — 2026-05-02
+
+- [x] Use the provided Supabase access token only for this staging migration session and do not persist it in evidence artifacts.
+- [x] Confirm `list_projects` succeeds and identify the VIYO staging project unambiguously while excluding production.
+- [x] Apply `packages/db/drizzle/0009_pia1_proprietary_intelligence_foundation.sql` only to the VIYO staging Supabase project.
+- [x] Verify staging tables, columns, constraints, indexes, RLS policies, and default-off HYVE consent behavior after migration.
+- [x] Record redacted staging verification evidence and report whether production remained untouched.
