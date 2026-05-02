@@ -12,7 +12,7 @@ import {
   timestamp,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
-import { workspaces } from './identity';
+import { workspaces } from './identity.js';
 
 /* ──────────────────────────────────────────────
  * TIMER_DEFINITIONS — Countdown timer configuration

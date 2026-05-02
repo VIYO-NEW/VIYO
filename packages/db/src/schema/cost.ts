@@ -12,7 +12,7 @@ import {
   timestamp,
   index,
 } from 'drizzle-orm/pg-core';
-import { workspaces } from './identity';
+import { workspaces } from './identity.js';
 
 /* ──────────────────────────────────────────────
  * TOKEN_USAGE_LOGS — AI provider cost tracking
