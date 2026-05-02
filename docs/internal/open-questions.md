@@ -128,3 +128,13 @@ Status: CLOSED — Product Owner approved Option A on 2026-04-28; T45 implemente
 ## 2026-04-28 — T46 Learning Loop Schema Gap Remains Deferred
 
 T46 worker routing can build a zero-shot fallback prompt when cache score is below threshold, but it does not create unapproved curator or learning-loop tables. Persisting new fallback learning events remains a deferred schema decision requiring PO approval.
+
+## GAP-2026-05-02-T56-SECURITY-BLOCKER — Cross-Sprint Security Tasks Block T56 Feature Work
+
+**Phase:** T56 Phase 1 preflight. **Category:** Security governance / sprint sequencing. **Blocking:** Yes. The T56 preflight Build Tracker query found 31 `Not Started` records with security/auth/MFA prefixes, including Phase 1 and Phase 2 records assigned to composite Taskmaster tasks `T100` and `T103`. Under the VIYO Cross-Sprint Security Blocker Rule, feature implementation must halt if any security-category task at or below the current build phase is not started.
+
+**Affected layers:** Sprint sequencing, Taskmaster governance, Build Tracker synchronization, CI/security posture, and any feature work that would proceed before the security lane is promoted or explicitly exempted by the PO.
+
+**Evidence:** Raw Airtable query is saved at `/home/ubuntu/VIYO_branch_lock/t56_build_tracker_security_query_raw_2026-05-02.json`; parsed summary is saved at `/home/ubuntu/VIYO_branch_lock/t56_security_blocker_summary_2026-05-02.json`; detailed blocker rows are saved at `/home/ubuntu/VIYO_branch_lock/t56_security_blocker_details_2026-05-02.json`.
+
+**Proposed plan:** Pause T56 implementation. PO should assign/promote the Phase 1/Phase 2 security lane first before T56 resumes. **Status:** DECIDED 2026-05-02 — PO accepted the T56 preflight halt, issued no override, and directed that security/auth/MFA blockers mapped to `T100` and `T103` must be resolved before T56 proceeds.
