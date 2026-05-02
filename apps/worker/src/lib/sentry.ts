@@ -17,7 +17,7 @@ import { SentryPropagator, SentrySpanProcessor, SentrySampler } from '@sentry/op
 import { SENSITIVE_FIELD_PATTERNS } from '@viyo/shared';
 
 const dsn = process.env.SENTRY_DSN_WORKER;
-const environment = process.env.NODE_ENV ?? 'development';
+const environment = process.env.SENTRY_ENVIRONMENT ?? process.env.NODE_ENV ?? 'development';
 const release = process.env.SENTRY_RELEASE ?? `viyo-worker@${process.env.npm_package_version ?? '0.0.0'}`;
 
 /**
