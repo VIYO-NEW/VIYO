@@ -445,7 +445,8 @@
 - [x] Read Taskmaster T73 details, test strategy, dependencies, and any existing subtasks before implementation.
 - [x] Set T73 to `in-progress` only after dependency and protocol gates are documented.
 - [x] Inspect the existing editing-router architecture, shared contracts, feature flags, and backend-supported capabilities before adding UI or route coverage.
-- [ ] Phase 2 approval plan drafted at `docs/internal/t73-phase2-architecture-wiring-plan.md`; wait for PO approval before implementation code changes.
+- [x] Phase 2 approval plan drafted at `docs/internal/t73-phase2-architecture-wiring-plan.md` and pushed in commit `d124d17` after Git push recovery.
+- [ ] Wait for PO approval of the Phase 2 architecture plan before implementation code changes.
 - [ ] Wire only the ten approved editing tools where backend-supported capability exists: Touch Edit, Text Edit, Layer Splitting, Background Swap, Object Removal, Canvas Expand, Upscale, Quick Edit, Style Transfer, and Material Swap.
 - [ ] Ensure no unwired placeholder buttons are exposed; tool availability must reflect shared contracts and feature flags.
 - [x] Update `.github/workflows/deploy.yml` for the Pre-Alpha PO decision by uncommenting the `push: branches: [main]` trigger, while preserving manual `workflow_dispatch` support.
