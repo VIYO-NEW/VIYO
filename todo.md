@@ -59,6 +59,14 @@
 
 ## In Review
 
+## Marketing Coming Soon Site — 2026-05-02
+
+- [x] Build `apps/marketing` as a minimal static Vite React app on the `staging` branch only.
+- [x] Keep the page self-contained with no backend calls, no external fonts, and no CDN dependencies.
+- [x] Validate local type-check/build for `@viyo/marketing` without redeploying or editing `apps/web` or `apps/admin`.
+- [x] Commit and push staging-only changes for PO review.
+- [x] Stop before production domain changes until explicit PO approval.
+
 ## Completed
 
 - [x] T46 — Composite Art Director Routing Suite (T21, T22, T23) — DONE 2026-04-29
