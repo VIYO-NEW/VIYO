@@ -260,3 +260,48 @@ No reconnections were performed. The available Vercel integration provided read 
 - Authority: [docs/governance/INFRASTRUCTURE_DECISIONS.md](./INFRASTRUCTURE_DECISIONS.md) (Decision 5)
 - Inventory baseline: [docs/governance/INFRASTRUCTURE_REPORT.md](./INFRASTRUCTURE_REPORT.md)
 - Read-only audit artifacts were generated outside the repository under `/tmp/wp3_*` and `/home/ubuntu/memory/checkpoints/` for Manus handoff continuity.
+
+---
+
+## Browser Agent Verification — 2026-05-08
+
+**Performed by:** Manus AI browser agent with interactive PO login
+**Authority:** Closes the NEEDS_PO_ACTION verdicts from the API-based audit above
+
+### Project: viyo-web
+
+**Settings → Git:** PASS — Connected Git Repository was visible as `VIYO-NEW/VIYO`; Git event toggles for pull-request comments, commit status, `deployment_status`, and `repository_dispatch` were visible; the Git tab did not expose a saved Production Branch field, but a deploy-hook branch placeholder showed `main` and recent preview deployments were observed.
+**Settings → Domains:** FAIL — Visible domains included `www.viyo.new` and `app.viyo.new` as Production, `viyo-web.vercel.app` as Production, and `app.staging.viyo.new` mapped to `develop`; expected staging preview mapping to `staging` was not confirmed, and `staging.viyo.new` was not visible in the inspected rows.
+**Settings → Environment Variables:** ISSUES_FOUND — Visible project variables were counts only: Production: 1, Preview: 4, Development: 0. Variable values were not opened, copied, recorded, or committed.
+**Recent Deployments:** PASS — Recent deployments were visible as Preview/Ready and Git-triggered, including latest branch `staging` from commit `813ee0e` with the PR #11 merge message; no deployment was triggered or modified.
+**Final Verdict:** ISSUES_FOUND
+
+### Project: viyo-admin
+
+**Settings → Git:** PASS — Connected Git Repository was visible as `VIYO-NEW/VIYO`; Git event toggles for pull-request comments, commit status, `deployment_status`, and `repository_dispatch` were visible; no provider settings were changed.
+**Settings → Domains:** FAIL — Visible domains included `admin.viyo.new` as Production, `viyo-admin.vercel.app` as Production, and `admin.staging.viyo.new` mapped to `develop`; expected staging preview mapping to `staging` was not confirmed.
+**Settings → Environment Variables:** ISSUES_FOUND — Visible project variables were counts only: Production: 1, Preview: 4, Development: 0. Variable values were not opened, copied, recorded, or committed.
+**Recent Deployments:** PASS — Recent deployments were visible as Preview/Ready and Git-triggered, including latest branch `staging` from commit `813ee0e` with the PR #11 merge message; no deployment was triggered or modified.
+**Final Verdict:** ISSUES_FOUND
+
+### Project: viyo-main
+
+**Settings → Git:** PASS — Connected Git Repository was visible as `VIYO-NEW/VIYO`; Git event toggles for pull-request comments, commit status, `deployment_status`, and `repository_dispatch` were visible; no provider settings were changed.
+**Settings → Domains:** NOTES — The Domains page loaded with domain-management controls visible, but no domain rows were visible in the rendered dashboard/markdown during inspection. No domain was added, removed, purchased, or edited.
+**Settings → Environment Variables:** FAIL — The Project tab reported `No Environment Variables Added`; visible project variable counts were Production: 0, Preview: 0, Development: 0. No values were opened, copied, recorded, or committed.
+**Recent Deployments:** PASS — Recent deployments were visible as Preview/Ready and Git-triggered, including latest branch `staging` from commit `813ee0e` with the PR #11 merge message; no deployment was triggered or modified.
+**Final Verdict:** ISSUES_FOUND
+
+### Issues found (if any)
+
+The dashboard inspection found specific issues requiring PO review. For `viyo-web`, `app.staging.viyo.new` was visible as mapped to `develop` rather than `staging`, `staging.viyo.new` was not visible in the inspected domain rows, and the visible environment-variable scope counts were Production: 1, Preview: 4, Development: 0. For `viyo-admin`, `admin.staging.viyo.new` was visible as mapped to `develop` rather than `staging`, and the visible environment-variable scope counts were Production: 1, Preview: 4, Development: 0. For `viyo-main`, no domain rows were visible during the dashboard inspection, and the Project environment-variable tab reported no environment variables.
+
+### Final WP-3 status
+
+PARTIAL — 0 projects fully verified, 3 projects need PO follow-up.
+
+### Notes on ai-api-web-portal
+
+ai-api-web-portal Vercel project was deleted by PO on 2026-05-08 (per PR #11 conversation thread). Out of scope for Decision 5.
+
+---
