@@ -1,11 +1,13 @@
 # R21 — Infrastructure & Deployment Topology (Enterprise Spec)
 
+Authoritative overrides: see docs/governance/INFRASTRUCTURE_DECISIONS.md for ratified PO decisions that supersede sections of this spec.
+
 ## 1. Executive Summary
 
 This specification defines the production infrastructure topology for VIYO. The architecture is designed for global edge delivery, asynchronous high-volume background processing, and strict isolation between the frontend, backend, and AI execution layers.
 
 **Key Cross-Spec Wiring:**
-*   **R28 (Timer Service):** Deployed to Cloudflare Workers for edge proximity.
+*   **R28 (Timer Service):** Deferred post-launch optimization per ratified PO Decision 4 (2026-05-08); Cloudflare Workers architectural intent retained only for future PO re-prioritization.
 *   **R19 (LLM Architecture):** Connects to the Redis cache for rate limiting.
 *   **R24 (Image Pipeline):** Uses Inngest for async orchestration.
 *   **R20 (Database):** Connects to Supabase Postgres via connection pooling.
@@ -17,12 +19,12 @@ VIYO uses a composable infrastructure stack across three primary providers: Verc
 | Layer | Provider | Service | Purpose |
 |-------|----------|---------|---------|
 | **Frontend App** | Vercel | Next.js (App Router) | Admin UI, Dashboard, VEO Chat Interface |
-| **Edge Compute** | Cloudflare | CF Workers | R28 Timer Service, image proxy, edge caching |
+| **Edge Compute** | Cloudflare | CF Workers | Deferred R28 Timer Service, image proxy, and edge caching optimization; not current implementation scope per ratified PO Decision 4 (2026-05-08) |
 | **API Backend** | Render | Node.js Web Service | Main GraphQL/REST API, Webhook receivers |
 | **Async Workers**| Render | Background Worker | Inngest worker instances for R24/R31/R23 jobs |
 | **Database** | Supabase | PostgreSQL 15+ | Relational data, pgvector, RLS |
 | **Authentication**| Supabase | GoTrue | User identity, JWT issuance |
-| **Blob Storage** | Supabase | Storage (S3-compat) | Uploaded assets, generated images |
+| **Blob Storage** | Cloudflare | R2 | Cloudflare R2 (canonical asset storage per ratified PO Decision 3, 2026-05-08). Supabase Storage was the prior intent and is no longer used for asset blobs. |
 | **In-Memory** | Upstash | Redis | Rate limiting (R19), ephemeral caching |
 | **Orchestration**| Inngest | Event-Driven Queue | Job scheduling, retries, fan-out execution |
 
@@ -125,7 +127,9 @@ app.listen(3000, () => console.log('Inngest Worker running on port 3000'));
 
 ## 6. Edge Compute Architecture (R28 Timer Service)
 
-The R28 Timer Service requires sub-50ms latency globally to render countdown SVGs accurately. It is deployed to Cloudflare Workers.
+DEFERRED — POST-LAUNCH OPTIMIZATION. Per ratified PO Decision 4 (2026-05-08), R28 Cloudflare Workers are not in current scope. Architectural intent retained for future revisit when traffic patterns justify edge serving. Do not schedule implementation work for R28 without explicit PO re-prioritization.
+
+The R28 Timer Service was originally specified for sub-50ms global countdown SVG rendering through Cloudflare Workers. This section is retained as reference-only architecture until the PO explicitly re-prioritizes R28 after launch.
 
 ```toml
 # wrangler.toml
