@@ -305,3 +305,59 @@ PARTIAL — 0 projects fully verified, 3 projects need PO follow-up.
 ai-api-web-portal Vercel project was deleted by PO on 2026-05-08 (per PR #11 conversation thread). Out of scope for Decision 5.
 
 ---
+
+---
+
+## Browser Agent Follow-Up #2 — viyo-main Source Verification + develop→staging Fix — 2026-05-09
+
+**Performed by:** Manus AI browser agent with interactive PO login
+**Authority:** Resolves the develop→staging wiring issues identified in WP-3-FU above and definitively answers viyo-main versus viyo-web ownership of `www.viyo.new`.
+
+### Phase 0: Source Verification of www.viyo.new
+
+**x-vercel-id from live response:** `gru1::z9gjf-1778302286177-5d9e49f4e587`
+**Live response headers:** `server: Vercel`; `x-vercel-cache: HIT`; no `x-vercel-deployment-url` header was present in the captured response.
+**viyo-web latest production deployment ID:** `dpl_6GDeSWvdweG2asjuLdA5Sg2RBYgo`, deployment URL pattern `viyo-web-1o1fztcko-viyo-ai.vercel.app`, branch `main`, commit `e3275bb7b8c0d8d85941335466b671cb907927bf`, message `chore(deploy): promote coming soon site to main [T90]`, state `READY`.
+**viyo-main latest production deployment ID:** `dpl_FNShNmFng8bXThm3Q2WazMqZK8n1`, deployment URL `viyo-main-lc1jli6tw-viyo-ai.vercel.app`, branch `main`, commit `e3275bb7b8c0d8d85941335466b671cb907927bf`, message `chore(deploy): promote coming soon site to main [T90]`, state `READY`.
+**Match:** The Vercel deployment resolver for `www.viyo.new` returned deployment `dpl_FNShNmFng8bXThm3Q2WazMqZK8n1` on project `viyo-main`; this matches the viyo-main production deployment record and not the viyo-web production deployment `dpl_6GDeSWvdweG2asjuLdA5Sg2RBYgo`.
+
+**Definitive verdict:** `PHASE_0_RESULT: www.viyo.new is served by VIYO-MAIN`.
+
+### Phase 1: viyo-main Full State
+
+**Framework:** `Vite`.
+**Root directory:** `apps/main`.
+**Connected repo:** `VIYO-NEW/VIYO`.
+**Production branch:** `main` observed from the production deployment metadata and dashboard Git settings context.
+**Domains visible:** Dashboard inspection showed the complete viyo-main Domains list as `viyo-main.vercel.app` on `Production` and `staging.viyo.new` on branch `staging`; no additional rows were visible after scrolling to the bottom. The read-only project metadata also listed Vercel-managed aliases `viyo-main-viyo-ai.vercel.app` and `viyo-main-git-main-viyo-ai.vercel.app`.
+**Environment variables:** Project Environment Variables tab showed `No Environment Variables Added`; visible project counts were Production `0`, Preview `0`, and Development `0`. No values were opened, copied, or committed.
+**Build & Development settings:** Build Command override `pnpm build`, Output Directory override `dist`, Install Command override `pnpm install`, Include files outside root directory `Enabled`, and skip deployments for no root-directory/dependency changes `Disabled`.
+**Node.js version:** `24.x` in read-only project metadata and visible Node.js settings options.
+**Last deployment:** `dpl_25wBQVviDSK2LqysbMdkGBJnXKNS`, deployment URL `viyo-main-c9k7n4b51-viyo-ai.vercel.app`, `READY`, branch `staging`, created in the inspected deployment list during the follow-up; the latest production deployment for source matching was `dpl_FNShNmFng8bXThm3Q2WazMqZK8n1` on branch `main`.
+**Total deployments:** At least 20 deployment rows were visible with a `Load More` control, so the exact total was greater than the visible first page.
+
+### Phase 2: develop→staging Fix Results
+
+| Domain | Project | Before | After | Status |
+|---|---|---|---|---|
+| `staging.viyo.new` | `viyo-main` | `staging` | `staging` | SKIPPED — already correct on viyo-main and explicitly on the do-not-touch list for this follow-up. |
+| `app.staging.viyo.new` | `viyo-web` | `develop` | `staging` | APPLIED — branch selector saved to `staging`; production-domain rows were not modified. |
+| `admin.staging.viyo.new` | `viyo-admin` | `develop` | `staging` | APPLIED — branch selector saved to `staging`; production-domain rows were not modified. |
+
+### Phase 3: Verification State
+
+**Pre-flight PR #12 status:** `MERGED`; merge commit `ec2495e86db991b7f80830c9c09390bdd8d6b267`; merged at `2026-05-09T04:04:48Z`.
+**staging branch HEAD at time of fix:** `ec2495e86db991b7f80830c9c09390bdd8d6b267` (`ec2495e`), `Merge pull request #12 from VIYO-NEW/chore/wp3-fu-vercel-dashboard-verification`, commit date `2026-05-09T00:04:47-04:00`.
+**Auto-deploy expected on next staging push:** YES after PO test commit, not performed in this directive.
+
+### Final Status of WP-3 Cleanup
+
+**Production deployments:** ACTIVE on `viyo-main` for `www.viyo.new` according to the Vercel deployment resolver; do not delete viyo-main.
+**Staging deployments:** FIXED for the two authorized develop→staging mutations: `app.staging.viyo.new` on `viyo-web` and `admin.staging.viyo.new` on `viyo-admin`. The root `staging.viyo.new` remained unchanged on `viyo-main` because it was already on `staging` and was explicitly excluded from mutation.
+**viyo-main disposition:** ACTIVE — confirmed serving `www.viyo.new` Coming Soon page. DO NOT DELETE. Active dependency.
+
+### Notes
+
+There is a provider-dashboard inconsistency worth PO awareness: the viyo-main Domains page inspection showed `staging.viyo.new` and `viyo-main.vercel.app`, while the Vercel deployment resolver for `www.viyo.new` and `viyo.new` returned `viyo-main` deployment `dpl_FNShNmFng8bXThm3Q2WazMqZK8n1`. The Phase 0 result therefore follows the live hostname-to-deployment resolver as the definitive source match. No environment-variable values, production domains, build settings, framework presets, or viyo-main domain settings were modified.
+
+---
