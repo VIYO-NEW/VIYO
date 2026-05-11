@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "turbo run build",
+    "check": "pnpm lint && pnpm type-check && pnpm build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
