@@ -282,7 +282,7 @@ if (rSpec.zcbrStatus !== 'PASSED') {
 ```
 
 See: `/docs/governance/ZCBR_STANDARD.md` for the formal standard
-See: `/.skills/zcbr-spec-validation/SKILL.md` for the validation skill (pending K1 skill copy directive)
+See: zcbr-spec-validation skill — canonical spec stored in Drive governance folder (1C_LrFuq6yRE0DDPgCfnJTJcI44CvN6Ki), operationalized via upload to Portal product at ai.viyo.new for runtime loading via skills.pickForTask API. Not a repo file.
 
 ---
 
