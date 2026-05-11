@@ -252,7 +252,7 @@ Applies to all model classes: image generation, image editing, LLM completions, 
 No Bullet ships against an unvalidated R-spec. Every R-spec referenced by any Bullet directive must carry a `ZCBR Status: PASSED` header from Architect Claude self-validation. Reviewer Claude rejects Bullet directives that cite non-passing R-specs at §9 Gate intake. Kimi pre-flight validation refuses to start code on Bullets whose cited R-specs do not pass the `zcbr-spec-validation` skill check. Manus-authored R-specs are reference inputs only; the canonical authoritative version of any R-spec is the Architect Claude version.
 
 See: `/docs/governance/ZCBR_STANDARD.md` (the formal standard)
-See: `/.skills/zcbr-spec-validation/SKILL.md` (the mechanical enforcement, pending K1 skill copy directive)
+See: zcbr-spec-validation skill — canonical spec stored in Drive governance folder (1C_LrFuq6yRE0DDPgCfnJTJcI44CvN6Ki), operationalized via upload to Portal product at ai.viyo.new for runtime loading via skills.pickForTask API. Not a repo file.
 
 ---
 
