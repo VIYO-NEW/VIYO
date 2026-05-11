@@ -264,6 +264,28 @@ try {
 
 ---
 
+## Rule 15 — ZCBR Validation Required Before Code (Lock 20 enforcement, locked 2026-05-11)
+
+No Bullet ships against an unvalidated R-spec. All Bullets ship against Architect-authored, ZCBR-validated R-specs.
+
+Enforcement:
+- Reviewer Claude rejects Bullet directives that cite non-passing R-specs at §9 Gate intake
+- Kimi pre-flight refuses to start code on Bullets whose cited R-specs do not pass the `zcbr-spec-validation` skill check
+- Manus-authored R-specs are reference inputs only; canonical authoritative version is the Architect Claude version
+
+```typescript
+// At Bullet directive intake (Reviewer Claude side)
+const rSpec = await loadRSpec(directive.rSpecPath);
+if (rSpec.zcbrStatus !== 'PASSED') {
+  return reject(directive, `R-spec ${directive.rSpecPath} has ZCBR Status: ${rSpec.zcbrStatus}`);
+}
+```
+
+See: `/docs/governance/ZCBR_STANDARD.md` for the formal standard
+See: `/.skills/zcbr-spec-validation/SKILL.md` for the validation skill (pending K1 skill copy directive)
+
+---
+
 **End of code rules.**
 
 For architectural reasoning behind these rules, see `/docs/governance/FOUNDATION_LOCK.md` and `/docs/architecture/VVOW_IMAGE_STUDIO_ARCHITECTURE.md`.

@@ -203,6 +203,59 @@ When DB drift is detected: **always rebuild from canonical migrations**, never p
 
 ---
 
+## Lock 15 — RESERVED
+
+Reserved for future ratification. Number held to preserve continuity with artifacts that reference Locks 17-20 explicitly. Do not assign content here without PO ratification.
+
+---
+
+## Lock 16 — RESERVED
+
+Reserved for future ratification. Number held to preserve continuity with artifacts that reference Locks 17-20 explicitly. Do not assign content here without PO ratification.
+
+---
+
+## Lock 17 — Foundation-First Decision Making (ratified 2026-05-09)
+
+No patch work. Architectural conflicts reconciled at source, not papered over.
+
+When a downstream surface (a Bullet directive, an R-spec, a feature) reveals a contradiction with an upstream authority (FOUNDATION_AUTHORITY, V8 PRD, an architecture file), the fix happens at the upstream authority — never as a local override or workaround in the downstream surface.
+
+**Forbidden:** Bullet directives that include "TODO: reconcile with V8 PRD" or similar deferral language without an explicit upstream-fix directive scheduled.
+
+---
+
+## Lock 18 — Tool-Capability-First Scoping (ratified 2026-05-09)
+
+Audit existing tool capabilities before specifying any feature. Example: GrapesJS already provides Canva-tier capabilities for free; don't build custom what tooling already provides.
+
+Every feature directive must include a "tool capability check" section before authoring implementation scope. If the underlying tool (GrapesJS, Mastra, Inngest, Supabase, Cloudflare R2) already provides the capability, the directive defers to the tool default and only specifies the wiring.
+
+**Forbidden:** Custom implementations of capabilities the toolchain already provides without an explicit "why not the tool default" rationale.
+
+---
+
+## Lock 19 — Provider Agnosticism (ratified 2026-05-09)
+
+No application code names a specific AI model, OCR provider, ESP, or other third-party service in business logic. All selections live in Provider Routing plugin registry (R29 PAL — pending rewrite as unified Plugin Registry per D55).
+
+The application calls `provider.execute(task)` and the registry resolves the actual model based on Art Director scoring, RLHF history, Tier 1/2/3 routing, and brand-specific overrides.
+
+Applies to all model classes: image generation, image editing, LLM completions, embeddings, OCR, segmentation, upscaling, ESP delivery, e-commerce platform calls.
+
+**Forbidden:** `if (model === 'NanoBanana')` or any hardcoded provider name in business logic. The single exception is the Plugin Registry itself, which is the registry of names.
+
+---
+
+## Lock 20 — ZCBR-Validated Specs Required (ratified 2026-05-11)
+
+No Bullet ships against an unvalidated R-spec. Every R-spec referenced by any Bullet directive must carry a `ZCBR Status: PASSED` header from Architect Claude self-validation. Reviewer Claude rejects Bullet directives that cite non-passing R-specs at §9 Gate intake. Kimi pre-flight validation refuses to start code on Bullets whose cited R-specs do not pass the `zcbr-spec-validation` skill check. Manus-authored R-specs are reference inputs only; the canonical authoritative version of any R-spec is the Architect Claude version.
+
+See: `/docs/governance/ZCBR_STANDARD.md` (the formal standard)
+See: `/.skills/zcbr-spec-validation/SKILL.md` (the mechanical enforcement, pending K1 skill copy directive)
+
+---
+
 **End of locks.**
 
-For implementation detail on any of these, consult `/docs/architecture/VVOW_IMAGE_STUDIO_ARCHITECTURE.md` and the relevant R-file (recognizing that some R-files are thin and pending rewrite).
+For implementation detail on any of these, consult `/docs/architecture/VVOW_IMAGE_STUDIO_ARCHITECTURE.md` and the relevant R-file (recognizing that some R-files are thin and pending rewrite per R-Spec_Audit_Table_v1.0.md).
