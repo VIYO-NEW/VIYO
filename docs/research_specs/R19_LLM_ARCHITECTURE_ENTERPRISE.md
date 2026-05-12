@@ -1,3 +1,11 @@
+---
+**SUPERSEDED:** This file is superseded by R19 v2 at
+/docs/research_specs/R19_LLM_ORCHESTRATION_v2.md.
+See that file for canonical LLM orchestration architecture.
+Superseded on: 2026-05-12
+ZCBR Status: SUPERSEDED
+---
+
 # R19 — LLM Architecture Enterprise Specification
 
 ## 1. Executive Summary
