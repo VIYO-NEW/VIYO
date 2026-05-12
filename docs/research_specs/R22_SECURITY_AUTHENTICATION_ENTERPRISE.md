@@ -1,3 +1,18 @@
+---
+**STATUS: SUPERSEDED**
+
+This document is superseded by R22 v2 at `/docs/research_specs/R22_SECURITY_AUTHENTICATION_v2.md` (ratified 2026-05-12, ZCBR PASSED by Architect Claude self-validation, merged via R22-V2-COMMIT-001 directive at PR #34, commit `31bba0963ab44176af2186f11d4ccf8a42db3fe9`).
+
+This v1 file is retained as historical reference only. v1 was a 6,328-byte skeleton covering three topics surface-level (JWT auth, API key hashing, ESP credential encryption) with zero ZCBR infrastructure and zero R20 v2 alignment. v2 (37,348 bytes) reconciles against committed implementation, ties the spec to R20 v2 schema authority, integrates the R29 v2 Plugin Registry credential boundary, and adds the full ZCBR substrate.
+
+All R-specs and Bullet directives that cite "R22" or "R22 v1" MUST be interpreted as citing R22 v2 going forward.
+
+Do NOT use this file as canonical. Do NOT update this file. See R22 v2.
+
+**Superseded by:** B-XC.21 triage REWRITE (Phase 0 audit B-XC.21-AUDIT-001) → R22 v2 authoring (2026-05-12) → R22-V2-COMMIT-001 PR #34 merge
+**Superseded date:** 2026-05-12
+---
+
 # R22 — Security & Authentication Architecture (Enterprise Spec)
 
 ## 1. Executive Summary
