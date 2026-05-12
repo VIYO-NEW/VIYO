@@ -1,3 +1,11 @@
+---
+**SUPERSEDED:** This file is superseded by R21 v2 at
+/docs/research_specs/R21_INFRASTRUCTURE_v2.md.
+See that file for canonical infrastructure architecture.
+Superseded on: 2026-05-12
+ZCBR Status: SUPERSEDED
+---
+
 # R21 — Infrastructure & Deployment Topology (Enterprise Spec)
 
 Authoritative overrides: see docs/governance/INFRASTRUCTURE_DECISIONS.md for ratified PO decisions that supersede sections of this spec.
