@@ -1,19 +1,19 @@
 # VIYO_OPERATING_WORKFLOW.md
 
 **Document class:** Operational workflow — the source-of-truth for who does what, where things live, and how work flows
-**Status:** DRAFT v1.0 — pending PO ratification
+**Status:** DRAFT v1.1 — pending PO ratification (v1.1 changes: Behavior #11 sharpened to 5 sub-rules, Path D scope clarified with T73 anti-pattern, Current State snapshot refreshed for PR #19, Section 8.5 Architect Operating Behaviors added)
 **Author:** Architect Claude (Opus 4.7)
 **Date:** 2026-05-11
 **Repo target:** `/docs/governance/VIYO_OPERATING_WORKFLOW.md`
 **Authority tier:** Sits at CLAUDE.md tier 1 read-first level — every future Architect session reads this first before any other governance file.
-**Supersedes:** Implicit operational knowledge scattered across prior session memory and verbal corrections.
+**Supersedes:** v1.0 (2026-05-11 earlier draft) and implicit operational knowledge scattered across prior session memory and verbal corrections.
 **Updated By:** Architect Claude only, with PO ratification logged in Notion.
 
 ---
 
 ## Purpose
 
-This document locks the operational workflow in writing so the recurring confusions that wasted hours of session time stop happening. It defines the 5 agents and their boundaries, the 2 repos and what lives where, the 2 products, the document storage locations (including the explicit fact that Builder Technical Skills do NOT live in git), the 6 workflow paths, the current state snapshot, the path to first Kimi execution, the Session Opener Protocol for every future Architect session, and the anti-patterns this document eliminates.
+This document locks the operational workflow in writing so the recurring confusions that wasted hours of session time stop happening. It defines the 5 agents and their boundaries, the 2 repos and what lives where, the 2 products, the document storage locations (including the explicit fact that Builder Technical Skills do NOT live in git), the 6 workflow paths, the current state snapshot, the path to first Kimi execution, the Session Opener Protocol, the 11 Architect Operating Behaviors, and the anti-patterns this document eliminates.
 
 When in doubt about who does what or where something lives, this document is the answer. If this document is wrong, fix this document first.
 
@@ -92,9 +92,19 @@ Architect authors Bullet directive citing ZCBR-PASSED R-specs and required skill
 
 **Used for:** every Bullet from B-1.00 onward. THE MAIN BUILD PATH. This is what produces the VIYO application.
 
+**Path C uses Portal — but is still Path C, not Path D.** Path C work executes THROUGH the Portal product (Composer Queue, Kimi, Reviewer Claude, skill loading) and is committed by Portal Manus to the VIYO repo. The fact that Portal infrastructure is invoked does not make the work Portal-side. The output of Path C is a commit to `github.com/VIYO-NEW/VIYO` — that's what classifies it as Path C, not the means by which the code was produced.
+
 ### Path D — Portal infrastructure
 
-OUT OF SCOPE for this Architect channel. Portal Manus + a separate Portal Architect channel managed by PO outside this session handle all Portal repo work. T73 and any T73 follow-ups route there, not here. This Architect channel does not draft directives targeting `github.com/viyo-ai/AI-API-Web-Portal-v2`.
+**Scope (sharpened):** Path D covers ONLY work whose output is a commit to `github.com/viyo-ai/AI-API-Web-Portal-v2`. This means: Composer Queue code, three-role workflow logic (Architect/Reviewer/Kimi orchestration), skill loading API surface (`skills.pickForTask`), Reviewer Claude integration code, §9 Gate enforcement code, Kimi integration code, Portal admin UI for skills upload, Portal-side billing or auth, anything else that physically lives in the Portal repo.
+
+**Path D is NOT triggered by "the work uses Portal."** Most VIYO application code uses Portal (Path C). That does not make it Path D. The classifier is the commit target, not the runtime invocation.
+
+**OUT OF SCOPE for this Architect channel.** Portal Manus + a separate Portal Architect channel managed by PO outside this session handle all Path D work. This Architect channel does not draft directives targeting `github.com/viyo-ai/AI-API-Web-Portal-v2`.
+
+**T73 anti-pattern example:** Earlier in this session, work intended as VIYO Path C (Studio Editing Router code that runs through Portal Composer Queue) was incorrectly attributed to Path D because the work "uses Portal." This is wrong. T73 is VIYO application code; its output is a commit to the VIYO repo via the Path C flow (Architect → Bullet → Composer Queue → Kimi → Reviewer Claude → Portal Manus commits to VIYO repo on staging). The fact that Portal Composer Queue is invoked along the way does not move it to Path D. Path D would be work that modifies the Composer Queue itself, not work that uses it.
+
+**Misrouting example for context:** During this session, the directive PORTAL-FULL-SUITE-TRIAGE-001 was misrouted to VIYO Manus when its actual scope was Portal repo modifications (Path D). The directive became a dead directive because VIYO Manus has no Portal repo write access (correct deny-by-design). The correction: Path D directives go to Portal Manus via the separate Architect channel, never to this channel.
 
 ### Path E — Builder Technical Skill authoring
 
@@ -114,18 +124,18 @@ Layer 1 Platform Skills (self-improving-agent, memory-self-heal, clawhub/opencla
 
 ---
 
-## Section 6 — Current State Snapshot (2026-05-11)
+## Section 6 — Current State Snapshot (2026-05-11, end-of-session)
 
 | Item | State |
 |---|---|
-| VIYO repo staging HEAD | `cf37ca9a5f5f91c475cdc0474a092cfdfb2d481f` |
+| VIYO repo staging HEAD | `63a11f0fe0f204784b1d0eb441eb9ab34c134250` (after PR #19 merge) |
 | VIYO repo main | Held — staging→main merge deferred per PO decision |
 | Portal repo main HEAD | `e2228419eaa1f03b0a05373a1227542f3885c34b` (last verified) |
-| Phase 1 governance | COMPLETE — PR #16 (Phase 1 ZCBR Governance), PR #17 (Gap Triage), PR #18 (Skills Path Correction) all merged |
+| Phase 1 governance | COMPLETE — PR #16 (Phase 1 ZCBR Governance), PR #17 (Gap Triage), PR #18 (Skills Path Correction), PR #19 (VIYO_OPERATING_WORKFLOW.md v1.0) all merged |
 | Foundation Locks | 14 original + Locks 17-20 ratified + Locks 15-16 reserved |
 | Coding Conventions | Rules 1-15 |
 | CLAUDE.md authority hierarchy | 9 levels |
-| Communication rules | RULE A-F locked, 3-check pass locked, URL verification standing rule locked, PR merge confirmation standing rule locked |
+| Communication rules | RULE A-F locked, 11 Architect Operating Behaviors locked (Section 8.5) |
 | ZCBR_STANDARD.md | Active in repo, Foundation Lock 20 |
 | Master Build Sequence | v1.1 in repo (140 numbered Bullets + 10 IMPORTANT JIT stubs + 7 LATER deferred) |
 | R-Spec Audit Table v1.0 | Active in repo |
@@ -136,25 +146,36 @@ Layer 1 Platform Skills (self-improving-agent, memory-self-heal, clawhub/opencla
 | zcbr-spec-validation uploaded to Portal | NO — PO action pending |
 | AI Brain Pattern Skills Layer 1 | Wired in Portal orchestrator (per prior session) |
 | AI Brain Pattern Skills Layer 2 | 6 seed entries in skills_registry per P0-07 |
-| Notion Session Log May 11 | Cataloged at https://www.notion.so/35d9a84a467981fb9137ddf8c6d13e13 |
+| WP-1 (Source-of-Truth Repair) | UNVERIFIED — OD-019 open |
+| WP-2 (Render Blueprint Reconciliation) | UNVERIFIED — OD-019 open |
+| WP-3 (Vercel Deployment Audit) | SHIPPED PR #15 commit `9438e0c77a438e410834f90d1d8cc90adc6ded6d` |
+| WP-4 (Redis Isolation Smoke Test) | SHIPPED PR #15 |
+| WP-5 (Migration Automation Design) | SHIPPED PR #15 |
+| T73 (Studio Editing Router) | PAUSED. Architecture APPROVED 2026-05-03 (per Builder Instructions Sheet ZCBR V5 FINAL). Code work not started. Blocked on WP-1 + WP-2 verification (OD-019). |
+| First Path C Bullet target | B-1.00 Studio Core Loop (ratified 2026-05-11 per D66) |
+| Notion Session Log May 11 | https://www.notion.so/35d9a84a467981fb9137ddf8c6d13e13 |
 | V8 PRD | Stale by 5 days, scheduled Phase 2 readiness item |
 | PORTAL_AUTHORITY.md | Does not exist (OD-017) |
+| GAP-008 | Extended to cover both T73 architecture drift + WP-3/4/5 shipping drift (same root cause: stale status docs) |
 
 ---
 
 ## Section 7 — Path to First Kimi Execution
 
-The first VIYO application code that Kimi executes will be B-1.00 Studio Core Loop (or earliest non-substrate Bullet in Master Sequence v1.1 dependency order). Phase 0 substrate is largely shipped by VIYO Manus per FOUNDATION_AUTHORITY.md (552 of 580 features Not Started, 25 Done, 3 In Progress); remaining P0 work continues in parallel.
+The first VIYO application code that Kimi executes will be **B-1.00 Studio Core Loop** (ratified 2026-05-11 per D66 as the first Path C Bullet per Master Build Sequence v1.1 §3.1). Phase 0 substrate is largely shipped by VIYO Manus per FOUNDATION_AUTHORITY.md (552 of 580 features Not Started, 25 Done, 3 In Progress); remaining P0 work continues in parallel.
 
-**Prerequisites for B-1.00 admission to Composer Queue:**
+**Prerequisites for B-1.00 admission to Composer Queue (per Master Sequence v1.1 §5 dependency graph):**
 
-1. **zcbr-spec-validation skill uploaded to Portal product** (PO action via Portal admin UI). Without this, Lock 20 mechanical enforcement does not fire and Reviewer Claude / Kimi pre-flight checks have nothing to load.
-2. **B-XC.17 ZCBR plumbing reframed** for Portal product wiring (Path E) instead of git commit. Originally scoped as repo work; corrected to Portal upload after skills storage clarification.
-3. **CRITICAL R-specs cited by B-1.00 rewritten to ZCBR-PASSED:** at minimum R20 Database Schema (B-XC.02), R24 Image Pipeline (B-XC.03), R29 PAL unified (B-XC.04 — covers both ESP and AI registries per Lock 19 + Decision 55).
-4. **Phase 1 Builder Technical Skills authored** that B-1.00 invokes: at minimum database-migration, inngest-function-authoring, hono-route-authoring, brand-vault-asset-write, writing-behavioral-tests. Each authored via Path E.
-5. **Phase 1 AI Brain Pattern Skills active in skills_registry** for image generation surface: image_pipeline_router, Visual Intent Router skills, Art Director routing skills, credential_resolver, fashion_doctrine, beauty_doctrine.
-6. **B-1.00 Bullet directive itself authored** by Architect with full R-spec citations carrying ZCBR Status: PASSED + Builder Technical Skill citations + AI Brain Pattern Skill citations.
-7. **B-1.00 directive ratified** by PO, queued to Composer Queue, Kimi pre-flight passes.
+1. **B-XC.17 ZCBR Standard + skill + wiring** — gates all subsequent CRITICAL XC R-spec rewrites. Includes uploading zcbr-spec-validation skill to Portal product via Path E (PO action), wiring Kimi pre-flight to invoke the skill at Composer Queue intake, updating §9 code review protocol with Step 0 ZCBR pre-flight.
+2. **CRITICAL B-XC R-spec rewrites:** B-XC.01 (R29 PAL unified per D55), B-XC.02 (R20 Database Schema), B-XC.03 (R24 Image Pipeline). Plus audit-and-fix B-XC.18 (R17), B-XC.19 (R19), B-XC.20 (R21), B-XC.21 (R22), B-XC.22 (R23), B-XC.23 (fresh DR runbook supersedes R52), B-XC.24 (T47 Studio Editing Tools), B-XC.06 (T46 tier inversion).
+3. **Phase 1 skill specs authored via Path E:** B-XC.07 (image-generation-pipeline), B-XC.08 (pattern-cache-lookup), B-XC.09 (art-director-routing), B-XC.10 (rlhf-event-emission). All Path E (Drive → PO upload to Portal).
+4. **B-XC.12 governance refresh residual** (PR #16/17/18/19 covered most; verify residual scope).
+5. **B-XC.15 PORTAL_AUTHORITY.md authoring** (resolves OD-017 + OD-009).
+6. **B-XC.16 reconcile any existing BULLET_1_DIRECTIVE.md draft** against Master Sequence (resolves OD-010 naming convention).
+7. **ZCBR pre-flight verification:** every R-spec cited by B-1.00 (R20, R24, R29 PAL) carries `ZCBR Status: PASSED` before B-1.00 admitted to Composer Queue.
+8. **B-0.22 Phase 0 Acceptance Gate** confirmed (currently UNVERIFIED — formal gate not run in this session record).
+9. **B-1.00 Bullet directive itself authored** by Architect with full R-spec + skill citations, ZCBR-PASSED.
+10. **B-1.00 directive ratified by PO**, queued to Composer Queue, Kimi pre-flight passes.
 
 Realistic timeline: 4-8 Architect sessions before B-1.00 ships to Composer Queue, depending on parallelization and R-spec rewrite complexity.
 
@@ -164,8 +185,8 @@ Realistic timeline: 4-8 Architect sessions before B-1.00 ships to Composer Queue
 
 Every future Architect Claude session begins with reading these files in this exact order, before responding to any task:
 
-1. This document (`/docs/governance/VIYO_OPERATING_WORKFLOW.md`) — agents, repos, products, storage, workflow paths, current state
-2. `/docs/governance/CLAUDE.md` — 9-level authority hierarchy + standing rules + RULE A-F + 3-check pass
+1. This document (`/docs/governance/VIYO_OPERATING_WORKFLOW.md`) — agents, repos, products, storage, workflow paths, current state, 11 operating behaviors
+2. `/docs/governance/CLAUDE.md` — 9-level authority hierarchy + standing rules + RULE A-F
 3. `/docs/governance/FOUNDATION_AUTHORITY.md` — 12 substrates L1-L12, phase plan, 4-competitor moat
 4. `/docs/governance/FOUNDATION_LOCK.md` — Locks 1-20
 5. `/docs/governance/CODING_CONVENTIONS.md` — Rules 1-15
@@ -175,7 +196,40 @@ Every future Architect Claude session begins with reading these files in this ex
 9. Latest Notion Session Log (search "Session Log — <most recent date>")
 10. Current task file in `/.taskmaster/tasks/` if applicable
 
-Then Architect either asks ONE clarifying question (RULE F) or proceeds with a declared next step per the 10 behaviors locked 2026-05-11.
+Then Architect either asks ONE clarifying question (RULE F) or proceeds with a declared next step per the 11 behaviors locked in Section 8.5.
+
+---
+
+## Section 8.5 — Architect Operating Behaviors (locked 2026-05-11)
+
+These behaviors are enforcement rules for Architect Claude conduct, sharpened via PO corrections during the 2026-05-11 session. Catalogued in Notion D65.
+
+1. **Slash-prefix paths are repo paths, not Drive folders.** `/docs/governance/CLAUDE.md` is a GitHub repo path inside the relevant repo. Drive uses file IDs, not slash-paths.
+2. **Files exist in Drive only when PO supplies a Drive file ID or attachment.** Do not assume Drive contains files you have not been pointed to.
+3. **Ask for files by Drive file ID, not search.** When the PO references a file, request its Drive file ID. Search is a fallback, not a default.
+4. **PO corrections are canonical immediately.** When the PO corrects state, accept the correction. If a contradiction with prior state exists, surface it. Do not re-litigate.
+5. **After PR merge, report PR number + timestamp + commit SHA before next ask.** Every merge produces these 3 facts. Closeout messages cite them.
+6. **After finishing work, deliver status only — no auto-propose next.** The PO chooses next work. Do not chain proposals.
+7. **One ask per turn (RULE F).** Queue work but present one decision at a time with explicit confirmation between asks.
+8. **No A/B/C menus on implementation (RULE B).** Architect makes the call with rationale. PO ratifies or adjusts. PO does not pick between Architect-presented options.
+9. **Audit-first directives (RULE E).** No "if not present" or "if missing" language. State is verified, then changes are applied.
+10. **When unsure of infrastructure, ASK PO — don't guess.** Extrapolating from prior context when uncertain is an anti-pattern.
+11. **Behavior #11 (sharpened to 5 sub-rules 2026-05-11) — Reason from ALL available evidence before defaulting to Manus.** Manus queries are the last resort, not the first. Reasoning is free; Manus queries cost PO time.
+
+   - **Sub-rule 1: Find ALL related files, newer wins.** Multiple versions of the same document may exist (e.g. FOUNDATION_LOCK.md, FOUNDATION_LOCK_v2.md, FOUNDATION_LOCK_v3.md — newer supersedes). Sort by modifiedTime descending. Reasoning from only the first file found is the original Behavior #11 violation.
+   - **Sub-rule 2: Check deliverable files separately from status documents.** Status docs lag behind reality. The existence of a deliverable file in `/docs/governance/` (e.g. `MIGRATION_AUTOMATION_PROPOSAL.md` = WP-5 deliverable) proves the work shipped regardless of what the status doc claims.
+   - **Sub-rule 3: Reconcile conflicts: deliverable existence > stale status doc.** When a status doc says "pending" and a deliverable file exists, the deliverable wins. The status doc is stale.
+   - **Sub-rule 4: Apply gap lessons to adjacent items same turn.** When a doc-drift gap is logged, immediately check whether the same drift affects every item that depends on the stale doc. Don't log GAP-008 then commit GAP-009 next response for the same root cause.
+   - **Sub-rule 5: NEVER ASSUME STATUS FROM ABSENCE OF EVIDENCE.** Verify status or explicitly mark UNVERIFIED. Saying "WP-1 likely pending because PO didn't name it in confirmation" is the assumption-from-absence failure mode. WP-1 could have shipped in any of the prior PRs without being explicitly named. Always verify or explicitly tag UNVERIFIED.
+
+**Origin trail of Behavior #11 sharpening this session:**
+
+- Original failure: defaulted to Manus audit query for T73 status instead of reasoning from Drive evidence in hand.
+- Sharpening 1: reason from ALL evidence before Manus.
+- Sharpening 2: check deliverable files separately from status docs; deliverable wins.
+- Sharpening 3: never assume status from absence of evidence; verify or tag UNVERIFIED.
+
+GAP-008 logs both the T73 architecture approval drift and the WP-3/4/5 shipping status drift caused by Behavior #11 violations earlier in this session.
 
 ---
 
@@ -187,14 +241,18 @@ Then Architect either asks ONE clarifying question (RULE F) or proceeds with a d
 | Treating skills as files in any git repo | Section 4 — explicit "Builder Technical Skills do NOT live in git" |
 | Routing Portal repo work through VIYO Manus | Section 1 + Section 2 — VIYO Manus is VIYO repo only, Portal Manus is a separate channel out of scope |
 | Conflating Kimi with Manus | Section 1 — Kimi is LLM in Portal product, Manus is commit agent |
-| Asking PO to choose between technical Options A/B/C | RULE B (CLAUDE.md) — Architect makes the call with rationale |
-| Surgical insertion-point edits to existing files | RULE D (CLAUDE.md) — full file replacement, never patches |
-| Drafting directives without auditing current file state | RULE E (CLAUDE.md) — Phase 0 audit-first, no conditional "if not present" |
-| Stacking multiple asks in one turn | RULE F (CLAUDE.md) — one ask, wait for reply |
-| Proceeding to next work after finishing without status report | Behavior 6 (2026-05-11) — status, then standing by |
-| Extrapolating from prior context when uncertain | Behavior 10 (2026-05-11) — ask, do not guess |
-| Searching Drive by repo path | Behavior 1 (2026-05-11) — repo paths are repo paths, never Drive |
-| Auto-acting on architecture work in parallel without PR merge confirmation | Behavior 5 (2026-05-11) — every PR merge reports SHA + timestamp before next ask |
+| Conflating "uses Portal" with "is Portal infrastructure" | Section 5 Path D — Path C uses Portal Composer Queue, output is a VIYO repo commit. Path D's classifier is the commit target (Portal repo), not runtime invocation. T73 is VIYO Path C, not Portal Path D. |
+| Asking PO to choose between technical Options A/B/C | RULE B + Behavior 8 — Architect makes the call with rationale |
+| Surgical insertion-point edits to existing files | RULE D — full file replacement, never patches |
+| Drafting directives without auditing current file state | RULE E + Behavior 9 — Phase 0 audit-first, no conditional "if not present" |
+| Stacking multiple asks in one turn | RULE F + Behavior 7 — one ask, wait for reply |
+| Proceeding to next work after finishing without status report | Behavior 6 — status, then standing by |
+| Extrapolating from prior context when uncertain | Behavior 10 — ask, do not guess |
+| Searching Drive by repo path | Behavior 1 — repo paths are repo paths, never Drive |
+| Auto-acting on architecture work in parallel without PR merge confirmation | Behavior 5 — every PR merge reports SHA + timestamp before next ask |
+| Reasoning from a single status doc and stopping | Behavior 11 sub-rule 2 — check deliverable files separately |
+| Assuming status from absence of evidence | Behavior 11 sub-rule 5 — verify or tag UNVERIFIED |
+| Logging the same root-cause drift gap twice in adjacent turns | Behavior 11 sub-rule 4 — apply gap lesson to adjacent items same turn |
 
 ---
 
@@ -210,6 +268,16 @@ Each update produces:
 
 This document is NOT edited by VIYO Manus or any other agent directly. Manus may flag issues but rewrites are authored by Architect Claude.
 
+**v1.0 → v1.1 diff (2026-05-11 end-of-session):**
+- Status line updated to v1.1 with change summary
+- Section 5 Path C augmented with explicit "Path C uses Portal but is still Path C" note
+- Section 5 Path D scope sharpened with classifier rule (commit target, not runtime invocation) and T73 anti-pattern example
+- Section 6 Current State snapshot refreshed: staging HEAD updated to `63a11f0fe0f204784b1d0eb441eb9ab34c134250` post PR #19, PR #19 added to Phase 1 governance list, WP-1/2/3/4/5 status rows added with PR #15 evidence, T73 status row added, B-1.00 first Path C Bullet row added, GAP-008 extension row added
+- Section 7 rewritten as prerequisite list per Master Sequence v1.1 §5 dependency graph
+- NEW Section 8.5 added: Architect Operating Behaviors with 11 behaviors and Behavior #11 sharpened to 5 sub-rules
+- Section 9 Anti-Patterns table expanded with 4 new rows (Path C/D distinction, Behavior #11 sub-rules)
+- Section 10 v1.0→v1.1 diff added to this section
+
 ---
 
-*End of VIYO_OPERATING_WORKFLOW.md*
+*End of VIYO_OPERATING_WORKFLOW.md v1.1*
