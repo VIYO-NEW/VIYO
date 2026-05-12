@@ -1,3 +1,16 @@
+---
+**STATUS: SUPERSEDED**
+
+This document is superseded by R24 v2 at `/docs/research_specs/R24_IMAGE_PIPELINE_v2.md` (ratified 2026-05-12, ZCBR PASSED by Architect Claude self-validation).
+
+This v1 fragment is retained as historical reference. Critique points that were valid in the original v1 vision are addressed in R24 v2 via the architectural rewrite; points specific to the v1 vision no longer apply because R24 v2 implements the CEO Vision Statement (2026-04-23) including 5 corrections.
+
+Do NOT use this file as canonical. See R24 v2.
+
+**Superseded by:** D66 (B-1.00 ratified) → R24 v2 authoring (2026-05-12)
+**Superseded date:** 2026-05-12
+---
+
 # Architectural Critique: VIYO Image Intelligence Engine
 
 **Date:** April 23, 2026

@@ -1,3 +1,18 @@
+---
+**STATUS: SUPERSEDED**
+
+This document is superseded by R24 v2 at `/docs/research_specs/R24_IMAGE_PIPELINE_v2.md` (ratified 2026-05-12, ZCBR PASSED by Architect Claude self-validation).
+
+This v1 fragment file is retained as historical reference only. R24 v2 reconciles five v1 fragment files (Video Analysis, Learning Loop Critique, Multi-Model Enterprise, Vision Critique, Vision Statement from CEO) into a single ZCBR-grade spec aligned to FOUNDATION_AUTHORITY L11 Pattern Substrate, the implementation surface in packages/shared/src/schemas/art-director.ts, and the 5 CEO corrections from 2026-04-23.
+
+All Bullet directives and R-specs that cite "R24" or any of the v1 fragment files MUST be interpreted as citing R24 v2 going forward.
+
+Do NOT use this file as canonical. Do NOT update this file. See R24 v2 for current pipeline contract.
+
+**Superseded by:** D66 (B-1.00 ratified) → R24 v2 authoring (2026-05-12) → R24 v2 merge PR
+**Superseded date:** 2026-05-12
+---
+
 # VIYO Image Generation Pipeline — Complete Video Analysis
 
 **Author:** Manus AI
