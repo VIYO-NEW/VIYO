@@ -1,3 +1,11 @@
+---
+**SUPERSEDED:** This file is superseded by R17 v2 at
+`/docs/research_specs/R17_UI_UX_ARCHITECTURE_v2.md`.
+See that file for canonical UX architecture.
+Superseded on: 2026-05-12
+ZCBR Status: SUPERSEDED
+---
+
 # R17 — UI/UX Architecture Enterprise Specification
 
 ## 1. Executive Summary
