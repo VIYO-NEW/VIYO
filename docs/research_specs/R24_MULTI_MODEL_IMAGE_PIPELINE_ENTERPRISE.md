@@ -1,3 +1,16 @@
+---
+**STATUS: SUPERSEDED**
+
+This document is superseded by R24 v2 at `/docs/research_specs/R24_IMAGE_PIPELINE_v2.md` (ratified 2026-05-12, ZCBR PASSED by Architect Claude self-validation).
+
+This v1 fragment is retained as historical reference. The Three-Tiered Image Intelligence System architecture (Tier 1 Learning Engine, Tier 2 Pattern Database, Tier 3 Production Router) is preserved and elaborated in R24 v2 §2-§6 with ZCBR-grade failure modes, edge cases, and tests.
+
+Do NOT use this file as canonical. See R24 v2.
+
+**Superseded by:** D66 (B-1.00 ratified) → R24 v2 authoring (2026-05-12)
+**Superseded date:** 2026-05-12
+---
+
 # R24 — Multi-Model Image Pipeline (Enterprise Architecture)
 
 **Status:** Locked & Verified (V3 - Dual-Scoring Architecture)

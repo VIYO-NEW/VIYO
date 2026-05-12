@@ -1,3 +1,16 @@
+---
+**STATUS: SUPERSEDED**
+
+This document is superseded by R24 v2 at `/docs/research_specs/R24_IMAGE_PIPELINE_v2.md` (ratified 2026-05-12, ZCBR PASSED by Architect Claude self-validation).
+
+This v1 fragment is retained as historical reference. The Learning Loop critique's core insight (Dual-Scoring + DSPy + RLHF to prevent "B+ Trap" model collapse) is preserved and formalized in R24 v2 §2 (Dual-Scoring Architecture) and §4 (Tier 1 Learning Engine).
+
+Do NOT use this file as canonical. See R24 v2.
+
+**Superseded by:** D66 (B-1.00 ratified) → R24 v2 authoring (2026-05-12)
+**Superseded date:** 2026-05-12
+---
+
 # The VIYO Learning Loop: An Architectural Critique
 
 ## 1. The Current Learning Loop (As Defined)
