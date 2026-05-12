@@ -1,3 +1,16 @@
+---
+**STATUS: SUPERSEDED**
+
+This document is superseded by R20 v2 at `/docs/research_specs/R20_DATABASE_SCHEMA_v2.md` (ratified 2026-05-12, ZCBR PASSED by Architect Claude self-validation, merged via PR #21 at commit `5004819e9bbf4d81a9c992003e3a2ed1731df3fc`).
+
+This v1 file is retained as historical reference only. All R-specs and Bullet directives that cite "R20" or "R20 v1" MUST be interpreted as citing R20 v2 going forward. The schema source files at `packages/db/src/schema/*.ts` cite "R20 §2" which now refers to R20 v2.
+
+Do NOT use this file as canonical. Do NOT update this file. See R20 v2 for current schema, RLS policies, migration plan, and ZCBR-grade failure modes / edge cases / tests.
+
+**Superseded by:** D66 (B-1.00 ratified) → R20 v2 authoring (2026-05-12) → PR #21 merge
+**Superseded date:** 2026-05-12
+---
+
 # R20 — Database Schema Lock & Migration Strategy (Enterprise Spec)
 
 ## 1. Executive Summary

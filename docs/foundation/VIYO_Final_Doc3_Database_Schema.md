@@ -1,3 +1,18 @@
+---
+**STATUS: SUPERSEDED**
+
+This document is superseded by R20 v2 at `/docs/research_specs/R20_DATABASE_SCHEMA_v2.md` (ratified 2026-05-12, ZCBR PASSED by Architect Claude self-validation, merged via PR #21 at commit `5004819e9bbf4d81a9c992003e3a2ed1731df3fc`).
+
+The parallel "Canonical Build Document" pattern that produced this V4 Final has been consolidated into R20 v2 to eliminate doc-drift risk (GAP-008 anti-pattern). All 81-table claims, 14-domain inventory, and schema definitions in this file are reflected in R20 v2 reconciled against the actual implementation at `packages/db/src/schema/*.ts`.
+
+This Final Doc 3 is retained as historical reference only. Going forward, the canonical schema source is R20 v2. Schema source files at `packages/db/src/schema/*.ts` are the implementation ground truth; R20 v2 is the contract that documents them.
+
+Do NOT use this file as canonical. Do NOT update this file. See R20 v2.
+
+**Superseded by:** D66 (B-1.00 ratified) → R20 v2 authoring (2026-05-12) → PR #21 merge
+**Superseded date:** 2026-05-12
+---
+
 # VIYO — Document 3: Canonical Database Schema
 **Version:** V4 Final  
 **Status:** Canonical Build Document  
