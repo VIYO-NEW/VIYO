@@ -1,3 +1,27 @@
+---
+**STATUS: SUPERSEDED (ESP content preserved as normative input to R29 v2)**
+
+This document is superseded by R29 v2 at `/docs/research_specs/R29_PLATFORM_ABSTRACTION_LAYER_v2.md` (ratified 2026-05-12, ZCBR PASSED by Architect Claude self-validation, merged via PR #25 at commit `d0538ae266abc4842dce24161530406f78cd57a2`).
+
+The ESP abstraction content in this v1 file — VIYO-UTL (Universal Tag Language) tag schema, the 8-ESP Connector Registry (Klaviyo, ActiveCampaign, Mailchimp, Braze, HubSpot, Omnisend, SendGrid), the per-ESP tag maps, footer compliance rules, and conditional syntax patterns — is preserved as normative input to R29 v2 §4. The Brevo entry was added as a 9th ESP placeholder in v2 pending operational validation.
+
+R29 v2 expands scope beyond v1's ESP-only focus into a **unified Plugin Registry** per D55 and the PO Hard Rule of 2026-05-12 (Lock 19 Extension Clause — full-category agnosticism), covering three integration categories at full-detail parity:
+- **ESP** (full detail, preserved from v1) — R29 v2 §4
+- **AI Providers** (new content, fulfilling Lock 19 + D55) — R29 v2 §5
+- **E-commerce Platforms** (full-detail parity — Shopify + WooCommerce + Magento + BigCommerce + Squarespace + Wix + custom; operational depth in R31) — R29 v2 §6
+
+R29 v2 also documents the Lock 19 Extension Clause (§10) which makes Provider Agnosticism self-extending across all future integration categories (payments-beyond-Stripe, analytics, CRM, ad platforms, SMS, CDP, CMS, PIM, feedback, etc.). R29 v2 specifies the 11-Bullet refactor sequence (B-XC.01-A through B-XC.01-K) that removes the 9-file hardcoded AI model literal surface and the Shopify-only e-commerce coupling, completing the Lock 19 contract that R24 v2 §3 forward-referenced.
+
+All R-specs and Bullet directives that cite "R29" MUST be interpreted as citing R29 v2 going forward.
+
+This v1 file is retained as historical reference and as the source of the original ESP abstraction articulation. For canonical contracts (unified Plugin Registry, AI provider abstraction, e-commerce platform abstraction, refactor path, capability identifiers, credential management, Lock 19 Extension Clause), see R29 v2.
+
+Do NOT update this v1 file. Future ESP additions or registry expansions produce R29 minor or major versions, not edits to this file.
+
+**Superseded by:** D55 (R29 PAL Option C — unified Plugin Registry) → PO Hard Rule 2026-05-12 (Lock 19 Extension Clause — full-category agnosticism) → D66 (B-1.00 ratified) → R29 v2 authoring (2026-05-12) → PR #25 merge
+**Superseded date:** 2026-05-12
+---
+
 # R29 — Platform Abstraction Layer Enterprise Architecture
 
 ## 1. Executive Summary

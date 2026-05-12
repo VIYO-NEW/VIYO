@@ -41,6 +41,8 @@ export const brands = pgTable('brands', {
   id: uuid('id').primaryKey().defaultRandom(),
   workspaceId: uuid('workspace_id').notNull().references(() => workspaces.id, { onDelete: 'cascade' }),
   name: varchar('name', { length: 255 }).notNull(),
+  hyveOptIn: boolean('hyve_opt_in').default(false).notNull(),
+  hyveOptInTimestamp: timestamp('hyve_opt_in_timestamp', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => ({

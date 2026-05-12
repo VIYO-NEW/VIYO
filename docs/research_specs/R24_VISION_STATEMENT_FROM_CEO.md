@@ -1,3 +1,16 @@
+---
+**STATUS: SUPERSEDED (content preserved as normative input to R24 v2)**
+
+This document's content is normative input to R24 v2 at `/docs/research_specs/R24_IMAGE_PIPELINE_v2.md`. The 5 CEO corrections articulated in this file (hundreds of image types not three; elastic model count not fixed; every image in email not just hero; learning phase IS the core product; replication as the learning mechanism) are formalized in R24 v2 §1.3 and treated as authority sources throughout that spec.
+
+This v1 file is retained for historical reference and as the source of the original CEO vision articulation. For implementation contracts (Tier 1/2/3 architecture, Three-Layer Pipeline, RLHF event emission, Pattern Recipe schema, Provider Registry indirection), see R24 v2.
+
+Do NOT update this v1 file. Future CEO vision updates produce new R24 minor or major versions, not edits to this file.
+
+**Superseded by:** R24 v2 (which preserves this content as normative input per §1.3)
+**Superseded date:** 2026-05-12
+---
+
 # R24 — CEO Vision Statement: VIYO Image Generation Architecture
 
 **Source:** Direct articulation from Nurudeen Lawal (CEO), April 23, 2026

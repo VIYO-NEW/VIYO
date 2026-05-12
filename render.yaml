@@ -1,3 +1,8 @@
+# This blueprint reflects live Render service settings as ratified per
+# docs/governance/INFRASTRUCTURE_DECISIONS.md (PO Decision 1, 2026-05-08).
+# Production tracks main; staging tracks staging.
+# Branch values must remain aligned with live Render dashboard settings.
+
 # ============================================================
 # Render Blueprint — VIYO Worker Services
 # Authority: R21 §5, Doc4 §2.2, Doc1 lines 9690-9700, T90 / SEC-10 Builder Execution Brief
@@ -12,7 +17,7 @@ services:
     dockerContext: .
     region: oregon
     plan: starter
-    branch: infra/domain-render-no-workflows
+    branch: main
     autoDeploy: true
     healthCheckPath: /health
     envVars:
@@ -31,7 +36,7 @@ services:
     dockerContext: .
     region: oregon
     plan: starter
-    branch: infra/domain-render-no-workflows
+    branch: staging
     autoDeploy: true
     healthCheckPath: /health
     envVars:

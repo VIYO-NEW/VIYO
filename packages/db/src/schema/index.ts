@@ -11,3 +11,4 @@ export * from './billing.js';
 export * from './collaboration.js';
 export * from './webhooks.js';
 export * from './integrations.js';
+export * from './proprietary-intelligence.js';

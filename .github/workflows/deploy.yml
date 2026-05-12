@@ -11,9 +11,9 @@
 name: VIYO Deploy Pipeline
 
 on:
-  # Uncomment when Render + DNS are configured:
-  # push:
-  #   branches: [main]
+  # Pre-alpha auto-deploy enabled by PO decision; revert to workflow_dispatch-only at Alpha entry.
+  push:
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
