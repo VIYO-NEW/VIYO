@@ -10,7 +10,7 @@
 
 ## RULE A — Paragraph summary
 
-FOUNDATION_LOCKS_v2.md establishes 21 ratified Foundation Locks as the single canonical authority for VIYO non-negotiable architectural commitments. Locks 1–14 carry forward the repo VVOW-era product-architecture commitments (Product Sequencing / Unified GrapesJS Backbone / MJML JSON Recipe / Cache-First / Pattern Recipe schema / Brand Vault organization / 3-Tier Provider / Programmatic editing / RLHF + Tinder swipe / LoRA pipeline / Pattern Seeding / Brain Council scope / Tenant Isolation via RLS / Canonical Migrations). Locks 15 and 16 remain RESERVED (placeholder for future ratification, preserving continuity with artifacts referencing Locks 17–21 explicitly). Locks 17–21 carry forward repo Locks 17–20 plus NEW Lock 21 (Governance Agnosticism, ratified 2026-05-12 in Notion, committed to repo by this deliverable). Conflict A resolution: the 12 tech-stack-vendor Locks 1–8 + 11–14 in the Notion Foundation Locks DB (Mastra / Inngest / GrapesJS Studio SDK / Sharp / R2 / Stripe / Supabase Postgres / Upstash Redis / Next.js / TypeScript strict / Zod / RLS) are absorbed via the mapping in §2: 4 are archived because they're already substantively covered (Sharp by CODING_CONVENTIONS Rule 6; Cloudflare R2 by INFRASTRUCTURE_DECISIONS ID-3; TypeScript strict by CODING_CONVENTIONS Rule 3; RLS by repo Lock 13 + CODING_CONVENTIONS Rule 9), and 8 are proposed as a NEW Stack Constraints Lock series (Locks 30–37) covering vendor lock-in choices not otherwise codified. The Stack Constraints series is surfaced as a PROPOSED addition contingent on PO ratification of the absorption mapping — Locks 30–37 are not committed to the repo file until PO ratifies; the immediate deliverable target is 21 Locks (1–21) with the absorption mapping as a separate Phase 2.2 / 5.2 work item. Each lock entry uses the canonical format: Number / Title / Statement / Scope / Rationale / Evidence / Date Locked / Authority Source. The deliverable closes with Phase 5.2 handoff (Notion Foundation Locks DB sync to this file's numbering + content), Curator recommendations for the 4 outstanding decisions (Stack Constraints adoption / Locks 15-16 disposition / Authority Source for Locks 1-14 / Notion archival policy), and pointer to ARCHITECT_OPERATING_RULES.md (Phase 2.3) for how Locks 17, 18, 19, 21 are operationalized via external enforcement mechanisms per ANTI_PATTERN_CATALOG §3.
+FOUNDATION_LOCKS_v2.md establishes **29 ratified Foundation Locks** (1–21 + 30–37) as the single canonical authority for VIYO non-negotiable architectural commitments. **Locks 1–14** carry forward the repo VVOW-era product-architecture commitments (Product Sequencing / Unified GrapesJS Backbone / MJML JSON Recipe / Cache-First / Pattern Recipe schema / Brand Vault organization / 3-Tier Provider / Programmatic editing / RLHF + Tinder swipe / LoRA pipeline / Pattern Seeding / Brain Council scope / Tenant Isolation via RLS / Canonical Migrations). **Locks 15 and 16** remain RESERVED (placeholder for future ratification, preserving continuity with artifacts referencing Locks 17–21 explicitly). **Locks 17–21** carry forward repo Locks 17–20 plus Lock 21 (Governance Agnosticism, ratified 2026-05-12 in Notion, committed to repo at SHA `d3795eb`). **Locks 30–37 (Stack Constraints series, ratified 2026-05-13 — committed at Phase 3.2 revision)** cover vendor lock-in commitments not otherwise codified: Lock 30 Mastra DAG / Lock 31 Inngest / Lock 32 GrapesJS Studio SDK / Lock 33 Stripe / Lock 34 Supabase Postgres / Lock 35 Upstash Redis / Lock 36 Next.js / Lock 37 Zod. Conflict A resolution: the 12 tech-stack-vendor Locks 1–8 + 11–14 in the Notion Foundation Locks DB are absorbed via the mapping in §2 — 4 archive because they're already substantively covered (Sharp by CODING_CONVENTIONS Rule 6; Cloudflare R2 by INFRASTRUCTURE_DECISIONS ID-3; TypeScript strict by CODING_CONVENTIONS Rule 3; RLS by repo Lock 13 + CODING_CONVENTIONS Rule 9); 8 absorb to Stack Constraints Locks 30–37 above. Each lock entry uses the canonical format: Number / Title / Statement / Scope / Rationale / Evidence / Date Locked / Authority Source. The deliverable closes with Phase 5.2 handoff (Notion Foundation Locks DB sync to this file's numbering + content), Curator recommendations for the 4 outstanding decisions (Stack Constraints adoption ✅ ratified / Locks 15-16 disposition ✅ RESERVED / Authority Source for Locks 1-14 ✅ VVOW + PO Direct / Notion archival policy ✅ Mark Superseded with pointers — all 4 PO-ratified), and pointer to ARCHITECT_OPERATING_RULES.md for how Locks 17, 18, 19, 21 are operationalized via external enforcement mechanisms per ANTI_PATTERN_CATALOG §3.
 
 ---
 
@@ -426,6 +426,134 @@ Implementation choices belong to the agent doing the work, subject to ratificati
 
 ---
 
+### Lock 30 — Workflow Engine: Mastra DAG only
+
+**Statement:** `@mastra/core` is the only permitted DAG orchestration framework for AI workflow composition inside Inngest steps. No LangChain, no custom orchestrator, no Temporal, no Prefect.
+
+**Scope:** All Brain Council DAG executions. All multi-step AI orchestration. All workflow composition for image generation pipelines (Phase 1) and email composition pipelines (Phase 2).
+
+**Rationale:** TypeScript-native (matches monorepo language). Open-source (zero vendor lock-in concern vs LangChain Cloud / Flowise). DAG composition fits the Brain Council pattern per VVOW §8.3. Substitution would fragment runtime knowledge of how Brain Council execution composes.
+
+**Evidence:** VVOW Architecture §8.3; CODING_CONVENTIONS Rule 5; FOUNDATION_AUTHORITY L4 substrate; Notion Lock 1 (2026-05-10 PO Direct).
+
+**Date Locked:** 2026-05-10 (per Notion); ratified to repo 2026-05-13 via Phase 3.2 commit.
+
+**Authority Source:** PO Direct.
+
+---
+
+### Lock 31 — Event Bus + Job Queue: Inngest only
+
+**Statement:** Inngest is the only permitted event bus and job queue. No BullMQ, no SQS, no RabbitMQ, no custom queue.
+
+**Scope:** All event-driven job orchestration. All retries. All step-level checkpointing. All scheduled jobs (Pattern Seeding daily scrape per Lock 11, scheduled re-training, RLHF event aggregation per Lock 9).
+
+**Rationale:** Step-level checkpointing survives crashes per VVOW §8.2. Fan-out fan-in patterns native — matches Brain Council parallel generation. Three environments verified live (production / staging / branch). Outer orchestrator per CODING_CONVENTIONS Rule 5 (Mastra DAGs run inside Inngest steps).
+
+**Evidence:** VVOW Architecture §8.2; CODING_CONVENTIONS Rule 5; FOUNDATION_AUTHORITY L4; Notion Lock 2 (2026-05-10 PO Direct).
+
+**Date Locked:** 2026-05-10; ratified to repo 2026-05-13 via Phase 3.2 commit.
+
+**Authority Source:** PO Direct.
+
+---
+
+### Lock 32 — Canvas Engine: GrapesJS Studio SDK only
+
+**Statement:** GrapesJS Studio SDK is the canvas engine for Image Studio (Studio SDK tuning) and Email Studio (MJML Plugin tuning per Lock 3). No custom editor, no Unlayer, no Stripo, no MJML-only approach.
+
+**Scope:** All visual editing surfaces. Phase 1 Image Studio at app.viyo.com. Phase 2 Email Studio. Live-sync edit modal opening Image Studio from inside Email Studio per VVOW §2.3.
+
+**Rationale:** Repo Lock 2 (Unified GrapesJS Backbone) commits to GrapesJS as product-architecture; Lock 32 is the vendor-lock complement — alternatives (Unlayer / Stripo) fragment the product. Studio SDK provides Canva-tier capabilities free per Lock 18 Tool-Capability-First Scoping.
+
+**Evidence:** VVOW Architecture §2.2 + §8.1; repo Lock 2; Lock 18; Notion Lock 3 (2026-05-10 PO Direct).
+
+**Date Locked:** 2026-05-10; ratified to repo 2026-05-13 via Phase 3.2 commit.
+
+**Authority Source:** PO Direct.
+
+---
+
+### Lock 33 — Payment Processor: Stripe only
+
+**Statement:** Stripe is the only permitted payment processor. No Paddle, no LemonSqueezy, no Braintree, no PayPal.
+
+**Scope:** All billing operations. All subscription management. All token-metered usage tracking per pricing lock D8. Webhook handlers with HMAC verification + idempotent processing per Notion D11 Webhook Architecture.
+
+**Rationale:** Stripe Billing supports token-metered usage with hard-stop at zero (per pricing lock D8 — Free/$49/$249/$499/$1499, no overage). Robust webhook protocol with HMAC verification. Provider Agnosticism (Lock 19) does not apply to billing — application layer cares about billing semantics, not provider abstraction.
+
+**Evidence:** Pricing lock D8; CODING_CONVENTIONS Rule 5; FOUNDATION_AUTHORITY substrate L6 (Token Metering + Billing); Notion Lock 6 (2026-05-10 PO Direct).
+
+**Date Locked:** 2026-05-10; ratified to repo 2026-05-13 via Phase 3.2 commit.
+
+**Authority Source:** PO Direct.
+
+---
+
+### Lock 34 — Primary Database: Supabase Postgres only
+
+**Statement:** Supabase Postgres is the primary database. No PlanetScale, no Neon, no RDS, no self-hosted Postgres.
+
+**Scope:** All application data. All multi-tenant data. All RLS enforcement (Lock 13). All canonical migrations (Lock 14). All pgvector embeddings for Pattern DB + Brand Vault semantic search.
+
+**Rationale:** Implicit substrate of repo Lock 13 (Tenant Isolation via Supabase RLS) and Lock 14 (Canonical Migrations) — both locks assume Supabase. Lock 34 makes the vendor commitment explicit at Foundation Lock authority tier. pgvector + RLS + Auth + Realtime in one platform reduces moving parts. Three projects verified live (production / staging / ai-api-web-portal).
+
+**Evidence:** VVOW Architecture §8.4; repo Locks 13 + 14; CODING_CONVENTIONS Rules 1 + 9; FOUNDATION_AUTHORITY L1 substrate; Notion Lock 7 (2026-05-10 PO Direct).
+
+**Date Locked:** 2026-05-10; ratified to repo 2026-05-13 via Phase 3.2 commit.
+
+**Authority Source:** PO Direct.
+
+---
+
+### Lock 35 — Cache + Rate Limit: Upstash Redis only
+
+**Statement:** Upstash Redis is the only permitted caching and rate limiting layer. No self-hosted Redis, no Memcached, no Vercel KV (acceptable alias — Upstash under the hood).
+
+**Scope:** All caching (Pattern DB cache layer per Lock 4, session cache, rate limit counters). All API gateway + per-tenant rate limit enforcement. Two databases verified isolated per WP-4 (`viyo` + `viyo-redis-staging`).
+
+**Rationale:** Upstash is HTTP-based — matches Vercel/Render edge runtime constraints. Pay-per-request model fits VIYO billing posture. INFRASTRUCTURE_DECISIONS ID-6 ratified isolation testing; Lock 35 commits the vendor choice that ID-6 verified.
+
+**Evidence:** INFRASTRUCTURE_DECISIONS ID-6; `/docs/governance/REDIS_ISOLATION_EVIDENCE.md` (WP-4 evidence bundle); Notion Lock 8 (2026-05-10 PO Direct).
+
+**Date Locked:** 2026-05-10; ratified to repo 2026-05-13 via Phase 3.2 commit.
+
+**Authority Source:** PO Direct.
+
+---
+
+### Lock 36 — Frontend Framework: Next.js 14+ App Router only
+
+**Statement:** Next.js 14+ with App Router is the only permitted frontend framework. No Remix, no SvelteKit, no Nuxt, no CRA, no Vite standalone.
+
+**Scope:** All frontend surfaces — app.viyo.com (brand admin + Image Studio), admin.viyo.com (internal admin + swipe gate reviewer), Portal at ai.viyo.new. Four Vercel projects (viyo-admin / viyo-web / viyo-main / ai-api-web-portal) per INFRASTRUCTURE_DECISIONS ID-5.
+
+**Rationale:** App Router pattern integrates cleanly with Vercel deployment. React Server Components reduce client bundle for Image Studio's heavy canvas surface. Standard Next.js patterns support GrapesJS Studio SDK integration (Lock 32) without exotic framework compatibility constraints.
+
+**Evidence:** R17 v2 UX Architecture; INFRASTRUCTURE_DECISIONS ID-5; repo `apps/web/` + `apps/admin/` package.json; Notion Lock 11 (2026-05-10 PO Direct).
+
+**Date Locked:** 2026-05-10; ratified to repo 2026-05-13 via Phase 3.2 commit.
+
+**Authority Source:** PO Direct.
+
+---
+
+### Lock 37 — Runtime Validation: Zod only
+
+**Statement:** Zod is the only permitted runtime validation library. No Yup, no Joi, no class-validator, no custom validation.
+
+**Scope:** All API route input validation. All Inngest event payload schemas. All shared schemas in `packages/core-types`. All Brain Council I/O contracts. All Pattern Recipe validation per Lock 5.
+
+**Rationale:** TypeScript-native — matches CODING_CONVENTIONS Rule 3 (TypeScript strict, zero `any`). Single source-of-truth via Zod schemas (no separate type definitions + validation definitions). Pattern Recipe JSON Schema (Lock 5) is implemented as a Zod schema; other validation libraries would fragment the schema source.
+
+**Evidence:** R20 v2 Database Schema; CODING_CONVENTIONS Rule 3; `packages/core-types` shared Zod schemas; Notion Lock 13 (2026-05-10 PO Direct).
+
+**Date Locked:** 2026-05-10; ratified to repo 2026-05-13 via Phase 3.2 commit.
+
+**Authority Source:** PO Direct.
+
+---
+
 ## Section 2 — Conflict A Resolution: Notion tech-stack Locks absorption mapping
 
 Per VIYO_PATH_TO_MVP.md §Step 2: the 12 Notion Foundation Locks DB entries for tech-stack vendor commitments (Locks 1–8 + 11–14 in the Notion DB, dated 2026-05-10) are absorbed via the mapping below. Notion Locks 17–20 already align with repo Locks 17–20 (no absorption needed). Notion Lock 21 commits to repo file as Lock 21 (above).
@@ -460,9 +588,9 @@ The Stack Constraints series is surfaced as PROPOSED below; PO ratification requ
 
 **Summary:** 4 archive (substantively covered elsewhere), 8 proposed Stack Constraints (Locks 30–37, contingent on PO ratification).
 
-### 2.3 Stack Constraints Lock series 30–37 (PROPOSED — not committed)
+### 2.3 Stack Constraints Lock series 30–37 (RATIFIED 2026-05-13 — committed at Phase 3.2 revision)
 
-If PO ratifies the absorption mapping, the following Stack Constraints Locks add to this file in a Phase 2.2 revision OR fold into Phase 5.2 governance refresh. Until ratification, these statements are NOT in effect as Foundation Locks — they remain Notion DB entries.
+PO ratified all 8 Stack Constraints Locks at FOUNDATION_LOCKS_v2 ratification 2026-05-13; commit deferred to Phase 3.2 governance refresh. Locks 30–37 now appear in §Section 1 above with full 8-field canonical format. The table below is retained as a quick-reference summary of the substance + cross-reference to Notion source locks.
 
 | Lock | Title | Statement | Authority Source |
 |---|---|---|---|
@@ -519,9 +647,11 @@ Lock 13 (Tenant Isolation via Supabase RLS) is the substrate for CODING_CONVENTI
 
 Four Curator-call decisions surface to PO for ratification with this deliverable.
 
-### Decision 1 — Stack Constraints Lock series 30–37 adoption
+### Decision 1 — Stack Constraints Lock series 30–37 adoption ✅ RATIFIED 2026-05-13
 
-**Curator recommendation:** **Adopt all 8** (Locks 30, 31, 32, 33, 34, 35, 36, 37) as proposed in §2.3. Vendor lock-in commitments at Lock authority tier preserves taxonomy clarity; absorbing into CODING_CONVENTIONS would balloon the rule set from 15 to 23 and obscure the focused rule structure. Stack Constraints series 30s keeps Lock numbering gap-aware (15, 16 RESERVED; 22–29 reserved for future product-architecture or process Locks).
+**Curator recommendation (accepted):** **Adopt all 8** (Locks 30, 31, 32, 33, 34, 35, 36, 37) as proposed in §2.3 and now committed to §Section 1 above. Vendor lock-in commitments at Lock authority tier preserves taxonomy clarity; absorbing into CODING_CONVENTIONS would balloon the rule set from 15 to 23 and obscure the focused rule structure. Stack Constraints series 30s keeps Lock numbering gap-aware (15, 16 RESERVED; 22–29 reserved for future product-architecture or process Locks).
+
+**Status:** PO-ratified at FOUNDATION_LOCKS_v2.md ratification 2026-05-13; committed to repo at Phase 3.2 revision (this commit). Locks 30–37 are non-negotiable architectural commitments effective immediately.
 
 **Alternative considered:** Absorb 8 Notion tech-stack locks into CODING_CONVENTIONS Rules 16–23. Rejected because CC Rules are coding patterns, not vendor lock-in commitments.
 
