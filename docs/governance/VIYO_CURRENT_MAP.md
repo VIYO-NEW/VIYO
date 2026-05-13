@@ -238,20 +238,25 @@ Phase 1 (Image Studio MVP) public launch unlocks → **Phase 1B Intelligence Fou
 
 ## §9 — Current State Snapshot (Q6)
 
-**As of 2026-05-13 mid-session (this file authoring):**
+**As of 2026-05-13 Phase 3.2 session-end refresh:**
 
 **Repo:** `github.com/VIYO-NEW/VIYO` staging branch.
 
-**Staging HEAD:** `1cc34b6` (after Phase 2.4 NIR_OPERATING_RULES commit). This file's commit will create the next HEAD.
+**Staging HEAD:** `9f31be5` (after Phase 3.2 VIYO_CURRENT_MAP §7 Cataloger activation commit). Per maintenance discipline, §9 lags actual HEAD by exactly one commit — this refresh commit becomes the new HEAD.
 
-**Curator session commits this session (4 governance files):**
+**Curator session commits this session (9 governance commits + 1 stale file removal):**
 
 | Phase | File | Commit SHA | Path |
 |---|---|---|---|
-| 2.2 FOUNDATION_LOCKS_v2 | FOUNDATION_LOCK.md | `d3795eb` | /docs/governance/FOUNDATION_LOCK.md |
+| 2.2 FOUNDATION_LOCKS_v2 (initial 21 Locks) | FOUNDATION_LOCK.md | `d3795eb` | /docs/governance/FOUNDATION_LOCK.md |
 | 2.3 ARCHITECT_OPERATING_RULES | ARCHITECT_OPERATING_RULES.md | `d67cebd` | /docs/governance/ARCHITECT_OPERATING_RULES.md |
-| 2.4 NIR_OPERATING_RULES_v2 | NIR_OPERATING_RULES.md | `1cc34b6` | /docs/governance/NIR_OPERATING_RULES.md |
-| 3.1 (this file) | VIYO_CURRENT_MAP.md | pending after ratification | /docs/governance/VIYO_CURRENT_MAP.md (replaces CURRENT_STATE.md) |
+| 2.4 NIR_OPERATING_RULES_v2 (13→9 rules) | NIR_OPERATING_RULES.md | `1cc34b6` | /docs/governance/NIR_OPERATING_RULES.md |
+| 3.1 VIYO_CURRENT_MAP (initial; removes stale CURRENT_STATE.md) | VIYO_CURRENT_MAP.md | `4b56acc` | /docs/governance/VIYO_CURRENT_MAP.md |
+| 2.1 late commit (referenced by other governance) | ANTI_PATTERN_CATALOG.md | `d08aec9` | /docs/governance/ANTI_PATTERN_CATALOG.md |
+| 1 late commit (new audits/ subfolder created) | STATE_AUDIT.md | `bb67d37` | /docs/governance/audits/STATE_AUDIT.md |
+| 3.2 Stack Constraints addendum (Locks 30-37 → 29 Locks total) | FOUNDATION_LOCK.md | `30972b0` | /docs/governance/FOUNDATION_LOCK.md |
+| 3.2 CLAUDE.md v2 (removes #8 sanction + 15-file bloat + 9-tier hierarchy in-text) | CLAUDE.md | `92dc4b8` | /docs/governance/CLAUDE.md |
+| 3.2 §7 Cataloger activation | VIYO_CURRENT_MAP.md | `9f31be5` | /docs/governance/VIYO_CURRENT_MAP.md |
 
 **9 R-spec v2 PRs merged 2026-05-12 (pre-Curator-session foundational ratifications):**
 - R20 v2 Database Schema (PR-equiv, ZCBR PASSED)
@@ -272,15 +277,6 @@ Phase 1 (Image Studio MVP) public launch unlocks → **Phase 1B Intelligence Fou
 - 1.5 Editing Router ⏸ PAUSED (T73 gated on WP-1 + WP-2 verification per OD-019)
 - 1.6 / 1.7 / 1.8 / 1.11 — NOT STARTED
 - 1.9 / 1.10 — DEFERRED V1.0.5
-
-**Uncommitted Curator artifacts (transitional gap — see §16 Decision 1):**
-
-| File | Phase | Local path | Repo status |
-|---|---|---|---|
-| STATE_AUDIT.md | 1 | C:\Users\Admin\Documents\VIYO\governance\STATE_AUDIT.md (52KB) | NOT in repo. Drive copy at file ID `1VU1HqsyuyfZnIpNExh37Dl-UkLtLC9zW` from Phase 1 one-time save. |
-| ANTI_PATTERN_CATALOG.md | 2.1 | C:\Users\Admin\Documents\VIYO\governance\ANTI_PATTERN_CATALOG.md (37KB) | NOT in repo. Local only. |
-
-Both files are referenced by other governance files (FOUNDATION_LOCK.md cites ANTI_PATTERN_CATALOG; ARCHITECT_OPERATING_RULES cites both; this file's §11 + §12 cite ANTI_PATTERN_CATALOG). For inheritance to function, both should commit to repo. See §16 Decision 1.
 
 **Infrastructure verified (post-WP-1..WP-5 work):**
 
@@ -353,13 +349,14 @@ Other active ODs (OD-004 fashion brand selection / OD-006 Anthropic spend cap / 
 
 | File | Repo path | What it contains |
 |---|---|---|
-| FOUNDATION_LOCK.md | `/docs/governance/FOUNDATION_LOCK.md` (SHA `d3795eb`) | 21 ratified Foundation Locks (1-14 product-architecture; 15-16 RESERVED; 17-21 process); Stack Constraints Locks 30-37 ratified pending commit; single 12-tier authority hierarchy |
+| FOUNDATION_LOCK.md | `/docs/governance/FOUNDATION_LOCK.md` (SHA `30972b0`) | 29 ratified Foundation Locks (1-14 product-architecture; 15-16 RESERVED; 17-21 process; 30-37 Stack Constraints vendor lock-in); single 12-tier authority hierarchy |
 | ARCHITECT_OPERATING_RULES.md | `/docs/governance/ARCHITECT_OPERATING_RULES.md` (SHA `d67cebd`) | Architect role definition (§1 8 properties) + Decision Authority Matrix (§2) + Operating Discipline (§3 6 rules) + Communication Discipline (§4 5 rules) + Agent Topology Boundaries (§5) |
 | NIR_OPERATING_RULES.md | `/docs/governance/NIR_OPERATING_RULES.md` (SHA `1cc34b6`) | 9 universal-scope rules for any Claude session in any project (consolidates v1.1 13 rules into 9 conflict-free) |
 | ZCBR_STANDARD.md | `/docs/governance/ZCBR_STANDARD.md` | 14-item ZC+BR checklist + 3-checkpoint validation protocol (Lock 20 substrate) |
 | CODING_CONVENTIONS.md | `/docs/governance/CODING_CONVENTIONS.md` | 15 testable code rules (Drizzle migrations, Result pattern, TypeScript strict, behavioral tests, Mastra+Inngest, Sharp/PIL not AI for text/color, plugin registry, RLS, ZCBR enforcement) |
 | INFRASTRUCTURE_DECISIONS.md | `/docs/governance/INFRASTRUCTURE_DECISIONS.md` | ID-1 (staging canonical) / ID-2 (auto-deploy pre-Alpha) / ID-3 (R2 canonical storage) / ID-4 (R28 deferred) / ID-5 (Vercel git-connected) / ID-6 (Redis isolation) |
-| ANTI_PATTERN_CATALOG.md | `/docs/governance/ANTI_PATTERN_CATALOG.md` (pending commit — see §16 Decision 1) | 15 observations + 3 subpatterns + 1 sanction organized into 7 failure families mapped to 4 foundational fix categories |
+| ANTI_PATTERN_CATALOG.md | `/docs/governance/ANTI_PATTERN_CATALOG.md` (SHA `d08aec9`) | 15 observations + 3 subpatterns + 1 sanction organized into 7 failure families mapped to 4 foundational fix categories |
+| CLAUDE.md v2 | `/docs/governance/CLAUDE.md` (SHA `92dc4b8`) | Lightweight bootstrap entry point — §1 Identity / §2 Auto-Load Reading List (4 files) / §3 Role Context (5 roles incl. Cataloger formally active) / §4 Communication / §5 What NOT to do (3 top callouts) / §6 First Action protocol. Replaces prior 15-file reading list + 9-tier hierarchy in-text + Standing Instruction #8 sanction. Auto-loads at every Architect session start. |
 
 **Lower-tier references** (consulted as needed):
 - `/docs/governance/PRODUCT_ROADMAP.md` — Phase 1 11 sub-phases + Phase 2/3/4+ sequencing
@@ -405,7 +402,7 @@ The full 4-category framework + every observation + every external enforcement m
 
 **5 decisions archived 2026-05-12** as implementation-detail clutter from the Ops Architect 13-silent-writes incident (per ANTI_PATTERN_CATALOG Family 1 Observation 2). 8 remaining Ops Architect entries flagged for Phase 5.1 review.
 
-**Foundation Locks:** 21 ratified + Stack Constraints Locks 30-37 PROPOSED (8 locks, ratified by PO 2026-05-13 pending Phase 2.2 revision commit).
+**Foundation Locks:** 29 ratified (Locks 1-21 product-architecture + process + Stack Constraints 30-37 vendor lock-in at SHA `30972b0`); Locks 15-16 RESERVED.
 
 **Open Decisions:** 13 active (OD-001 through OD-020 with some closed; OD-008 closed 2026-05-08; OD-009 / 011-018 / 020 status tracked in Notion Open PO Decisions DB). Repo OPEN_DECISIONS.md lists only OD-001..007 — stale by 13 ODs (per STATE_AUDIT §Conflict).
 
@@ -475,49 +472,13 @@ The full 4-category framework + every observation + every external enforcement m
 
 ---
 
-## §16 — Curator-call decisions (2 surfaced)
+## §16 — Closing
 
-### Decision 1 — Commit ANTI_PATTERN_CATALOG.md + STATE_AUDIT.md to repo alongside this file
+This file is THE inheritance file. Every future VIYO agent reads this first at session start. The file synthesizes 9 governance commits this Curator session + 9 shipped R-spec v2 + VVOW v2.0 + PRODUCT_ROADMAP + Notion DB current state + Airtable + Drive folder structure + Cataloger role formally active + Stack Constraints Locks 30-37 ratified into a single readable surface.
 
-**Curator recommendation:** **Commit both files** at Phase 3.1 ratification, before authoring Phase 3.2 CLAUDE.md v2.
+§9 + §10 + §13 update at end of every Architect session as standing discipline. §1-3 + §4 + §7 + §14 + §15 require PO ratification to change. Quarterly drift detection per §15. §16 (this section) is the closing pointer — earlier session-end Curator-call decisions sections live in git history, not as residual sections in the inheritance file.
 
-**Why:** Both files are referenced by other ratified governance (FOUNDATION_LOCK.md cites ANTI_PATTERN_CATALOG; ARCHITECT_OPERATING_RULES cites both; this file's §11 + §12 cite ANTI_PATTERN_CATALOG). For inheritance to function, all 7 governance pointers in §11 must resolve to canonical state. Currently they don't — 2 of 7 are local-only.
-
-**Proposed paths (per workflow rule for working artifacts vs foundational substrate):**
-- ANTI_PATTERN_CATALOG.md → `/docs/governance/ANTI_PATTERN_CATALOG.md` (foundational substrate, lives alongside other governance)
-- STATE_AUDIT.md → `/docs/governance/audits/STATE_AUDIT.md` (audit/analysis, per workflow rule "Working artifacts (audits, analyses) → /docs/governance/audits/")
-
-**Alternative considered:** Defer both to Phase 5 cleanup. Rejected because Phase 3.2 CLAUDE.md v2 will reference ANTI_PATTERN_CATALOG; if uncommitted, CLAUDE.md v2's required reading list breaks.
-
-**PO action:** Ratify "commit both files at Phase 3.1 ratification with proposed paths" OR direct alternative.
-
-### Decision 2 — Stack Constraints Locks 30-37 commit timing
-
-**Curator recommendation:** **Commit Stack Constraints Locks 30-37 to FOUNDATION_LOCK.md** at next governance refresh window (could be Phase 3.2 CLAUDE.md v2 commit, or Phase 5.2 system cleanup). All 8 Locks were ratified by PO at FOUNDATION_LOCKS_v2 ratification but deferred to a revision commit. Current FOUNDATION_LOCK.md has 21 Locks; the revision adds 8 more.
-
-**Why now option (Phase 3.2):** Lock 30-37 substance is ratified; deferring leaves the Lock set incomplete; CLAUDE.md v2 hierarchy references "FOUNDATION_LOCK = 21 Locks + Stack Constraints 30-37" — easier to point to canonical state if both ratified Lock sets are committed.
-
-**Why Phase 5.2 option:** Stack Constraints are out-of-scope for the inheritance layer specifically; they're stack-vendor commitments operationalized by CODING_CONVENTIONS and existing R-specs. Inheritance file doesn't need them inline.
-
-**Curator recommendation:** Phase 3.2 alongside CLAUDE.md v2 commit. Closes the deferred commitment; FOUNDATION_LOCK.md becomes canonical Lock 1-21 + 30-37.
-
-**PO action:** Ratify "commit Stack Constraints 30-37 at Phase 3.2 governance refresh" OR direct Phase 5.2 timing.
-
----
-
-## §17 — Closing
-
-This file is THE inheritance file. Every future VIYO agent reads this first at session start; the file synthesizes 4 governance commits + 2 local-pending governance files + 9 shipped R-spec v2 + VVOW v2.0 + PRODUCT_ROADMAP + Notion DB current state + Airtable + Drive folder structure into a single readable surface.
-
-§9 + §10 + §13 update at end of every Architect session as standing discipline. §1-3 + §4 + §7 + §14 + §15 require PO ratification to change. Quarterly drift detection per §15.
-
-**Phase 3.1 is complete pending PO ratification.**
-
-After ratification:
-- Curator commits this file to `/docs/governance/VIYO_CURRENT_MAP.md` (replaces CURRENT_STATE.md) via direct local git.
-- §16 Decision 1: Curator commits ANTI_PATTERN_CATALOG.md + STATE_AUDIT.md to their respective paths in the same session.
-- §16 Decision 2: Curator commits Stack Constraints Locks 30-37 addendum to FOUNDATION_LOCK.md at Phase 3.2 (or defers to Phase 5.2 per PO direction).
-- Phase 3.2 CLAUDE.md v2 authors next, using this file as the auto-load target.
+**Phase 3.1 + Phase 3.2 complete.** Curator session 2026-05-13 closes after this refresh commit. Fresh Phase 4 PRD V8.1 Curator session opens in new Claude Code Desktop with clean context inheritance via CLAUDE.md v2 (SHA `92dc4b8`) and its 4-file reading list — VIYO_CURRENT_MAP (this file) + ARCHITECT_OPERATING_RULES + NIR_OPERATING_RULES + ANTI_PATTERN_CATALOG. The inheritance pattern is provable in practice — fresh Phase 4 session is the test.
 
 ---
 
