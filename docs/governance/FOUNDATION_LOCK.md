@@ -1,16 +1,16 @@
-# FOUNDATION_LOCKS_v2.md
+# FOUNDATION_LOCK.md
 
 **Phase 2.2 deliverable per VIYO_PATH_TO_MVP.md §Step 2**
-**Authored:** 2026-05-13 by VIYO Project Curator (Claude Code Desktop)
-**Supersedes:** `/docs/governance/FOUNDATION_LOCK.md` (current Locks 1–20 + RESERVED 15, 16)
-**Authority tier:** Foundational substrate. Below PO decisions + V8 PRD; above CODING_CONVENTIONS + R-spec ZCBR + per-Bullet directives + code.
+**Authored:** 2026-05-13 by VIYO Project Curator (Claude Code Desktop). **Amended:** 2026-05-13 Stack Constraints commit at Phase 3.2 revision; 2026-05-14 Lock 38 Universal Service Agnosticism addendum + clarification; 2026-05-14 Step C Author fix pass (16 VALID + 3 ratified ESCALATE resolutions per ARBITRATION_FOUNDATION_LOCK_v2.md).
+**Supersession history:** prior `/docs/governance/FOUNDATION_LOCK.md` (Locks 1–20 + RESERVED 15, 16) committed at SHA `30972b0`; superseded 2026-05-13 by this file's Locks 1–21 + Stack Constraints 30–37 at Phase 3.2 commit; Lock 38 addendum committed 2026-05-14 at SHA `ef47d2c` + clarification at `397fd50`.
+**Authority tier:** Foundational substrate per §Authority hierarchy below (canonical statement, supersedes prior 7-tier vs 9-tier disagreement).
 **Update authority:** Curator authors drafts; PO ratifies; Cataloger commits to canonical state (repo + Notion). Once committed, locks are non-negotiable; changes require PO directive that explicitly modifies the locked text.
 
 ---
 
 ## RULE A — Paragraph summary
 
-FOUNDATION_LOCKS_v2.md establishes **30 ratified Foundation Locks** (post-2026-05-14 Lock 38 addendum) (1–21 + 30–37) as the single canonical authority for VIYO non-negotiable architectural commitments. **Locks 1–14** carry forward the repo VVOW-era product-architecture commitments (Product Sequencing / Unified GrapesJS Backbone / MJML JSON Recipe / Cache-First / Pattern Recipe schema / Brand Vault organization / 3-Tier Provider / Programmatic editing / RLHF + Tinder swipe / LoRA pipeline / Pattern Seeding / Brain Council scope / Tenant Isolation via RLS / Canonical Migrations). **Locks 15 and 16** remain RESERVED (placeholder for future ratification, preserving continuity with artifacts referencing Locks 17–21 explicitly). **Locks 17–21** carry forward repo Locks 17–20 plus Lock 21 (Governance Agnosticism, ratified 2026-05-12 in Notion, committed to repo at SHA `d3795eb`). **Locks 30–37 (Stack Constraints series, ratified 2026-05-13 — committed at Phase 3.2 revision)** cover vendor lock-in commitments not otherwise codified: Lock 30 Mastra DAG / Lock 31 Inngest / Lock 32 GrapesJS Studio SDK / Lock 33 Stripe / Lock 34 Supabase Postgres / Lock 35 Upstash Redis / Lock 36 Next.js / Lock 37 Zod. Conflict A resolution: the 12 tech-stack-vendor Locks 1–8 + 11–14 in the Notion Foundation Locks DB are absorbed via the mapping in §2 — 4 archive because they're already substantively covered (Sharp by CODING_CONVENTIONS Rule 6; Cloudflare R2 by INFRASTRUCTURE_DECISIONS ID-3; TypeScript strict by CODING_CONVENTIONS Rule 3; RLS by repo Lock 13 + CODING_CONVENTIONS Rule 9); 8 absorb to Stack Constraints Locks 30–37 above. Each lock entry uses the canonical format: Number / Title / Statement / Scope / Rationale / Evidence / Date Locked / Authority Source. The deliverable closes with Phase 5.2 handoff (Notion Foundation Locks DB sync to this file's numbering + content), Curator recommendations for the 4 outstanding decisions (Stack Constraints adoption ✅ ratified / Locks 15-16 disposition ✅ RESERVED / Authority Source for Locks 1-14 ✅ VVOW + PO Direct / Notion archival policy ✅ Mark Superseded with pointers — all 4 PO-ratified), and pointer to ARCHITECT_OPERATING_RULES.md for how Locks 17, 18, 19, 21 are operationalized via external enforcement mechanisms per ANTI_PATTERN_CATALOG §3.
+FOUNDATION_LOCK.md establishes **30 ratified Foundation Locks** (1–14 + 17–21 product/process + 30–38 Stack Constraints + Universal Service Agnosticism = 28 ratified + 2 RESERVED = 30 numbered slots) as the single canonical authority for VIYO non-negotiable architectural commitments. **Locks 1–14** carry forward the repo VVOW-era product-architecture commitments (Product Sequencing / Unified GrapesJS Backbone / MJML JSON Recipe / Cache-First / Pattern Recipe schema / Brand Vault organization / 3-Tier Provider / Programmatic editing / RLHF + Tinder swipe / LoRA pipeline / Pattern Seeding / Brain Council scope / Tenant Isolation via RLS / Canonical Migrations). **Locks 15 and 16** remain RESERVED (placeholder for future ratification, preserving continuity with artifacts referencing Locks 17–21 explicitly). **Locks 17–21** carry forward repo Locks 17–20 plus Lock 21 (Governance Agnosticism, ratified 2026-05-12 in Notion, committed to repo at SHA `d3795eb`). **Locks 30–37 (Stack Constraints series, ratified 2026-05-13 — committed at Phase 3.2 revision)** cover vendor lock-in commitments not otherwise codified: Lock 30 Mastra DAG / Lock 31 Inngest / Lock 32 GrapesJS Studio SDK / Lock 33 Stripe / Lock 34 Supabase Postgres / Lock 35 Upstash Redis / Lock 36 Next.js / Lock 37 Zod. **Lock 38 (Universal Service Agnosticism, ratified 2026-05-14)** generalizes Lock 19's provider-agnosticism principle to every external service class; the substrate-vs-service-class boundary is decided by swap-cost (re-platform = locked substrate; registry config = agnostic service class). Conflict A resolution: the 12 tech-stack-vendor Locks 1–8 + 11–14 in the Notion Foundation Locks DB are absorbed via the mapping in §2 — 4 archive because they're already substantively covered (Sharp by CODING_CONVENTIONS Rule 6; Cloudflare R2 by INFRASTRUCTURE_DECISIONS ID-3; TypeScript strict by CODING_CONVENTIONS Rule 3; RLS by repo Lock 13 + CODING_CONVENTIONS Rule 9); 8 absorb to Stack Constraints Locks 30–37 above. Each lock entry uses the canonical format: Number / Title / Statement / Scope / Rationale / Evidence / Date Locked / Authority Source. The deliverable closes with Phase 5.2 handoff (Notion Foundation Locks DB sync to this file's numbering + content), Curator recommendations for the 5 ratified decisions (Stack Constraints adoption ✅ ratified 2026-05-13 / Locks 15-16 disposition ✅ RESERVED ratified 2026-05-13 / Authority Source for Locks 1-14 ✅ VVOW + PO Direct ratified 2026-05-13 / Notion archival policy ✅ Mark Superseded with pointers ratified 2026-05-13 / Lock 38 Universal Service Agnosticism ✅ ratified 2026-05-14), and pointer to ARCHITECT_OPERATING_RULES.md for how Locks 17, 18, 19, 21 are operationalized via external enforcement mechanisms per ANTI_PATTERN_CATALOG §3.
 
 ---
 
@@ -18,12 +18,12 @@ FOUNDATION_LOCKS_v2.md establishes **30 ratified Foundation Locks** (post-2026-0
 
 1. Read repo `/docs/governance/FOUNDATION_LOCK.md` for current Locks 1–20 (in full).
 2. Searched Notion Foundation Locks DB (data source `7ed3c2e2-958d-40f0-bb32-70711b52c6bc`) for all Lock pages; confirmed 17 distinct pages: Locks 1–8 + 11–14 (tech-stack, dated 2026-05-10) + Locks 17–21 (process). Locks 9, 10, 15, 16 absent from Notion DB.
-4. Fetched full body of Notion Lock 21 (Governance Agnosticism) and Lock 20 (ZCBR-Validated Specs Required) for verbatim canonical text.
-5. Read STATE_AUDIT.md §Conflict A (Lock 1–14 content mismatch between repo and Notion).
-6. Read VVOW_IMAGE_STUDIO_ARCHITECTURE.md §Appendix A Summary Table of Locks for product-architecture context.
-7. Read CODING_CONVENTIONS.md and INFRASTRUCTURE_DECISIONS.md to identify which Notion tech-stack locks are already substantively captured elsewhere.
-8. Read VIYO_PATH_TO_MVP.md §Step 2 specification (inline above) for absorption mapping requirement.
-9. Authored Locks 1–21 + absorption mapping + Stack Constraints proposal + Phase 5.2 handoff.
+3. Fetched full body of Notion Lock 21 (Governance Agnosticism) and Lock 20 (ZCBR-Validated Specs Required) for verbatim canonical text.
+4. Read STATE_AUDIT.md §Conflict A (Lock 1–14 content mismatch between repo and Notion).
+5. Read VVOW_IMAGE_STUDIO_ARCHITECTURE.md §Appendix A Summary Table of Locks for product-architecture context.
+6. Read CODING_CONVENTIONS.md and INFRASTRUCTURE_DECISIONS.md to identify which Notion tech-stack locks are already substantively captured elsewhere.
+7. Read VIYO_PATH_TO_MVP.md §Step 2 specification (inline above) for absorption mapping requirement.
+8. Authored Locks 1–21 + absorption mapping + Stack Constraints proposal + Phase 5.2 handoff.
 
 ---
 
@@ -32,26 +32,34 @@ FOUNDATION_LOCKS_v2.md establishes **30 ratified Foundation Locks** (post-2026-0
 The following hierarchy resolves Conflict C (per STATE_AUDIT.md §12). Top wins.
 
 1. **PO decisions** — recorded in Notion Decisions DB + accepted directives + chat ratifications.
-2. **V8 PRD (until V8.1 supersedes — Phase 4)** at Drive ID `1SL1zKOi80tFAcqzNvPDPA1vI9kZgNMKU`. Canonical product north star except where flagged underspecified by PO audit.
-3. **FOUNDATION_LOCKS_v2.md (this file)** — non-negotiable architectural commitments.
-4. **FOUNDATION_AUTHORITY.md** — 12 substrate definitions + 7 conflict resolutions (C-01 through C-07) + 4-competitor moat absorption framework.
-5. **VVOW Architecture v2.0** — Phase 1 canonical implementation reference.
-6. **VIYO_OPERATING_WORKFLOW.md** §1–5 (substrate sections) — agent topology, repo/product/storage roles, workflow paths.
-7. **CODING_CONVENTIONS.md** — 15 testable code rules (post-Phase 2.2 if absorption mapping ratified: extends to incorporate absorbed Notion locks; otherwise unchanged).
-8. **ZCBR_STANDARD.md** — R-spec quality bar (Lock 20 substrate).
-9. **R-spec ZCBR** — ZCBR-PASSED specs (Architect-authored only per Lock 20).
-10. **Per-Bullet directives** — operational scope only.
-11. **Existing code** — last priority; rewrite to match higher layers when conflicts arise.
+2. **PRD V8.1** at `/docs/PRD_V8.1.md` (committed `d2bd8dc` 2026-05-14; §6 revision at `e720e6c`). Canonical product north star; supersedes prior V8 PRD (Drive ID `1SL1zKOi80tFAcqzNvPDPA1vI9kZgNMKU` retained as historical archive).
+3. **FOUNDATION_LOCK.md (this file)** — non-negotiable architectural commitments.
+4. **FOUNDATION_AUTHORITY.md** — substrate definitions + conflict resolutions + 4-competitor moat absorption framework.
+5. **ANTI_PATTERN_CATALOG.md** — failure-mode taxonomy + foundational fix categories with external enforcement mechanisms; substrate for governance enforcement.
+6. **VVOW Architecture v2.0** — Phase 1 canonical implementation reference.
+7. **VIYO_OPERATING_WORKFLOW.md** §1–5 (substrate sections) — agent topology, repo/product/storage roles, workflow paths.
+8. **CODING_CONVENTIONS.md** — testable code rules; extends to incorporate absorbed Notion locks per §2 absorption mapping.
+9. **ZCBR_STANDARD.md** — R-spec quality bar (Lock 20 substrate).
+10. **R-spec ZCBR** — ZCBR-PASSED specs (Architect-authored only per Lock 20).
+11. **Per-Bullet directives** — operational scope only.
+12. **Existing code** — last priority; rewrite to match higher layers when conflicts arise.
 
-The 7-tier hierarchy in FOUNDATION_AUTHORITY.md §1.3 and the 9-tier hierarchy in current CLAUDE.md are both superseded by this single canonical statement. Phase 3.1 CLAUDE.md v2 references this hierarchy by pointer rather than restating, eliminating drift.
+The 7-tier hierarchy in FOUNDATION_AUTHORITY.md §1.3 and the 9-tier hierarchy in prior CLAUDE.md are both superseded by this single canonical 12-tier statement. CLAUDE.md v2 references this hierarchy by pointer rather than restating, eliminating drift.
 
 ---
 
-## Section 1 — The 21 Foundation Locks
+## Section 1 — The 30 Foundation Locks (1–21 + 30–38)
 
 Each lock uses format: **Number / Title / Statement / Scope / Rationale / Evidence / Date Locked / Authority Source.**
 
-Locks 1–14 = product-architecture commitments. Locks 15–16 = RESERVED. Locks 17–21 = process / governance commitments.
+Lock taxonomy:
+- **Locks 1–14** = product-architecture commitments (VVOW-era ratified).
+- **Locks 15–16** = RESERVED (placeholder for future ratification).
+- **Locks 17–21** = process / governance commitments.
+- **Locks 30–37** = Stack Constraints / vendor lock-in commitments (ratified 2026-05-13 at Phase 3.2 revision).
+- **Lock 38** = Universal Service Agnosticism / process-governance commitment generalizing Lock 19 (ratified 2026-05-14).
+
+Total: 28 ratified Locks + 2 RESERVED slots = 30 numbered Locks.
 
 ---
 
@@ -160,6 +168,8 @@ Locks 1–14 = product-architecture commitments. Locks 15–16 = RESERVED. Locks
 
 **Statement:** Image AI providers organize in three tiers. **Tier 1** (Aggregators, launch primary): Atlas Cloud + fal.ai peers route NanoBanana 2 Pro + Flux 1.1 Pro + Seedream — "Best for the Job" routing. **Tier 2** (Frontier Direct): OpenAI / Google / Ideogram direct APIs route GPT Image 2 / Imagen 4 / Ideogram V3 for high-complexity Tier 1 cannot handle. **Tier 3** (Self-Hosted): RunPod / Thunder Compute re-hosts Tier 1/2 models for CapEx optimization. Tier 1 → Tier 2 escalation is complexity-based, not failure-based. Tier 3 doesn't change WHICH model runs — only WHERE it runs. Tier 3 activates at 6,700 images/month → L40S ($202/mo) and at 18,700 images/month → A100 80GB ($562/mo), admin-gated approval, not auto-activated.
 
+**Named-launch-default framing (per F16 ESCALATE ratification 2026-05-14):** the aggregators (Atlas Cloud, fal.ai) and the specific models named above (NanoBanana 2 Pro, Flux 1.1 Pro, Seedream, GPT Image 2, Imagen 4, Ideogram V3) are **illustrative launch defaults**, not hardcoded mandates. They are **registry-resolved per Lock 38** (and Lock 19 for the AI-provider-specific instance) — business logic never hardcodes them. The governance text names them AS the ratified launch-default tier members; the registry holds the runtime resolution. A future tier reconfiguration (different aggregator / different model selection) is a registry config change, not a Lock 7 amendment, provided the 3-tier architecture itself is preserved.
+
 **Scope:** All generation routing in Phase 1+ via R29 PAL Plugin Registry.
 
 **Rationale:** Aggregators (Atlas Cloud + fal.ai) handle majority of traffic at competitive price. Direct API serves complexity exceeding Tier 1 capacity. Self-hosted GPU drops marginal cost at scale. Tier numbering inverted vs. April-era T46 v6.1; VVOW v2.0 supersedes (per Conflict Resolution C-05).
@@ -190,7 +200,9 @@ Locks 1–14 = product-architecture commitments. Locks 15–16 = RESERVED. Locks
 
 ### Lock 9 — Implicit RLHF + Tinder Swipe Gate
 
-**Statement:** Every user action emits an RLHF signal: drag to canvas = `+1 qaScore`; export image = `+5 qaScore`; regenerate (ignore variant) = `−1 qaScore`. QA Bouncer (GPT-4o-mini) auto-approves/rejects every generation. Humans verify via Tinder-style side-by-side swipe vs. original: 50% of auto-approved sampled, 20% of auto-rejected sampled. Override events feed DSPy optimization loop. After 5,000 swipe decisions, Fine-Tuned VLM Preference Classifier replaces humans for the sample. Skipping the swipe gate sample for QA Bouncer outputs is forbidden.
+**Statement:** Every user action emits an RLHF signal: drag to canvas = `+1 qaScore`; export image = `+5 qaScore`; regenerate (ignore variant) = `−1 qaScore`. QA Bouncer (GPT-4o-mini as named launch default) auto-approves/rejects every generation. Humans verify via Tinder-style side-by-side swipe vs. original: 50% of auto-approved sampled, 20% of auto-rejected sampled. Override events feed DSPy optimization loop. After 5,000 swipe decisions, Fine-Tuned VLM Preference Classifier replaces humans for the sample. Skipping the swipe gate sample for QA Bouncer outputs is forbidden.
+
+**Named-launch-default framing (per F16 ESCALATE ratification 2026-05-14):** GPT-4o-mini is the **illustrative launch default** for the QA Bouncer capability. The Bouncer is **registry-resolved per Lock 38** (and Lock 19 for AI-provider specifics) — business logic never hardcodes the model name. The lock's substance is the RLHF flywheel + auto-approval/rejection + Tinder swipe gate architecture; the specific Bouncer model is a registry tier default that the operator can swap without amending Lock 9.
 
 **Scope:** All Phase 1 generation events + all human review workflows. RLHF event emission integrated into every Inngest function in the generation pipeline (CODING_CONVENTIONS Rule 10).
 
@@ -352,6 +364,8 @@ Locks 1–14 = product-architecture commitments. Locks 15–16 = RESERVED. Locks
 
 **Statement:** No application code names a specific AI model, OCR provider, ESP, e-commerce platform, payment processor, embedding service, or other third-party service in business logic. All selections live in the Provider Routing plugin registry (R29 PAL v2, ZCBR PASSED 2026-05-12). The application calls `provider.execute(task)` and the registry resolves the actual provider for that task at runtime. Applies to all model classes: image generation, image segmentation, image upscaling, OCR, text generation, embedding, vision, video, audio, ESP delivery, e-commerce sync, payment processing. `if (model === 'NanoBanana')` or any hardcoded provider name in business logic is forbidden. The single exception is the Plugin Registry itself, which is the registry of names.
 
+**Relationship to Lock 38 (per F8 ESCALATE ratification 2026-05-14):** Lock 19 is the **AI-provider-specific instance** of Lock 38's universal service-agnosticism principle. Lock 19 is **NOT superseded** by Lock 38 — it is retained as the AI-provider-specific application, kept in force per the generalize-and-keep pattern. Lock 38 carries the universal rule across all external service classes; Lock 19 is its AI-provider elaboration. Future Lock-19-relevant rules co-evolve with Lock 38 — additions specific to AI providers author against Lock 19; additions applying to all external service classes author against Lock 38.
+
 **Scope:** All application code. All Mastra DAG step implementations. All Inngest function implementations. All API routes invoking external services.
 
 **Rationale:** Provider lock-in is a strategic risk. Hardcoded model names make migration to new models / providers a code-change exercise; registry-based selection makes it a config change.
@@ -480,7 +494,9 @@ Implementation choices belong to the agent doing the work, subject to ratificati
 
 **Scope:** All billing operations. All subscription management. All token-metered usage tracking per pricing lock D8. Webhook handlers with HMAC verification + idempotent processing per Notion D11 Webhook Architecture.
 
-**Rationale:** Stripe Billing supports token-metered usage with hard-stop at zero (per pricing lock D8 — Free/$49/$249/$499/$1499, no overage). Robust webhook protocol with HMAC verification. Provider Agnosticism (Lock 19) does not apply to billing — application layer cares about billing semantics, not provider abstraction.
+**Rationale:** Stripe Billing supports token-metered usage with hard-stop at zero (per pricing lock D8 — Free/$49/$249/$499/$1499, no overage). Robust webhook protocol with HMAC verification.
+
+**Named-launch-default framing (per F7 / Finding 2 ratification 2026-05-14):** Stripe is the **locked launch default** for payment processing AND payment processing is **registry-resolved under Lock 38** (parallel to Lock 7's AI provider naming pattern — named tier ≠ hardcoded in business logic). The prior Lock 33 Rationale carve-out clause stating that Provider Agnosticism did not apply to billing is **STRUCK** by this ratified ruling; payment processors fall under Lock 38's universal agnosticism with Stripe as the named launch default the registry resolves to at launch. A future payment-processor swap is a registry config change, not a Lock 33 amendment.
 
 **Evidence:** Pricing lock D8; CODING_CONVENTIONS Rule 5; FOUNDATION_AUTHORITY substrate L6 (Token Metering + Billing); Notion Lock 6 (2026-05-10 PO Direct).
 
@@ -562,7 +578,9 @@ Implementation choices belong to the agent doing the work, subject to ratificati
 
 **Scope:** All VIYO external integrations, all service classes, all phases. Governance locks the capability interface and the cost model; the registry holds the vendor selection. The named service classes (LLM providers / image-generation providers / ESPs / payment processors / CRMs / analytics) are illustrative — the rule is universal and applies to any external service class VIYO adopts.
 
-**Relationship to Lock 19:** Lock 19 (Provider Agnosticism — AI providers) is the originating instance and remains in force as the AI-provider-specific elaboration. Lock 38 generalizes the same principle to every service class. Lock 19 is NOT superseded — it is Lock 38 applied to AI providers.
+**Relationship to Lock 19:** Lock 19 (Provider Agnosticism — AI providers) is the originating instance and remains in force as the AI-provider-specific elaboration. Lock 38 generalizes the same principle to every service class. **Lock 19 is NOT superseded — it is the AI-provider-specific instance of Lock 38** (per F8 ESCALATE ratification 2026-05-14: more-specific Locks remain in force as kept elaborations of more-general Locks). Cross-reference is bidirectional: Lock 19's body declares the relationship explicitly; this Lock 38 clause completes the bidirectional reference.
+
+**Relationship to Stack Constraints Locks 30–37 (per F6 ESCALATE ratification 2026-05-14):** **A service is locked substrate if swapping it requires re-platforming; it is an agnostic service class if swapping it is a registry configuration change. Locks 30–37 are substrate; Lock 38 governs service classes.** This swap-cost test draws the boundary permanently. Locks 30–37 (Mastra DAG / Inngest / GrapesJS Studio SDK / Stripe / Supabase Postgres / Upstash Redis / Next.js / Zod) commit to vendors whose substitution would be a re-platform or rewrite — they stand as substrate locks. Lock 38 governs the agnostic service classes (payment processors per F7 ruling, ESPs, AI providers per Lock 19, CRMs, analytics, observability, future) where substitution is a registry config change. Lock 33 (Stripe) is treated under both lenses: Stripe is the named launch default substrate AND payment processing falls under Lock 38 universal agnosticism — the swap-cost test resolves the apparent tension because payment processor substitution is registry-resolved at the integration layer.
 
 **Rationale:** Hardcoded vendors create governance conflicts the moment a vendor changes, prevent valid multi-vendor strategy (multi-ESP, payment-processor switching, CRM flexibility), and make every integration a permanent decision. Runtime resolution is the pattern proven in Lock 19 and the §6 pricing-as-Portal-config reframe — the system surfaces options, the operator or an agent decides at runtime, nothing operational is frozen into governance.
 
@@ -593,24 +611,24 @@ The Stack Constraints series is surfaced as PROPOSED below; PO ratification requ
 
 | Notion Lock | Substance | Destination | Status |
 |---|---|---|---|
-| **Notion Lock 1** Mastra DAG orchestrator only | Workflow engine vendor lock | **PROPOSED Stack Constraint Lock 30** | Surfaced below |
-| **Notion Lock 2** Inngest event bus only | Job queue + event bus vendor lock | **PROPOSED Stack Constraint Lock 31** | Surfaced below |
-| **Notion Lock 3** GrapesJS Studio SDK only | Email/Image editor canvas vendor lock | **PROPOSED Stack Constraint Lock 32** | Surfaced below (substantively covered by repo Lock 2 product-architecture commitment; vendor-lock element separate) |
+| **Notion Lock 1** Mastra DAG orchestrator only | Workflow engine vendor lock | **RATIFIED Stack Constraint Lock 30** (2026-05-13) | See §Section 1 above |
+| **Notion Lock 2** Inngest event bus only | Job queue + event bus vendor lock | **RATIFIED Stack Constraint Lock 31** (2026-05-13) | See §Section 1 above |
+| **Notion Lock 3** GrapesJS Studio SDK only | Email/Image editor canvas vendor lock | **RATIFIED Stack Constraint Lock 32** (2026-05-13) | See §Section 1 above (substantively covered by repo Lock 2 product-architecture commitment; vendor-lock element separate) |
 | **Notion Lock 4** Sharp only for programmatic image ops | Image processing library vendor lock | **ARCHIVE** — substantively covered by CODING_CONVENTIONS Rule 6 (Sharp/PIL for compositing, NEVER AI for text/color) | No new Lock needed |
 | **Notion Lock 5** Cloudflare R2 only for asset storage | Asset storage vendor lock | **ARCHIVE** — substantively covered by INFRASTRUCTURE_DECISIONS ID-3 (Cloudflare R2 canonical asset storage, ratified 2026-05-08) + repo Lock 6 (Brand Vault DB-driven organization) | No new Lock needed |
-| **Notion Lock 6** Stripe only for payment processing | Payment processor vendor lock | **PROPOSED Stack Constraint Lock 33** | Surfaced below (no current repo Lock / CC Rule / Infrastructure ID covers payment processor vendor) |
-| **Notion Lock 7** Supabase Postgres primary database | Primary database vendor lock | **PROPOSED Stack Constraint Lock 34** | Surfaced below (implicit in repo Lock 13 RLS + Lock 14 Migrations + CC Rule 1, but vendor not explicit anywhere) |
-| **Notion Lock 8** Upstash Redis only for caching/rate limiting | Cache + rate limit vendor lock | **PROPOSED Stack Constraint Lock 35** | Surfaced below (INFRASTRUCTURE_DECISIONS ID-6 references Upstash for isolation testing but doesn't declare it a vendor lock) |
-| **Notion Lock 11** Next.js 14+ App Router only | Frontend framework vendor lock | **PROPOSED Stack Constraint Lock 36** | Surfaced below (not in current Locks or CC Rules) |
+| **Notion Lock 6** Stripe only for payment processing | Payment processor vendor lock | **RATIFIED Stack Constraint Lock 33** (2026-05-13; F7 carve-out struck 2026-05-14 — Stripe is named launch default registry-resolved under Lock 38) | See §Section 1 above |
+| **Notion Lock 7** Supabase Postgres primary database | Primary database vendor lock | **RATIFIED Stack Constraint Lock 34** (2026-05-13) | See §Section 1 above (implicit in repo Lock 13 RLS + Lock 14 Migrations + CC Rule 1; this lock makes vendor explicit) |
+| **Notion Lock 8** Upstash Redis only for caching/rate limiting | Cache + rate limit vendor lock | **RATIFIED Stack Constraint Lock 35** (2026-05-13) | See §Section 1 above (INFRASTRUCTURE_DECISIONS ID-6 references Upstash for isolation testing; this lock makes vendor explicit) |
+| **Notion Lock 11** Next.js 14+ App Router only | Frontend framework vendor lock | **RATIFIED Stack Constraint Lock 36** (2026-05-13) | See §Section 1 above |
 | **Notion Lock 12** TypeScript strict mode mandatory | Type discipline | **ARCHIVE** — substantively covered by CODING_CONVENTIONS Rule 3 (TypeScript strict, zero `any`) | No new Lock needed |
-| **Notion Lock 13** Zod only for runtime validation | Validation library vendor lock | **PROPOSED Stack Constraint Lock 37** | Surfaced below (Zod used implicitly throughout R-specs and CC Rules but not explicit anywhere as a vendor lock) |
+| **Notion Lock 13** Zod only for runtime validation | Validation library vendor lock | **RATIFIED Stack Constraint Lock 37** (2026-05-13) | See §Section 1 above |
 | **Notion Lock 14** Supabase RLS mandatory for tenant tables | Tenant isolation enforcement | **ARCHIVE** — substantively covered by repo Lock 13 (Tenant Isolation via Supabase RLS) + CODING_CONVENTIONS Rule 9 | No new Lock needed |
 
 **Summary:** 4 archive (substantively covered elsewhere), 8 proposed Stack Constraints (Locks 30–37, contingent on PO ratification).
 
 ### 2.3 Stack Constraints Lock series 30–37 (RATIFIED 2026-05-13 — committed at Phase 3.2 revision)
 
-PO ratified all 8 Stack Constraints Locks at FOUNDATION_LOCKS_v2 ratification 2026-05-13; commit deferred to Phase 3.2 governance refresh. Locks 30–37 now appear in §Section 1 above with full 8-field canonical format. The table below is retained as a quick-reference summary of the substance + cross-reference to Notion source locks.
+PO ratified all 8 Stack Constraints Locks at this file's original ratification 2026-05-13; commit deferred to Phase 3.2 governance refresh. Locks 30–37 now appear in §Section 1 above with full 8-field canonical format. The table below is retained as a quick-reference summary of the substance + cross-reference to Notion source locks.
 
 | Lock | Title | Statement | Authority Source |
 |---|---|---|---|
@@ -640,6 +658,7 @@ After PO ratifies this file + the absorption mapping, Phase 5.2 (System Cleanup 
 | Lock 14 (RLS) | Mark Status = Superseded; pointer to repo Lock 13 + CODING_CONVENTIONS Rule 9 |
 | Locks 17, 18, 19, 20, 21 | Add `Repo commit:` property pointing to `/docs/governance/FOUNDATION_LOCK.md` (this file, post-commit) |
 | Locks 9, 10, 15, 16 (absent from Notion) | Create Notion pages from this file's content; Status = Locked; Authority Source = VVOW + PO Direct |
+| **Lock 38** Universal Service Agnosticism (new, dated 2026-05-14) | **Create Notion page** for Lock 38 with the file's Lock 38 substance (Statement + Scope + Relationship to Lock 19 + Relationship to Stack Constraints + Rationale + Evidence); Status = Locked; Authority Source = PO Direct; Date Locked = 2026-05-14. Cross-reference: Lock 19's Notion page is updated with "Lock 38 is the universal generalization; Lock 19 is the AI-provider-specific instance" — bidirectional pointer per F8 ratification (Lock 19 NOT superseded). |
 
 Phase 5.2 is Cataloger work (not Curator) — surface as Manus directive in Phase 5 governance refresh.
 
@@ -647,17 +666,20 @@ Phase 5.2 is Cataloger work (not Curator) — surface as Manus directive in Phas
 
 ## Section 4 — Operationalization handoffs
 
-Lock 17, 18, 19, 21 are the substrate for ARCHITECT_OPERATING_RULES.md (Phase 2.3). Per ANTI_PATTERN_CATALOG §3, each Lock is operationalized via an external enforcement mechanism:
+Lock 17, 18, 19, 21, 38 are the substrate for ARCHITECT_OPERATING_RULES.md. Per ANTI_PATTERN_CATALOG §3, each Lock is operationalized via an external enforcement mechanism — capability described per Lock 21 (specific tools / agents / skills named in the implementing R-specs, not in this governance text):
 
-| Lock | Operationalized in | External enforcement mechanism (per ANTI_PATTERN_CATALOG §3) |
+| Lock | Operationalized in | External enforcement capability |
 |---|---|---|
-| **Lock 17** Foundation-First | Phase 2.3 ARCHITECT_OPERATING_RULES §3 Operating Discipline | Reviewer Claude rejects Bullet directives + R-specs containing "TODO: reconcile" deferral language; CI grep on commit |
-| **Lock 18** Tool-Capability-First | Phase 2.3 ARCHITECT_OPERATING_RULES §3 | R-spec ZCBR §X "Tool Capability Check" section mandatory; Reviewer Claude rejects R-specs without it |
-| **Lock 19** Provider Agnosticism | R29 v2 PAL + ZCBR validation + ARCHITECT_OPERATING_RULES §3 | CI grep on commit for hardcoded model name strings; Reviewer Claude §9 Gate rejection; Kimi pre-flight via `zcbr-spec-validation` skill |
-| **Lock 20** ZCBR-Validated Specs Required | ZCBR_STANDARD.md §5 (3 checkpoints) | Architect self-validation at authoring; Reviewer Claude validation at §9 Gate intake; Kimi pre-flight via `zcbr-spec-validation` skill before code start |
-| **Lock 21** Governance Agnosticism | Phase 2.3 ARCHITECT_OPERATING_RULES §3 + Phase 3.1 CLAUDE.md v2 + Phase 3.2 VIYO_CURRENT_MAP | Lock 21 self-validation skill at governance authoring; CI lint on governance files for specific-implementation patterns; PO-side test before sending directives |
+| **Lock 17** Foundation-First | ARCHITECT_OPERATING_RULES Operating-Discipline section | An external validator agent rejects Bullet directives + R-specs containing deferral-language indicating unreconciled upstream conflict; a commit-time lint rejects governance text with the same pattern. |
+| **Lock 18** Tool-Capability-First | ARCHITECT_OPERATING_RULES Operating-Discipline section | An R-spec quality bar requires a Tool Capability Check section; the validator rejects R-specs without it. |
+| **Lock 19** Provider Agnosticism (AI-provider-specific instance of Lock 38) | R29 v2 PAL + ZCBR validation + ARCHITECT_OPERATING_RULES Operating-Discipline section | A commit-time lint rejects hardcoded model-name strings in business logic; the validator rejects R-specs with the same pattern; a pre-flight check refuses code start on R-specs not carrying a passing validation header. |
+| **Lock 20** ZCBR-Validated Specs Required | ZCBR_STANDARD.md (3-checkpoint protocol) | Architect self-validation at authoring; an external validator at directive-intake gate; a pre-flight check before code start. |
+| **Lock 21** Governance Agnosticism | ARCHITECT_OPERATING_RULES Operating-Discipline section + CLAUDE.md v2 + VIYO_CURRENT_MAP | A self-validation skill at governance authoring; a commit-time lint on governance files for specific-implementation patterns; PO-side test before sending directives. |
+| **Lock 38** Universal Service Agnosticism (per F13 fix 2026-05-14) | R29 v2 PAL + ARCHITECT_OPERATING_RULES Operating-Discipline section | A commit-time lint rejects hardcoded vendor names in business logic outside Stack Constraints (Locks 30–37) carve-out classes; a registry-schema enforcement check confirms every external service class resolves via the Plugin Registry; the swap-cost boundary test (re-platform = substrate / registry config = service class) is applied at governance-text authoring time. |
 
-Locks 1–14 (product-architecture commitments) are operationalized in code via the R-specs that implement them (R20 v2 / R24 v2 / R29 v2 / R31 v2 / T46 v2) + the schemas they declare. No additional governance enforcement layer needed beyond the schemas themselves.
+Locks 1–14 (product-architecture commitments) are operationalized in code via the R-specs that implement them + the schemas they declare. No additional governance enforcement layer needed beyond the schemas themselves.
+
+Locks 30–37 (Stack Constraints) are operationalized as substrate commitments — the named vendor IS the lock's substance (Lock 21 edge case applies). Operational enforcement is at the package-manifest layer (package.json dependencies match locked vendors) + project-config layer (provider URLs match locked services); no separate governance enforcement mechanism beyond the operational reality of the project depending on the named vendors.
 
 Lock 13 (Tenant Isolation via Supabase RLS) is the substrate for CODING_CONVENTIONS Rule 9 + R22 v2 (Security & Auth).
 
@@ -671,50 +693,64 @@ Four Curator-call decisions surface to PO for ratification with this deliverable
 
 **Curator recommendation (accepted):** **Adopt all 8** (Locks 30, 31, 32, 33, 34, 35, 36, 37) as proposed in §2.3 and now committed to §Section 1 above. Vendor lock-in commitments at Lock authority tier preserves taxonomy clarity; absorbing into CODING_CONVENTIONS would balloon the rule set from 15 to 23 and obscure the focused rule structure. Stack Constraints series 30s keeps Lock numbering gap-aware (15, 16 RESERVED; 22–29 reserved for future product-architecture or process Locks).
 
-**Status:** PO-ratified at FOUNDATION_LOCKS_v2.md ratification 2026-05-13; committed to repo at Phase 3.2 revision (this commit). Locks 30–37 are non-negotiable architectural commitments effective immediately.
+**Status:** PO-ratified at this file's original ratification 2026-05-13; committed to repo at Phase 3.2 revision. Locks 30–37 are non-negotiable architectural commitments effective immediately.
 
 **Alternative considered:** Absorb 8 Notion tech-stack locks into CODING_CONVENTIONS Rules 16–23. Rejected because CC Rules are coding patterns, not vendor lock-in commitments.
 
 **PO action:** Ratify "all 8 Stack Constraints Locks 30–37" OR reject Stack Constraints series in favor of CODING_CONVENTIONS expansion. If ratified, Phase 2.2 revision adds Locks 30–37 to this file. If rejected, Phase 5.2 reconciliation marks Notion entries Superseded with CC Rule pointers and CC expansion happens in Phase 5.2.
 
-### Decision 2 — Locks 15, 16 disposition
+### Decision 2 — Locks 15, 16 disposition ✅ RATIFIED 2026-05-13
 
-**Curator recommendation:** **Keep RESERVED.** No substrate exists for new content; assigning without ratification would re-introduce the reactive accumulation anti-pattern (Family 7 in ANTI_PATTERN_CATALOG). Reserved slots preserve continuity with artifacts referencing Locks 17–21 explicitly.
+**Curator recommendation (accepted):** **Keep RESERVED.** No substrate exists for new content; assigning without ratification would re-introduce the reactive accumulation anti-pattern (Family 7 in ANTI_PATTERN_CATALOG). Reserved slots preserve continuity with artifacts referencing Locks 17–21 explicitly.
 
-**Alternative considered:** Renumber Locks 17–21 to 15–19 (collapsing reserved gap). Rejected because existing repo + Notion artifacts reference Lock 17, 18, 19, 20, 21 by number; renumbering cascades changes across CLAUDE.md, FOUNDATION_AUTHORITY, ZCBR_STANDARD, Operating Workflow, ANTI_PATTERN_CATALOG, and external dependencies (Reviewer Claude protocol, Kimi pre-flight check).
+**Status:** PO-ratified 2026-05-13 at Phase 2.2 ratification. Locks 15 and 16 remain RESERVED as named in §Section 1.
 
-**PO action:** Ratify "Locks 15, 16 remain RESERVED" OR direct content assignment with explicit Lock 15 / Lock 16 substance.
+**Alternative considered:** Renumber Locks 17–21 to 15–19 (collapsing reserved gap). Rejected because existing repo + Notion artifacts reference Lock 17, 18, 19, 20, 21 by number; renumbering cascades changes across CLAUDE.md, FOUNDATION_AUTHORITY, ZCBR_STANDARD, Operating Workflow, ANTI_PATTERN_CATALOG, and external dependencies (validator agent + pre-flight check protocols).
 
-### Decision 3 — Authority Source field for Locks 1–14
+### Decision 3 — Authority Source field for Locks 1–14 ✅ RATIFIED 2026-05-13
 
-**Curator recommendation:** Set Authority Source for Locks 1–14 as "VVOW + PO Direct" per the chain: VVOW Architecture v2.0 was authored by Architect Claude, PO-accepted 2026-05-12; the underlying Locks emerged from PO audit of V8 PRD §20K.1 captured in VVOW §0 (recorded 2026-05-08).
+**Curator recommendation (accepted):** Authority Source for Locks 1–14 = "VVOW + PO Direct" per the chain: VVOW Architecture v2.0 was authored by Architect Claude, PO-accepted 2026-05-12; the underlying Locks emerged from PO audit of V8 PRD §20K.1 captured in VVOW §0 (recorded 2026-05-08).
+
+**Status:** PO-ratified 2026-05-13 at Phase 2.2 ratification. Applied to Locks 1–14 in §Section 1.
 
 **Alternative considered:** "Architect Claude" only — rejected because the Locks pre-date Architect Claude's authoring; they originated from PO audit of V8 PRD.
 
-**PO action:** Ratify "VVOW + PO Direct" OR specify alternative attribution per Lock.
+### Decision 4 — Notion Foundation Locks DB archival policy ✅ RATIFIED 2026-05-13
 
-### Decision 4 — Notion Foundation Locks DB archival policy
+**Curator recommendation (accepted):** **Mark Notion entries Status = Superseded** (or "Status = Locked" with `Repo commit:` pointer for Locks 17–21) rather than deleting. Retains audit trail; future drift detection can compare Notion vs. repo without losing historical context.
 
-**Curator recommendation:** **Mark Notion entries Status = Superseded** (or "Status = Locked" with `Repo commit:` pointer for Locks 17–21) rather than deleting. Retains audit trail; future drift detection can compare Notion vs. repo without losing historical context.
+**Status:** PO-ratified 2026-05-13 at Phase 2.2 ratification. Phase 5.2 reconciliation executes per §Section 3 handoff table.
 
 **Alternative considered:** Delete Notion Lock pages after this file commits. Rejected because Notion retains the only record of when each lock was first authored (Date Locked property); deletion loses audit trail.
 
-**PO action:** Ratify "mark Superseded with pointers" OR direct deletion.
+### Decision 5 — Lock 38 Universal Service Agnosticism ✅ RATIFIED 2026-05-14
+
+**Curator recommendation (accepted):** Add Lock 38 as a process-governance commitment generalizing Lock 19's provider-agnosticism principle to every external service class. Substrate-vs-service-class boundary decided by swap-cost (re-platform = locked substrate; registry config = agnostic service class). Lock 19 retained as the AI-provider-specific instance per F8 ESCALATE ratification (more-specific Locks remain in force as kept elaborations of more-general Locks).
+
+**Status:** PO-ratified 2026-05-14. Committed to repo at SHA `ef47d2c` + clarification at `397fd50`. Step C Author fix pass 2026-05-14 applied the F6 swap-cost boundary clause to Lock 38 + bidirectional Lock 19 cross-reference + F7 Lock 33 billing carve-out strike + F16 named-launch-default framing on Locks 7/9.
+
+**Authority Source:** PO Direct.
+
+**Alternative considered:** Treat AI-provider agnosticism alone (Lock 19) as sufficient; not generalize. Rejected because hardcoded vendors across non-AI service classes (payment, ESP, CRM, analytics, observability) create the same governance-conflict failure mode Lock 19 was authored to prevent — the principle generalizes.
 
 ---
 
 ## Section 6 — Closing
 
-This file establishes 21 ratified Foundation Locks as the single canonical authority for VIYO non-negotiable architectural commitments, resolves Conflict A via the absorption mapping in §2, commits Lock 21 (Governance Agnosticism) from Notion to repo, and surfaces 4 Curator-call decisions for PO ratification.
+This file establishes 30 ratified Foundation Locks as the single canonical authority for VIYO non-negotiable architectural commitments, resolves Conflict A via the absorption mapping in §2 (8 Notion tech-stack Locks ratified as Stack Constraints Locks 30–37 + 4 absorbed by reference to CODING_CONVENTIONS / INFRASTRUCTURE_DECISIONS / Lock 13), commits Lock 21 (Governance Agnosticism) from Notion to repo, generalizes Lock 19 to Lock 38 (Universal Service Agnosticism with the swap-cost boundary clause for Stack Constraints), and records 5 PO-ratified Curator-call decisions (Stack Constraints adoption / Locks 15-16 RESERVED / Authority Source for Locks 1-14 / Notion archival policy / Lock 38 addendum).
 
-After PO ratification:
-- **Repo commit:** This file replaces `/docs/governance/FOUNDATION_LOCK.md` via Manus directive (Path A). Commit message cites the PO ratification chat quote per the proposed PR ratification trail schema (ANTI_PATTERN_CATALOG §3 Category 2).
-- **Phase 2.3 (ARCHITECT_OPERATING_RULES.md)** authors next, using Locks 17, 18, 19, 21 as substrate per §4 above.
-- **Phase 5.2** Notion Foundation Locks DB sync executes per §3 handoff (Cataloger work, surfaced as Manus directive).
-- **Phase 2.2 revision** (if Stack Constraints ratified) adds Locks 30–37 to this file.
+Ratification record:
+- **Original commit:** Phase 2.2 deliverable committed 2026-05-13.
+- **Phase 3.2 revision:** Stack Constraints Locks 30–37 committed 2026-05-13.
+- **Lock 38 addendum:** committed 2026-05-14 at SHA `ef47d2c` + clarification at `397fd50`.
+- **Step C Author fix pass:** 16 VALID + 3 ratified ESCALATE resolutions applied 2026-05-14 per ARBITRATION_FOUNDATION_LOCK_v2.md (committed at SHA `5616757`).
 
-**Phase 2.2 is complete pending PO ratification.**
+Operational handoffs:
+- **ARCHITECT_OPERATING_RULES.md** uses Locks 17, 18, 19, 21, 38 as substrate per §Section 4 above.
+- **Phase 5.2 Notion Foundation Locks DB sync** executes per §Section 3 handoff (Cataloger work, surfaced as Manus directive).
+
+**Phase 2.2 + Phase 3.2 revision + Lock 38 addendum + Step C Author fix pass all ratified.**
 
 ---
 
-*End of FOUNDATION_LOCKS_v2.md*
+*End of FOUNDATION_LOCK.md*
