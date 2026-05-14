@@ -18,7 +18,7 @@
 | 3 | MVP Definition | **Ratified 2026-05-14** (with 3 tightening edits applied: §3.4 Lovart specifics moved to §6; §3.5 R52 reclassified as post-launch; §3.3 critical-vs-parallel adjacency note added) |
 | 4 | V1.0 6-Month Vision | **Ratified 2026-05-14** (Path 2 — keep label, §4.7 disclosure; with §1 cross-reference clause + §4.7 load-bearing prominence + §4.3-§4.6 Manus Inventory counts removed/tagged) |
 | 5 | Architecture | **Ratified 2026-05-14 — Architecture A** (Portal-inclusive; OD-009 = next-Architect early priority; 2 inline corrections applied: Path C terminology replaced with VIYO_CURRENT_MAP §7 citation; §5.6 Red row 4 R-specs named with substrate) |
-| 6 | Cost Model + Pricing Architecture | **Ratified 2026-05-14** (post 2-step structural reframe: pricing = Portal config; cost-transparency locked, margin numbers NOT locked — loss-leader valid; OD-001 + OD-021 CLOSED via §6.5 dissolution) |
+| 6 | Cost Model + Pricing Architecture | **Ratified 2026-05-14** + **§-level revision 2026-05-14** adding §6.3.1 Recommended Per-Plan Feature Matrix (starting Portal admin config, fully admin-overridable per §6.3 / Lock 38 pattern) + §6.7 Full Cost Suite (Admin) locked capability (standing live cost surface; B-1.19 implementation surface, MVP-scoped non-B-1.18-gate operator infrastructure) |
 | 7 | Roadmap | **Ratified 2026-05-14 + Lock 38 clarification SHA `397fd50`** (with 2 consistency items: §7.2 G3-G5 cite PRODUCT_ROADMAP.md §Release readiness gates; §7.5 cross-ref to §5.6 R-spec list) |
 | 8 | Open Decisions | **Ratified 2026-05-14** (with 2 corrections applied: §8.3 MVP-blocking set = {OD-004, OD-005, OD-009, OD-019} = 4 ODs; OD-003 reclassified deferred-not-blocking Phase 1B; §7.2 G2 + §3.5 MVP-done list aligned) |
 | 9 | Success Criteria | **Authored — surfacing for ratification** |
@@ -257,6 +257,7 @@ Sub-phases 1.1 through 1.8 (Core Loop → Pattern DB cache → Token billing →
 - Phase 1 sub-phases 1.1-1.8 + 1.11
 - **Admin shells:** B-1.01 brand admin signup + onboarding wizard at app.viyo.com; B-1.02 team invites + role assignment
 - **Billing UI:** B-1.14 Lovart-style tiered billing UI substrate (per §3.4 Pricing Architecture Statement — runtime values via Portal admin; cost model + cost-transparency surfaces per §6)
+- **Full Cost Suite (Admin):** **B-1.19 standing live cost-and-margin surface at admin.viyo.com per §6.7 locked capability — adjacent to B-1.14 billing UI. MVP-scoped operator infrastructure (operator-facing); NOT a B-1.18 customer-acceptance-gate criterion. Closes the gap §6.7 names: pricing-as-runtime requires a live cost surface, not just a config-save-time check.**
 - **Shopify integration:** B-0.17 Shopify connector read-only catalog sync (PKCE OAuth per Notion D48)
 - **22 Generation Modes:** B-1.07 A1-A8 e-commerce + brand basics; B-1.08 A9-A14 brand + asset; B-1.09 A16-A22 marketing + fashion + e-commerce advanced; A15 covered in sub-phase 1.11
 - **Designer Brain:** B-1.04 Brain 6 wiring (per Lock 12 Brain Council scope)
@@ -358,6 +359,7 @@ These belong to **Portal admin runtime configuration**. Pricing decisions are op
 - All Phase 1.5-1.8 + 1.11 sub-phases shipped per §3.2 status table
 - Admin shells (B-1.01/02) deployed at app.viyo.com + admin.viyo.com
 - Lovart-style tiered billing UI substrate (B-1.14) operational with Stripe (Lock 33) integration; cost-transparency surfaces per §6.2 active at config-save — Portal-configured tier values informed by cost model + transparency per §3.4
+- **B-1.19 Full Cost Suite (Admin) operational at admin.viyo.com per §6.7 locked capability — MVP-scoped operator infrastructure; NOT a B-1.18 customer-acceptance-gate criterion (a missing cost widget does not block a customer generating an image). Verified separately at MVP launch as operator-readiness criterion; tracked in §9.1 sub-phase shipment list.**
 - Shopify catalog sync (B-0.17) operational with PKCE OAuth per Notion D48
 - All 22 Generation Modes (A1-A22) live and routed via Art Director Router (T46 v2)
 - G2 + G8 public-launch blockers closed: A15 Brand Kit Mode functional + G8 Character Consistency functional
@@ -748,6 +750,50 @@ The Portal MAY display a recommended margin range as **operator-side suggestion*
 
 **Strategic implication:** pricing decisions are operational, not architectural. Tier structures iterate based on customer acquisition data, retention data, competitive shifts (per §2.1 quarterly Lovart audit), and product expansion (Phase 2+ feature unlocks). Pricing is a product-marketing function, not a PRD revision function.
 
+### §6.3.1 — Recommended Per-Plan Feature Matrix (starting configuration)
+
+**Status:** RECOMMENDED DEFAULT, NOT LOCKED. The matrix below is the Curator-suggested starting Portal admin configuration at V1.0 launch. Every cell is **fully admin-overridable at runtime per §6.3** (parallel to Lock 38's registry-resolution pattern applied to internal feature gating): the Portal admin may rename tiers, add/remove tiers, move features between tiers, change allocations, or restructure the feature axis itself without governance revision. Treat this matrix as PRD's recommended Portal admin state on day-one of launch, not a PRD-locked artifact.
+
+**Tier labels and dollar values are Portal-configured per §6.3 — NOT set in this PRD.** The matrix maps the recommended **relative tier structure** (which features at which tier), not absolute pricing. Tier labels Tier 1 through Tier 5 below are deliberately abstract placeholders to avoid soft-re-locking the pricing decision §6.5 dissolved (OD-001 + OD-021). The Portal admin assigns actual tier names + dollar values at launch and updates them continuously without governance revision.
+
+**Deck-source positioning (directional, subject to change):** §6.3.1 also serves as the canonical source for per-package/per-plan structure in VIYO investor and marketing materials. As such it represents the **DESIRED, DIRECTIONAL** package structure — **NOT a commitment.** It changes as product scope and market position evolve; any deck or external material derived from it must carry the same "directional, subject to change" framing. A change to this matrix is a normal §-level revision per the PRD's maintenance rule, NOT a breach of anything externally shown. This pre-empts an implied-commitment expectations gap with funders or external audiences: the matrix is the current direction, not a contractual promise.
+
+**Tier count assumption:** 5 tiers as a starting structure (mirrors the Lovart-style tier-count common in the segment per §6.4 + the Notion D8 reference structure). Tier count itself is Portal-configurable per §6.3 — the matrix illustrates relative structure at 5 tiers; admin may collapse to 4 or expand to 6 without governance revision.
+
+| Capability | Tier 1 | Tier 2 | Tier 3 | Tier 4 | Tier 5 |
+|---|---|---|---|---|---|
+| **Monthly credit allocation** (per §6.1 cost model: 5 credits/image at aggregator rate) | 30 / day trial | 2,000 | 11,000 | 25,000 | 80,000 |
+| **Generation Modes accessible (A1–A22 per VVOW §4.3)** | Subset (basic A1–A5) | Mid subset (A1–A12) | Full A1–A22 | Full A1–A22 | Full A1–A22 |
+| **Editing toolbelt (B1–B10 per VVOW §3 + Lock 8)** | Programmatic-only (B2/B4/B8 — zero AI tokens) | B1–B5 (programmatic + basic AI) | Full B1–B10 | Full B1–B10 | Full B1–B10 |
+| **A15 Brand Kit Mode (public-launch blocker G2 per VVOW §14)** | No | No | Yes | Yes | Yes |
+| **G8 Character Consistency Across Scenes (public-launch blocker per VVOW §14)** | No | No | Yes | Yes | Yes |
+| **Brand Vault asset retention (Lock 6 organization)** | 50 assets | 500 | 5,000 | 25,000 | Unlimited |
+| **Concurrent brands per account (multi-tenancy per Lock 13)** | 1 | 1 | 3 | 10 | Unlimited |
+| **Provider routing tier (Lock 7)** | Tier 1 (aggregator) only | Tier 1 + limited Tier 2 burst | Tier 1 + Tier 2 frontier-direct on complexity | Tier 1 + Tier 2 + priority routing | All tiers + Lock 7 Tier 3 self-hosted (when activated per admin gate) |
+| **Shopify catalog sync (R33 + B-0.17 PKCE OAuth)** | Read-only | Read-only | Full read+write | Full + multi-store hints | Full + multi-store + dedicated capacity |
+| **Brand-Specific LoRA pipeline (Lock 10 — V1.0.5)** | No | No | No | No | Yes (when V1.0.5 ships) |
+
+*Note on matrix scope:* the 10 rows above map only capabilities already established in PRD body / VVOW substrate / Foundation Locks. Common SaaS tier-able operational levers (per-account user seats, support cadence, API access, Pattern DB cache priority, RLHF swipe-gate participation framing) are deliberately NOT in this matrix — the §-level revision authoring audit (2026-05-14) confirmed those would introduce new substrate not currently in PRD scope; they belong to Portal admin operational decisions or to future PRD revisions when their underlying capability is scoped. The matrix only tiers what the product already commits to ship.
+
+**Notes on matrix construction:**
+
+- Credit allocations align with §6.1 cost model + §6.4 Lovart competitive reference (Tier 3 ~11,000 credits/month aligns to Lovart Pro tier credit allocation reference per §6.4). Specific allocation magnitudes per tier are illustrative starting values; admin reconfigures.
+- Public-launch blockers (G2 + G8 per VVOW §14) gate at Tier 3 and above by default — the lower tiers ship without them, deferring those capabilities for paying customers. Admin may reconfigure (e.g., grant G2 to Tier 2 as a customer-acquisition lever).
+- Lock 7 Tier 3 self-hosted access is Tier 5-only by default (matches the Lock 7 admin-gated activation pattern at scale thresholds 6,700 → 18,700 img/mo per Lock 7 + Conflict Resolution C-05).
+- Brand-Specific LoRA (Lock 10) is reserved for Tier 5 even when V1.0.5 ships, reflecting the cost asymmetry of per-brand fine-tuning pipelines.
+- Lovart-style "Unlimited Relax" generation track (queue-based, no credit consumption per §6.4 baseline) is NOT in the starting matrix. Admin may add as a Tier 3+ feature post-launch if desired.
+
+**Admin override examples (illustrative, not exhaustive):**
+
+- Launch promotion: extend full A1–A22 access to Tier 2 for first 90 days (customer-acquisition lever).
+- Cohort-specific: grant Brand-Specific LoRA to Tier 4 customers in select verticals.
+- Vertical bundling: rename Tier 5 to "Agency" and add multi-client white-label as a feature unlock.
+- Loss-leader: reduce Tier 3 monthly price (Portal-configured per §6.3) while retaining Tier 3 feature set (per §6.2 — cost transparency surfaces the consequence; no architectural block).
+
+**Strategic framing:** the matrix anchors a sane starting state so the Portal admin is not making 10+ independent capability-to-tier configuration decisions on day-one of launch. Once launched, the admin iterates the matrix continuously against cohort acquisition data, retention curves, competitive shifts (per §2.1 quarterly Lovart audit), and product expansion (Phase 2 / Phase 1B feature unlocks). The matrix is a starting state, not a destination — and the dollar values that anchor each tier are Portal admin decisions made at launch + iterated thereafter, NOT PRD content.
+
+**Pointer:** §6.7 Full Cost Suite (Admin) provides the standing live margin + per-brand drill-down + divergence-alerting surfaces that inform admin decisions to deviate from this recommended matrix.
+
 ### §6.4 — Competitive Reference (input, not target)
 
 Lovart Feb 2026 baseline (per PO-provided public sources; quarterly audit per §2.1):
@@ -795,6 +841,47 @@ Both Open Decisions are **CLOSED via architectural dissolution**, NOT resolved t
 | Pricing UI runtime substrate (B-1.14) ships at MVP | Green | Per §3.1 public launch scope minimum. Lovart-style billing UI is the substrate; pricing values + margin posture are Portal admin runtime input. |
 
 **Pointer:** §8 Open Decisions records OD-001 + OD-021 as CLOSED via dissolution. §9 Success Criteria includes cost-transparency surface as Phase 1 acceptance gate substrate (per §6.2 + §6.3 locked Portal requirement).
+
+### §6.7 — Full Cost Suite (Admin) — locked capability
+
+**Why §6.7 exists (substrate of §6.2):** §6.2 locked cost transparency as the substrate informing pricing decisions. The §6.3 locked Portal requirement specified a **config-save-time** transparency check — necessary but insufficient. Pricing-as-runtime (Lock 38 pattern applied to pricing per §6.3) means the operator makes pricing decisions continuously, not only at config-save events. **A live runtime decision requires a live cost surface.** Shipping Portal-configurable pricing without an always-on cost suite is the steering wheel without the dashboard. §6.7 closes the gap by locking the standing admin cost surface as a capability requirement.
+
+**Locked capability (per Lock 21 — describes capability, not implementation):**
+
+The system MUST provide an always-on cost-and-margin surface accessible to admin-role operators (admin.viyo.com per INFRASTRUCTURE_DECISIONS ID-2). The surface MUST:
+
+1. **Surface real-time cost per operation type, per provider, per tier** — drawn from actual provider invoice data (not estimates). Operation types span the §6.1 cost model categories (image generation / image segmentation / image upscale / OCR / text generation / embedding / vision / future). Provider attribution per Lock 19 + Lock 38 registry resolution.
+2. **Surface live gross margin per tier (plan)** computed against the current Portal-configured pricing (per §6.3) and the current usage mix per tier. Updates as usage shifts.
+3. **Surface aggregate live gross margin** across the whole configured customer base. Updates as the customer mix shifts.
+4. **Surface margin trajectory** under variable cache-hit rate assumptions (Lock 4 Pattern DB cache compounding per §2.4) and Tier 3 self-hosted activation states (Lock 7 thresholds at 6,700 / 18,700 img/mo). The operator sees how the cost basis evolves under each assumption.
+5. **Surface per-brand cost drill-down** — for any brand, the cost it generated this billing period, the revenue it produced, the gross margin posture, and the trend. Surfaces which brands are expensive operators, which are loss-leaders by intent (per §6.2 explicit allowance for loss-leader pricing), and which are profitable anchors.
+6. **Surface divergence alerting** against the operator-set margin target (the per-brand and aggregate recommendations per §6.2 — recommendations only, NOT floors). When live margin diverges from the operator-set target by a material amount (admin-configurable threshold), the surface alerts the operator. The alert is informational — the architecture does NOT enforce; the operator decides whether the divergence is acceptable (e.g., temporary loss-leader window) or requires reconfig (per §6.6 risk row).
+
+**Scope:** admin-role operators only. Non-admin user roles see the customer-facing economics surfaces per §6.2 (their tier price, their credit allocation, their usage) — NOT the per-provider cost data, NOT the aggregate margin data, NOT the per-brand drill-down for other brands.
+
+**What §6.7 does NOT require (intentionally):**
+
+- A specific UI implementation (Lock 21 — implementation choice for B-1.19 author + Architect role)
+- A specific provider-invoice-ingestion mechanism (Lock 19 + Lock 38 — registry-resolved)
+- A specific divergence-alert delivery channel (email / in-app / webhook — Portal admin choice)
+- A specific aggregation cadence (real-time stream vs. minute / hour granularity — operator scaling choice)
+- A specific historical retention window (admin-configurable per operational economics)
+
+**Implementation surface:** B-1.19 — see §3 below.
+
+**Relationship to §6.2 + §6.3:**
+
+- §6.2 locked the principle: cost transparency informs pricing decisions.
+- §6.3 locked the config-save-time check: Portal MUST surface cost/margin at every pricing-config-save attempt.
+- §6.7 locks the standing live surface: admin MUST have a continuous cost-and-margin view, not just a save-time snapshot.
+
+The three together (§6.2 principle + §6.3 save-time enforcement + §6.7 standing surface) make cost transparency operationally real, not procedural.
+
+**MVP scope:** §6.7 is MVP-scoped. The operator needs the standing cost suite for sane operations at public launch — running Portal-configurable pricing without it leaves the operator pricing-blind in production. However, §6.7 is **NOT** a B-1.18 customer-acceptance-gate item. A customer generating an image at app.viyo.com does not interact with the admin cost suite; a missing or partially-implemented cost widget at admin.viyo.com does not block customer acceptance. §6.7 ships at MVP for operator reasons, not customer reasons. (See §3 B-1.19 placement: adjacent to B-1.14 billing UI, MVP-scoped, NOT a B-1.18 gate.)
+
+**Risk if §6.7 not shipped at MVP:** operator runs Portal-configurable pricing blind. Loss-leader windows extend past intent; profitable cohorts are not surfaced; cost-basis shifts (cache hit rate changes / provider price changes / Tier 3 activation thresholds) are not noticed until quarterly review. §6.2 cost-transparency lock is theoretical-only without the standing surface to make it real. **§6.7 is the implementation surface that turns §6.2 from principle into operational reality.**
+
+**Pointer:** §9 Success Criteria §9.1 sub-phase shipment criteria includes B-1.19 as MVP-scoped operator infrastructure (NOT B-1.18 acceptance gate). Phase 5 substrate refresh will source B-1.19 detailed Bullet spec into Master Build Sequence v1.1 + R-spec authoring queue.
 
 ---
 
@@ -961,6 +1048,7 @@ B-1.18 ("Phase 1 MVP Acceptance Ceremony") is the public-launch gate Bullet per 
 - All Phase 1 sub-phases 1.1-1.8 + 1.11 shipped per §3.2 acceptance gate column. Sub-phases 1.9 (Pattern Seeding) + 1.10 (Brand-Specific LoRA) deferred V1.0.5 per §7.4 + OD-002 + Lock 10 pipeline.
 - Admin shells (B-1.01/02) deployed at `app.viyo.com` + `admin.viyo.com` per INFRASTRUCTURE_DECISIONS ID-2.
 - Lovart-style tiered billing UI substrate (B-1.14) operational with Stripe (Lock 33) integration.
+- **B-1.19 Full Cost Suite (Admin) operational at admin.viyo.com per §6.7 locked capability — MVP-scoped operator-readiness criterion; verified separately from B-1.18 customer-acceptance gate (operator-facing surface, not customer-facing). Standing always-on cost-and-margin view + per-brand drill-down + divergence alerting per §6.7 capability list. Closes §6.2 cost-transparency principle into operational reality (steering wheel + dashboard, not just config-save check).**
 - Shopify catalog sync (B-0.17) operational with PKCE OAuth per Notion D48 + R33.
 - All 22 Generation Modes (A1-A22) live and routed via Art Director Router (T46 v2).
 - All B1-B10 editing tools operational per R24 v2.1 contracts + T47 v2 Studio Editing Tools.
