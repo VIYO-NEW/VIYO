@@ -44,7 +44,7 @@ The following hierarchy resolves Conflict C (per STATE_AUDIT.md §12). Top wins.
 11. **Per-Bullet directives** — operational scope only.
 12. **Existing code** — last priority; rewrite to match higher layers when conflicts arise.
 
-The 7-tier hierarchy in FOUNDATION_AUTHORITY.md §1.3 and the 9-tier hierarchy in prior CLAUDE.md are both superseded by this single canonical 12-tier statement. CLAUDE.md v2 references this hierarchy by pointer rather than restating, eliminating drift.
+Prior authority-hierarchy statements in FOUNDATION_AUTHORITY.md §1.3 (text still present in that file as superseded substrate — Phase 5 reconciliation target) and in prior CLAUDE.md (replaced in CLAUDE.md v2 with a pointer to this hierarchy) are both superseded by this single canonical statement. The canonical hierarchy is the enumeration above, not a count.
 
 ---
 
