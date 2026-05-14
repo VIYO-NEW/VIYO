@@ -556,7 +556,9 @@ Implementation choices belong to the agent doing the work, subject to ratificati
 
 ### Lock 38 — Universal Service Agnosticism
 
-**Statement:** No external service is hardcoded in VIYO business logic. Every external service — across every class, including but not limited to LLM providers, image-generation providers, ESPs, payment processors, CRMs, analytics, and any future class — is resolved at runtime through a provider registry. Business logic calls a capability interface; the registry resolves the concrete vendor. Any service in any class is swappable via registry configuration without a code change or a governance revision.
+**Statement:** No external service is hardcoded in VIYO business logic. Every external service — across every class, including but not limited to **AI/ML providers** (LLM providers, image-generation providers, segmentation providers, upscale providers, OCR providers, embedding providers, vision providers), **communication and marketing services** (ESPs), **commerce platforms** (Shopify, WooCommerce, BigCommerce, and the site-builder class including WordPress, Wix, Squarespace), **CRMs** (HubSpot, Salesforce, and peers), **payment processors**, **analytics**, **observability**, and any future class — is resolved at runtime through a provider registry. Business logic calls a capability interface; the registry resolves the concrete vendor. Any service in any class is swappable via registry configuration without a code change or a governance revision.
+
+**This list is illustrative and non-exhaustive — Lock 38 applies to every external service class VIYO integrates, whether or not it is named here. The test is functional: if VIYO calls out to it, it is registry-resolved.**
 
 **Scope:** All VIYO external integrations, all service classes, all phases. Governance locks the capability interface and the cost model; the registry holds the vendor selection. The named service classes (LLM providers / image-generation providers / ESPs / payment processors / CRMs / analytics) are illustrative — the rule is universal and applies to any external service class VIYO adopts.
 
