@@ -146,13 +146,14 @@ Phase 5 = governance cleanup. Steps B + C done (CLAUDE.md and FOUNDATION_LOCK.md
 
 ## 8 — OPEN PO ACTION ITEMS (from Notion Open PO Decisions DB — verify current status there)
 
-- OD-001 — Pricing reconciliation (deck vs Notion D8). NOTE: largely dissolved via PRD V8.1 §6.5 — pricing is Portal runtime config. Verify status.
+- OD-001 — ✅ CLOSED via PRD V8.1 §6.5 dissolution ratified 2026-05-14 (commit `e720e6c`). Pricing is Portal-configured runtime per §6.3; both legacy deck slide 9 + Notion D8 tier structures lose canonical status. D85 ratified 2026-05-15 confirms PRD V8.1 vision authority. No verification needed — closure foundational.
 - OD-002 — Legal review on Milled / Email Love / Really Good Emails scraping. Blocks Pattern Seeding.
-- OD-003 — AgentMail IMAP provider selection (Phase 1B).
+- OD-003 — AgentMail IMAP Provider Selection (Phase 1B). Open / Urgent per Notion canonical (page `35c9a84a-4679-8167-adba-f105de476038`). Options A-D documented in Notion; recommendation = Option A (Nylas unified API, $0.01/connection/month). Deferred-not-blocking for MVP per PRD §3.1 + §7.4 (V1.0.5 / Phase 1B).
 - OD-004 — R29 PAL Rewrite Scope (per Notion canonical + PRD V8.1 §8.1). CLOSED 2026-05-15 via R29 v2 ZCBR-PASS Iα. [Historical note: prior text "Atlas Cloud + fal.ai catalog verification" was OD-003-area framing per OPEN_DECISIONS.md L20 — wrong-number drift.]
 - OD-005 — 3 Swipe Gate reviewer accounts. Blocks Phase 1 RLHF flywheel.
 - OD-006 — Set Anthropic Console spend cap $100/mo.
-- (OD-021 — pricing tier / margin floor — CLOSED via dissolution.)
+- OD-009 — ✅ CLOSED 2026-05-15 (Composer Queue concurrency 2 parallel lanes ratified per Phase A A2; commit `90f96e0`; Notion `35e9a84a-4679-81bd-8b91-fa66b472513b`).
+- OD-021 — ✅ CLOSED 2026-05-14 via PRD V8.1 §6.5 dissolution ratification (pricing tier + margin floor questions dissolved by §6.2 Margin Visibility ratification; Portal-configured runtime per §6.3). D85 ratified 2026-05-15 confirms.
 
 Verify all against the live Open PO Decisions DB — `996b2e7d-50f8-41bd-a815-faf5194277f1`.
 

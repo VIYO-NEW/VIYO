@@ -36,7 +36,7 @@ Parent: `3559a84a-4679-8194-946e-f8fc5479e4c2` (ARCHIVED — See Child Databases
 
 | DB | Parent ID | Count |
 |---|---|---|
-| 🗄️ Decisions Database | `7a769bf3-c291-4825-aa42-c1c8bc94ca30` | 90 (D1-D85+; D67/D68 duplicates pending cleanup) |
+| 🗄️ Decisions Database | `7a769bf3-c291-4825-aa42-c1c8bc94ca30` | 92 (D1-D85 + D86 + D87 post Path α execution 2026-05-15) |
 | 🚧 Open PO Decisions DB | `b31bfeb0-8108-475e-ac71-44295f36ff55` | 21 (OD-001 to OD-021) |
 | 📐 Conflict Resolutions DB | `5ea24908-fa42-4bca-a15d-3a72b15b5f6d` | 7 (C-01 to C-07) |
 | ⚠️ Doc Gaps DB | `cc88a002-5fc1-4528-b4de-4520ff271ea1` | 9 (GAP-001 to GAP-009) |
@@ -83,17 +83,7 @@ Airtable Q&A Master Log: 202 records (Approved 152 / Conflict Resolved 44 / Defe
 3. X4-B (DEFERRED, LOWER — PRD long-horizon vision drift; Curator-call placement).
 4. A9 authoring (Adversary loop required).
 5. A8 (OD-006 spend cap; Atlas/fal.ai DROPPED).
-6. **D67/D68 ID-reuse cleanup (Path α ratified 2026-05-15)** — Notion Decisions DB has D67 and D68 IDs each reused across May 11 + May 12 sessions with DIFFERENT content (not duplicates; ID-reuse collision caught by Curator Rule E grep-verify at session close). Path α ratified: May 11 entries keep IDs (D68 = Lock 21 ratification, heavily cited downstream — no renumbering ripple); May 12 entries renumber to D86 + D87 to preserve audit trail.
-
-   Implementation (next-session execution; can dispatch to Manus or execute via PO-side Claude direct Notion writes):
-
-   a. Create new page D86 in Decisions DB (`b886724c-aa03-432b-889e-e63d9cdb7de6`) with content copied from existing page `35e9a84a-4679-81df-9291-e6ba7e10f3b4` (R20 v2 hybrid base, May 12)
-   b. Create new page D87 in Decisions DB with content copied from existing page `35e9a84a-4679-81b8-a208-dff6ebb10463` (R20 v2 supersession, May 12)
-   c. Mark page `35e9a84a-4679-81df-9291-e6ba7e10f3b4` Status = Superseded; add cross-ref note in body: "Superseded by D86 per ID-reuse cleanup Path α ratified 2026-05-15. Page retained for audit trail."
-   d. Mark page `35e9a84a-4679-81b8-a208-dff6ebb10463` Status = Superseded; add cross-ref note: "Superseded by D87 per ID-reuse cleanup Path α ratified 2026-05-15. Page retained for audit trail."
-   e. Update SESSION_STATE.md count: "90 (D1-D85+; D67/D68 duplicates pending cleanup)" → "92 (D1-D87 canonical post-renumber)"
-
-   Curator-call: this is the perfect "warm-up" task for fresh PO-side Claude to demonstrate new auto-load discipline working (read SESSION_STATE → execute parked work → confirm orientation in <5 min).
+6. **D67/D68 ID-reuse cleanup — Path α EXECUTED 2026-05-15** ✅ — D86 created at Notion page `3619a84a-4679-816a-9b94-d289207becd6` (May 12 D67 content); D87 created at `3619a84a-4679-819e-a3fc-d2257ff12956` (May 12 D68 content); May 12 original pages marked Superseded with cross-refs. May 11 entries retain D67/D68 IDs per first-claim discipline (Lock 21 cited downstream — no ripple). Steps a-e archived in commit history; no further action required.
 
 7. Cleanup batch:
    - R23 v2 rewrite (B-XC.22 scope; per Manus tension)
