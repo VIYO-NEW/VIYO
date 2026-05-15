@@ -46,7 +46,7 @@ Airtable Q&A Master Log: 202 records (Approved 152 / Conflict Resolved 44 / Defe
 
 **Full canonical audit reference:** Drive `VIYO_Canonical_State_Audit_2026-05-15.md` (ID `1ogFA3ySF-IJDSlVDvKzzsvCDeiZv34Vo`, 245 KB).
 
-**Session reasoning ledger:** Drive `SESSION_LEDGER_2026-05-15.md` (Manus producing, parallel).
+**Session reasoning ledger:** Drive `SESSION_LEDGER_2026-05-15.md` (ID `1rWVLk7zGEcs_SoB1Pj2_82hYp8k0HuwZ`, 20 KB — delivered by Manus 2026-05-15).
 
 ---
 
@@ -83,12 +83,23 @@ Airtable Q&A Master Log: 202 records (Approved 152 / Conflict Resolved 44 / Defe
 3. X4-B (DEFERRED, LOWER — PRD long-horizon vision drift; Curator-call placement).
 4. A9 authoring (Adversary loop required).
 5. A8 (OD-006 spend cap; Atlas/fal.ai DROPPED).
-6. Cleanup batch:
-   - D67/D68 duplicates (per Manus tension): verify canonical version, mark duplicate as Superseded
+6. **D67/D68 ID-reuse cleanup (Path α ratified 2026-05-15)** — Notion Decisions DB has D67 and D68 IDs each reused across May 11 + May 12 sessions with DIFFERENT content (not duplicates; ID-reuse collision caught by Curator Rule E grep-verify at session close). Path α ratified: May 11 entries keep IDs (D68 = Lock 21 ratification, heavily cited downstream — no renumbering ripple); May 12 entries renumber to D86 + D87 to preserve audit trail.
+
+   Implementation (next-session execution; can dispatch to Manus or execute via PO-side Claude direct Notion writes):
+
+   a. Create new page D86 in Decisions DB (`b886724c-aa03-432b-889e-e63d9cdb7de6`) with content copied from existing page `35e9a84a-4679-81df-9291-e6ba7e10f3b4` (R20 v2 hybrid base, May 12)
+   b. Create new page D87 in Decisions DB with content copied from existing page `35e9a84a-4679-81b8-a208-dff6ebb10463` (R20 v2 supersession, May 12)
+   c. Mark page `35e9a84a-4679-81df-9291-e6ba7e10f3b4` Status = Superseded; add cross-ref note in body: "Superseded by D86 per ID-reuse cleanup Path α ratified 2026-05-15. Page retained for audit trail."
+   d. Mark page `35e9a84a-4679-81b8-a208-dff6ebb10463` Status = Superseded; add cross-ref note: "Superseded by D87 per ID-reuse cleanup Path α ratified 2026-05-15. Page retained for audit trail."
+   e. Update SESSION_STATE.md count: "90 (D1-D85+; D67/D68 duplicates pending cleanup)" → "92 (D1-D87 canonical post-renumber)"
+
+   Curator-call: this is the perfect "warm-up" task for fresh PO-side Claude to demonstrate new auto-load discipline working (read SESSION_STATE → execute parked work → confirm orientation in <5 min).
+
+7. Cleanup batch:
    - R23 v2 rewrite (B-XC.22 scope; per Manus tension)
    - OD closure verification (per Manus tension): cross-check Notion Closed status vs repo commits
-7. Y1 future micro-amend: CR §3.4 A1 substrate fold-in; A9 fold-in option.
-8. Issue C: image-gen-pipeline + rlhf-emission Drive YAML→1.1 at next edit.
+8. Y1 future micro-amend: CR §3.4 A1 substrate fold-in; A9 fold-in option.
+9. Issue C: image-gen-pipeline + rlhf-emission Drive YAML→1.1 at next edit.
 
 ---
 
