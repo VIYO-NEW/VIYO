@@ -1,7 +1,7 @@
 # FOUNDATION_LOCK.md
 
 **Phase 2.2 deliverable per VIYO_PATH_TO_MVP.md §Step 2**
-**Authored:** 2026-05-13 by VIYO Project Curator (Claude Code Desktop). **Amended:** 2026-05-13 Stack Constraints commit at Phase 3.2 revision; 2026-05-14 Lock 38 Universal Service Agnosticism addendum + clarification; 2026-05-14 Step C Author fix pass (16 VALID + 3 ratified ESCALATE resolutions per ARBITRATION_FOUNDATION_LOCK_v2.md).
+**Authored:** 2026-05-13 by VIYO Project Curator (Claude Code Desktop). **Amended:** 2026-05-13 Stack Constraints commit at Phase 3.2 revision; 2026-05-14 Lock 38 Universal Service Agnosticism addendum + clarification; 2026-05-14 Step C Author fix pass (16 VALID + 3 ratified ESCALATE resolutions per ARBITRATION_FOUNDATION_LOCK_v2.md); 2026-05-14 Lock 21 §-level revision (Path 1) — Statement bullet 4 extended with count-restatement clause + substrate-pointer clarifying sentence; "Does NOT apply to" Operational-reports line extended with audit-artifact point-in-time count carve-out. Per PO ratification of Phase 5.1 Decisions DB audit Arbitration Finding 1 ESCALATE. Canonical home for the count-restatement standing rule.
 **Supersession history:** prior `/docs/governance/FOUNDATION_LOCK.md` (Locks 1–20 + RESERVED 15, 16) committed at SHA `30972b0`; superseded 2026-05-13 by this file's Locks 1–21 + Stack Constraints 30–37 at Phase 3.2 commit; Lock 38 addendum committed 2026-05-14 at SHA `ef47d2c` + clarification at `397fd50`.
 **Authority tier:** Foundational substrate per §Authority hierarchy below (canonical statement, supersedes prior 7-tier vs 9-tier disagreement).
 **Update authority:** Curator authors drafts; PO ratifies; Cataloger commits to canonical state (repo + Notion). Once committed, locks are non-negotiable; changes require PO directive that explicitly modifies the locked text.
@@ -403,7 +403,7 @@ Governance instructions — including PO directives to Architect, Architect-auth
 - Governance text states the capability needed
 - Governance text states the principle the capability serves
 - Governance text states the success condition that confirms the capability exists
-- Governance text does **NOT** name specific files, specific paths, specific step numbers, specific tag names, specific schema field names, specific tool names, or specific implementation patterns
+- Governance text does **NOT** name specific files, specific paths, specific step numbers, specific tag names, specific schema field names, specific tool names, or specific implementation patterns, **including restated counts or ranges of items in a live source-of-truth surface** (e.g., 'D1-D29 decisions', '21 ratified Locks', '15 sections', '6 platforms') — point to the enumeration or live source. A substrate-pointer cell names identity (name, URL, ID, purpose, schema); it does not state the count of the substrate's contents — the count is the live source's, not the pointer's.
 
 Implementation choices belong to the agent doing the work, subject to ratification.
 
@@ -419,7 +419,7 @@ Implementation choices belong to the agent doing the work, subject to ratificati
 - Implementation specs (R-spec ZCBR documents — these ARE implementation, must be specific)
 - Per-Bullet directives (implementation work for Kimi — must be specific)
 - Code (always specific by nature)
-- Operational reports / state observations (PR numbers, commit SHAs, file IDs — these are observations of state, not governance)
+- Operational reports / state observations (PR numbers, commit SHAs, file IDs, point-in-time counts observed in audit artifacts — these are observations of state, not governance)
 
 **Test for compliance:** Read any governance text. Ask: "Does this name a specific file, path, step number, tag, schema field, or implementation pattern?" If yes, the text fails Lock 21. Rewrite to state the capability and let the implementing agent choose the specifics.
 
