@@ -160,11 +160,11 @@ Largely shipped by Manus (25 features Done, 3 In Progress). Bullets cover remain
 - Complexity: M | Open deps: None
 
 **B-0.13 — L12-A Builder Technical Skills baseline**
-- Moat: None | Outcome: VIYO repo /.skills/ folder seeded with 11 Tier 1 Builder Skills copied from Portal repo (K1 = COPY)
+- Moat: None | Outcome: Tier 1 Builder Skills authored to Drive claude folder + uploaded to Portal product at ai.viyo.new per D63 Path E; loadable at runtime via skills.pickForTask()
 - VVOW: n/a | R-spec: n/a | Features: P0-07 (L12-A scope only)
 - Locks: 17 | Skills: directive-authoring-v2 (Architect-side)
 - Prereqs: B-0.01 | Parallel-safe with: B-0.11, B-0.12, B-0.14
-- Acceptance: 11 skills present in /.skills/, skills.pickForTask() returns each by name, PORTAL-QA-05 equivalent test passes, K1 confirmed in commit
+- Acceptance: Tier 1 Builder Skills authored in Drive + uploaded to Portal product, skills.pickForTask() returns each by name, PORTAL-QA-05 equivalent test passes
 - Complexity: S | Open deps: None
 
 **B-0.14 — L12-B Brain Pattern Skills baseline (skills_registry)**
@@ -1110,7 +1110,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 - VVOW: §10.1 | R-spec: R24 v2 | Features: None
 - Locks: 4, 5, 19 | Skills: directive-authoring-v2
 - Prereqs: B-0.13 | Parallel-safe with: B-XC.08, B-XC.09, B-XC.10
-- Acceptance: Skill spec authored (200-400 words), committed via Manus directive, Kimi loads via skills.pickForTask()
+- Acceptance: Skill spec authored (200-400 words) in Drive + uploaded to Portal product per D63 Path E, Kimi loads via skills.pickForTask() at Composer Queue intake
 - Complexity: S | Open deps: None
 
 **B-XC.08 — pattern-cache-lookup skill spec**
@@ -1118,7 +1118,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 - VVOW: §10.2-10.3 | R-spec: R20 v2, R24 v2 | Features: None
 - Locks: 4, 5 | Skills: directive-authoring-v2
 - Prereqs: B-0.13 | Parallel-safe with: B-XC.07, B-XC.09, B-XC.10
-- Acceptance: Skill spec authored + committed
+- Acceptance: Skill spec authored in Drive + uploaded to Portal product per D63 Path E
 - Complexity: S | Open deps: None
 
 **B-XC.09 — art-director-routing skill spec**
@@ -1126,7 +1126,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 - VVOW: §8.8.2 | R-spec: R24 v2, R29 PAL v2 | Features: None
 - Locks: 19 | Skills: directive-authoring-v2
 - Prereqs: B-0.13, B-XC.01 | Parallel-safe with: B-XC.07, B-XC.08, B-XC.10
-- Acceptance: Skill spec authored + committed
+- Acceptance: Skill spec authored in Drive + uploaded to Portal product per D63 Path E
 - Complexity: S | Open deps: None
 
 **B-XC.10 — rlhf-event-emission skill spec**
@@ -1134,7 +1134,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 - VVOW: §12 | R-spec: R24 v2 | Features: None
 - Locks: 9 | Skills: directive-authoring-v2
 - Prereqs: B-0.13 | Parallel-safe with: B-XC.07, B-XC.08, B-XC.09
-- Acceptance: Skill spec authored + committed
+- Acceptance: Skill spec authored in Drive + uploaded to Portal product per D63 Path E
 - Complexity: S | Open deps: None
 
 **B-XC.11 — layer-splitting-pipeline skill spec**
@@ -1142,7 +1142,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 - VVOW: §13 | R-spec: R24 v2 | Features: None
 - Locks: 4, 5, 8, 19 | Skills: directive-authoring-v2
 - Prereqs: B-0.13, B-XC.07 | Parallel-safe with: B-XC.07 onward
-- Acceptance: Skill spec authored + committed, Kimi loads for B-1.13
+- Acceptance: Skill spec authored in Drive + uploaded to Portal product per D63 Path E, Kimi loads for B-1.13
 - Complexity: S | Open deps: None
 
 **B-XC.12 — Governance file refresh sweep**
@@ -1189,7 +1189,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 
 
 **B-XC.17 — ZCBR Standard Authoring + Skill Spec + Validation Wiring**
-- Outcome: ZCBR_STANDARD.md committed to /docs/governance/, zcbr-spec-validation skill committed to /.skills/, §9-code-review-protocol updated with Step 0 ZCBR pre-flight, Kimi Portal pre-flight wired to run zcbr-spec-validation at Composer Queue intake, Lock 20 added to FOUNDATION_LOCK.md
+- Outcome: ZCBR_STANDARD.md committed to /docs/governance/, zcbr-spec-validation skill authored to Drive + uploaded to Portal product per D63 Path E, §9-code-review-protocol updated with Step 0 ZCBR pre-flight, Kimi Portal pre-flight wired to run zcbr-spec-validation at Composer Queue intake, Lock 20 added to FOUNDATION_LOCK.md
 - VVOW: n/a | R-spec: n/a (this Bullet creates new authority documents) | Features: Enables all CRITICAL B-XC rewrites by providing the validation mechanism
 - Locks: 17, 20 | Skills: directive-authoring-v2, zcbr-spec-validation (self-validates), r-file-rewrite-pattern
 - Prereqs: ZCBR_STANDARD.md PO-ratified (done 2026-05-11), zcbr-spec-validation skill PO-ratified (done 2026-05-11) | Parallel-safe with: B-0.13 (Builder Technical Skills baseline)
@@ -1568,7 +1568,7 @@ After ratification, every Architect session opens with: "What's the next Bullet 
 
 ## Appendix B — Skills Index (which Bullets load which skill)
 
-**Builder Technical Skills (11 Tier 1, in VIYO repo /.skills/):**
+**Builder Technical Skills (Tier 1, authored to Drive + uploaded to Portal product per D63 Path E):**
 
 | Skill | Bullets that load it |
 |---|---|
