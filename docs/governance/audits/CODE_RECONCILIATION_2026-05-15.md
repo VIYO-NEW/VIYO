@@ -184,21 +184,29 @@ B-0.22 Phase 0 Acceptance Gate gates B-1.00. **Phase 0 has 22 Bullets total — 
 | R23 v2 Cost Reconciliation | B-0.07, B-1.14 | M |
 | R24 v2.1 (A15 + B1–B10 + G8) | B-1.10, B-1.11/12/13 | S |
 | R33 Shopify | B-0.17 | M |
+| R37 MAAX brand preference signals | art-director-routing + rlhf-event-emission skills cite as substrate (cautiously per skill self-awareness); B-XC.18 territory audit-and-fix | M |
 | T47 v2 Studio Editing Tools | B-1.11/12/13 | M |
-| R52 v2 DR runbook | B-0.21 (if MVP-blocking — verify Phase A) | S |
+
+**Note:** R52 v2 DR runbook reclassified POST-LAUNCH per PRD V8.1 §3.5 + §5.6 + §7.5 verbatim 2026-05-14 (Phase A A5 ✅ 2026-05-15) — NOT MVP-blocking. Removed from gap table. B-0.21 minimum DR substrate (Supabase PITR + R2 cross-region + `/docs/runbooks/` + tabletop) is the MVP-blocking DR substrate, verified separately in Phase B.
 
 ---
 
-## §7 — Skill specs B-XC.07–10 status
+## §7 — Skill specs B-XC.07–10 status (D63 Path E)
 
-| Bullet | Skill | Portal | Repo |
+Per Decision 63 reaffirmed 2026-05-15 (Notion `35d9a84a-4679-8121-a174-e66c3eb2c9a1`): skills do NOT live in any git repo. Path E flow: Architect authors `SKILL_<name>.md` in Drive claude folder → PO ratifies → PO uploads to Portal product via admin UI → runtime via `skills.pickForTask()`.
+
+| Bullet | Skill | Drive (authoring) | Portal (runtime canonical) |
 |---|---|---|---|
-| B-XC.07 | image-generation-pipeline v1.1 | Uploaded | NOT IN REPO |
-| B-XC.08 | pattern-cache-lookup v1.0 | Uploaded | NOT IN REPO |
-| B-XC.09 | art-director-routing v1.0 | Uploaded | NOT IN REPO |
-| B-XC.10 | rlhf-event-emission v1.1 | Uploaded | NOT IN REPO |
+| B-XC.07 | image-generation-pipeline | Authored | Uploaded v1.0.0 2026-05-12 |
+| B-XC.08 | pattern-cache-lookup | Authored | Uploaded v1.0.0 2026-05-12 |
+| B-XC.09 | art-director-routing | Authored | Uploaded v1.0.0 2026-05-12 |
+| B-XC.10 | rlhf-event-emission | Authored | Uploaded v1.0.0 2026-05-12 |
 
-**Open scoping question — PO ruling required Phase A item A3:** does Portal-uploaded satisfy "committed via Manus directive" acceptance criterion, or must skills move to repo `/docs/skills/`? Prior session lead flagged as unresolved.
+**Acceptance satisfied:** Portal upload state per D63 Path E satisfies B-XC.07-10 acceptance per MBS v1.1 D63-aligned text (commit `4725660`). No `/.skills/` repo mirror needed; previous "NOT IN REPO" framing was anti-pattern artifact (cited K1=COPY stale substrate; D63 dropped K1 2026-05-11).
+
+**Companion skill (B-XC.17):** `zcbr-spec-validation` v1.0.0 Uploaded 2026-05-12 also under D63 Path E. Out of §7 table scope (B-XC.07-10) but noted for completeness.
+
+**Issue C version inconsistency park-item (logged to SESSION_STATE):** Portal listing shows v1.0.0 for all 5; Drive-source markdown bodies for image-generation-pipeline + rlhf-event-emission have title `(v1.1)` and §14 v1.0→v1.1 diff explanation. PO-ratified resolution: YAML frontmatter aligns to v1.1 at next Architect edit cycle (maintenance, not Phase A blocker).
 
 ---
 
@@ -280,7 +288,7 @@ Run with 2 parallel Composer Queue lanes per A2 ratification.
 ## §11 — Open scoping questions for Phase A resolution
 
 1. **OD-001 pricing dissolved?** Verify PRD §6.3 + §6.5. (Phase A A4)
-2. **B-XC.07–10 commit criterion** — Portal vs repo. (Phase A A3)
+2. **B-XC.07–10 storage location** — ✅ RESOLVED 2026-05-15 via Path α realign: A3 Interpretation 1 ratified (Portal canonical per D63 Path E). Skills uploaded to Portal v1.0.0 2026-05-12 satisfy B-XC.07-10 acceptance. K1=COPY substrate previously cited was anti-pattern (D63 dropped K1 2026-05-11 — see §13 Rule 3.9 strengthening). (Phase A A3 ✅)
 3. **B-1.19 Full Cost Suite MVP scope** per PRD §6.7. (Phase A A5)
 4. **R52 DR reclassified post-launch** per PRD §3.5. (Phase A A5)
 5. **OD-004 R29 PAL Rewrite Scope** — closed by R29 v2 merge or scope-extends. (Phase A A5)
@@ -309,6 +317,10 @@ Three new rules added to ARCHITECT_OPERATING_RULES.md §3 in Phase A item A9, af
 **Rule 3.12 — Cross-surface drift detection cadence + Manus mirror delegation + cross-relay paste-discipline.** Weekly drift check (Curator-run or scripted): repo HEAD vs Notion vs Airtable vs Taskmaster vs SESSION_STATE.md last-modified. Any divergence > threshold surfaces to PO as drift report. Edge case 1: routine mirror operations to Notion/Airtable from canonical repo state delegated to Manus per Curator-defined rules; Curator verifies post-mirror. Edge case 2 (added 2026-05-15 per Curator gap surfacing during CODE_RECONCILIATION ratification): paste-discipline (Rule 3.8) extends across all relay boundaries — PO ↔ PO-side Claude AND PO-side Claude ↔ Curator. Curator refuses commits on text not verbatim in its own conversation surface. PO-side Claude ratifications relay via verbatim paste to Curator before commit; no derivation, no paraphrase, no "the text from the prior conversation" reference. Mechanical work to Manus, judgment to Curator, authority to PO.
 
 Verbatim rule text + 7-field canonical format + Substrate references authored in Phase A A9 paste-back. Adversary loop applied. Then commit.
+
+**Rule 3.9 strengthening (added 2026-05-15 per Curator anti-pattern surfacing during D63 supersession check):** When Architect / Curator / PO-side Claude / Cataloger cites prior directive text (decision IDs, Lock numbers, R-spec citations, K1=COPY-style protocol references, OD numbers, MBS Bullet acceptance text) as substrate for a current decision or paste-back, the citing agent MUST grep-verify the cited directive against canonical state (Notion Decisions DB / FOUNDATION_LOCK.md / R-spec ZCBR Status header / MBS body / OD Notion record) before propagating the citation. Memory-based citation, inference-based citation, or citation-by-skim is forbidden.
+
+**Stale-citation-propagation anti-pattern surfaced 2026-05-15:** B-XC.07-10 acceptance text in MBS v1.1 cited K1=COPY substrate from B-0.13, but D63 had dropped K1=COPY four days prior (2026-05-11) as anti-pattern. Three governance layers — (1) Architect spec author citing K1 in B-XC.07-10 acceptance text, (2) Curator A3 paste-back recommending Interpretation 2 (repo required) based on K1+B-XC.07-10 substrate, (3) PO ratification of I2 — all skipped grep-verifying the cited substrate against the Decisions DB. A3 I2 unwittingly superseded D63. Resolution: Path α realign 2026-05-15 reaffirming D63; A3 I2 reversed to I1. Rule 3.9 strengthening installs the grep-verify mandate to prevent recurrence. Maps to ANTI_PATTERN_CATALOG Family 1 (silent-writes / governance-text propagation) + Phase 5.x anti-skim family. A9 authoring places in catalog; Curator-call on family attachment.
 
 ---
 
