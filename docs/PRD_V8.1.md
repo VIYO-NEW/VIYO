@@ -502,7 +502,7 @@ Phase plan for VIYO from current state (Phase 1 Image Studio MVP in build) throu
 
 | Phase | Months 0-4 (MVP build) | Months 4-7 (post-MVP) | Months 7-12+ (stretch) |
 |---|---|---|---|
-| Phase 1 Image Studio MVP | **build → ship** (per §3.3: 12-16 weeks parallel; 22-26 weeks serial pending OD-009) | stable / iteration / V1.0.5 (Pattern Seeding + LoRA) | mature |
+| Phase 1 Image Studio MVP | **build → ship** (per §3.3: 12-16 weeks parallel — OD-009 ratified 2026-05-15: 2 parallel lanes confirmed) | stable / iteration / V1.0.5 (Pattern Seeding + LoRA) | mature |
 | Phase 1B Intelligence Foundation | not started | **substrate authored + ingestion pipelines built** (R46 + R25 + SYPHON + MAAX + HYVE R-specs authored; ingestion infrastructure operational) | corpus accumulated; ATLAS operational; ready to fuel Phase 2 |
 | Phase 2 Email Engine | not started | not started (Phase 1B is prerequisite per Lock 1) | **build begins** (Brain Council activation + MJML compilation + Klaviyo deployment + 12 flow templates + popups + deliverability + audits) — realistically 4-6 months itself given 220 features |
 | Phase 2.5 Brand Team Collab | not started | not started | not started (2.5 follows 2) |
@@ -654,7 +654,7 @@ Reasoning:
 |---|---|---|
 | GitHub Dependabot 24 vulnerabilities on default branch (12 high, 11 moderate, 1 low) | Yellow | Pre-existing; deferred to post-Phase 6 Architect per Curator session 2026-05-13 close. See §9 post-launch deliverables. |
 | Manual database migrations (WP-5 pending) | Yellow | Migration automation design pending; affects deployment velocity post-MVP; not B-1.18 blocking. |
-| **OD-009 Composer Queue concurrency model unratified** | **Red** | Affects MVP timeline 12-16 vs 22-26 weeks per §3.3 + Architecture A operational readiness per §5.5. Highest-leverage open decision per VIYO_CURRENT_MAP §10. |
+| ~~OD-009 Composer Queue concurrency model~~ | ~~Red~~ → ✅ RESOLVED 2026-05-15 | OD-009 ratified per Phase A A2: 2 parallel lanes for related-and-wired features, sequential for cross-touching. Timeline 12-16 weeks parallel confirmed. |
 | Notion DB drift (FOUNDATION_AUTHORITY §9.2 stale "D1-D29" claim vs actual ≥D84) | Yellow | Phase 5.1 Notion Decisions DB sweep + FOUNDATION_AUTHORITY refresh in Phase 5.2. Not B-1.18 blocking. |
 | FOUNDATION_AUTHORITY §4 lock count drift ("14 Foundation Locks" header vs actual 29 ratified) | Yellow | Phase 5.2 Notion Foundation Locks DB sync to FOUNDATION_LOCK.md SHA `30972b0`. Not B-1.18 blocking. |
 | **4 R-specs not yet ZCBR-PASSED: R23 v2 (fresh authoring needed) + R24 v2.1 (minor bump pending) + R33 Shopify Integration (new authority per Notion D48) + T47 v2 Studio Editing Tools (predates ZCBR — MINOR FIX per R-Spec Audit Table). R52 excluded per §3.5 reclassification as post-launch ops.** | **Red** | B-1.18 blocking per §3.5. Architect-side authoring work in fresh Phase 4 Architect session post-PRD ratification. |
@@ -900,7 +900,7 @@ Per §4 V1.0 6-Month Vision (full detail) + §4.7 Path 2 framing (label aspirati
 
 | Phase | Status | Realistic delivery window from 2026-05-14 |
 |---|---|---|
-| **Phase 1 Image Studio MVP** | In build (1.1-1.4 ✅ Shipped; 1.5 ⏸ PAUSED; 1.6-1.8 + 1.11 Not started; 1.9/1.10 Deferred V1.0.5) | Months 0-4 (per §3.3: 12-16 weeks parallel; 22-26 weeks serial pending OD-009) |
+| **Phase 1 Image Studio MVP** | In build (1.1-1.4 ✅ Shipped; 1.5 ⏸ PAUSED; 1.6-1.8 + 1.11 Not started; 1.9/1.10 Deferred V1.0.5) | Months 0-4 (per §3.3: 12-16 weeks parallel — OD-009 ratified 2026-05-15: 2 parallel lanes confirmed) |
 | **Phase 1B Intelligence Foundation** | Not started — hard prerequisite for Phase 2 per Lock 1 | Months 4-6 (substrate + ingestion pipelines built; R36/R37/R38/R46/R25 R-specs authored) |
 | **Phase 2 Email Engine** | Not started — depends on Phase 1B corpus operational | Months 6-12+ (build begins; Klaviyo enters as launch-default ESP per Lock 38) |
 | **Phase 2.5 Brand Team Collaboration + Trust Layer** | Not started — follows Phase 2 surfaces per Lock 1 | Months 12-18 (Curator estimate) |
@@ -914,7 +914,7 @@ Per PRODUCT_ROADMAP.md §Release readiness gates + §3.5 MVP Success Definition 
 | Gate | Description | Status |
 |---|---|---|
 | **G1** | All Phase 1 sub-phases complete (1.1–1.8 + 1.11; 1.9/1.10 deferred V1.0.5) | 1.1-1.4 ✅ shipped; 1.5-1.8 + 1.11 pending |
-| **G2** | All MVP-blocking Open Decisions resolved | OD-001 + OD-021 CLOSED via §6.5 dissolution; 4 MVP-blocking remain (OD-004 / OD-005 / OD-009 / OD-019); OD-002 + OD-003 deferred-not-blocking (V1.0.5 / Phase 1B) per §3.1 + §7.4 |
+| **G2** | All MVP-blocking Open Decisions resolved | OD-001 + OD-021 + OD-004 + OD-009 CLOSED 2026-05-14/2026-05-15; 2 MVP-blocking remain (OD-005 / OD-019); OD-002 + OD-003 deferred-not-blocking (V1.0.5 / Phase 1B) per §3.1 + §7.4 |
 | **G3** | A15 Brand Kit Mode shipped (Lovart audit gap G2 closure — public-launch blocker per VVOW §14) | Pending sub-phase 1.11 (Bullet B-1.10) |
 | **G4** | Character Consistency Across Scenes shipped (Lovart audit gap G8 closure — public-launch blocker per VVOW §14) | Pending sub-phase 1.11 (new Bullet B-1.X to insert) |
 | **G5** | 30-day stability window post-soft-launch | Future |
@@ -944,7 +944,7 @@ Sequencing rules per Lock 1 (Product Sequencing) + FOUNDATION_AUTHORITY §3 — 
 
 | Risk | Severity | Mitigation |
 |---|---|---|
-| **OD-009 Composer Queue concurrency unratified delays MVP timeline 12-16 → 22-26 weeks** | **Red** | Highest-leverage next-Architect decision per §3.3. Affects Architecture A operational readiness per §5.5 + parallel-lane execution per §3.3. |
+| ~~OD-009 Composer Queue concurrency~~ | ~~Red~~ → ✅ RESOLVED 2026-05-15 | 2 parallel lanes ratified per Phase A A2. Timeline 12-16 weeks parallel confirmed achievable. |
 | **R23 v2 + R24 v2.1 + R33 + T47 v2 not yet ZCBR-PASSED** (matches §5.6 list; R52 excluded per §3.5 reclassification as post-launch ops) | **Red** | B-1.18 blocking per §3.5. Architect-side authoring work in fresh Phase 4 Architect session post-PRD ratification. |
 | OD-002 legal review blocks V1.0.5 Pattern Seeding | Yellow | Pattern Seeding deferred to V1.0.5 by design per §3.1 (Notion D50); NOT B-1.18 blocking. |
 | Phase 1B intelligence substrate (R46/R25/SYPHON/MAAX/HYVE R-specs) authoring effort | Yellow | Multiple R-specs to author; staggered start during Phase 1 MVP stable window post-launch. |

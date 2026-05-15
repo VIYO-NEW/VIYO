@@ -147,7 +147,7 @@ Phase 5 = governance cleanup. Steps B + C done (CLAUDE.md and FOUNDATION_LOCK.md
 - OD-001 — Pricing reconciliation (deck vs Notion D8). NOTE: largely dissolved via PRD V8.1 §6.5 — pricing is Portal runtime config. Verify status.
 - OD-002 — Legal review on Milled / Email Love / Really Good Emails scraping. Blocks Pattern Seeding.
 - OD-003 — AgentMail IMAP provider selection (Phase 1B).
-- OD-004 — Atlas Cloud + fal.ai catalog verification. MVP-blocking.
+- OD-004 — R29 PAL Rewrite Scope (per Notion canonical + PRD V8.1 §8.1). CLOSED 2026-05-15 via R29 v2 ZCBR-PASS Iα. [Historical note: prior text "Atlas Cloud + fal.ai catalog verification" was OD-003-area framing per OPEN_DECISIONS.md L20 — wrong-number drift.]
 - OD-005 — 3 Swipe Gate reviewer accounts. Blocks Phase 1 RLHF flywheel.
 - OD-006 — Set Anthropic Console spend cap $100/mo.
 - (OD-021 — pricing tier / margin floor — CLOSED via dissolution.)

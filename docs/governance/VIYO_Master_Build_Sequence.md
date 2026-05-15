@@ -293,7 +293,7 @@ Absorbs Lovart's moat. Decomposes 41 P1 features plus features re-mapped from P2
 - Locks: 5, 11, 19 | Skills: inngest-function-authoring, hono-route-authoring, pattern-recipe-validation, writing-behavioral-tests
 - Prereqs: B-0.12, B-1.03 | Parallel-safe with: B-1.04, B-1.06, B-1.07
 - Acceptance: Daily Inngest scrape runs against Milled, image stored in R2 with attribution, Claude Vision produces Pattern Recipe conforming to locked schema, pattern enters Active state queryable by Visual Intent Router
-- Complexity: L | Open deps: OD-002 (Milled OK per VVOW §10.4 internal reference; Email Love + RGE expansion blocked), OD-004
+- Complexity: L | Open deps: OD-002 (Milled OK per VVOW §10.4 internal reference; Email Love + RGE expansion blocked) — OD-004 dropped (CLOSED Iα 2026-05-15)
 
 **B-1.06 — Tinder Swipe Gate UI (admin.viyo.com swipe reviewer)**
 - Moat: Lovart (RLHF quality gate) | Outcome: Reviewers triage auto-approved + auto-rejected via side-by-side swipe
@@ -395,9 +395,9 @@ Absorbs Lovart's moat. Decomposes 41 P1 features plus features re-mapped from P2
 - Moat: Lovart (verification) | Outcome: P1 acceptance demo — VIYO replicates Lovart's full surface
 - VVOW: §14 (G1+G2+G3 closed) | R-spec: All P1-referenced R-specs verified or rewrite scheduled | Features: Aggregate from B-1.00 through B-1.17
 - Locks: All 17 | Skills: §9-code-review-protocol
-- Prereqs: B-1.00 through B-1.17, OD-001/003/004/005 closed | Parallel-safe with: None
+- Prereqs: B-1.00 through B-1.17, OD-005 closed (OD-001 dissolved per PRD §6.5; OD-003 deferred-not-blocking per PRD §3.1; OD-004 CLOSED Iα 2026-05-15) | Parallel-safe with: None
 - Acceptance: Lovart parity demo runs, A15 Brand Kit works, 22 modes generate, 11 editing tools function, Pattern DB seeded, RLHF flywheel emitting, Lovart-style billing operational, swipe gate live
-- Complexity: S | Open deps: OD-001, OD-003, OD-004, OD-005
+- Complexity: S | Open deps: OD-005 (OD-001/003/004 all closed 2026-05-14/2026-05-15)
 
 ---
 
@@ -1171,11 +1171,11 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 
 **B-XC.15 — PORTAL_AUTHORITY.md authoring**
 - Outcome: PORTAL_AUTHORITY.md exists in Portal repo /docs/governance/, parallels FOUNDATION_AUTHORITY.md scope
-- VVOW: n/a | R-spec: new | Features: Closes OD-009
+- VVOW: n/a | R-spec: new | Features: Documents OD-009 ratified resolution (2 parallel lanes, ratified 2026-05-15)
 - Locks: 17, 18, 19 | Skills: directive-authoring-v2
 - Prereqs: B-XC.13, B-XC.14 | Parallel-safe with: B-XC.12
 - Acceptance: PORTAL_AUTHORITY.md covers Portal identity + three-role architecture + 8-step flow + skills mechanism + Bullet parseability + Composer Queue + §9 Gate + concurrency model + service inventory + repo dependencies; PO ratifies
-- Complexity: L | Open deps: OD-009
+- Complexity: L | Open deps: None (OD-009 ratified 2026-05-15 — B-XC.15 documents resolution, no longer blocked)
 
 **B-XC.16 — Reconcile existing BULLET_1_DIRECTIVE.md against Master Build Sequence**
 - Outcome: Existing draft from prior turn reconciled against this Sequence, deltas applied, ready for Composer Queue send
@@ -1183,7 +1183,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 - Locks: All P1 locks | Skills: directive-authoring-v2
 - Prereqs: B-0.22, B-XC.07-XC.11, B-XC.12, B-XC.15 | Parallel-safe with: None at this gate
 - Acceptance: Existing BULLET_1_DIRECTIVE.md reconciled, renamed to B-1.00_STUDIO_CORE_LOOP_DIRECTIVE.md per OD-010, deltas applied, sent to Composer Queue
-- Complexity: S | Open deps: OD-003, OD-004, OD-005, OD-009, OD-010
+- Complexity: S | Open deps: OD-005, OD-010 (OD-003 deferred-not-blocking per PRD §3.1; OD-004 CLOSED Iα 2026-05-15; OD-009 CLOSED 2026-05-15)
 
 ---
 
@@ -1630,7 +1630,7 @@ After ratification, every Architect session opens with: "What's the next Bullet 
 
 ## Appendix D — Closeout Notes
 
-**128 Bullets initially planned + 4 added during decomposition = 132 total** (B-1.06 added Tinder Swipe Gate UI as separate Bullet, B-XC.16 added reconciliation step, B-4.13 added continuous tail, B-XC.11 separated layer-splitting from other P1 skills).
+**140 numbered Bullets current state** (128 initially planned + 4 added during decomposition for v1.0 = 132 baseline; +8 Cross-Cutting Bullets B-XC.17-XC.24 added in v1.1 per §2 Phase Summary line 52; total 140 numbered + 10 JIT stubs + 7 LATER deferred). Decomposition additions: B-1.06 Tinder Swipe Gate UI, B-XC.16 reconciliation step, B-4.13 continuous tail, B-XC.11 layer-splitting separation.
 
 **Document size:** ~1500 lines, fits within 30-60 page target.
 

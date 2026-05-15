@@ -261,7 +261,7 @@ Run with 2 parallel Composer Queue lanes per A2 ratification.
 - **Phase C: 2–3 weeks**
 - **Phase D: 8–12 weeks with parallel lanes**
 
-**Total: 12–17 weeks to public-launchable Image Studio MVP.** Matches PRD V8.1 §3.3.
+**Total: 12–16 weeks to public-launchable Image Studio MVP.** Matches PRD V8.1 §3.3 canonical.
 
 ---
 

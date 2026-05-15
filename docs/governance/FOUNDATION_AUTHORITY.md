@@ -622,7 +622,7 @@ This document does NOT get edited by Manus directly. Manus may flag issues in di
 | OD-001 | Pricing reconciliation (deck slide 9 `$99/$299/$499/$1,499` vs Notion D8 locked `$0/$49/$249/$499/$1,499`) | Public launch, investor materials | Open |
 | OD-002 | Legal review on Milled / Email Love / Really Good Emails scraping | Pattern Seeding pipeline expansion | Open |
 | OD-003 | Atlas Cloud + fal.ai catalog verification (exact models, pricing, rate limits) | Phase 1 acceptance, T73 gates | Open |
-| OD-004 | 12 fashion brand competitor selection for Pattern Seeding | Pattern Seeding initial seed | Open |
+| ~~OD-004~~ | [Historical row: prior "12 fashion brand competitor selection for Pattern Seeding" framing OBSOLETE — current canonical OD-004 per Notion + PRD V8.1 §8.1 = R29 PAL Rewrite Scope, CLOSED 2026-05-15 via R29 v2 ZCBR-PASS Iα. Fashion-brand selection question dissolved into Phase 1B / Pattern Seeding scope per VVOW §10.4.] | n/a | CLOSED 2026-05-15 |
 | OD-005 | 3 Swipe Gate reviewer accounts (`SWIPE_REVIEWER_USER_IDS` env var) | Phase 4 RLHF acceptance | Open |
 | OD-006 | Anthropic Console spend cap = $100 / month | Cost control | Open |
 | OD-007 | Conversation export cadence | Continuity / record-keeping | Open |

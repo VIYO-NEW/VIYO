@@ -336,7 +336,7 @@ Phase 1 (Image Studio MVP) public launch unlocks → **Phase 1B Intelligence Fou
 | OD-002 | Legal review on Milled / Email Love / Really Good Emails scraping | Pattern Seeding pipeline expansion (V1.0.5 1.9) |
 | OD-003 | Atlas Cloud + fal.ai catalog verification (exact models / pricing / rate limits) | Phase 1 acceptance, T73 gates |
 | OD-005 | 3 Swipe Gate reviewer accounts (`SWIPE_REVIEWER_USER_IDS`) | B-1.06 Tinder Swipe Gate UI |
-| ~~OD-009~~ | ✅ CLOSED 2026-05-15: 2 parallel lanes related-wired, sequential cross-touching | Timeline: 12-17 weeks parallel confirmed per A2 |
+| ~~OD-009~~ | ✅ CLOSED 2026-05-15: 2 parallel lanes related-wired, sequential cross-touching | Timeline: 12-16 weeks parallel confirmed per A2 (PRD §3.3 canonical) |
 | OD-019 | WP-1 + WP-2 verification | T73 phase 2 wiring (sub-phase 1.5) |
 
 Other active ODs (OD-006 Anthropic spend cap / OD-007 conversation export cadence / OD-011..OD-018 / OD-020 silent-write) tracked in Notion Open Decisions DB; not all block MVP launch. OD-004 fashion-brand selection framing OBSOLETE — current OD-004 per Notion = R29 PAL Rewrite Scope CLOSED 2026-05-15 via R29 v2 ZCBR-PASS Iα.
