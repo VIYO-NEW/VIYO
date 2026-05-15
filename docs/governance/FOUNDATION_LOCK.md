@@ -240,7 +240,7 @@ Total: 28 ratified Locks + 2 RESERVED slots = 30 numbered Locks.
 
 **Rationale:** Pattern DB starts non-empty for every new brand — moat-behind-moat over Lovart which starts every user from blank slate. Per VVOW §10.4 — internal architectural reference and benchmarking, no IP reuse, OD-008 closed 2026-05-08.
 
-**Evidence:** VVOW Architecture §10.4 + §15 (advantage 8); OD-002 (legal review open); OD-004 (12 fashion brand competitor selection).
+**Evidence:** VVOW Architecture §10.4 + §15 (advantage 8); OD-002 (legal review open). [Historical note: prior text referenced "OD-004 (12 fashion brand competitor selection)" — that OD-004 framing is OBSOLETE; current OD-004 per Notion = R29 PAL Rewrite Scope (CLOSED 2026-05-15 via R29 v2 ZCBR-PASS Iα). Fashion-brand selection question dissolved into Phase 1B / Pattern Seeding scope per VVOW §10.4 substrate.]
 
 **Date Locked:** 2026-05-08 (VVOW v2.0).
 

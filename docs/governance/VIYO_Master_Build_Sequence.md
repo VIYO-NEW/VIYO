@@ -27,7 +27,7 @@ Fields per Bullet:
 - **Complexity** — S (1-3d) / M (3-7d) / L (1-2w) / XL (2-3w)
 - **Open deps** — OD-xxx or GAP-xxx blocking
 
-Parallel-safe assumes Portal Composer Queue supports concurrent lanes — see OD-009 in Section 6.
+Parallel-safe assumes Portal Composer Queue supports concurrent lanes — OD-009 ratified 2026-05-15: 2 parallel lanes for related-and-wired features, sequential for cross-touching (see Section 6 + CODE_RECONCILIATION §8 A2).
 
 ---
 
@@ -1071,7 +1071,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 - Locks: 6, 13 | Skills: r-file-rewrite-pattern
 - Prereqs: None | Parallel-safe with: B-XC.01, B-XC.03, B-XC.04
 - Acceptance: R20 v2 captures full schema, PO ratifies, GAP-003 closed
-- Complexity: M | Open deps: GAP-003
+- Complexity: M | Open deps: None (GAP-003 closed via R20 v2 ZCBR-PASS 2026-05-12)
 
 **B-XC.03 — R24 Image Pipeline rewrite (THIN → full)**
 - Outcome: R24 captures model registry + Pattern Recipe schema + B1-B11 tools
@@ -1079,7 +1079,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 - Locks: 4, 5, 8 | Skills: r-file-rewrite-pattern
 - Prereqs: None | Parallel-safe with: B-XC.01, B-XC.02, B-XC.04
 - Acceptance: R24 v2 captures full image pipeline, PO ratifies, GAP-004 closed
-- Complexity: M | Open deps: GAP-004
+- Complexity: M | Open deps: None (GAP-004 closed via R24 v2 ZCBR-PASS 2026-05-12)
 
 **B-XC.04 — R31 Product Data Extraction rewrite (THIN → full)**
 - Outcome: R31 captures full Brand Vault organization
@@ -1087,7 +1087,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 - Locks: 6 | Skills: r-file-rewrite-pattern
 - Prereqs: None | Parallel-safe with: B-XC.03
 - Acceptance: R31 v2 captures full Brand Vault contract, PO ratifies, GAP-005 closed
-- Complexity: M | Open deps: GAP-005
+- Complexity: M | Open deps: None (GAP-005 closed via R31 v2 ZCBR-PASS 2026-05-12)
 
 **B-XC.05 — R32 Email Engine full read + extraction (P2 prep)**
 - Outcome: Architect reads R32 fully + extracts P2 Bullet context
@@ -1358,7 +1358,7 @@ B-4.01 onward (continuous, no single acceptance gate)
 - Additional ESPs (B-4.04/05/06/07): all parallel after R29 PAL v2
 - SMS/push/white-label: parallel after R39
 
-**Cross-cutting Bullets:** B-XC.01 through B-XC.16 are all parallel-safe with their respective prereqs. Portal-side Bullets (B-XC.13/14/15) parallel with all VIYO repo Bullets since different repo.
+**Cross-cutting Bullets:** B-XC.01 through B-XC.24 are all parallel-safe with their respective prereqs. Portal-side Bullets (B-XC.13/14/15) parallel with all VIYO repo Bullets since different repo.
 
 ---
 
@@ -1368,7 +1368,7 @@ This Sequence reveals architectural gaps not yet covered. PO ratifies in single 
 
 | ID | Decision | Blocks | Recommended resolution |
 |---|---|---|---|
-| OD-009 | Does Portal Composer Queue support concurrent Bullet execution lanes, or is it strictly serial? If serial, parallel-safe markings in this Sequence have no scheduling effect. | All parallel-track assumptions | Document Portal concurrency model in PORTAL_AUTHORITY.md (B-XC.15). Recommended: support 2-3 concurrent lanes minimum so Brand Admin + Studio work can ship in parallel. |
+| OD-009 | ✅ CLOSED 2026-05-15 — Portal Composer Queue concurrency ratified: 2 parallel lanes for related-and-wired features, sequential for cross-touching (e.g., 22 generation modes A1-A8 + A9-A14 parallel; admin shells parallel). See CODE_RECONCILIATION §8 A2 + Notion OD-009 (commit `90f96e0`). | (closed) | Resolution: 2 parallel lanes. PORTAL_AUTHORITY.md authoring (B-XC.15) deferred separate. |
 | OD-010 | Should the first Bullet directive be filed as `BULLET_1_DIRECTIVE.md` (Gap Handoff naming) or `B-1.00_STUDIO_CORE_LOOP_DIRECTIVE.md` (Master Sequence convention)? Inconsistency will confuse Portal. | B-1.00 send | Adopt B-X.YY convention. Rename existing draft. CURRENT_BULLET.txt content becomes `B-1.00_STUDIO_CORE_LOOP`. |
 | OD-011 | BFCM module per DEFERRED-001 has no R-spec, no PRD section. Who authors R-spec when PO activates? | B-4.11 send | Architect Claude authors R-spec in dedicated session when PO triggers BFCM activation. Until then B-4.11 stays "TBD". |
 | OD-012 | GPT Image 3 Full-Email Research per DEFERRED-002 needs options memo. Who writes? | B-4.12 send | Architect Claude writes memo in dedicated session when PO triggers. |
@@ -1385,7 +1385,7 @@ PO ratifies by confirming:
 
 1. End State (Section 1) captures fully-shipped VIYO accurately
 2. Phase Summary (Section 2) absorbs 4-competitor moat per FOUNDATION_AUTHORITY.md
-3. Per-Bullet metadata complete for all 132 Bullets
+3. Per-Bullet metadata complete for all 140 numbered Bullets + 10 JIT stubs + 7 LATER deferred (per §2 Phase Summary total)
 4. Dependency graph (Section 5) traces B-0.01 through B-4.13 without cycles
 5. All 580 features from Inventory v002 accounted for (mapped, Deferred, or Future)
 6. Open Decisions OD-009 through OD-016 surfaced with recommendations; PO ratifies in single session
@@ -1621,7 +1621,7 @@ After ratification, every Architect session opens with: "What's the next Bullet 
 | R38 SYPHON | Current | B-1B.03 |
 | R39 Global Admin | Current | B-4.01 |
 | R46 Email Ingestion | IMAP only (Milled separate per §10.4) | B-1B.01, B-2.31 |
-| R52 Disaster Recovery | Anomalously 334KB — quality unverified (GAP-002) | B-0.21 (mitigation: fresh runbook) |
+| R52 Disaster Recovery | SUPERSEDED by B-XC.23 fresh DR runbook — R52 reclassified POST-LAUNCH per PRD V8.1 §3.5 + Phase A A5 ratified 2026-05-15. GAP-002 closed. | (post-launch — not MVP-blocking) |
 | T46 Art Director Routing Suite | Needs rewrite (B-XC.06 tier inversion) | B-XC.06 |
 | T48 Webhook Pipeline | Superseded by Notion D11 | n/a (D11 supersedes) |
 | T33-T36 Brand Chat Comments | Phase 2.5 | B-2.5.01, B-2.5.02 |

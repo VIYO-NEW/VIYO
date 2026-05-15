@@ -64,7 +64,7 @@ VIYO_CURRENT_MAP.md is the single inheritance file every future VIYO agent reads
 
 **Dropped from MVP entirely:** B-0.18 Klaviyo connector scaffold (Klaviyo enters in V1.1 with Email Engine).
 
-**Estimated timeline:** 12–16 weeks calendar with 2–3 parallel Composer Queue lanes (OD-009 unratified — affects timeline). Without parallel lanes, 22–26 weeks.
+**Estimated timeline:** 12–16 weeks calendar with 2 parallel Composer Queue lanes (OD-009 ratified 2026-05-15: 2 parallel lanes for related-and-wired features; sequential for cross-touching). Confirmed achievable per Phase A A2.
 
 ---
 
@@ -309,7 +309,7 @@ Phase 1 (Image Studio MVP) public launch unlocks → **Phase 1B Intelligence Fou
 **Bullet work (Architect → Manus):**
 - **4 Phase 1 skill specs** (B-XC.07 / 08 / 09 / 10): `image-generation-pipeline`, `pattern-cache-lookup`, `art-director-routing`, `rlhf-event-emission`. May already be uploaded to ai.viyo.new — verify Portal upload state.
 - **B-XC.11 layer-splitting-pipeline skill** — for B-1.13 only.
-- **B-XC.15 PORTAL_AUTHORITY.md** — Composer Queue concurrency model per OD-009.
+- **B-XC.15 PORTAL_AUTHORITY.md** — Composer Queue concurrency model documented per OD-009 ratification 2026-05-15 (2 parallel lanes related-wired, sequential cross-touching).
 - **B-XC.16** — reconcile any existing BULLET_1_DIRECTIVE.md draft against Master Build Sequence v1.1 (resolves OD-010 naming convention).
 
 **Phase 1 sub-phase Bullets (per Master Build Sequence v1.1):**
@@ -336,10 +336,10 @@ Phase 1 (Image Studio MVP) public launch unlocks → **Phase 1B Intelligence Fou
 | OD-002 | Legal review on Milled / Email Love / Really Good Emails scraping | Pattern Seeding pipeline expansion (V1.0.5 1.9) |
 | OD-003 | Atlas Cloud + fal.ai catalog verification (exact models / pricing / rate limits) | Phase 1 acceptance, T73 gates |
 | OD-005 | 3 Swipe Gate reviewer accounts (`SWIPE_REVIEWER_USER_IDS`) | B-1.06 Tinder Swipe Gate UI |
-| OD-009 | Composer Queue concurrency model (parallel lane count) | Timeline: 12-16 weeks vs 22-26 weeks |
+| ~~OD-009~~ | ✅ CLOSED 2026-05-15: 2 parallel lanes related-wired, sequential cross-touching | Timeline: 12-17 weeks parallel confirmed per A2 |
 | OD-019 | WP-1 + WP-2 verification | T73 phase 2 wiring (sub-phase 1.5) |
 
-Other active ODs (OD-004 fashion brand selection / OD-006 Anthropic spend cap / OD-007 conversation export cadence / OD-011..OD-018 / OD-020 silent-write) tracked in Notion Open Decisions DB; not all block MVP launch.
+Other active ODs (OD-006 Anthropic spend cap / OD-007 conversation export cadence / OD-011..OD-018 / OD-020 silent-write) tracked in Notion Open Decisions DB; not all block MVP launch. OD-004 fashion-brand selection framing OBSOLETE — current OD-004 per Notion = R29 PAL Rewrite Scope CLOSED 2026-05-15 via R29 v2 ZCBR-PASS Iα.
 
 ---
 

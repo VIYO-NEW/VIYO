@@ -404,7 +404,7 @@ For each substrate: **scope** (what it is), **Phase 0 baseline** (what ships in 
 
 **For:** Architect / Reviewer / Kimi to consume at build/review time.
 
-**Lives in:** Portal repo `.skills/` folder. 11 skills authored.
+**Lives in:** Drive claude folder (`1C_LrFuq6yRE0DDPgCfnJTJcI44CvN6Ki`) authored by Architect Claude; uploaded to Portal product at ai.viyo.new via Portal admin UI; loaded at runtime via `skills.pickForTask()` API per D63 Path E (ratified 2026-05-11 + reaffirmed 2026-05-15). Skills do NOT live in any git repo. Currently 5 uploaded to Portal v1.0.0 (4 B-XC.07-10 + 1 B-XC.17 zcbr-spec-validation) since 2026-05-12; long-horizon Tier 1 target = 11 skills (B-0.13 baseline).
 
 | # | Skill | Purpose |
 |---|---|---|
@@ -420,7 +420,7 @@ For each substrate: **scope** (what it is), **Phase 0 baseline** (what ships in 
 | 10 | `r-file-rewrite-pattern` | R-spec rewrite from thin baseline |
 | 11 | `acceptance-message-template` | Closeout template ending in "Provide a Manus Project gate for me to publish it locally" |
 
-**Phase 0 baseline.** `.skills/` folder created. 11 skills authored. Skill loading verified end-to-end via PORTAL-QA-05 across Claude / Kimi / Auto / Dual routes via `skills.pickForTask` API manual attachment per task.
+**Phase 0 baseline (B-0.13 per MBS).** Tier 1 Builder Skills authored to Drive claude folder + uploaded to Portal product per D63 Path E. Currently 5 uploaded to Portal v1.0.0 (4 B-XC.07-10 + 1 B-XC.17 zcbr-spec-validation) since 2026-05-12; long-horizon target = 11 skills. Skill loading verified end-to-end via PORTAL-QA-05 across Claude / Kimi / Auto / Dual routes via `skills.pickForTask` API manual attachment per task. Skills do NOT live in any git repo per D63.
 
 #### L12-B — AI Brain Pattern Skills
 

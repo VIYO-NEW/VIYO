@@ -994,7 +994,7 @@ Both ODs are **CLOSED via §6.5 dissolution**, not resolved. The distinction mat
 
 ### §8.3 — MVP-Blocking ODs Flagged
 
-Per §7.2 G2 gate ("All MVP-blocking Open Decisions resolved"), the following 4 ODs MUST be resolved before Phase 1 public launch. Names match Notion DB titles (source of truth).
+Per §7.2 G2 gate ("All MVP-blocking Open Decisions resolved"), the following 2 ODs MUST be resolved before Phase 1 public launch (down from 4 — OD-004 + OD-009 closed 2026-05-15 per Phase A A5 + A2 ratifications). Names match Notion DB titles (source of truth).
 
 | OD ID | Title | MVP-blocking? | Severity per §7.5 |
 |---|---|---|---|
@@ -1022,12 +1022,12 @@ PRD V8.1 §4.3 references "220 features" inventoried via Manus across competitor
 
 | OD | Resolution | Owner | Trigger |
 |---|---|---|---|
-| **OD-004** | Architect Claude authors R29 v2 spec covering unified Plugin Registry per Lock 19 + Lock 38 (AI models / ESPs / commerce / CRMs / payment / analytics / observability / site-builders / future). Single ZCBR-PASS surface. | Architect Claude | During R-spec authoring session post-PRD V8.1 ratification (per §5.6 Red row 4 R-specs not yet ZCBR-PASSED — R23 v2 / R24 v2.1 / R33 / T47 v2 — fresh session) |
+| **OD-004** | ✅ RESOLVED 2026-05-15 (Iα ratified per Phase A A5) — R29 v2 ZCBR-PASS 2026-05-12 is the unified Plugin Registry instance per Lock 19 (originating AI-provider PAL); future ESP/commerce/payment/CRM/analytics/site-builder PAL R-specs are downstream Lock 38 instances, NOT OD-004 scope extensions per §7.1 Lock 38 registry-resolved framing. | Architect Claude | RESOLVED (post-PRD V8.1 §6.5 dissolution framing + α realign) |
 | **OD-005** | PO designates 3 reviewer accounts + grants admin.viyo.com access. Per Decision 52: 3 humans, Tinder swipe UI, 5,000 swipes → VLM Preference Classifier handoff, 1,000 RLHF events hard-gates Phase 2. | PO action | Before B-1.18 sub-phase 1.4 (Tinder swipe gate ships) — already on path per VIYO_CURRENT_MAP §9 status |
-| **OD-009** | PO confirms Portal concurrency state (serial vs. N lanes). Portal-side knowledge held by PO / Portal Architect channel — **external to VIYO Architect role**. If concurrent: ratify lane count. If serial: Portal directive to evolve (separate channel) + adjust Phase 1 timeline expectations 12-16 → 22-26 weeks. | PO (external Portal channel) | **Highest-leverage next-Architect decision per §3.3 + §7.5 Red** — surface during next-Architect session opening |
+| **OD-009** | ✅ RESOLVED 2026-05-15 (PO ratified per Phase A A2) — Portal Composer Queue supports 2 parallel lanes for related-and-wired features (e.g., 22 generation modes A1-A8 + A9-A14, admin shells B-1.01 + B-1.02), sequential for cross-touching features. Phase 1 timeline 12-16 weeks parallel per §3.3 confirmed achievable. | PO ratified | RESOLVED (commit `90f96e0` + Notion `35e9a84a-4679-81bd-8b91-fa66b472513b` Closed) |
 | **OD-019** | Architect / PO verify WP-1 (R21 spec + staging runbook updates) + WP-2 (render.yaml patch) status — either PO confirmation, Drive search for Architect deliverables, or Manus repo query. T73 unblocking confidence stated definitively post-verification. | Architect (verification work) / PO (confirmation) | Before T73 unblock + sub-phase 1.5 commencement — already on critical path per VIYO_CURRENT_MAP §10 highest-priority work unit |
 
-**Pointer:** §9 Success Criteria translates OD resolution into B-1.18 acceptance gate substrate. ARCHITECT_OPERATING_RULES §2 Decision Authority Matrix governs which decisions Architect drafts vs. PO ratifies — OD-004 / OD-019 are Architect-drafted recommendations awaiting PO ratification; OD-005 / OD-009 are PO-owned with Architect surface only.
+**Pointer:** §9 Success Criteria translates OD resolution into B-1.18 acceptance gate substrate. ARCHITECT_OPERATING_RULES §2 Decision Authority Matrix governs which decisions Architect drafts vs. PO ratifies. Post-α realign 2026-05-15: OD-004 + OD-009 RESOLVED; OD-019 remains Architect-drafted recommendation awaiting PO ratification; OD-005 remains PO-owned with Architect surface only.
 
 ---
 

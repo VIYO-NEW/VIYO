@@ -77,7 +77,7 @@ When the spec mentions any of the following, it either defines them in-spec OR c
 - Features → cite Feature ID from Inventory v002 (e.g. "T70-CACHE-ROUTE-META")
 - External APIs → cite vendor documentation URL or internal API path
 - Models → cite via Provider Registry interface (per Lock 19 — no hardcoded model name strings)
-- Skills → cite by exact skill name in `/.skills/` (e.g. "loads `pattern-cache-lookup`")
+- Skills → cite by exact skill name as loaded via `skills.pickForTask()` API from Portal product per D63 Path E (e.g. "loads `pattern-cache-lookup`"). Skills do NOT live in any git repo per D63 reaffirmed 2026-05-15.
 
 A spec that mentions "the assets table" without citing R20 or defining the schema fails ZC-2.
 
@@ -129,7 +129,7 @@ For every external library, service, or skill the spec depends on:
 
 - Library: package name + version constraint (e.g. `@mastra/core@^0.1.0`) or "use whatever is in package.json with a follow-up Bullet to pin"
 - Service: service name + endpoint + auth method (e.g. "Supabase Realtime via @supabase/realtime-js v2.x")
-- Skill: exact skill name in `/.skills/` + version if applicable (e.g. "loads `pattern-cache-lookup` v1")
+- Skill: exact skill name loaded via `skills.pickForTask()` API from Portal product per D63 Path E + version if applicable (e.g. "loads `pattern-cache-lookup` v1.0.0"). Skills do NOT live in any git repo per D63 reaffirmed 2026-05-15.
 - Model: cited via Provider Registry abstraction only (Lock 19) — no model name strings in spec
 - R-spec: cited as `Rxx vN` with note on whether the cited R-spec is itself ZCBR-validated
 
