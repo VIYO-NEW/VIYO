@@ -64,7 +64,7 @@ AI Email Creative OS for Shopify+Klaviyo brands. Phased build:
 - `ARCHITECT_OPERATING_RULES.md` — Architect/Curator operating discipline.
 - `NIR_OPERATING_RULES.md` — repo copy of the universal rules (see §1 for the Drive canonical).
 - `VIYO_CURRENT_MAP.md` — the inheritance map, ~15 sections.
-- `SESSION_STATE.md` — <2KB live state pointer. Recovery protocol: read SESSION_STATE → VIYO_CURRENT_MAP → in-flight file.
+- `SESSION_STATE.md` — **local-only at the Curator-machine path `C:\Users\Admin\Documents\VIYO\governance\SESSION_STATE.md`, NOT version-controlled in the repo.** <2KB live state pointer. Recovery protocol: per `ARCHITECT_OPERATING_RULES.md` §3 Rule 3.9.
 
 **Substrate authority + standards:**
 
