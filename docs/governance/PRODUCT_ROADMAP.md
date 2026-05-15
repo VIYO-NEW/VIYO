@@ -12,20 +12,20 @@ This file captures the high-level sequencing. Detailed acceptance tests for each
 
 | Sub-phase | What | Acceptance Gate | Status |
 |---|---|---|---|
-| Phase 0 | Foundation (repo, monorepo, Hono API worker, deployment) | Live | ✅ Shipped |
-| 1.1 Core Loop | Chat → Canvas → DB single-variant generation | T25 + T26 functional end-to-end | ✅ Shipped |
-| 1.2 Pattern DB cache | Cache-first with metadata transparency | T70 invariants | ✅ Shipped |
-| 1.3 Token billing | Reconciliation across providers | T71 | ✅ Shipped |
-| 1.4 R2 + Brand Vault | Asset contract with lineage + JSONB metadata + pgvector | T72 | ✅ Shipped |
-| **1.5 Editing Router** | **Studio Editing Router routes B1–B10 + correct model per intent** | **T73** | **⏸ PAUSED** awaiting architecture acceptance |
-| 1.6 Multi-variant | One brief → 3 variants in Design Chat (Zone 1) | TBD | Future |
-| 1.7 Full editing tools | All B1–B10 functional with correct model routing | TBD | Future |
-| 1.8 RLHF feedback loop | qaScore updates after 1,000 events; DSPy active; Tinder swipe gate live with 3 reviewers | TBD | Future |
-| 1.9 Pattern Seeding | Milled scraper live; initial Pattern DB seeded | TBD | Future |
-| 1.10 Brand-Specific LoRA | First brand reaches threshold; LoRA training pipeline produces deployable artifact | TBD | Future |
-| 1.11 Gap closure | G2 (A15 Brand Kit Mode) + G8 (Character Consistency) shipped | TBD | Future |
+| Phase 0 | Substrate (22 Bullets B-0.01-B-0.22 — Identity, Asset Model, Provider Routing, Job Orchestration, Data Flywheel, Token Metering, Observability, Real-time, Storage, Webhooks, Pattern Substrate, Skills, Connectors, Health, DR) | B-0.22 Phase 0 Acceptance Gate | 🟡 ~13 of 22 Bullets substantively shipped per CODE_RECONCILIATION_2026-05-15.md §5; B-0.22 Cannot Pass — incomplete prereqs B-0.01/0.09/0.13/0.14/0.16/0.17/0.19/0.21 |
+| 1.1 Core Loop | Chat → Canvas → DB single-variant generation | B-1.00 acceptance — end-to-end loop, 4 named failure modes, cache hit + cache miss tested, RLHF events emit | 🟡 IN PROGRESS — substantive substrate present per CODE_RECONCILIATION_2026-05-15.md §3.1; B-1.00 acceptance not verified |
+| 1.2 Pattern DB cache | Cache-first with metadata transparency | Cache hit + miss paths verified end-to-end | 🟡 PARTIALLY SHIPPED — substrate complete (image-patterns.ts + embeddings + pattern schema); end-to-end verification pending |
+| 1.3 Token billing | Reconciliation across providers | B-0.07 + B-1.14 acceptance | ✅ SUBSTRATE SHIPPED — T9 backend + frontend + token-engine.ts + processed_stripe_events dedup |
+| 1.4 R2 + Brand Vault | Asset contract with lineage + JSONB metadata + pgvector | B-0.03 acceptance | ✅ SHIPPED — assets table + parent_asset_id lineage + JSONB + pgvector + R2 two-bucket setup |
+| 1.5 Editing Router | Studio Editing Router routes B1–B10 + correct model per intent | B-1.11 + B-1.12 + B-1.13 acceptance | ⏸ CONTRACT LAYER ONLY — editing-router.ts is contract-only; no editing tool implementation; T47 v2 R-spec missing; gated on OD-019 + WP-1/WP-2 |
+| 1.6 Multi-variant | One brief → 3 variants in Design Chat (Zone 1) | TBD | NOT STARTED |
+| 1.7 Full editing tools | All B1–B10 functional with correct model routing | TBD | NOT STARTED |
+| 1.8 RLHF feedback loop | qaScore updates after 1,000 events; DSPy active; Tinder swipe gate live with 3 reviewers | TBD | NOT STARTED |
+| 1.9 Pattern Seeding | Milled scraper live; initial Pattern DB seeded | — | DEFERRED V1.0.5 (gated on OD-002 legal review) |
+| 1.10 Brand-Specific LoRA | First brand reaches threshold; LoRA training pipeline produces deployable artifact | — | DEFERRED V1.0.5 |
+| 1.11 Gap closure | G2 (A15 Brand Kit Mode) + G8 (Character Consistency) shipped | TBD | NOT STARTED (public-launch blocker) |
 
-**Image Studio public launch unlocks when:** All Phase 1 sub-phases complete + OD-001 (pricing) + OD-002 (legal) + OD-003 (provider catalog) + OD-005 (reviewer accounts) resolved.
+**Image Studio public launch unlocks when:** All Phase 1 sub-phases complete + OD-002 (legal) + OD-003 (provider catalog) + OD-005 (reviewer accounts) resolved. (OD-001 + OD-021 CLOSED via PRD V8.1 §6.5 dissolution 2026-05-14 — pricing is Portal-configured runtime, not launch blocker.)
 
 ---
 
