@@ -127,40 +127,52 @@ Results below — per claim.
 
 **Recommended correction per Step C standing rule:** replace "Notion Decisions (D1-D57)" with "Notion Decisions" without ID range. The "exempt from ZCBR" carve-out applies to every record in the Decisions DB regardless of ID; restating an ID range adds no substance and recreates the drift surface. Cell value becomes capability-only: "Notion Decisions — Higher-tier authority. Not subject to ZCBR."
 
-### §2.3 — VIYO_CURRENT_MAP.md — count-restatement question (live but possibly violating the standing rule)
+### §2.3 — VIYO_CURRENT_MAP.md — content-type classification per Lock 21 + 5.1 Arbitration
 
-**Three claims in VIYO_CURRENT_MAP.md restate Decisions DB count or range:**
+**Three claims in VIYO_CURRENT_MAP.md reference Decisions DB count or range. Each is classified by content type** — the test specified in Lock 21's Compliance Test (governance text does not name specific implementations, including restated counts per the Lock 21 §-level revision) and exemption clauses (state-observation exclusion includes point-in-time counts observed in audit artifacts; substrate-pointer cells name identity not count per the substrate-pointer clarifying sentence in Lock 21 Statement bullet 4). The 5.1 Arbitration F10 methodological ruling required this audit to apply content-type classification, not directory-location classification — the prior reasoning path had implicitly relied on whether a file sits in `/docs/governance/` rather than on the text's substantive content type.
 
-1. **Line 15 RULE A:** *"...ratified vs proposed snapshot (Notion **D1-D84+** + 21 Locks ratified + Stack Constraints 30-37 PROPOSED + 13 Open Decisions active)..."* — accurate as of authoring time per VIYO_CURRENT_MAP.md HEAD `c08721c`; "D1-D84+" matches the highest observed ID this audit also surfaced.
+1. **Line 15 RULE A:** *"...ratified vs proposed snapshot (Notion **D1-D84+** + 21 Locks ratified + Stack Constraints 30-37 PROPOSED + 13 Open Decisions active)..."*
 
-2. **Line 133** (§11 Active Governance Pointers / DB inventory cell): *"🗄️ Decisions Database | `7a769bf3c2914825aa42c1c8bc94ca30` | `b886724c-aa03-432b-889e-e63d9cdb7de6` | **D1-D84+ ratified PO decisions**; Phase Relevance multi-select for cross-phase tagging"* — same range restatement.
+   **Content-type:** live-state assertion. RULE A in VIYO_CURRENT_MAP.md is the inheritance summary every future agent reads at session-start — by purpose, current-ratified-state summary, not point-in-time historical observation. The session-end refresh cadence keeps the assertion current; it does NOT reclassify it as state observation. Test: would the text be rewritten if D85 lands? Yes — RULE A is supposed to describe current state, and a current-state summary that says "D1-D84+" while the DB holds D1-D85+ would be wrong. The text's purpose is live-current, not snapshot-at-authoring. Contrast with Item 5 (line 387) which explicitly frames itself as past-time observation ("D84 latest observed [timestamp]", "precise count pending sweep") — Item 5's framing is observation; Item 3 reads as assertion. Falls under Lock 21's generalized count-restatement clause (Statement bullet 4): restated counts or ranges of items in a live source-of-truth surface fail the rule.
+
+   **Disposition:** Yellow correction stands. Strip "D1-D84+" from RULE A line 15; replace with capability-only phrasing pointing to the live DB (e.g., "ratified PO decisions per the live Decisions DB").
+
+2. **Line 133** (§11 Active Governance Pointers / DB inventory cell): *"🗄️ Decisions Database | `7a769bf3c2914825aa42c1c8bc94ca30` | `b886724c-aa03-432b-889e-e63d9cdb7de6` | **D1-D84+ ratified PO decisions**; Phase Relevance multi-select for cross-phase tagging"*
+
+   **Content-type:** substrate-pointer content. The cell's role is to identify the DB (name + URL + data source ID + purpose-clause). Per the Lock 21 substrate-pointer clarifying sentence in Statement bullet 4: *"A substrate-pointer cell names identity (name, URL, ID, purpose, schema); it does not state the count of the substrate's contents — the count is the live source's, not the pointer's."* The "D1-D84+ ratified PO decisions" portion fails the substrate-pointer rule (range/count in pointer cell). The rest of the cell (name + URL + data source ID + Phase Relevance multi-select purpose-clause) is Lock 21-compliant identity content.
+
+   **Disposition:** Yellow correction stands. Strip the range "D1-D84+" while preserving substrate-pointer identity attributes. Cell becomes (capability-only): *"🗄️ Decisions Database | <DB URL> | <data source ID> | ratified PO decisions, schema per live DB; Phase Relevance multi-select for cross-phase tagging."*
 
 3. **Line 387** (§13 Ratified vs Proposed snapshot, or similar): *"**Notion Decisions DB current count: ≥84 entries** (D84 latest observed 2026-05-12T21:43 via Notion search). FOUNDATION_AUTHORITY.md §9.2 stale claim 'D1-D29' is wrong by ~55 entries. Precise count pending dedicated Notion sweep in Phase 5.1."*
 
-**Status:** Accurate at audit time but rule-violating. The three restatements correctly identify D84 as the highest observed ID — but they restate a count/range in governance text, which falls under the **generalized standing rule** ratified by PO 2026-05-14 (extends the Step C count-naming rule from authority-hierarchy-counts-specifically to ALL governance count-restatements): *"Point to the enumeration / live source, never restate a count — applies to ALL governance count-restatements, not only authority-hierarchy counts. Closes the structural count-drift class."* The drift class is "any restated count in a governance file goes stale when the underlying thing changes" — "D1-D84+" is accurate today and wrong the day D85 lands. Same failure mode as FOUNDATION_AUTHORITY.md §9.2; different number. The narrower scoping (authority-hierarchy only) would fix one instance and knowingly leave three others standing in the same drift class — that defeats "closes the class."
+   **Content-type:** state observation. The line documents drift at a specific past observation time (2026-05-12T21:43) and routes the reconciliation to Phase 5.1. The "≥84 entries" + "wrong by ~55 entries" + "Precise count pending" framing is observation-of-drift, not a live-state assertion. Falls under Lock 21's state-observation exclusion (point-in-time observations).
 
-**Severity:** Yellow. Correction required for all three locations.
+   **Disposition:** WITHDRAWN. No correction required.
 
-**Recommended correction:** strip "D1-D84+" / "≥84 entries" / "wrong by ~55 entries" from the three locations; replace with capability-only phrasing pointing to the live DB. Line 387's substantive purpose (flag the FOUNDATION_AUTHORITY.md §9.2 drift; route the sweep to Phase 5.1) is preserved without count restatement — example replacement: *"FOUNDATION_AUTHORITY.md §9.2 claim is stale relative to the live DB; live count + ID range queryable in Notion at the canonical URL."* Line 15 RULE A and Line 133 DB-inventory cell replace "D1-D84+" with capability-only phrasing ("ratified PO decisions" without range) and point to the live DB URL.
+**Content-type method explanatory note:** the prior draft of this section (pre-5.1-Arbitration) classified all three locations as "rule-violating" via directory location (VIYO_CURRENT_MAP.md sits in `/docs/governance/`, therefore governance text). The 5.1 Arbitration F10 methodological ruling identified directory location as an unsound classification axis — Lock 21's plain-text test is content type (capability vs implementation; live-state assertion vs state observation; substrate-pointer identity vs content-count), not file path. The rewrite above applies content-type classification: 1 of 3 locations is state observation (Item 5, exempt); 1 of 3 is substrate-pointer content with count (Item 4, fails substrate-pointer rule); 1 of 3 is a live-state assertion in inheritance-summary text with count (Item 3, fails generalized count-restatement clause). Two distinct rule sub-clauses both apply within Lock 21's single test.
 
-### §2.4 — STATE_AUDIT.md — accurate, NOT a stale claim
+### §2.4 — STATE_AUDIT.md — content-type classified as state observation; no correction
 
-**STATE_AUDIT.md §2.3 line 82 + §4 line 273 + §10 line 416 + §10 line 436** all document the FOUNDATION_AUTHORITY.md §9.2 drift accurately, surface the D70-D82 silent-write cluster, and route the reconciliation to Phase 5.1. STATE_AUDIT.md is an audit artifact at `/docs/governance/audits/STATE_AUDIT.md`, not a canonical authority surface. Its statements about Decisions DB state are observations-of-state per Lock 21's state-observation exclusion, not governance content asserting a live count.
+STATE_AUDIT.md §2.3 line 82 + §4 line 273 + §10 line 416 + §10 line 436 document the FOUNDATION_AUTHORITY.md §9.2 drift, surface the D70-D82 silent-write cluster, and route the reconciliation to Phase 5.1. Each statement describes what was observed at the audit's authoring time — observations of past-time state, not live-state assertions.
 
-**Status:** ACCURATE. No correction required. STATE_AUDIT.md and this 5.1 audit artifact share the same factual content about the DB state.
+**Content-type:** state observation. STATE_AUDIT.md's substantive content is past-time observations of the DB's state when the audit ran. Lock 21's state-observation exclusion (extended in the Lock 21 §-level revision to explicitly cover "point-in-time counts observed in audit artifacts") applies directly.
+
+**Disposition:** ACCURATE. No correction required. STATE_AUDIT.md and this 5.1 audit artifact share the same factual content about the DB state, both as observations rather than as live-state assertions.
+
+**Content-type method explanatory note:** the prior draft of this section (pre-5.1-Arbitration) reached the same disposition via directory-location reasoning (STATE_AUDIT.md sits in `/docs/governance/audits/`, therefore audit artifact, therefore state observation). The 5.1 Arbitration F10 methodological ruling identified directory location as an unsound classification axis. The content-type method reaches the same conclusion (state observation) via the right reasoning path: the text's substantive content is observations of past-time state. Conclusion stands; reasoning path corrected.
 
 ---
 
 ## §3 — Summary table
 
-| # | Claim location | Current text (excerpt) | Status | Severity | Recommended correction |
-|---|---|---|---|---|---|
-| 1 | FOUNDATION_AUTHORITY.md §9.2 line 593 | "29 ratified PO decisions (D1-D29) — master decision record" | **STALE** by ~55 entries | **Red** | Strip count + range; capability-only cell text pointing to live DB |
-| 2 | R-Spec_Audit_Table_v1.0.md line 63 | "Notion Decisions (D1-D57)" | **STALE** by ~27 entries | Yellow | Strip range; cell value becomes "Notion Decisions — Higher-tier authority. Not subject to ZCBR." |
-| 3 | VIYO_CURRENT_MAP.md line 15 RULE A | "Notion D1-D84+" | Accurate at audit time, rule-violating | Yellow | Strip range; capability-only phrasing pointing to live DB |
-| 4 | VIYO_CURRENT_MAP.md line 133 §11 DB inventory cell | "D1-D84+ ratified PO decisions" | Accurate at audit time, rule-violating | Yellow | Strip range; capability-only cell pointing to live DB |
-| 5 | VIYO_CURRENT_MAP.md line 387 §13 (or near) | "Notion Decisions DB current count: ≥84 entries... wrong by ~55 entries" | Accurate at audit time, rule-violating | Yellow | Strip count; preserve substantive purpose (flag FOUNDATION_AUTHORITY drift + route to 5.1) without count restatement |
-| n/a | STATE_AUDIT.md §2.3 + §4 + §10 | Various — documents the drift | ACCURATE (audit artifact, not canonical claim) | n/a | No correction; STATE_AUDIT is the substrate this 5.1 audit extends |
+| # | Claim location | Current text (excerpt) | Content-type | Disposition | Severity | Recommended correction |
+|---|---|---|---|---|---|---|
+| 1 | FOUNDATION_AUTHORITY.md §9.2 line 593 | "29 ratified PO decisions (D1-D29) — master decision record" | Live-state assertion in tier-4 substrate file (per §2.1) | **STALE** by ~55 entries; correction required | **Red** | Strip count + range; capability-only cell text pointing to live DB |
+| 2 | R-Spec_Audit_Table_v1.0.md line 63 | "Notion Decisions (D1-D57)" | Live-state assertion in R-spec audit table row (per §2.2) | **STALE** by ~27 entries; correction required | Yellow | Strip range; cell value becomes "Notion Decisions — Higher-tier authority. Not subject to ZCBR." |
+| 3 | VIYO_CURRENT_MAP.md line 15 RULE A | "Notion D1-D84+" | Live-state assertion in inheritance summary (per §2.3 content-type ruling) | Correction required per Lock 21 generalized count-restatement clause | Yellow | Strip range; capability-only phrasing pointing to live DB (e.g., "ratified PO decisions per the live Decisions DB") |
+| 4 | VIYO_CURRENT_MAP.md line 133 §11 DB inventory cell | "D1-D84+ ratified PO decisions" | Substrate-pointer content with count in pointer cell (per §2.3 content-type ruling) | Correction required per Lock 21 substrate-pointer clarification | Yellow | Strip range; preserve identity attributes (name + URL + ID + purpose-clause) |
+| 5 | VIYO_CURRENT_MAP.md line 387 §13 (or near) | "Notion Decisions DB current count: ≥84 entries... wrong by ~55 entries" | State observation (point-in-time + drift-routing) per §2.3 content-type ruling | WITHDRAWN — exempt per Lock 21 state-observation clause | n/a | No correction |
+| n/a | STATE_AUDIT.md §2.3 + §4 + §10 | Various — documents the drift | State observation per §2.4 content-type ruling | ACCURATE (exempt) | n/a | No correction; content-type method confirms exemption via point-in-time observation analysis |
 
 ---
 
@@ -179,11 +191,11 @@ These four items go into the 5.1 follow-up queue for Cataloger work + PO ratific
 
 ## §5 — Lock 21 discipline applied throughout this audit
 
-Per the **generalized standing rule** (ratified PO 2026-05-14, extending the Step C authority-hierarchy-count rule to all governance count-restatements — Lock 21 capability-over-count):
-- This audit **points to the live DB** as the canonical source of truth (URL + data source ID stated; counts and ranges treated as observations-of-state per Lock 21's state-observation exclusion explicit clause).
-- Counts named in this audit (54 / 23 / 77 / 79) are stated as **observation values at audit time** in §1.3, with explicit acknowledgement that the live DB may contain additional records the search did not surface.
-- Recommended corrections in §3 strip count restatements from governance files in all 5 stale-claim locations; they do NOT replace a stale count with a freshly-restated count, which would just recreate the drift surface at a different value.
-- The generalized rule applies to all 5 claim locations equally (Items 1+2 already stale; Items 3+4+5 accurate today but in the same drift class).
+Per the Lock 21 §-level revision (count-restatement clause in Statement bullet 4 + substrate-pointer clarifying sentence + state-observation exclusion extended to cover point-in-time counts observed in audit artifacts):
+- This audit **points to the live DB** as the canonical source of truth (URL + data source ID stated; counts in §1.3 are point-in-time observations at audit time per Lock 21's state-observation exclusion).
+- Counts named in this audit's §1.3 (54 / 23 / 77 / 79) are stated as **observation values at audit time**, with explicit acknowledgement that the live DB may contain additional records the search did not surface.
+- Per the 5.1 Arbitration F10 methodological ruling, §3 summary table classifies claim locations by **content type** (live-state assertion vs substrate-pointer content vs state observation), not by directory location. Content-type classification yields: Items 1+2+3+4 require corrections (live-state assertions in Items 1+2+3; substrate-pointer with count in Item 4; all fail Lock 21 sub-clauses); Item 5 + STATE_AUDIT.md are exempt (state observations per the exclusion).
+- Recommended corrections in §3 strip count restatements; they do NOT replace stale counts with freshly-restated counts (which would recreate the drift surface at a different value).
 
 ---
 
