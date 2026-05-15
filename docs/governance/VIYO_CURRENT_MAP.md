@@ -5,7 +5,7 @@
 **Phase 3.1 deliverable per VIYO_PATH_TO_MVP.md §Step 6**
 **Authored:** 2026-05-13 by VIYO Project Curator (Claude Code Desktop)
 **Supersedes:** `/docs/governance/CURRENT_STATE.md` (2026-05-08, 5+ days stale, 6 PRs not reflected)
-**Authority tier:** Inheritance layer. Below FOUNDATION_LOCKS_v2 + FOUNDATION_AUTHORITY + ARCHITECT_OPERATING_RULES; above per-Bullet directives. Read FIRST at every session start.
+**Authority tier:** Inheritance layer. Below FOUNDATION_LOCK + FOUNDATION_AUTHORITY + ARCHITECT_OPERATING_RULES; above per-Bullet directives. Read FIRST at every session start.
 **Maintenance:** Living document. §9 (Current State) + §10 (Pending Work) updated at end of every Architect session as standing discipline. §1–§3 (Identity / MVP / Vision) require PO ratification to change. Quarterly drift detection via dedicated Curator session.
 
 ---

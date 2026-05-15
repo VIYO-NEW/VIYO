@@ -10,7 +10,7 @@
 ## 0 — FIRST ACTIONS for the fresh PO-side conversation
 
 1. Read this whole file.
-2. Read NIR_OPERATING_RULES_v2.md (Drive ID below) — how Nir works, 13 universal rules.
+2. Read NIR_OPERATING_RULES.md (Drive ID below) — how Nir works, 13 universal rules.
 3. Read /docs/governance/SESSION_STATE.md directly from the repo — the live state pointer. Per Rule E (nothing cited from memory) + Rule 3.10 (SESSION_STATE.md is repo-canonical, committed at every session end; local-only state is forbidden).
 4. Read latest SESSION_LEDGER_YYYY-MM-DD.md in Drive working folder for full prior-session reasoning context.
 5. Reference latest VIYO_Canonical_State_Audit_YYYY-MM-DD.md in Drive for full canonical surface verbatim (337 items as of 2026-05-15 audit; do NOT re-audit).

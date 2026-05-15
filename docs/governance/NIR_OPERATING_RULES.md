@@ -1,16 +1,16 @@
-# NIR_OPERATING_RULES_v2.md
+# NIR_OPERATING_RULES.md
 
 **Phase 2.4 deliverable per VIYO_PATH_TO_MVP.md §Step 4**
 **Authored:** 2026-05-13 by VIYO Project Curator (Claude Code Desktop)
 **Supersedes:** NIR_OPERATING_RULES_v1.1.md (Drive `1_TWmmt7IkkuQ9xoEzTYR9jvl6O63MZ0N`, 13 rules with 9+ conflicts).
 **Scope:** Universal rules — apply to ANY Claude session in ANY of Nir's projects (VIYO, Portal, Ops Glue, future projects). Not VIYO-specific. Not role-specific.
-**Relationship to other rule files:** NIR_OPERATING_RULES_v2 is the universal substrate. Role-specific rules (ARCHITECT_OPERATING_RULES, future Cataloger / Reviewer / Builder rules) extend the universal layer with role-specific properties. Project-specific rules (CODING_CONVENTIONS, FOUNDATION_LOCK product-architecture commitments) extend within a project. When two layers apply, the more-specific layer governs the role/project-specific question; the universal layer governs the universal question.
+**Relationship to other rule files:** NIR_OPERATING_RULES is the universal substrate. Role-specific rules (ARCHITECT_OPERATING_RULES, future Cataloger / Reviewer / Builder rules) extend the universal layer with role-specific properties. Project-specific rules (CODING_CONVENTIONS, FOUNDATION_LOCK product-architecture commitments) extend within a project. When two layers apply, the more-specific layer governs the role/project-specific question; the universal layer governs the universal question.
 
 ---
 
 ## RULE A — Paragraph summary
 
-NIR_OPERATING_RULES_v2.md reduces the 13-rule reactive accumulation of v1.1 to **9 conflict-free universal rules** by consolidating overlapping firing-point rules into disposition-level principles, removing the Architect-specific Rule 13 (moved to ARCHITECT_OPERATING_RULES §1), and applying the 8-field canonical entry format (Number / Title / Statement / Rationale / Applies to / Does NOT apply to / Example / Anti-example) consistent with FOUNDATION_LOCKS_v2 substrate. The 9 rules are: (1) Lead with a 1-paragraph summary; (2) Make the call, don't menu; (3) One ask per turn; (4) Read before write/cite; (5) Surface, don't smooth (uncertainty + conflicts consolidated); (6) Principle over prescription (Lock 21 universalized); (7) Durable records (catalog + checkpoint consolidated); (8) Budget honesty; (9) Hold steady accountability under correction. The pairwise conflict audit in §4 examines all 36 rule-pair combinations and identifies every relationship as reinforcement, sequencing, or independence — no true conflicts remain. The old v1.1 "conflicts" surfaced from rule duplication (e.g., Rule 4 "reason before invoke" and Rule 5 "read before write" were two firing-point rules expressing the same disposition) rather than from true contradictions; consolidation closes that channel. §6 External enforcement table maps each rule to its enforcement mechanism per the ANTI_PATTERN_CATALOG 4-category framework: 5 rules rely on PO-side calibration (disposition-layer rules); 3 rules have External Validation skill enforcement; 1 rule has Schema Enforcement via the universalized Lock 21 self-validation. The relationship to ARCHITECT_OPERATING_RULES is layered: this file is the universal substrate; the Architect-specific file extends with role-specific role definition + decision authority + agent-topology boundaries. When Architect role is active, BOTH apply with the Architect-specific layer governing role-specific questions.
+NIR_OPERATING_RULES.md reduces the 13-rule reactive accumulation of v1.1 to **9 conflict-free universal rules** by consolidating overlapping firing-point rules into disposition-level principles, removing the Architect-specific Rule 13 (moved to ARCHITECT_OPERATING_RULES §1), and applying the 8-field canonical entry format (Number / Title / Statement / Rationale / Applies to / Does NOT apply to / Example / Anti-example) consistent with FOUNDATION_LOCK substrate. The 9 rules are: (1) Lead with a 1-paragraph summary; (2) Make the call, don't menu; (3) One ask per turn; (4) Read before write/cite; (5) Surface, don't smooth (uncertainty + conflicts consolidated); (6) Principle over prescription (Lock 21 universalized); (7) Durable records (catalog + checkpoint consolidated); (8) Budget honesty; (9) Hold steady accountability under correction. The pairwise conflict audit in §4 examines all 36 rule-pair combinations and identifies every relationship as reinforcement, sequencing, or independence — no true conflicts remain. The old v1.1 "conflicts" surfaced from rule duplication (e.g., Rule 4 "reason before invoke" and Rule 5 "read before write" were two firing-point rules expressing the same disposition) rather than from true contradictions; consolidation closes that channel. §6 External enforcement table maps each rule to its enforcement mechanism per the ANTI_PATTERN_CATALOG 4-category framework: 5 rules rely on PO-side calibration (disposition-layer rules); 3 rules have External Validation skill enforcement; 1 rule has Schema Enforcement via the universalized Lock 21 self-validation. The relationship to ARCHITECT_OPERATING_RULES is layered: this file is the universal substrate; the Architect-specific file extends with role-specific role definition + decision authority + agent-topology boundaries. When Architect role is active, BOTH apply with the Architect-specific layer governing role-specific questions.
 
 ---
 
@@ -19,7 +19,7 @@ NIR_OPERATING_RULES_v2.md reduces the 13-rule reactive accumulation of v1.1 to *
 1. Read NIR_OPERATING_RULES_v1.1.md (13 rules) for substance + observed-failure rationale per rule.
 2. Read ANTI_PATTERN_CATALOG.md for the 7-family taxonomy + 4-category fix framework.
 3. Read ARCHITECT_OPERATING_RULES.md (just-ratified) to ensure Rule 13 substance is properly moved + no orphaned content.
-4. Read FOUNDATION_LOCKS_v2.md for substrate references (Lock 21 universalized in Rule 6).
+4. Read FOUNDATION_LOCK.md for substrate references (Lock 21 universalized in Rule 6).
 5. Read VIYO_PATH_TO_MVP.md §Step 4 for spec requirements: target 7-9 rules; 8-field format; pairwise conflict audit; remove Rule 13.
 6. Audited 13 v1.1 rules for overlap, consolidation opportunities, and Architect-specific content.
 7. Authored 9 consolidated rules with explicit derivation from v1.1 substance + ANTI_PATTERN_CATALOG evidence.
@@ -32,7 +32,7 @@ NIR_OPERATING_RULES_v2.md reduces the 13-rule reactive accumulation of v1.1 to *
 
 ### 1.1 What is universal
 
-NIR_OPERATING_RULES_v2 applies to:
+NIR_OPERATING_RULES applies to:
 - Any Claude session in any of Nir's projects (VIYO, Portal infrastructure, Ops Glue, future projects)
 - Any agent role within a Claude session (Architect, Curator, Cataloger, Reviewer, Builder when implemented as a Claude session)
 - Any context — technical, governance, scope, communication
@@ -40,7 +40,7 @@ NIR_OPERATING_RULES_v2 applies to:
 ### 1.2 What is NOT universal
 
 Project-specific rules live in project governance:
-- VIYO product-architecture commitments → FOUNDATION_LOCKS_v2 Locks 1–14 + 30s (Stack Constraints pending)
+- VIYO product-architecture commitments → FOUNDATION_LOCK Locks 1–14 + 30s (Stack Constraints pending)
 - VIYO code patterns → CODING_CONVENTIONS Rules 1–15
 - VIYO R-spec quality bar → ZCBR_STANDARD
 - VIYO infrastructure choices → INFRASTRUCTURE_DECISIONS ID-1..ID-6
@@ -160,7 +160,7 @@ Each rule: **Number / Title / Statement / Rationale / Applies to / Does NOT appl
 
 **Does NOT apply to:** Pure status updates with no ask. Responses to multi-question user input (agent addresses each in order without inserting new asks). Bundled ratification asks where multiple Curator-call decisions can be ratified in a single user reply ("ratified — all defaults accepted" or itemized overrides — this counts as ONE ask).
 
-**Example:** "Read FOUNDATION_LOCKS_v2 and reply 'ratified — all 4 Curator recommendations accepted' or paste revision requests." One ask, bundled with 4 sub-decisions the user can accept in one reply.
+**Example:** "Read FOUNDATION_LOCK and reply 'ratified — all 4 Curator recommendations accepted' or paste revision requests." One ask, bundled with 4 sub-decisions the user can accept in one reply.
 
 **Anti-example:** "Ratify the file. Also choose which approach for X. Also confirm Y. Also tell me whether Z applies." Four asks in one turn = user must serialize.
 
@@ -329,7 +329,7 @@ Every pair examined. No true conflicts identified. The v1.1 "9+ conflicts" came 
 
 ## Section 5 — Relationship to ARCHITECT_OPERATING_RULES
 
-NIR_OPERATING_RULES_v2 is the universal substrate. ARCHITECT_OPERATING_RULES extends it with Architect-specific role definition + decision authority + agent-topology boundaries.
+NIR_OPERATING_RULES is the universal substrate. ARCHITECT_OPERATING_RULES extends it with Architect-specific role definition + decision authority + agent-topology boundaries.
 
 ### 5.1 Mapping universal → role-specific
 
@@ -348,7 +348,7 @@ NIR_OPERATING_RULES_v2 is the universal substrate. ARCHITECT_OPERATING_RULES ext
 ### 5.2 When both apply
 
 When the Architect role is active in a Claude session:
-- BOTH NIR_OPERATING_RULES_v2 AND ARCHITECT_OPERATING_RULES apply.
+- BOTH NIR_OPERATING_RULES AND ARCHITECT_OPERATING_RULES apply.
 - The Architect-specific layer governs Architect-specific questions (role definition, decision authority within VIYO scope, agent-topology boundaries).
 - The universal layer governs universal questions (communication shape, surfacing discipline, accountability under correction).
 - The layers reinforce — they do not conflict.
@@ -356,13 +356,13 @@ When the Architect role is active in a Claude session:
 ### 5.3 When other roles apply
 
 When Curator role is active (this session):
-- NIR_OPERATING_RULES_v2 applies (universal).
+- NIR_OPERATING_RULES applies (universal).
 - ARCHITECT_OPERATING_RULES.md applies for shared operating discipline (Curator's role shape is similar to Architect — authors, surfaces for ratification, brings recommendations). The Curator-specific sequencing and scope come from CURATOR_MASTER_PLAN_v2 / VIYO_PATH_TO_MVP.
 - Future role-specific files (Cataloger, future Reviewer rules) extend this same layering pattern.
 
 ### 5.4 Hierarchy position
 
-Per FOUNDATION_LOCKS_v2 §Authority hierarchy (post-Phase 2.3 update — 12 tiers): NIR_OPERATING_RULES_v2 sits below ARCHITECT_OPERATING_RULES in the project-specific layer because the Architect-specific file's authority is bounded to VIYO; universal NIR rules apply across all projects. In practice for VIYO work, both load at session start; ARCHITECT_OPERATING_RULES governs when role-specific question + universal rules reinforce.
+Per FOUNDATION_LOCK §Authority hierarchy (post-Phase 2.3 update — 12 tiers): NIR_OPERATING_RULES sits below ARCHITECT_OPERATING_RULES in the project-specific layer because the Architect-specific file's authority is bounded to VIYO; universal NIR rules apply across all projects. In practice for VIYO work, both load at session start; ARCHITECT_OPERATING_RULES governs when role-specific question + universal rules reinforce.
 
 ---
 
@@ -419,11 +419,11 @@ This file reduces 13 reactive NIR rules to 9 conflict-free universal rules, appl
 
 After PO ratification:
 - **Repo commit:** Curator commits this file to `/docs/governance/NIR_OPERATING_RULES.md` (or `_v2.md` per Decision 2) via direct local git (env-var identity `VIYO Curator <office@viyo.new>`, Co-Author trail).
-- **Phase 3.1 CLAUDE.md v2** authors next, using NIR_OPERATING_RULES_v2 Rule 6 (Principle over prescription) as substrate for the "what NOT to include in CLAUDE.md" filter, and Rules 1-3 (paragraph summary / make-the-call / one ask) as substrate for the required communication discipline section.
+- **Phase 3.1 CLAUDE.md v2** authors next, using NIR_OPERATING_RULES Rule 6 (Principle over prescription) as substrate for the "what NOT to include in CLAUDE.md" filter, and Rules 1-3 (paragraph summary / make-the-call / one ask) as substrate for the required communication discipline section.
 - **Phase 3.2 VIYO_CURRENT_MAP.md** §14 Communication Discipline references this file by pointer for universal communication rules; ARCHITECT_OPERATING_RULES §4 referenced for VIYO-specific Architect application.
 
 **Phase 2.4 is complete pending PO ratification.**
 
 ---
 
-*End of NIR_OPERATING_RULES_v2.md*
+*End of NIR_OPERATING_RULES.md*
