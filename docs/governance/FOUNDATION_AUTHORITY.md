@@ -590,7 +590,7 @@ R32 Email Engine (38 KB), R36 HYVE (25 KB), R37 MAAX (11 KB), R38 SYPHON (10 KB)
 
 | Source | Location | What it provides |
 |---|---|---|
-| **Notion VIYO Decision Log** | https://www.notion.so/VIYO-Decision-Log-and-QA-Tracker-3559a84a46798194946ef8fc5479e4c2 | 29 ratified PO decisions (D1-D29) — master decision record |
+| **Notion VIYO Decision Log** | https://www.notion.so/VIYO-Decision-Log-and-QA-Tracker-3559a84a46798194946ef8fc5479e4c2 | Master decision record. Live count + ID range queryable in Notion at the URL; canonical state is the DB itself. |
 | **Airtable VIYO Base** | `appo5mNncCCzKcIRk` | Q&A Master Log (~200), Build Tracker (580), Skills Registry (109+), Services Inventory (27), Architecture Broadcasts (6) |
 | **Manus Master Architectural Atlas V1.0 EXHAUSTIVE** | https://drive.google.com/file/d/1DLhFqf3SwEE9NRpDr-m20iKWIQ7gE3M1/view | 17.3 MB / 580 records / 165 docs / 715 technical files / 88 Task Master tasks — feature inventory |
 | **Manus Skill Routing Map** | https://drive.google.com/file/d/1psGtt41YPjw0oCx3KIuty8-Ny7EOAqKM/view | 109 skills mapped per Brain — Layer 1 / Layer 2 architecture |

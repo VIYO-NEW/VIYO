@@ -60,7 +60,7 @@ Triage legend: **CRIT** = CRITICAL | **IMPT** = IMPORTANT | **LATR** = LATER | *
 | 31 | VVOW Image Studio Architecture | **EXEMPT** | n/a | All Phase 1 Bullets | All P1 Bullets | n/a | Higher-tier authority document per CLAUDE.md hierarchy. Not subject to ZCBR check (per skill spec Step 3). |
 | 32 | FOUNDATION_AUTHORITY.md | **EXEMPT** | n/a | All Bullets | All Bullets | n/a | Higher-tier authority. Not subject to ZCBR. |
 | 33 | V8 PRD | **EXEMPT** | n/a | All Bullets | All Bullets | n/a | Higher-tier authority. Not subject to ZCBR. |
-| 34 | Notion Decisions (D1-D57) | **EXEMPT** | n/a | Various Bullets | Various Bullets | n/a | Higher-tier authority. Not subject to ZCBR. |
+| 34 | Notion Decisions | **EXEMPT** | n/a | Various Bullets | Various Bullets | n/a | Higher-tier authority. Not subject to ZCBR. |
 | 35 | Foundation Locks (1-20) | **EXEMPT** | n/a | All Bullets | All Bullets | n/a | Higher-tier authority. Not subject to ZCBR. |
 | 36 | Conflict Resolutions (C-01 through C-07) | **EXEMPT** | n/a | Various Bullets | Various Bullets | n/a | Higher-tier authority. Not subject to ZCBR. |
 | 37 | Master Build Sequence v1.x | **EXEMPT** | n/a | n/a (it cites Bullets, not cited by them) | n/a | n/a | Higher-tier authority. Not subject to ZCBR. |
