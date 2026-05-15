@@ -971,10 +971,10 @@ Sequencing rules per Lock 1 (Product Sequencing) + FOUNDATION_AUTHORITY §3 — 
 | **OD-001** | Pricing Page Copy & Conversion Optimization | PO | **CLOSED via §6.5 dissolution** | (was: marketing site launch, pricing page UX) |
 | OD-002 | Legal Review: Milled / Email Love / Really Good Emails Scraping | Legal | Open | Phase 1.9 Pattern Seeding + R46 competitor corpus — **V1.0.5, NOT MVP-blocking per §3.1** |
 | OD-003 | AgentMail IMAP Provider Selection | Architect Claude | Open | R46 Email Ingestion Module — **Phase 1B prerequisite for Phase 2** |
-| OD-004 | R29 PAL Rewrite Scope (unified Plugin Registry per Lock 19 + Lock 38) | Architect Claude | Open | All Brain implementation specs reference provider routing |
+| OD-004 | R29 PAL Rewrite Scope (unified Plugin Registry per Lock 19 + Lock 38) | Architect Claude | **CLOSED via R29 v2 ZCBR-PASS 2026-05-12 (Iα ratified 2026-05-15)** | (was: all Brain implementation specs reference provider routing — future ESP/commerce/payment PAL R-specs are downstream Lock 38 instances, NOT OD-004 scope extensions) |
 | OD-005 | 3 Reviewer Accounts Setup (Tinder swipe gate) | PO | Open | Phase 1 RLHF swipe gate operational (admin.viyo.com minimal scope) |
 | OD-006 / OD-007 / OD-008 | Phase 1B substrate ODs (R-spec scoping) | Architect / PO | Open | Phase 1B intelligence layer; **NOT MVP-blocking** (post-launch sequence per §7.4) |
-| **OD-009** | **Portal Composer Queue concurrency model — serial or N parallel lanes?** | **Architect Claude** | **Open** | **All parallel-track Bullet assumptions in Master Build Sequence v1.1; Phase 1 prerequisite chain timeline; Architecture A operational readiness per §5.5** |
+| OD-009 | Portal Composer Queue concurrency model | Architect Claude | **CLOSED 2026-05-15 (2 parallel lanes related-wired, sequential cross-touching)** | (was: parallel-track Bullet assumptions; resolved by PO ratification 2026-05-15 — see CODE_RECONCILIATION §8 A2) |
 | OD-010 – OD-018 | Misc Phase 1 / Phase 1B / governance-substrate ODs | Various | Open | Various — see Notion DB for per-OD detail; **none MVP-blocking** |
 | **OD-019** | **WP-1 + WP-2 status unverified — need PO confirmation or repo check before T73 unblocking** | **PO** | **Open** | **T73 sub-phase 1.5 unblocking; Studio Editing Router; PAUSED state continues until resolved** |
 | OD-020 | PO sign-off on Foundation Locks, Decisions, OD resolutions | PO | Open | Governance cadence; **NOT MVP-blocking** (process item) |
@@ -998,10 +998,10 @@ Per §7.2 G2 gate ("All MVP-blocking Open Decisions resolved"), the following 4 
 
 | OD ID | Title | MVP-blocking? | Severity per §7.5 |
 |---|---|---|---|
-| **OD-004** | R29 PAL Rewrite Scope (Lock 19 + Lock 38 unified Plugin Registry — AI model registry + ESP + commerce + payment + future) | **Yes** — all provider routing specs depend on unified PAL | Yellow (Architect-side authoring during fresh Phase 4 Architect session) |
 | **OD-005** | 3 Reviewer Accounts Setup (Tinder swipe gate) | **Yes** — Phase 1 RLHF swipe gate cannot activate without 3 reviewers (Decision 52) | Yellow (PO action item; small ask) |
-| **OD-009** | Portal Composer Queue concurrency model | **Yes** — **load-bearing per Architecture A** | **Red** (§7.5 — affects MVP timeline 12-16 → 22-26 weeks per §3.3) |
 | **OD-019** | WP-1 + WP-2 status verification | **Yes** — T73 sub-phase 1.5 unblocking gate | Yellow (verification check, not implementation work) |
+
+**OD-004 + OD-009 CLOSED 2026-05-15 — removed from MVP-blocking table.** OD-004 closed via R29 v2 ZCBR-PASS 2026-05-12 (Interpretation α ratified 2026-05-15; future ESP/commerce/payment PAL R-specs are downstream Lock 38 instances). OD-009 closed via PO ratification 2026-05-15 (2 parallel lanes related-wired; sequential cross-touching). Net MVP-blocking ODs: 005, 019 — down from 4 to 2.
 
 **Deferred-not-blocking ODs:**
 
