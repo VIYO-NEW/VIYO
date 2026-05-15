@@ -27,6 +27,9 @@ The 4 files below are the **inheritance pool**. §3 names which subset each role
 | 2 | **ARCHITECT_OPERATING_RULES.md** | `/docs/governance/ARCHITECT_OPERATING_RULES.md` | When Architect role active per §3 | Architect role definition + decision authority + operating discipline + communication discipline + agent topology boundaries |
 | 3 | **NIR_OPERATING_RULES.md** | `/docs/governance/NIR_OPERATING_RULES.md` | ALWAYS | Universal-scope operating rules for any Claude session in any of Nir's projects |
 | 4 | **ANTI_PATTERN_CATALOG.md** | `/docs/governance/ANTI_PATTERN_CATALOG.md` | ALWAYS | Failure family taxonomy + foundational fix categories with external enforcement mechanisms |
+| 5 | **SESSION_STATE.md** | `/docs/governance/SESSION_STATE.md` | ALWAYS | Live state pointer: current Phase + HEAD SHA + ledger + pending queue + recovery protocol. Read fresh every session — never rely on memory. Per Rule 3.10 + Rule E. |
+
+Also read latest `SESSION_LEDGER_YYYY-MM-DD.md` in Drive working folder for prior-session reasoning chains when continuity needed. Reference latest `VIYO_Canonical_State_Audit_YYYY-MM-DD.md` in Drive for full canonical surface (337 items as of 2026-05-15 audit; Drive ID `1ogFA3ySF-IJDSlVDvKzzsvCDeiZv34Vo`).
 
 **Deeper substrate** is referenced from VIYO_CURRENT_MAP.md §11 by repo path (FOUNDATION_LOCK.md / ZCBR_STANDARD.md / CODING_CONVENTIONS.md / INFRASTRUCTURE_DECISIONS.md / FOUNDATION_AUTHORITY.md / VVOW_IMAGE_STUDIO_ARCHITECTURE.md / PRODUCT_ROADMAP.md / VIYO_Master_Build_Sequence.md). Load on-demand per task scope.
 

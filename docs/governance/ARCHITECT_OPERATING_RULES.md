@@ -313,6 +313,26 @@ Drift gaps surfaced explicitly. No answers from memory.
 
 **Edge case:** When the diagnostic surfaces drift gaps (stale inheritance-file refresh / uncommitted files / unpushed commits / inaccurate handoff-doc references), Curator surfaces the gaps without acting on them — diagnostic identifies gaps; PO directs the remediation order. Diagnostic ≠ auto-fix. When the diagnostic surfaces zero drift gaps, that is a valid clean baseline outcome — Curator states "no drift surfaced" explicitly, the same way Adversary states "no Red or Yellow findings."
 
+### Rule 3.10 — SESSION_STATE Repo Canonical
+
+**Statement:** SESSION_STATE.md is repo-canonical, committed to `/docs/governance/SESSION_STATE.md` at every session end. Local-only session state is forbidden (e.g., `C:\Users\Admin\Documents\VIYO\governance\SESSION_STATE.md` as sole canonical violates this).
+
+**Derived from:** 2026-05-15 session handoff failure mode — fresh PO-side Claude sessions discovered SESSION_STATE.md was local-only despite CONTEXT_RESTORE §0 routing to it. The local-only path meant the live state pointer was not readable autonomously from the repo, forcing the relay (Nir between PO-side Claude and Curator) to carry state across sessions — the exact failure mode Rule 3.9 was designed to prevent.
+
+**Substrate:** ANTI_PATTERN_CATALOG Family 1 (silent writes to canonical state must be in repo, not local-only filesystem) + Rule E (nothing cited from memory — including state itself; if state lives only in Curator's local filesystem, fresh PO-side Claude is forced to memory-cite). Closes the local-only-state subset of the stale-citation-propagation chain.
+
+**Write trigger:** session end, PO ratifies delta summary, Curator commits SESSION_STATE.md to repo at `/docs/governance/SESSION_STATE.md`.
+
+**Read trigger:** every fresh session start, per CLAUDE.md §2 file 5 (auto-load reading list).
+
+**External enforcement:** CLAUDE.md §2 auto-load mandates SESSION_STATE.md as file 5; fresh PO-side Claude sessions cannot inherit live state without reading the repo file. Rule 3.7 (push on every commit) + Rule 3.8 (verbatim paste-back) + Rule 3.9 (grep-verify state diagnostic) chain is incomplete without Rule 3.10 — together they enforce repo-canonical state across all relay boundaries.
+
+**Applies to:** Every session-close handoff. Every fresh-session inheritance. Recovery-after-context-loss moments.
+
+**Does NOT apply to:** Curator-internal scratch state during a single session (uncommitted draft notes are fine mid-session — only SESSION_STATE.md itself must commit at session end).
+
+**Edge case:** If the working-tree is dirty at session end and SESSION_STATE.md commit would conflict with uncommitted work, Curator surfaces the conflict before committing; PO directs disposition (commit dirty state with explicit "session-close partial" note, or finish dirty work first then commit SESSION_STATE.md). Curator does not silently overwrite or skip the SESSION_STATE commit.
+
 ---
 
 ## Section 4 — Communication Discipline (5 rules)

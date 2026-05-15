@@ -236,6 +236,24 @@ Target: agent reads exactly 2 inheritance files (CLAUDE.md v2 + VIYO_CURRENT_MAP
 
 ---
 
+### §3.5 — Anti-Pattern Variants surfaced 2026-05-15
+
+Four anti-pattern variants surfaced during 2026-05-15 session work (Rule E lock, D85 ratification, Lock 22 graduation):
+
+**a. Stale-citation-propagation chain (3-layer)** — variant of Family 1. Example: D63 K1=COPY case (Architect cited stale → Curator paste-back propagated → PO ratified the stale chain). Three governance layers all skipped grep-verifying the cited substrate against the Decisions DB. A3 Interpretation 2 unwittingly superseded D63. Resolution: Path α realign 2026-05-15 reaffirming D63; A3 I2 reversed to I1. Closes via Rule E grep-verify mandate.
+
+**b. Arbiter adjacent-string blindness** — Arbiter flags stale citation in one location but doesn't grep same string across rest of touched file. X2.18/X2.20 example (timeline "12-17" fixed at line 67, missed at adjacent line 339 same file). Closes via Rule D strengthened mandate (stale-string sweep across all touched files for any flagged stale citation).
+
+**c. Memory-citation (universal)** — agent cites from memory / inference / paraphrase / skim instead of grep-verifying canonical source. Forbidden across all agents (Architect / Curator / PO-side Claude / Arbiter / Adversary / Manus / Cataloger). Closes via Rule E (universal precondition resolving all stale-citation families at source).
+
+**d. Capability-citation without verify** — subspecies of (c). Agent asserts "I don't have access to X tool" without verifying via tool_search with multiple keyword variants. Closes via Rule E applied to own tool access.
+
+**External enforcement:** Rule E (locked in ARCHITECT_OPERATING_RULES §3) requires grep-verify against canonical source before propagating any citation. Rule D strengthened mandate (locked in same §3) requires Arbiter stale-string sweep across all touched files. Rule 3.10 (SESSION_STATE repo-canonical) closes the local-only-state subset that would otherwise propagate stale citations via uncommitted session memory. Together, Rules A/B/C/D/E + Rule 3.7-3.10 chain forms the universal anti-stale-citation discipline locked across all relay boundaries (PO ↔ PO-side Claude ↔ Curator ↔ Arbiter ↔ Adversary ↔ Manus ↔ Cataloger).
+
+For full reasoning chains + concrete session examples see `SESSION_LEDGER_2026-05-15.md` in Drive working folder.
+
+---
+
 ## Section 4 — Fix-to-Evidence Map
 
 Each row: evidence point → which foundational fix addresses it → external enforcement mechanism.

@@ -10,11 +10,13 @@
 ## 0 — FIRST ACTIONS for the fresh PO-side conversation
 
 1. Read this whole file.
-2. Read NIR_OPERATING_RULES (Drive ID below) — how Nir works, 13 universal rules.
-3. Have the Curator surface SESSION_STATE.md from the repo — the live state pointer.
-4. Then: the one open item is the Phase 5.1 Lock 21 revision. Ruling already decided (Path 1 — see §6).
+2. Read NIR_OPERATING_RULES_v2.md (Drive ID below) — how Nir works, 13 universal rules.
+3. Read /docs/governance/SESSION_STATE.md directly from the repo — the live state pointer. Per Rule E (nothing cited from memory) + Rule 3.10 (SESSION_STATE.md is repo-canonical, committed at every session end; local-only state is forbidden).
+4. Read latest SESSION_LEDGER_YYYY-MM-DD.md in Drive working folder for full prior-session reasoning context.
+5. Reference latest VIYO_Canonical_State_Audit_YYYY-MM-DD.md in Drive for full canonical surface verbatim (337 items as of 2026-05-15 audit; do NOT re-audit).
+6. Resume from "Pending queue" section in SESSION_STATE.md. Confirm orientation to PO before starting work.
 
-**Standing rule for the PO-side Claude:** Verify canonical sources by reading them — never from memory. State which surface you read (Notion vs repo file vs Drive). Keep sessions short. The relay (Nir between PO-side Claude and Curator) degrades over long sessions — this is a known, observed failure mode.
+**Standing rule for the PO-side Claude:** Verify canonical sources by reading them — never from memory (Rule E). State which surface you read. Keep sessions short. Always verify own tool access via tool_search before claiming capability gaps. Dispatch Manus for full audit production when context budget tightens (do not carry verbatim batches in conversation context).
 
 ---
 
