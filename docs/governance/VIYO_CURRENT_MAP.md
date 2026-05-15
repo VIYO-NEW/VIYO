@@ -46,11 +46,11 @@ VIYO_CURRENT_MAP.md is the single inheritance file every future VIYO agent reads
 
 | Sub-phase | What | Acceptance gate | Status |
 |---|---|---|---|
-| 1.1 Core Loop | Chat → Canvas → DB single-variant generation | T25 + T26 functional end-to-end | ✅ Shipped |
-| 1.2 Pattern DB cache | Cache-first with metadata transparency | T70 invariants | ✅ Shipped |
-| 1.3 Token billing | Reconciliation across providers | T71 | ✅ Shipped |
-| 1.4 R2 + Brand Vault | Asset contract with lineage + JSONB metadata + pgvector | T72 | ✅ Shipped |
-| 1.5 Editing Router | Studio Editing Router routes B1–B10 + correct model per intent | T73 | ⏸ PAUSED (gated on WP-1+WP-2 verification per OD-019) |
+| 1.1 Core Loop | Chat → Canvas → DB single-variant generation | B-1.00 acceptance — end-to-end loop, 4 named failure modes, cache hit + cache miss tested, RLHF events emit | 🟡 IN PROGRESS — substantive substrate present per CODE_RECONCILIATION_2026-05-15.md §3.1; B-1.00 acceptance not verified |
+| 1.2 Pattern DB cache | Cache-first with metadata transparency | Cache hit + miss paths verified end-to-end | 🟡 PARTIALLY SHIPPED — substrate complete (image-patterns.ts + embeddings + pattern schema); end-to-end verification pending |
+| 1.3 Token billing | Reconciliation across providers | B-0.07 + B-1.14 acceptance | ✅ SUBSTRATE SHIPPED — T9 backend + frontend + token-engine.ts + processed_stripe_events dedup |
+| 1.4 R2 + Brand Vault | Asset contract with lineage + JSONB metadata + pgvector | B-0.03 acceptance | ✅ SHIPPED — assets table + parent_asset_id lineage + JSONB + pgvector + R2 two-bucket setup |
+| 1.5 Editing Router | Studio Editing Router routes B1–B10 + correct model per intent | B-1.11 + B-1.12 + B-1.13 acceptance | ⏸ CONTRACT LAYER ONLY — editing-router.ts is contract-only; no editing tool implementation; T47 v2 R-spec missing; gated on OD-019 + WP-1/WP-2 |
 | 1.6 Multi-variant | One brief → 3 variants in Design Chat | TBD | NOT STARTED |
 | 1.7 Full editing tools | All B1–B10 functional with correct model routing | TBD | NOT STARTED |
 | 1.8 RLHF feedback loop | qaScore updates after 1,000 events; DSPy active; Tinder swipe gate with 3 reviewers | TBD | NOT STARTED |
@@ -270,11 +270,11 @@ Phase 1 (Image Studio MVP) public launch unlocks → **Phase 1B Intelligence Fou
 - R22 v2 Security & Auth (PR #34, ZCBR PASSED; R22 v1 marked SUPERSEDED PR #35)
 
 **Phase 1 sub-phase status (matches §2 table):**
-- 1.1 Core Loop ✅ Shipped (T25 + T26)
-- 1.2 Pattern DB cache ✅ Shipped (T70)
-- 1.3 Token billing ✅ Shipped (T71)
-- 1.4 R2 + Brand Vault ✅ Shipped (T72)
-- 1.5 Editing Router ⏸ PAUSED (T73 gated on WP-1 + WP-2 verification per OD-019)
+- 1.1 Core Loop 🟡 IN PROGRESS — substantive substrate present per CODE_RECONCILIATION_2026-05-15.md; B-1.00 acceptance unverified
+- 1.2 Pattern DB cache 🟡 PARTIALLY SHIPPED — substrate complete; end-to-end verification pending
+- 1.3 Token billing ✅ Substrate shipped
+- 1.4 R2 + Brand Vault ✅ Shipped
+- 1.5 Editing Router ⏸ Contract layer only; implementation gated on OD-019 + T47 v2
 - 1.6 / 1.7 / 1.8 / 1.11 — NOT STARTED
 - 1.9 / 1.10 — DEFERRED V1.0.5
 
