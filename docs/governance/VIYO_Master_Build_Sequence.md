@@ -93,7 +93,7 @@ Largely shipped by Manus (25 features Done, 3 In Progress). Bullets cover remain
 - Locks: 19, 13 | Skills: database-migration, hono-route-authoring, writing-behavioral-tests
 - Prereqs: B-0.01, B-0.02 | Parallel-safe with: B-0.03, B-0.05, B-0.06
 - Acceptance: Provider Registry table exists, ESP adapter interface compiles, e-commerce normalizer round-trips Shopify fixture, encryption helper passes vector test, AI registry slot documented as awaiting B-XC.01
-- Complexity: M | Open deps: GAP-001 (does not block this Bullet — ESP/e-commerce scope ships first)
+- Complexity: M | Open deps: None (GAP-001 closed via B-XC.01 R29 v2 ZCBR-PASS 2026-05-12 + OD-004 Iα ratified 2026-05-15)
 
 **B-0.05 — L4 Job Orchestration baseline**
 - Moat: None | Outcome: Inngest workers running on Render (3 envs), Mastra DAG framework wired, shared Zod schemas in packages/core-types
@@ -117,7 +117,7 @@ Largely shipped by Manus (25 features Done, 3 In Progress). Bullets cover remain
 - Locks: 8, 13, 19 (per D56) | Skills: database-migration, inngest-function-authoring, hono-route-authoring, writing-behavioral-tests
 - Prereqs: B-0.01, B-0.04 | Parallel-safe with: B-0.05, B-0.06, B-0.08
 - Acceptance: Stripe webhook idempotent (processed_stripe_events table), token deduction RPC uses row locking, programmatic ops grep returns zero token charges, 5-tier price config seeded
-- Complexity: M | Open deps: OD-001 (does not block — B-1.14 surfaces UI)
+- Complexity: M | Open deps: None (OD-001 dissolved per PRD V8.1 §6.5 2026-05-14; pricing is Portal-configured runtime per §6.3)
 
 **B-0.08 — L7 Observability baseline**
 - Moat: None | Outcome: OpenTelemetry + Sentry + PostHog + structured JSON logs + generation_id trace context end-to-end
@@ -225,11 +225,11 @@ Largely shipped by Manus (25 features Done, 3 In Progress). Bullets cover remain
 
 **B-0.21 — Backup + Disaster Recovery foundation**
 - Moat: None | Outcome: Supabase point-in-time recovery + R2 cross-region snapshot policy + documented recovery runbook
-- VVOW: n/a | R-spec: R52 (anomalously 334KB — quality unverified) | Features: feature-set under L7/L9
+- VVOW: n/a | R-spec: B-XC.23 fresh DR runbook (SUPERSEDES R52 — R52 reclassified post-launch per PRD V8.1 §3.5 + Phase A A5 ratified 2026-05-15) | Features: feature-set under L7/L9
 - Locks: None | Skills: hono-route-authoring, writing-behavioral-tests
 - Prereqs: B-0.08, B-0.10 | Parallel-safe with: B-0.20, B-0.22
 - Acceptance: PITR confirmed on Supabase production, R2 snapshot policy active, recovery runbook in /docs/runbooks/ tested via tabletop exercise
-- Complexity: M | Open deps: GAP-002 (R52 quality — mitigation: rewrite runbook fresh, don't trust R52 wholesale)
+- Complexity: M | Open deps: None (GAP-002 closed via B-XC.23 fresh DR runbook authoring; R52 reclassified post-launch per PRD V8.1 §3.5 + A5 2026-05-15)
 
 **B-0.22 — Phase 0 Acceptance Gate**
 - Moat: None (gate) | Outcome: All 12 substrates pass acceptance; PO ratifies P0 complete; P1 unblocked

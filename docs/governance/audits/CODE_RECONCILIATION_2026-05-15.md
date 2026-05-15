@@ -218,13 +218,13 @@ Path 1 locked. OD-009 ruled: 2 parallel lanes for related-and-wired features.
 
 | # | Item | Effort | Owner |
 |---|---|---|---|
-| **A1** | **Taskmaster scope verification.** Curator opens `.taskmaster/tasks/` directly — surface total task count, currentTag, other tags, whether tasks scoped by phase. If full-VIYO-scope, apply Phase 1 MVP filter to artifact §3 inventory. | S (5 min) | Curator |
-| **A2** | **OD-009 ratified: 2 parallel lanes** for related-and-wired features (e.g., 22 generation modes A1-A8 + A9-A14, admin shells B-1.01 + B-1.02). Sequential for cross-touching features. Logged to Notion + SESSION_STATE. | S | (closed) |
-| **A3** | **PO ruling on skill spec commit pattern (B-XC.07–10).** Does Portal-uploaded satisfy criterion? Curator surfaces both interpretations + standing rule context; PO rules. | S (~15 min PO decision) | PO |
-| **A4** | **Verify OD-001 status against PRD V8.1 §6.3 + §6.5.** Prior lead: dissolved. Confirm or deny. | S (15 min Curator read) | Curator + PO |
-| **A5** | **Verify B-1.19 Full Cost Suite + R52 DR + OD-004 R29 PAL Scope** against PRD V8.1. Resolve all 5 open scoping questions from §11. | S (~30 min Curator read + PO ratification) | Curator + PO |
+| **A1** | ✅ **RESOLVED 2026-05-15** — Taskmaster verified: 101 tasks in single 'master' tag, no phase tagging. CODE_RECONCILIATION §3 inventory confirmed full-VIYO scope; Phase 1 MVP filter applies per-task during Phase B B1 audit. | S (5 min) | Curator ✅ |
+| **A2** | ✅ **RESOLVED 2026-05-15** — OD-009 ratified: 2 parallel lanes for related-and-wired features; sequential for cross-touching. Logged to Notion (`35e9a84a-4679-81bd-8b91-fa66b472513b` Status=Closed) + SESSION_STATE + PRD V8.1 §8.1+§8.3 (commit `584d587`). | S | (closed) ✅ |
+| **A3** | ✅ **RESOLVED 2026-05-15** — Interpretation 1 (Portal canonical per D63 Path E) ratified via Path α realign reaffirming D63 (2026-05-11) after stale-citation-propagation anti-pattern caught (see §13 Rule 3.9 strengthening). I2 reversed. Skills uploaded to Portal v1.0.0 2026-05-12 satisfy B-XC.07-10 acceptance. | S (~15 min PO decision) | PO ✅ |
+| **A4** | ✅ **RESOLVED 2026-05-15** — OD-001 DISSOLVED per PRD V8.1 §6.5 ratified 2026-05-14 (commit `e720e6c`); OD-021 also dissolved. Pricing = Portal-configured runtime per §6.3. Notion OD-001 Status=Closed; date aligned 2026-05-14 = 2026-05-14. | S (15 min Curator read) | Curator + PO ✅ |
+| **A5** | ✅ **RESOLVED 2026-05-15** — Verified verbatim per PRD V8.1 §3.5/§5.6/§6.7/§7.5/§8: B-1.19 MVP-scoped operator-readiness (NOT B-1.18 gate); R52 reclassified POST-LAUNCH; OD-004 CLOSED via R29 v2 ZCBR-PASS Iα; OD-001 dates aligned. §11 Q1-Q5 all closed (Q3 + Q4 + Q5 in this batch; Q1 in A4; Q2 in A3 via α realign). | S (~30 min Curator read + PO ratification) | Curator + PO ✅ |
 | **A6** | **Ratify Master Build Sequence v1.1 as canonical.** Currently DRAFT. | S (~1 Curator session) | PO |
-| **A7** | **IF A3 = "repo required":** author + commit B-XC.07–10 skill specs to `/docs/skills/`. Skip if A3 = "Portal satisfies." | S (~1 Curator session for all 4) | Architect → Manus |
+| **A7** | ✅ **RESOLVED NO-ACTION 2026-05-15** — A3 ratified Interpretation 1 (Portal canonical per D63). 5 skills (4 B-XC.07-10 + 1 B-XC.17 zcbr-spec-validation) already in Portal v1.0.0 since 2026-05-12. B-XC.07-10 acceptance satisfied per D63 Path E. No repo authoring needed. | S (~1 Curator session for all 4) | Architect → Manus ✅ (NO-ACTION) |
 | **A8** | **Close remaining PO decisions** — OD-006 spend cap (5 min), OD-003 Atlas/fal.ai catalog verification. | S total | PO |
 | **A9** | **Author Cross-Surface Continuity Discipline (Rules 3.10/3.11/3.12 — see §13).** Adversary-loop ratified. Lands as commit. | M (~1 Curator session + Adversary loop) | Architect + PO |
 
