@@ -6,7 +6,7 @@
 
 ## What this session accomplished
 
-15 anchor commits A-O. HEAD `036ea55`.
+15 anchor commits A-O at session close 2026-05-15. HEAD `036ea55` at write time. Post-close additions through 2026-05-18: P `bec457e` = this handoff doc; Q `b1b5496` = variant 5f sweep; R `9a98f23` = native git-hooks; S `5b90f34` = D88 + Dispatch 2 closure; T `d073a69` = D88 revision + Dispatch 3 outcome. Current HEAD: `d073a69`.
 
 Substantive: Rule E locked, D85 ratified (Lock 22 graduates), tier-as-taxonomy clarification, SESSION_STATE.md added to repo (Rule 3.10), ANTI_PATTERN_CATALOG §3.5 added (4 variants), OD register refresh (X4-A), Path α executed (D86 + D87 created, May 12 D67/D68 Superseded), foundational handoff substrate complete.
 
@@ -103,7 +103,7 @@ Pattern: PO-side Claude is the agent most prone to memory-citation. Rule E exter
 ## Authority state at session close
 
 - Notion canonical: 92 Decisions (D1-D85 + D86 + D87) + 21 ODs (OD-001 through OD-021 with closures applied) + 7 Conflicts + 9 GAPs
-- Repo HEAD: `036ea55`
+- Repo HEAD: `036ea55` (at session 2026-05-15 close; current `d073a69` post-2026-05-18 work including variant 5f sweep, native hooks, D88 Ruflo decision cycle, Dispatch 3 WSL2 cage)
 - D85 ratified: Lock 22 graduated; PRD V8.1 vision + MBS post-Commit 2 MVP execution
 - Standing Rules canonical: 7 rules + Authority Hierarchy refreshed (PRD V8 → V8.1)
 - Drive substrate: 245 KB canonical audit + 20 KB session ledger + A9 draft IN PRODUCTION
@@ -112,7 +112,7 @@ Pattern: PO-side Claude is the agent most prone to memory-citation. Rule E exter
 
 ## Next-session orientation target
 
-CLAUDE.md §2 auto-load (5 files) → SESSION_STATE → SESSION_LEDGER → this handoff → confirm orientation to PO in <5 minutes → resume from Pending queue item 1 (Commit 2 MBS).
+CLAUDE.md §2 auto-load (5 files) → SESSION_STATE → SESSION_LEDGER → this handoff → confirm orientation to PO in <5 minutes → resume from current Pending queue. Top items: Ruflo validation cycle observations (weekly check-in starting ~2026-05-25); Manus A9 Cross-Surface Continuity Discipline Adversary loop; Commit 2 MBS canonical ratification gated on A9.
 
 Standing rule per Rule 3.10: never start work from memory. Always grep-verify from canonical sources per Rule E.
 

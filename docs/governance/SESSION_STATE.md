@@ -5,14 +5,18 @@ Fresh-session inheritance. Read this immediately after CLAUDE.md §2 auto-load. 
 ---
 
 **Phase:** Phase 5 CLOSED. Phase A IN PROGRESS. A1/A2/A3/A4/A5/A7 ✅. Path 1 locked.
-**HEAD:** `9a98f23`. Branch: `staging`.
+**HEAD:** `d073a69`. Branch: `staging`.
 **Last session:** 2026-05-15 (Rule E lock, D85 ratification, Lock 22 graduated, tier-as-taxonomy clarification, anti-pattern variants surfaced, handoff failure mode discovered + fixed).
 
 ---
 
-## Phase 5 ledger (18 anchor commits)
+## Phase 5 ledger (20 anchor commits)
 
-A `ac17cd5`; B `0336b3d`+`3e08a65`; C `5616757`+`8fddef0`+`2094c36`; D5.1 `82803a9`+`d4ede32`+`dd244e6`+`f5ad28b`; E `90f96e0`; F `fddd1be`; G `4725660` (MBS D63 align DRAFT); H `e64689b` (CODE_RECON §6/§7/§11/§13); I `584d587` (PRD §8.1+§8.3 OD-004+009 closed); J `e7484ba` (X1 Phase 0 stale-refs); K `40aeb09` (X2 stale-substrate refresh 21 amendments); L `c30ea94` (X3 OD-004/009 propagation 16 amendments); M `181f49c` (Session 2026-05-15 close-out + foundational handoff fix); N `e248a0f` (Session 2026-05-15 final delta + D67/D68 ID-reuse Path α surfacing); O `036ea55` (X4-A operating-state OD-register refresh + D86/D87 writes post-Path-α); P `bec457e` (Session 2026-05-15 handoff doc); Q `b1b5496` (stable-filename _v2 sweep — variant 5f drift closure); R `9a98f23` (native git-hooks — Rule E + Rule C external enforcement, Dispatch 1).
+A `ac17cd5`; B `0336b3d`+`3e08a65`; C `5616757`+`8fddef0`+`2094c36`; D5.1 `82803a9`+`d4ede32`+`dd244e6`+`f5ad28b`; E `90f96e0`; F `fddd1be`; G `4725660` (MBS D63 align DRAFT); H `e64689b` (CODE_RECON §6/§7/§11/§13); I `584d587` (PRD §8.1+§8.3 OD-004+009 closed); J `e7484ba` (X1 Phase 0 stale-refs); K `40aeb09` (X2 stale-substrate refresh 21 amendments); L `c30ea94` (X3 OD-004/009 propagation 16 amendments); M `181f49c` (Session 2026-05-15 close-out + foundational handoff fix); N `e248a0f` (Session 2026-05-15 final delta + D67/D68 ID-reuse Path α surfacing); O `036ea55` (X4-A operating-state OD-register refresh + D86/D87 writes post-Path-α); P `bec457e` (Session 2026-05-15 handoff doc); Q `b1b5496` (stable-filename _v2 sweep — variant 5f drift closure); R `9a98f23` (native git-hooks — Rule E + Rule C external enforcement, Dispatch 1); S `5b90f34` (Ruflo Dispatch 2 closure + SESSION_STATE refresh — D88 created); T `d073a69` (D88 revision + Dispatch 3 outcome — WSL2 cage live, validation window open).
+
+> Convention: SESSION_STATE.md ledger excludes self-reference. The commit
+> containing this file is always HEAD+1 relative to the last listed anchor.
+> Next governance commit catches up.
 
 3-agent topology: W1=Author+Arbiter, W2=Adversary CC, ISOLATED MODE.
 
@@ -25,6 +29,7 @@ A `ac17cd5`; B `0336b3d`+`3e08a65`; C `5616757`+`8fddef0`+`2094c36`; D5.1 `82803
 - D63 reaffirmed 2026-05-15 (Notion `35d9a84a-4679-8121-a174-e66c3eb2c9a1`)
 - **D85 ratified 2026-05-15** (Notion `3619a84a-4679-813e-b722-ee9fb49bbc56`): PRD V8.1 + MBS Time-Horizon Authority Split. Lock 22 graduates from candidate to ratified.
 - **Ruflo 3.7.0-alpha.68 REJECTED 2026-05-18** (Notion D88 — authored by Architect): shadow validation aborted on first action (containment-flag `--no-global` bug `#1744` writes `~/.claude/CLAUDE.md` despite documented opt-out). Full evidence: `docs/governance/RUFLO_SHADOW_ABORT_2026-05-18.md`. Patterns 1+2 from research memo already landed at ledger anchor R; Patterns 3/4/5 (memory, swarm, GOAP) deferred to native-port research track.
+- **Dispatch 3 WSL2 cage (2026-05-18, T `d073a69`):** Ubuntu-22.04 distro running Ruflo 3.7.0-alpha.68 sealed; isolation verified (Linux leak contained, Windows host untouched). 6 plugins active (core/swarm/agentdb/rvf/goals/intelligence). Validation window open through 2026-05-25 to 2026-06-01. Path Forward documented in `RUFLO_SHADOW_ABORT_2026-05-18.md` (commit T). D88 status Open at notion.so/3649a84a4679812b9acdf163ac0e4565.
 - **Rule E locked 2026-05-15**: Nothing cited from memory. Ever. Universal precondition.
 - **Tier-as-taxonomy clarification**: "Tier" in Decision 14/37 + C-05 = provider class taxonomy, NOT priority. Selection per Decision 20. No supersession needed.
 - MVP R-spec gaps (M each): R23 v2 (per Manus audit confirmation — REWRITE B-XC.22), R24 v2.1, R33, T47 v2, R37
