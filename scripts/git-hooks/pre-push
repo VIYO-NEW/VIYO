@@ -11,6 +11,7 @@ ALLOWLIST=(
     "docs/governance/NIR_OPERATING_RULES.md"
     "docs/governance/VIYO_CURRENT_MAP.md"
     "docs/governance/CONTEXT_RESTORE.md"
+    "docs/governance/A9_CROSS_SURFACE_CONTINUITY_DISCIPLINE.md"
     "scripts/git-hooks/pre-push"
 )
 FAIL=0
