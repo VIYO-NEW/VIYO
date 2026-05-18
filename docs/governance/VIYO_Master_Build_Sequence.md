@@ -1638,7 +1638,7 @@ After ratification, every Architect session opens with: "What's the next Bullet 
 
 ## Appendix D — Closeout Notes
 
-**140 numbered Bullets current state** (128 initially planned + 4 added during decomposition for v1.0 = 132 baseline; +8 Cross-Cutting Bullets B-XC.17-XC.24 added in v1.1 per §2 Phase Summary line 52; total 140 numbered + 10 JIT stubs + 7 LATER deferred). Decomposition additions: B-1.06 Tinder Swipe Gate UI, B-XC.16 reconciliation step, B-4.13 continuous tail, B-XC.11 layer-splitting separation.
+**141 numbered Bullets current state** (128 initially planned + 4 added during decomposition for v1.0 = 132 baseline; +8 Cross-Cutting Bullets B-XC.17-XC.24 added in v1.1 per §2 Phase Summary line 52 = 140; +1 B-XC.31 promoted from JIT stub in Commit 2 ratified 2026-05-18 at commit c269a11 = 141 numbered; total 141 numbered + 9 JIT stubs + 7 LATER deferred). Decomposition additions: B-1.06 Tinder Swipe Gate UI, B-XC.16 reconciliation step, B-4.13 continuous tail, B-XC.11 layer-splitting separation.
 
 **Document size:** ~1500 lines, fits within 30-60 page target.
 
