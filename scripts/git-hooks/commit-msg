@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+set -e
+COMMIT_MSG_FILE="$1"
+[ ! -f "$COMMIT_MSG_FILE" ] && exit 0
+
+# Read current commit message (reliable across -m, -F, editor flows)
+MSG_CONTENT=$(cat "$COMMIT_MSG_FILE")
+
+FAIL=0
+
+# --- Universal check 1: SHA-citation verify (variant 5g closure, all commits) ---
+CANDIDATE_SHAS=$(echo "$MSG_CONTENT" | grep -ohE '\b[0-9a-f]{7,40}\b' | sort -u || true)
+for sha in $CANDIDATE_SHAS; do
+    if ! git cat-file -e "$sha^{commit}" 2>/dev/null; then
+        echo "ERROR commit-msg: Cited SHA \`$sha\` not found in repo."
+        echo "  Variant 5g closure: every SHA citation must verify."
+        FAIL=1
+    fi
+done
+
+# --- Universal check 2: File-path verify (all commits) ---
+CANDIDATE_FILES=$(echo "$MSG_CONTENT" | grep -ohE '[A-Za-z0-9_/-]+\.md\b' | sort -u || true)
+for file in $CANDIDATE_FILES; do
+    if [[ "$file" == */* ]] && [ ! -f "$file" ]; then
+        echo "ERROR commit-msg: Cited file \`$file\` not found in repo."
+        FAIL=1
+    fi
+done
+
+# --- Governance discipline (governance commits only) ---
+STAGED=$(git diff --cached --name-only)
+IS_GOV=0
+for f in $STAGED; do
+    [[ "$f" == docs/governance/* ]] && IS_GOV=1 && break
+done
+
+if [ $IS_GOV -eq 1 ]; then
+    MSG=$(echo "$MSG_CONTENT" | grep -v '^#' | grep -v '^$' || true)
+    SUBJECT=$(echo "$MSG" | head -1)
+    BODY=$(echo "$MSG" | tail -n +2)
+
+    if ! echo "$SUBJECT" | grep -qE '^(docs|feat|fix|refactor|chore)(\(.+\))?: '; then
+        echo "ERROR commit-msg: Governance commit needs conventional subject."
+        echo "  Pattern: type(scope): description"
+        echo "  Got: $SUBJECT"
+        FAIL=1
+    fi
+
+    BODY_LEN=$(echo -n "$BODY" | wc -c | tr -d ' ')
+    if [ "$BODY_LEN" -lt 100 ]; then
+        echo "ERROR commit-msg: Governance body must be >= 100 chars (got $BODY_LEN)."
+        FAIL=1
+    fi
+
+    if ! echo "$BODY" | grep -qiE '(ratifi|po direct|per po|ratified by)'; then
+        echo "NOTICE commit-msg: No PO ratification reference detected. Consider adding."
+    fi
+fi
+
+if [ $FAIL -ne 0 ]; then
+    echo "commit-msg blocked. --no-verify bypasses."
+    exit 1
+fi
+exit 0

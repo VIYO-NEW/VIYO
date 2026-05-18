@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+LOG_DIR="$HOME/.viyo"
+LOG_FILE="$LOG_DIR/session-log.md"
+mkdir -p "$LOG_DIR"
+[ ! -f "$LOG_FILE" ] && echo -e "# VIYO Session Log\n\nAuto-appended on commit.\n" > "$LOG_FILE"
+SHA=$(git rev-parse HEAD)
+SHORT=$(git rev-parse --short HEAD)
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+SUBJECT=$(git log -1 --format="%s")
+TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+REPO=$(basename "$(git rev-parse --show-toplevel)")
+DIFFSTAT=$(git show --stat HEAD --format= | tail -1)
+{
+    echo "## $TS — $REPO branch $BRANCH"
+    echo ""
+    echo "- SHA: \`$SHA\`  (short: \`$SHORT\`)"
+    echo "- Subject: $SUBJECT"
+    echo "- Diff: $DIFFSTAT"
+    echo ""
+} >> "$LOG_FILE"
+exit 0
