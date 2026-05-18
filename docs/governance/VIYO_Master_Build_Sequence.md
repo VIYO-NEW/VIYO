@@ -1,6 +1,6 @@
 # VIYO Master Build Sequence v1.1
 
-**Status:** DRAFT v1.1 — pending PO ratification
+**Status:** RATIFIED v1.1 (PO ratification 2026-05-18, Commit 2 canonical)
 **v1.0 ratified:** (status preserved — v1.1 supersedes)
 **v1.1 changes:** Added R-Spec Audit Table integration, 8 new Cross-cutting Bullets (B-XC.17 through B-XC.24), IMPORTANT JIT stub references, LATER deferred appendix, dependency graph updated with ZCBR pre-flight enforcement
 **Date:** 2026-05-11
@@ -48,8 +48,8 @@ A brand on VIYO operates a complete email creative OS from a single workspace. T
 | P2.5 — Brand Team Collab | Grid & Pixel oversight | 9 | M |
 | P3 — Intelligence Studio | Instant | 9 | L |
 | P4+ — Service Expansion | None (breadth) | 13 | M |
-| XC — Cross-cutting | n/a | 24 (+10 stubs + 7 deferred appendix) | S-M |
-| **Total** | | **140** (numbered) + 10 stubs + 7 deferred | |
+| XC — Cross-cutting | n/a | 25 (+9 stubs + 7 deferred appendix) | S-M |
+| **Total** | | **141** (numbered) + 9 stubs + 7 deferred | |
 
 After P3 acceptance, VIYO is the only product combining Lovart + Migma + Grid&Pixel + Instant moats. P4+ is scale and breadth.
 
@@ -232,11 +232,11 @@ Largely shipped by Manus (25 features Done, 3 In Progress). Bullets cover remain
 - Complexity: M | Open deps: None (GAP-002 closed via B-XC.23 fresh DR runbook authoring; R52 reclassified post-launch per PRD V8.1 §3.5 + A5 2026-05-15)
 
 **B-0.22 — Phase 0 Acceptance Gate**
-- Moat: None (gate) | Outcome: All 12 substrates pass acceptance; PO ratifies P0 complete; P1 unblocked
+- Moat: None (gate) | Outcome: All 12 L-layers pass acceptance; PO ratifies P0 complete; P1 unblocked
 - VVOW: n/a | R-spec: n/a | Features: Aggregate from B-0.02-B-0.21
 - Locks: All 17 | Skills: §9-code-review-protocol
 - Prereqs: B-0.02 through B-0.21 | Parallel-safe with: None (strictly sequential)
-- Acceptance: All 12 substrate audits green, zero failing CI tests, FOUNDATION_AUTHORITY + CURRENT_STATE reflect P0 complete, PO §9 ratification logged
+- Acceptance: All 12 L-layer audits green, zero failing CI tests, FOUNDATION_AUTHORITY + CURRENT_STATE reflect P0 complete, PO §9 ratification logged
 - Complexity: S | Open deps: None
 
 ---
@@ -1238,7 +1238,7 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 
 **B-XC.23 — Fresh DR Runbook authoring (SUPERSEDES R52)**
 - Outcome: Fresh runbook authored from scratch at /docs/runbooks/disaster-recovery.md (NOT a rewrite of R52). R52 marked SUPERSEDED with pointer header.
-- VVOW: n/a | R-spec: new runbook supersedes R52 | Features: None (DR runbook covers Supabase PITR + R2 snapshot policy + recovery procedure)
+- VVOW: n/a | R-spec: new runbook supersedes R52 | Features: Closes GAP-002 (DR runbook covers Supabase PITR + R2 snapshot policy + recovery procedure)
 - Locks: 20 | Skills: r-file-rewrite-pattern, zcbr-spec-validation, directive-authoring-v2
 - Prereqs: B-XC.17 | Parallel-safe with: B-XC.18-XC.22, B-XC.24
 - Acceptance: Fresh runbook in repo with ZCBR Status: PASSED, R52 has SUPERSEDED header pointing to new runbook, B-0.21 can cite new runbook, tabletop exercise documented
@@ -1251,6 +1251,14 @@ Not part of any single phase. Cover spec rewrites, governance refreshes, skill a
 - Prereqs: B-XC.17 | Parallel-safe with: B-XC.18-XC.23
 - Acceptance: T47 v2 in repo with ZCBR Status: PASSED, aligned to C-01 + Lock 8, B-1.11 + B-1.12 + B-1.13 can cite T47 v2
 - Complexity: S | Open deps: None | Triage: CRITICAL — blocks B-1.11 (next 30-60 days)
+
+**B-XC.31 — R37 MAAX audit + fix (promoted from stub 2026-05-18)**
+- Outcome: R37 audited against ZCBR + current MAAX architecture, ZCBR header added, marked PASSED or REWRITE per audit verdict
+- VVOW: §5.2 (MAAX integration context per B-2.27 reference) | R-spec: R37 MAAX | Features: PIA-MAAX, PIA-5-MAAX-PREFERENCE-CAPTURE-FOUNDATION, PIA-7-FUTURE-INTELLIGENCE-ACTIVATION
+- Locks: 4, 5, 8, 19, 20 | Skills: r-file-rewrite-pattern, zcbr-spec-validation, directive-authoring-v2
+- Prereqs: B-XC.17 | Parallel-safe with: B-XC.18-XC.24, B-XC.32-XC.34
+- Acceptance: R37 audit verdict logged with ZCBR Status, B-1B.04 + B-2.02 + B-2.27 can cite R37 v[N], OD-013 PIA inheritance discipline verified
+- Complexity: M | Open deps: OD-013 PIA inheritance recommendation (§6 line 1375) | Triage: HIGH — gates B-1B.04 (Phase 1B)
 
 ---
 
@@ -1266,7 +1274,6 @@ These specs are listed as stubs — they exist in the Sequence as placeholder Bu
 | B-XC.28-stub | R27 Composable Sections | B-2.01 enters next-3 | B-2.01, B-2.32, B-2.33, B-2.34, B-2.35 | PENDING audit |
 | B-XC.29-stub | R32 Email Engine REWRITE | B-2.01 enters next-3 | All P2 + P2.5 + P3 | REWRITE (full) |
 | B-XC.30-stub | R36 HYVE | B-1B.05 enters next-3 | B-1B.05 | PENDING audit |
-| B-XC.31-stub | R37 MAAX | B-1B.04 enters next-3 | B-1B.04, B-2.02, B-2.27 | PENDING audit |
 | B-XC.32-stub | R38 SYPHON | B-1B.03 enters next-3 | B-1B.03 | PENDING audit |
 | B-XC.33-stub | R46 Email Ingestion MINOR FIX | B-1B.01 enters next-3 | B-1B.01, B-2.31 | MINOR FIX |
 | B-XC.34-stub | T33-T36 Brand Chat Comments | B-2.5.01 enters next-3 | B-2.5.01, B-2.5.02, B-2.5.03 | PENDING audit |
@@ -1385,7 +1392,7 @@ PO ratifies by confirming:
 
 1. End State (Section 1) captures fully-shipped VIYO accurately
 2. Phase Summary (Section 2) absorbs 4-competitor moat per FOUNDATION_AUTHORITY.md
-3. Per-Bullet metadata complete for all 140 numbered Bullets + 10 JIT stubs + 7 LATER deferred (per §2 Phase Summary total)
+3. Per-Bullet metadata complete for all 141 numbered Bullets + 9 JIT stubs + 7 LATER deferred (per §2 Phase Summary total)
 4. Dependency graph (Section 5) traces B-0.01 through B-4.13 without cycles
 5. All 580 features from Inventory v002 accounted for (mapped, Deferred, or Future)
 6. Open Decisions OD-009 through OD-016 surfaced with recommendations; PO ratifies in single session
@@ -1530,7 +1537,7 @@ After ratification, every Architect session opens with: "What's the next Bullet 
 - B-4.12 GPT Image 3 Research
 - B-4.13 Phase 4+ ongoing
 
-**Cross-cutting (24)**
+**Cross-cutting (25)**
 - B-XC.01 R29 PAL v2 rewrite
 - B-XC.02 R20 Database Schema rewrite
 - B-XC.03 R24 Image Pipeline rewrite
@@ -1555,14 +1562,15 @@ After ratification, every Architect session opens with: "What's the next Bullet 
 - B-XC.22 R23 Cost Engine MINOR FIX
 - B-XC.23 Fresh DR Runbook (supersedes R52)
 - B-XC.24 T47 Studio Editing Tools audit + fix
+- B-XC.31 R37 MAAX audit + fix
 
-**IMPORTANT JIT Stubs (10) — placeholder Bullets, rewrite triggered when dependent enters next-3 window**
+**IMPORTANT JIT Stubs (9) — placeholder Bullets, rewrite triggered when dependent enters next-3 window**
 - B-XC.25-stub through B-XC.34-stub (see Section 4 IMPORTANT Stubs table)
 
 **LATER Deferred Appendix (7) — activate at phase activation gate**
 - R28, R30, R33, R35, R39, R49, R53 (see Section 4 LATER Deferred Appendix table)
 
-**Total: 140 numbered Bullets + 10 stubs + 7 deferred appendix entries**
+**Total: 141 numbered Bullets + 9 stubs + 7 deferred appendix entries**
 
 ---
 
