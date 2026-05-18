@@ -208,15 +208,15 @@ For each substrate: **scope** (what it is), **Phase 0 baseline** (what ships in 
 
 ### L1 — Identity & Multi-Tenancy
 
-**Scope.** Supabase Auth + Postgres RLS + workspace concept + role hierarchy (Owner / Admin / Approver / Editor / Viewer). Tenant isolation enforced at the database row level, not application code.
+**Scope.** Supabase Auth + Postgres RLS + workspace concept + phase-scoped role system. **Phase 1 baseline:** simple 4-role enum (owner/admin/member/viewer) — sufficient for Image Studio where every team member has full access to image features. **Phase 2 extension:** Klaviyo-style permission system with set-default 5-role (Owner/Admin/Approver/Editor/Viewer) + brand-admin role customization with feature-level permissions (per D89 ratified 2026-05-18). Tenant isolation enforced at the database row level, not application code.
 
-**Phase 0 baseline.** Supabase Auth project configured. RLS policies on every brand-linked table. Roles + permissions tables seeded. Multi-factor authentication scaffolded (SMS + email code methods). Service-role key bypass forbidden for user-initiated operations (Lock 13). 99 Phase 0/1 features build this substrate per Manus Inventory.
+**Phase 0 baseline.** Supabase Auth project configured. RLS policies on every brand-linked table. Simple 4-role enum (owner/admin/member/viewer) seeded in `workspace_members.role` column — sufficient for Phase 1 Image Studio scope where every team member has full access to image features. Multi-factor authentication scaffolded (SMS + email code methods). Service-role key bypass forbidden for user-initiated operations (Lock 13). Per D89 ratified 2026-05-18, role-system complexity (5-role enum + Klaviyo-style brand-admin role customization) is Phase 2 Email Studio scope, NOT Phase 0 baseline. 99 Phase 0/1 features build this substrate per Manus Inventory.
 
 **Phase 1 extension.** Brand admin shell at app.viyo.com (signup, login, onboarding, workspace management, team invites + role assignment). Minimal admin shell at admin.viyo.com (tenant list + swipe-gate reviewer interface).
 
 **Phase 1B extension.** PII redaction pipeline (regex masking before LLM calls) — feature P1-09.
 
-**Phase 2 extension.** Mandatory MFA enforcement gate. Permission-aware UI (hide/disable based on role). Generation session state machine.
+**Phase 2 extension.** Mandatory MFA enforcement gate. Permission-aware UI (hide/disable based on role). Generation session state machine. **Klaviyo-style permission system** (per D89 ratified 2026-05-18): set-default 5-role enum (Owner / Admin / Approver / Editor / Viewer) + brand-admin role customization surface allowing brands to define custom roles with feature-level permission grants. Email Studio approval workflows where Approver role gates send authorization separate from Editor role that creates content.
 
 **Phase 2.5 extension.** Invite acceptance flows (existing user + new user). Team management page.
 
