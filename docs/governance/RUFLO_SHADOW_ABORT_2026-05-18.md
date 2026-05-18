@@ -114,4 +114,58 @@ Body sketch:
 
 ---
 
+## Path Forward (revised 2026-05-18, post-PO-pushback + same-day Dispatch 3 execution)
+
+The original REJECT-strong framing in this report was premature framework rejection (Ruflo memo §7 anti-pattern). PO caught the over-reach: CCD's git-layer isolation in Dispatch 2 was thin; real filesystem/user-account isolation was never attempted before reject. Same-day correction: Dispatch 3 executed WSL2-isolated retry; cage works; validation window now open.
+
+Revised path forward, parallel:
+
+**Tier 1 — WSL2 cage validation period OPEN.**
+
+Container/WSL2 retry executed same-day per D88 revision. Outcome:
+
+- Distro: Ubuntu-22.04 (WSL2 v2, App version 2.7.3.0, kernel 6.6.114.1-1)
+- Shadow repo: /home/plato/viyo-shadow @ HEAD 5b90f34 (exact match to main)
+- Git remotes: empty; push.default=nothing (commit egress sealed)
+- Ruflo: 3.7.0-alpha.68 installed --minimal --no-global
+- Plugins active: ruflo-core, ruflo-swarm, ruflo-agentdb, ruflo-rvf, ruflo-goals, ruflo-intelligence
+- Plugins explicitly skipped: autopilot, federation, aidefence, hive-mind, iot-cognitum, neural-trader, market-data
+
+Isolation proof (CCD verified, three-times-checked across dispatch):
+
+| Check | Path | Result |
+|---|---|---|
+| Leak inside cage | /home/plato/.claude/CLAUDE.md | PRESENT (4-line Ruflo pointer, identical to Dispatch 2 host-direct leak) |
+| Leak on Windows host | %USERPROFILE%\.claude\CLAUDE.md | ABSENT (pre/post/post-post all three checks) |
+| Main VIYO repo | C:\Users\Admin\Documents\VIYO\repo | HEAD 5b90f34, working tree clean |
+
+Bug #1744 still fires inside Linux userspace; cage prevents Windows host contamination. Validation window OPEN 2026-05-18; target close 2026-05-25 to 2026-06-01. Validation log: /home/plato/viyo-shadow/validation-log.md (inside cage; export via `wsl --export` or copy to /mnt/c/ when needed).
+
+Step 8 decision target at validation close: REJECT / KEEP / NATIVE-PORT recommendation surfaced as D89-candidate (subject to grep-verify of Decisions DB at time of authoring per Rule E).
+
+Rollback path (unchanged): `wsl --unregister Ubuntu-22.04` from admin PowerShell removes distro + all Ruflo state atomically. Single command.
+
+**Tier 2 — Upstream evidence on Ruflo #1597 (PO action, when convenient).**
+
+Provenance correction: CCD's original validation report cited bug #1744 (the install-study issue that drove --no-global flag addition in 3.6.28). The actual leak-bug-of-record is #1597, filed 2026-04-10, labels: bug / data-loss / installer / cli. Ruflo team confirmed in their tracker as "data loss by design flaw." 3.6.28 release notes claimed --no-global closed 3 of 5 #1744 papercuts; our 3.7.0-alpha.68 reproduction proves the fix did NOT propagate to the alpha line — regression of #1597.
+
+Upstream action: file reproduction evidence on #1597 (reopen if closed) OR open new regression-tracking issue framed as "--no-global flag still leaks ~/.claude/CLAUDE.md in 3.7.0-alpha.68 — regression of #1597 fix attempted in 3.6.28." Cost: zero work, indefinite wait. Re-evaluation trigger when ruvnet ships stable release with confirmed fix.
+
+PO action item, separate from this commit and from Tier 1 work.
+
+**Tier 3 — Native-port (gated on Tier 1 outcome).**
+
+If Tier 1 validation window closes KEEP (Ruflo cage proves Patterns 3/4/5 deliver real velocity value), native-port becomes the long-term answer to remove third-party runtime dependency from canonical state.
+
+If Tier 1 closes REJECT (alpha bugs proliferate even inside cage, patterns underperform, or velocity gain doesn't materialize), drop Ruflo entirely; no native-port needed.
+
+If Tier 1 closes NATIVE-PORT-NOW (specific patterns prove load-bearing but cage adds too much operational overhead), build the load-bearing patterns natively in-house using existing VIYO substrate (NIR Rule 6: principle over prescription).
+
+Estimated native-port cost: 1-2 weeks per pattern. Decision substrate: validation evidence from Tier 1, not memo speculation.
+
+D88 status: Open (revised 2026-05-18 from initial Locked).
+D88 URL: https://www.notion.so/3649a84a4679812b9acdf163ac0e4565
+
+---
+
 *Validation closed 2026-05-18.*
