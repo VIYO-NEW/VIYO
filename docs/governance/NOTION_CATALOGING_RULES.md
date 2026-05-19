@@ -45,7 +45,7 @@ Each database has TWO URLs: the database PAGE URL (what you click in browser) an
 | 📅 Session Log: 2026-05-08 | `https://www.notion.so/3559a84a467981a5a99cf65c5f0c6a8c` | Session summary record |
 | 📅 Session Log: 2026-05-09 | `https://www.notion.so/3559a84a467981b1a3b1c0f5f1e3b7d2` | Session summary record |
 | 📅 Session Log: 2026-05-10 | `https://www.notion.so/3559a84a467981c4b8e2d1a6e2f4c8e3` | Session summary record |
-| 📏 Standing Rules | `https://www.notion.so/3559a84a467981d5c9f3e2b7f3a5d9f4` | Permanent agent rules |
+| ⚖️ Standing Rules | `https://www.notion.so/35c9a84a467981c7a1fcdb7556f572d4` | Permanent agent rules |
 | 👑 Authority Hierarchy | `https://www.notion.so/3559a84a467981e6daf4f3c8a4b6eaf5` | Reference page for the 12-tier hierarchy |
 
 ---
@@ -170,7 +170,7 @@ Each database has TWO URLs: the database PAGE URL (what you click in browser) an
 
 ---
 
-### 2.7 📏 Standing Rules page (`3559a84a467981d5c9f3e2b7f3a5d9f4`)
+### 2.7 ⚖️ Standing Rules page (`35c9a84a-4679-81c7-a1fc-db7556f572d4`)
 
 **Role:** Permanent agent rules indexed for cross-role discovery. Mirror of ARCHITECT_OPERATING_RULES.md §3+§4 (Architect) + NIR_OPERATING_RULES.md (universal) — Notion is the search-friendly cross-reference; repo files are canonical text.
 

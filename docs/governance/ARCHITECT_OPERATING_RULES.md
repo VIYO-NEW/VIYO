@@ -485,7 +485,8 @@ Drift gaps surfaced explicitly. No answers from memory.
 
 **Statement:** Every new Architect session FIRST executes CLAUDE.md §6 First Action:
 1. Confirm role (Architect / Cataloger / Curator)
-2. Read 4 inheritance files in order: VIYO_CURRENT_MAP.md → ARCHITECT_OPERATING_RULES.md → NIR_OPERATING_RULES.md → ANTI_PATTERN_CATALOG.md
+2. Read 6 inheritance files in order: VIYO_CURRENT_MAP.md → ARCHITECT_OPERATING_RULES.md → NIR_OPERATING_RULES.md → ANTI_PATTERN_CATALOG.md → SESSION_STATE.md → NOTION_CATALOGING_RULES.md
+2.5. Sweep PO Inbox per NOTION_CATALOGING_RULES.md §3.2 — run `notion-search` against data source `collection://be5f9696-b119-4f81-bb73-2599f5c1242b` filtered by role's Route to value (Architect Claude / Governance Curator / Decision Cataloger) AND Status=Open. Surface findings to PO in first response: count of Open items by Priority (Now / Next Session / Future Phase / Reference Only) + 1-line title of each. Items >7 days stale surface explicitly with stale-warning.
 3. State first task per VIYO_CURRENT_MAP §10 Pending Work Queue + dependency analysis
 4. Wait for PO ratification BEFORE authoring anything
 
@@ -495,7 +496,7 @@ If session prompt doesn't surface inheritance files, Architect ASKS PO for uploa
 
 **Derived from:** B-0.02 6-cycle failure root cause (2026-05-18) — Architect started authoring B-0.02 v0.1 without loading inheritance. Operated for 7 rounds against fictional substrate. Discovered via PO screenshot of governance folder revealing inheritance files Architect never read.
 
-**Substrate:** ANTI_PATTERN_CATALOG §3 Category 4 (Session-Start Inheritance). CLAUDE.md v2 §6 First Action protocol. Rule 3.19 (project_knowledge_search FIRST) chains into inheritance load.
+**Substrate:** ANTI_PATTERN_CATALOG §3 Category 4 (Session-Start Inheritance). CLAUDE.md v2 §6 First Action protocol. Rule 3.19 (project_knowledge_search FIRST) chains into inheritance load. Chains into NOTION_CATALOGING_RULES.md §3.2 PO Inbox Monitoring Protocol per follow-on commit 2026-05-19 (step 2.5 added).
 
 **External enforcement:** PO session-open observation — if Architect responds to first message without inheritance load + role confirmation + first task statement, PO redirects to §6 First Action. Future: session-open template + automated inheritance-load verification.
 
@@ -522,6 +523,24 @@ If session prompt doesn't surface inheritance files, Architect ASKS PO for uploa
 **Does NOT apply to:** Product code commits (apps/, packages/, scripts/) — Manus VIYO channel handles per separate directive discipline. Portal commits. Notion DB writes. Airtable writes.
 
 **Edge case:** When a governance commit is genuinely mechanical (e.g., fixing a typo in a section header), the SESSION_STATE refresh may be minimal (just HEAD pointer bump + one-line ledger anchor); but it MUST be bundled. Skipping the refresh "because the commit is small" recreates the drift pattern this rule closes.
+
+### Rule 3.22 — Canonical state writes outside the repo close with SESSION_STATE refresh commit
+
+**Statement:** When any session lands canonical state writes to Notion DBs (Decisions / Open PO Decisions / Foundation Locks / Documentation Gaps / Conflict Resolutions / Standing Rules page) OR to Drive canonical artifacts (governance docs, R-spec files outside repo), the session closes with a Curator-direct SESSION_STATE.md refresh commit acknowledging those writes. Rule 3.21 covers docs/governance/ repo edits; Rule 3.22 covers Notion + Drive canonical writes. Together they ensure no canonical state lands without SESSION_STATE pointer + carry-forward acknowledgment within the same session.
+
+**Mechanism:** Cataloger surfaces drain completion to Architect → Architect drafts SESSION_STATE refresh content (carry-forward extension naming the writes + URLs) → PO ratifies → Curator commits + pushes. May bundle with other governance commits per Rule 3.21 OR run as standalone refresh commit if no other governance work pending.
+
+**Derived from:** Curator finding 2026-05-19 — Cataloger drain landed 17 canonical Notion writes (D55-D58, Lock 22, GAP-008/009/010, 12 standing rules appended, 9 Inbox status updates); Rule 3.21 did not fire because no docs/governance/ files touched; SESSION_STATE was stale for the window between drain completion and this follow-on governance commit.
+
+**Substrate:** Rule 3.21 (Curator bundles SESSION_STATE refresh into every governance commit; same-day sibling rule for repo edits). Rule 3.4 (no canonical writes without ratification surface). NOTION_CATALOGING_RULES.md §2 (per-DB write rules). A9 §6 SESSION_STATE specification.
+
+**External enforcement:** Cataloger's drain completion report explicitly cites Architect to draft SESSION_STATE refresh content. Curator's session-end checklist verifies SESSION_STATE.md commit landed within same session as any canonical Notion or Drive writes. Future: pre-commit citation verifier (Phase 1B Curator-tool per Category 5) extends scope to verify SESSION_STATE.md acknowledgment for Notion writes referenced by URL in commit metadata.
+
+**Applies to:** Every Cataloger session that writes to canonical Notion DBs. Every session that lands canonical Drive artifacts. Includes solo Cataloger sessions (where the same Architect agent handles Notion writes + repo commit per Rule 3.17 BEST setup).
+
+**Does NOT apply to:** Inbox writes by PO (PO is the original author of Inbox entries; not derivative canonical state). Search / read-only operations against Notion DBs. Local Drive working-folder writes that don't claim canonical authority.
+
+**Edge case:** When canonical writes span multiple agent sessions (Cataloger session lands Notion writes, then Architect session opens later for follow-on commit), the SESSION_STATE refresh lands in the NEXT Architect/Curator session that opens — but Cataloger surfaces the pending refresh in its completion report so the next session catches it immediately. Two-session gap acceptable; three-session gap is variant 5g territory (memory of pending refresh without grep-verify) and surfaces as anti-pattern.
 
 ---
 

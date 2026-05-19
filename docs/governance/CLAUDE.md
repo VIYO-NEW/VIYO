@@ -19,7 +19,7 @@ VIYO is an **AI Email Creative Operating System** for Shopify + Klaviyo brands. 
 
 ## §2 — Auto-Load Reading List
 
-The 4 files below are the **inheritance pool**. §3 names which subset each role loads. The pool replaces the prior 15-file required reading — VIYO_CURRENT_MAP.md absorbs the substance via §11 pointers to deeper substrate.
+The 6 files below are the **inheritance pool** (was 4 at Phase 3.1 ratification; SESSION_STATE.md added as #5 per Rule 3.10 ratification 2026-05-15; NOTION_CATALOGING_RULES.md added as #6 per Phase 2.6 ratification 2026-05-19). §3 names which subset each role loads. The pool replaces the prior 15-file required reading — VIYO_CURRENT_MAP.md absorbs the substance via §11 pointers to deeper substrate.
 
 | Order | File | Repo path | Load condition | Purpose |
 |---|---|---|---|---|
@@ -28,6 +28,7 @@ The 4 files below are the **inheritance pool**. §3 names which subset each role
 | 3 | **NIR_OPERATING_RULES.md** | `/docs/governance/NIR_OPERATING_RULES.md` | ALWAYS | Universal-scope operating rules for any Claude session in any of Nir's projects |
 | 4 | **ANTI_PATTERN_CATALOG.md** | `/docs/governance/ANTI_PATTERN_CATALOG.md` | ALWAYS | Failure family taxonomy + foundational fix categories with external enforcement mechanisms |
 | 5 | **SESSION_STATE.md** | `/docs/governance/SESSION_STATE.md` | ALWAYS | Live state pointer: current Phase + HEAD SHA + ledger + pending queue + recovery protocol. Read fresh every session — never rely on memory. Per Rule 3.10 + Rule E. |
+| 6 | **NOTION_CATALOGING_RULES.md** | `/docs/governance/NOTION_CATALOGING_RULES.md` | ALWAYS | Phase 2.6 canonical Notion structure (6 DBs + Standing Rules page + Session Log child pages + PO Inbox) + per-DB cataloging rules + PO Inbox monitoring protocol. Required for all sessions to execute PO Inbox sweep at session open per Rule 3.20 step 2.5. |
 
 Also read latest `SESSION_LEDGER_YYYY-MM-DD.md` in Drive working folder for prior-session reasoning chains when continuity needed. Reference latest `VIYO_Canonical_State_Audit_YYYY-MM-DD.md` in Drive for full canonical surface (337 items as of 2026-05-15 audit; Drive ID `1ogFA3ySF-IJDSlVDvKzzsvCDeiZv34Vo`).
 
