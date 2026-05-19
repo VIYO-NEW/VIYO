@@ -32,7 +32,8 @@ while read local_ref local_sha remote_ref remote_sha; do
         done
         [ $ALLOWED -eq 1 ] && continue
         # Skip test fixtures: they contain intentional invalid citations for verifier tests.
-        [[ "$file" == scripts/verifier/test/pre-push-fixtures/* ]] && continue
+        # Covers both pre-push-fixtures/ (D-1) and dispatch-fixtures/ (D-2).
+        case "$file" in scripts/verifier/test/*-fixtures/*) continue;; esac
         for pat in "${DRIFT_PATTERNS[@]}"; do
             if grep -q "$pat" "$file"; then
                 echo "ERROR pre-push: drift \`$pat\` in \`$file\` (not allowlisted)."
