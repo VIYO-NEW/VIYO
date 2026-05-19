@@ -1,8 +1,8 @@
 ---
 spec_id: R22
 title: Security & Authentication Architecture
-version: 2.0
-revision: rev2 (Architect-applied PO-suggestions before lock)
+version: 2.0.1
+revision: rev2.1 (§9.3 sites list addition per D89 supersession Path B 2026-05-18; ZCBR re-validation deferred — §9.3 addition is registry append, not substrate change per R22 v2 §3.4 precedent for scope vocabulary additions)
 zcbr_status: PASSED
 zcbr_validation_date: 2026-05-12
 zcbr_validator: Architect Claude (Opus 4.7) self-validation
@@ -393,6 +393,7 @@ CI fails on any undocumented service-role usage.
 | Pattern Seeding | Bulk insert to `image_prompt_patterns` (global table) | R24 v2 |
 | Plugin Registry credential resolution | Reads `esp_connections` / `ai_provider_connections` for any workspace at invocation time | R29 v2 |
 | Webhook delivery | Reads `webhook_endpoints` across workspaces for dispatch | T48 v3.0 + D11 |
+| JWT auth context bootstrap | (1) Membership lookup at line 77 in `handleJwtAuth` — service-role required because RLS-respecting client requires `auth.uid()` context that is not established until membership is known (bootstrap circularity); (2) API key verification at line 113 in `handleApiKeyAuth` — service-role required to read `api_keys` table for hash verification before any user JWT exists (API keys are an auth-bootstrapping primitive themselves). SECURITY DEFINER function refactor candidate for Phase 1B per DG-16. Multi-workspace user correctness gap per DG-21. | R22 v2 |
 
 ---
 
