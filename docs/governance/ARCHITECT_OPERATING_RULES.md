@@ -542,6 +542,37 @@ If session prompt doesn't surface inheritance files, Architect ASKS PO for uploa
 
 **Edge case:** When canonical writes span multiple agent sessions (Cataloger session lands Notion writes, then Architect session opens later for follow-on commit), the SESSION_STATE refresh lands in the NEXT Architect/Curator session that opens — but Cataloger surfaces the pending refresh in its completion report so the next session catches it immediately. Two-session gap acceptable; three-session gap is variant 5g territory (memory of pending refresh without grep-verify) and surfaces as anti-pattern.
 
+### Rule 3.23 — Curator runs verify-dispatch.sh at every dispatch intake
+
+**Statement:** Every Architect-to-Curator dispatch read from Drive working folder OR any agent-to-agent dispatch markdown received by Curator MUST be verified via `scripts/verifier/verify-dispatch.sh <dispatch-file>` BEFORE Curator executes any dispatch content. If verify returns BLOCK (exit 1), Curator surfaces failures to PO + Architect, does NOT execute, awaits direction. If verify returns PASS (exit 0), Curator may proceed with normal dispatch execution per existing rules (Rule 3.8 prepared diff surface, etc).
+
+**Strict mode:** Curator MAY invoke with `--strict` flag (exit 2 on WARN-only). Default non-strict for Phase 1; escalate to default-strict after 30-day measurement window per Phase 2 dispatch.
+
+**Mechanism:**
+1. Curator receives dispatch (paste from PO OR read from Drive folder).
+2. Curator saves dispatch to repo working tree (e.g., `.dispatch/inbound/2026-05-19_<short-name>.md` — NOT committed; gitignored).
+3. Curator runs `bash scripts/verifier/verify-dispatch.sh .dispatch/inbound/2026-05-19_<short-name>.md`.
+4. If exit 0 → proceed with dispatch execution.
+5. If exit 1 → STOP, surface to PO + Architect with verify output, await direction.
+6. If exit 2 (strict mode) → STOP, surface, await direction.
+
+**Derived from:** Adversary cycle v1 verdict 2026-05-19 — Path D-2 receiver-side first; closes 4 of 6 historical variant 5g instances (Instances 3-6 caught at receiver intake informally; Rule 3.23 formalizes).
+
+**Substrate:** Rule 3.22 (canonical state writes trigger SESSION_STATE refresh); Rule 3.8 (Curator prepared-diff surface); ANTI_PATTERN_CATALOG Category 5 (Tool-Level Pre-Commit Enforcement — Rule 3.23 extends to pre-dispatch boundary).
+
+**External enforcement:** `scripts/verifier/verify-dispatch.sh` invocation by Curator at every dispatch intake; non-invocation surfaces as session-discipline failure (memory-only verification is variant 5g territory). Future: Curator session-start checklist + post-merge hook to assert verify-dispatch.sh invocation history per session.
+
+**Applies to:** All Curator sessions receiving Architect dispatches. ALSO applies when Curator drafts its own follow-on dispatches for Manus/Adversary/Reviewer; Curator self-verifies before sending.
+
+**Does NOT apply to:** PO direct chat messages (Rule 3.23 is dispatch-file-scoped, not conversational message-scoped). Verify-dispatch is for markdown files; PO chat is interpreted directly by Architect per Rule 3.13.
+
+**Edge case:** When dispatch arrives via paste in chat (not Drive folder), Curator still saves to `.dispatch/inbound/` working location and runs verify before execution. The save-then-verify step is universal regardless of source channel.
+
+**Failure modes the rule closes:**
+- Variant 5a (stale-citation propagation across agent boundaries)
+- Variant 5g (memory-citation of fix-target — receiver-side catch)
+- Variant 5k (Architect-tier work without inline verbatim — partial; full closure requires verify-dispatch.sh A2 extension Phase 2)
+
 ---
 
 ## Section 4 — Communication Discipline (5 rules)
