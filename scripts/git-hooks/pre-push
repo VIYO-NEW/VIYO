@@ -12,6 +12,7 @@ ALLOWLIST=(
     "docs/governance/VIYO_CURRENT_MAP.md"
     "docs/governance/CONTEXT_RESTORE.md"
     "docs/governance/A9_CROSS_SURFACE_CONTINUITY_DISCIPLINE.md"
+    "docs/governance/audits/STATE_AUDIT.md"
     "scripts/git-hooks/pre-push"
 )
 FAIL=0

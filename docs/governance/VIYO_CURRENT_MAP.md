@@ -238,11 +238,30 @@ Phase 1 (Image Studio MVP) public launch unlocks → **Phase 1B Intelligence Fou
 
 ## §9 — Current State Snapshot (Q6)
 
-**As of 2026-05-13 Phase 3.2 session-end refresh:**
+**As of 2026-05-18 Item 1 governance refresh:**
 
 **Repo:** `github.com/VIYO-NEW/VIYO` staging branch.
 
-**Staging HEAD:** `9f31be5` (after Phase 3.2 VIYO_CURRENT_MAP §7 Cataloger activation commit). Per maintenance discipline, §9 lags actual HEAD by exactly one commit — this refresh commit becomes the new HEAD.
+**Staging HEAD:** `f980a76` (after B-0.01 Substrate Audit landing + FA §5 L1 phase-scoping fix). Per maintenance discipline + Rule 3.21 (Curator bundles SESSION_STATE refresh into every governance commit), §9 lags actual HEAD by exactly one commit — this Item 1 refresh commit becomes the new HEAD.
+
+**§9.1 — Post-2026-05-15 substrate commits (ledger anchors U → Y):**
+
+| Anchor | Commit | Event |
+|---|---|---|
+| U | `19074db` | Path X bookkeeping refresh — SESSION_STATE pointer + convention annotation |
+| V | `67922fc` | **A9 v1.0 RATIFIED** — Cross-Surface Continuity Discipline (Lock-tier governance event) |
+| W | `c269a11` | **MBS Commit 2 RATIFIED** — MBS v1.1 elevated to MVP execution authority (Lock 22 operationalized) |
+| X | `afdf02b` | L1641 hot-fix — variant 5b instance closure |
+| Y | `f980a76` | **B-0.01 Substrate Audit landing** — 165 P0 features audited, FA §5 L1 phase-scoping fix, DG-01 through DG-07 surfaced |
+
+**§9.2 — Active substrate status as of 2026-05-18:**
+
+- **B-0.01 audit landed** at `f980a76` — "schema-rich runtime-sparse" baseline; 3 critical gaps (GAP-L13-001 requireAdmin missing, GAP-L4-001 Mastra not installed, GAP-L12-001 skills_registry missing); DG-01 through DG-07 surfaced.
+- **A9 v1.0 RATIFIED** at `67922fc` — Cross-Surface Continuity Discipline; Rules 3.10/3.11(REJECTED)/3.12, Rules A-E, anti-pattern variants 5a-5h, hooks substrate operationalization, Cataloger transitional period EXITED.
+- **MBS Commit 2 RATIFIED** at `c269a11` — MBS v1.1 elevated to MVP execution authority per Lock 22 operationalization.
+- **D89 ratified 2026-05-18** — Phase 1 Image Studio = 4-role baseline (owner/admin/member/viewer); Klaviyo-style 5-role + brand-admin role customization scoped to Phase 2 Email Studio. PENDING Curator commit per PASTE BLOCK G (MBS B-0.02 acceptance text update).
+- **B-0.02 PAUSED 2026-05-18** post-Adversary v6 — 6-cycle variant 5g recurrence; tool-level enforcement empirically required (pre-commit citation verifier queued per ANTI_PATTERN_CATALOG §4 Category 5).
+- **11 new standing rules ratified** at Item 1 commit — Rules 3.13-3.21 + 4.6 (lead with ONE recommendation; YES/NO without scroll; empirical executor test; never recommend session close; BEST setup for task class; Inventory never canonical authority; project_knowledge_search FIRST; §6 First Action inviolable; SESSION_STATE bundling; floor-enforced systemConfig).
 
 **Curator session commits this session (9 governance commits + 1 stale file removal):**
 
@@ -298,7 +317,18 @@ Phase 1 (Image Studio MVP) public launch unlocks → **Phase 1B Intelligence Fou
 
 ## §10 — Pending Work Queue (Q6)
 
-**R-spec work (Architect priority):**
+**Sequenced pending queue (post-2026-05-18 Item 1 refresh):**
+
+1. **Item 1 Phase C** (NEXT, HIGH priority) — Notion canonical-state updates: Open Decisions DB + Standing Rules page + Decisions DB + Documentation Gaps DB. Architect drafts per-write directives; PO ratifies per-write; Cataloger executes via post-transition standing authority per A9 §10.
+2. **PASTE BLOCK G** (HIGH priority) — Curator commit: D89 supersession action 1 (MBS B-0.02 acceptance text "5 roles" → "4 roles" per Path A, D85-pattern). Single-file surgical commit on `docs/governance/VIYO_Master_Build_Sequence.md`.
+3. **PASTE BLOCK H** (HIGH priority) — R22 v2 v2.0 → v2.0.1 amendments: header version bump + §9.3 sites list addition for auth.ts bootstrap per Path B. Architect-tier R-spec edit per Rule 3.4.
+4. **Pre-commit citation verifier** (Architect dispatch directive → Manus build) — automated grep-verify on every quoted block in directives. Phase 1B Curator-tool deliverable. Tool-level Family 4 + Category 5 enforcement for variant 5g.
+5. **viyo-zcbr-architect skill v1.0.6 → v1.0.7** (Architect-authored) — mandatory Canonical Authority Audit + pre-flight checklist + quote-only-from-grep rule.
+6. **B-0.02 v1.0 re-author** (clean slate, post-tools) — L1 Identity & Multi-Tenancy completion.
+7. **B-0.03 through B-0.06** (parallel-safe with B-0.02 per MBS) — remaining Phase 0 substrate bullets.
+8. **Substrate Map work for Lock 39 candidate** (DEFERRED) — comprehensive agentic-vs-architectural matrix; lands as Lock 39 or PRD V8.1 §3.5 extension.
+
+**R-spec work (Architect priority, carried over):**
 - **R24 v2.1 minor bump** — add §X.A A15 Brand Kit Mode, §X.B B1-B10 toolbelt, §X.B.3 B3 Layer Splitting stack lock, §X.C Brand LoRA pipeline (V1.0.5 deferred), §X.D G8 Character Consistency. Highest dependency-unblocking leverage per prior session analysis.
 - **R23 v2 fresh authoring** — broken draft deleted; needs verified R29 v2 citations using `providerRegistry.execute` + `ai_provider_models` + `ProviderExecuteResult<T>.metadata.cost` (not the broken Registry.invoke / ai_provider_connections / costAttribution from memory of deleted draft).
 - **R33 Shopify Integration audit** — new R-spec authority per Notion D48.
@@ -355,8 +385,9 @@ Other active ODs (OD-006 Anthropic spend cap / OD-007 conversation export cadenc
 | ZCBR_STANDARD.md | `/docs/governance/ZCBR_STANDARD.md` | 14-item ZC+BR checklist + 3-checkpoint validation protocol (Lock 20 substrate) |
 | CODING_CONVENTIONS.md | `/docs/governance/CODING_CONVENTIONS.md` | 15 testable code rules (Drizzle migrations, Result pattern, TypeScript strict, behavioral tests, Mastra+Inngest, Sharp/PIL not AI for text/color, plugin registry, RLS, ZCBR enforcement) |
 | INFRASTRUCTURE_DECISIONS.md | `/docs/governance/INFRASTRUCTURE_DECISIONS.md` | ID-1 (staging canonical) / ID-2 (auto-deploy pre-Alpha) / ID-3 (R2 canonical storage) / ID-4 (R28 deferred) / ID-5 (Vercel git-connected) / ID-6 (Redis isolation) |
-| ANTI_PATTERN_CATALOG.md | `/docs/governance/ANTI_PATTERN_CATALOG.md` (SHA `d08aec9`) | 15 observations + 3 subpatterns + 1 sanction organized into 7 failure families mapped to 4 foundational fix categories |
+| ANTI_PATTERN_CATALOG.md | `/docs/governance/ANTI_PATTERN_CATALOG.md` (refreshed at Item 1 commit) | 15 Section F observations + 2 post-2026-05-18 observations (16-17) + 3 subpatterns + 1 sanction + 9 variants (5a-5h + 5k) organized into 7 failure families mapped to 5 foundational fix categories (Category 5 added: Tool-Level Pre-Commit Enforcement) |
 | CLAUDE.md v2 | `/docs/governance/CLAUDE.md` (SHA `92dc4b8`) | Lightweight bootstrap entry point — §1 Identity / §2 Auto-Load Reading List (4 files) / §3 Role Context (5 roles incl. Cataloger formally active) / §4 Communication / §5 What NOT to do (3 top callouts) / §6 First Action protocol. Replaces prior 15-file reading list + 9-tier hierarchy in-text + Standing Instruction #8 sanction. Auto-loads at every Architect session start. |
+| A9_CROSS_SURFACE_CONTINUITY_DISCIPLINE.md | `/docs/governance/A9_CROSS_SURFACE_CONTINUITY_DISCIPLINE.md` (SHA `67922fc`) | A9 v1.0 RATIFIED 2026-05-18 — Lock-tier governance discipline. Rules A-E, Rules 3.10/3.11(REJECTED)/3.12, anti-pattern variants 5a-5h, Lock 22 verbatim, hooks substrate operationalization, Cataloger role tool-access scoping + transitional period EXITED. Future revisions require isolated Adversary cold-read per §9 Addition 5. |
 
 **Lower-tier references** (consulted as needed):
 - `/docs/governance/PRODUCT_ROADMAP.md` — Phase 1 11 sub-phases + Phase 2/3/4+ sequencing
@@ -402,12 +433,13 @@ The full 4-category framework + every observation + every external enforcement m
 
 **5 decisions archived 2026-05-12** as implementation-detail clutter from the Ops Architect 13-silent-writes incident (per ANTI_PATTERN_CATALOG Family 1 Observation 2). 8 remaining Ops Architect entries flagged for Phase 5.1 review.
 
-**Foundation Locks:** 29 ratified (Locks 1-21 product-architecture + process + Stack Constraints 30-37 vendor lock-in at SHA `30972b0`); Locks 15-16 RESERVED.
+**Foundation Locks:** 30 ratified (Locks 1-22 + Stack Constraints 30-37); Locks 15-16 RESERVED. Lock 22 newly ratified 2026-05-18 per MBS Commit 2 operationalization (Authority Hierarchy Time-Horizon Split per D85 + A9 §4). Lock 39 candidate placeholder added 2026-05-18 (Agentic-vs-Architectural Boundary, deferred to Substrate Map work).
 
 **Open Decisions:** 13 active (OD-001 through OD-020 with some closed; OD-008 closed 2026-05-08; OD-009 / 011-018 / 020 status tracked in Notion Open PO Decisions DB). Repo OPEN_DECISIONS.md lists only OD-001..007 — stale by 13 ODs (per STATE_AUDIT §Conflict).
 
 **Rejected/proposed-but-not-ratified:**
-- **"Lock 22 — Manifest schema-drift forbidden"** — proposed silently inside a stillborn R29 v2 draft 2026-05-12 (ANTI_PATTERN_CATALOG Family 1 Observation 5). REJECTED — not in Lock set. Schema-drift discipline lives in Lock 5 (Pattern Recipe JSON Schema) and is enforced by ZCBR + CI grep.
+- **"Lock 22 — Manifest schema-drift forbidden"** (original 2026-05-12 silent-write proposal inside stillborn R29 v2 draft) — REJECTED for that scope; Lock 22 number RECLAIMED 2026-05-18 for **Authority Hierarchy Time-Horizon Split** per D85 + A9 §4 + MBS Commit 2 operationalization at `c269a11`. Schema-drift discipline (the original 2026-05-12 proposal scope) remains in Lock 5 (Pattern Recipe JSON Schema) enforced by ZCBR + CI grep — that scope was not Lock-tier; this Lock 22 number now holds the time-horizon authority split. **RATIFIED 2026-05-18.**
+- **Lock 39 candidate placeholder (Agentic-vs-Architectural Boundary)** — added per A9 §4 + Adversary v6 #12 recommendation; deferred to Substrate Map work post-B-0.02 v1.0 dispatch. Open scope question: where does the agentic principle extend beyond Lock 19 (providers/models/services per R29 v2 §10) + PRD V8.1 §3.4 (pricing)? Substrate Map deliverable lands as Lock 39 or PRD V8.1 §3.5 extension.
 - **Old NIR_OPERATING_RULES v1.1 13 rules** — superseded by NIR_OPERATING_RULES.md 9 rules at SHA `1cc34b6`.
 - **Old VIYO_OPERATING_WORKFLOW.md §8.5 14 Architect Operating Behaviors** — reactive accumulation; NOT inherited as authority. Substance carried foundationally into ARCHITECT_OPERATING_RULES.md and NIR_OPERATING_RULES.md.
 

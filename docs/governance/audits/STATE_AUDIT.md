@@ -451,4 +451,55 @@ After ratification, Phase 2 begins with ANTI_PATTERN_CATALOG.md authored from th
 
 ---
 
+---
+
+## 2026-05-18 — B-0.02 Directive 6-Cycle Audit (Architect-side)
+
+**Audit type:** Process failure root-cause analysis
+**Author:** VIYO Product Architect (Claude Opus 4.7), self-audit
+**Trigger:** PO surfaced screenshot of governance folder containing inheritance files Architect never loaded; 6-cycle B-0.02 directive iteration failed to produce dispatchable artifact
+
+**Cause:** Handoff broke at session start. Architect did not execute CLAUDE.md §6 First Action. Did not load the 4-file inheritance bundle (VIYO_CURRENT_MAP.md / ARCHITECT_OPERATING_RULES.md / NIR_OPERATING_RULES.md / ANTI_PATTERN_CATALOG.md). Operated without inheritance for entire session.
+
+**Pattern observed:** Variant 5g (memory-citation without grep-verify) recurred across all 6 Adversary cycles (B-0.02 directive v0.1 → v0.6 with Adversary v1 → v6). Each cycle Adversary caught miscitations; Architect "fixed" by introducing new miscitations.
+
+**Meta-recurrence (B-0.02 v0.4):** Architect authored §0 standing-rule self-acknowledgment explicitly logging variant 5g. Within the SAME §0 block, Architect cited "EF-28 verbatim" as canonical authority. Adversary v4 grep returned ZERO canonical matches. Variant 5g recurred INSIDE the §0 block authored to refute it.
+
+**Adversary cycle metrics:**
+
+| Cycle | Findings | Architect "fix" outcome |
+|---|---|---|
+| v1 | 22 (11 MAJOR + 5 MINOR + 6 NIT) | 18/22 cleanly addressed; 4 partial |
+| v2 | 11 (4 MAJOR + 4 MINOR + 3 NIT) | 7/11 cleanly addressed; 4 partial |
+| v3 | 12 (6 MAJOR + 4 MINOR + 2 NIT) | 6/11 cleanly addressed (v2 findings); introduced new defects |
+| v4 | 10 (4 MAJOR + 2 MINOR + 4 NIT) | 6/10 cleanly addressed; agentic-rule scope inflated beyond Lock 19 canonical |
+| v5 | 10 (4 MAJOR + 2 MINOR + 4 NIT) | 3/10 cleanly addressed (lowest yet); CODING_CONVENTIONS Rule 7 misattributed as Rule 11 |
+| v6 | 16 (3 CRITICAL + 5 MAJOR + 4 MODERATE + 3 NIT + 1 INFO) | PAUSED — 4 CRITICAL/MAJOR clustered around §0 verbatim citation defects (Lock 19 truncated, R29 §10 from wrong location, PRD §3.4 truncated, Lock 19/38 relationship contaminated) |
+
+**Root cause identified 2026-05-18:** PO uploaded governance folder screenshot showing inheritance files Architect should have loaded at session start. Forward fix required to prevent recurrence on next Architect session.
+
+**Forward fix (ratified per Item 1 governance refresh commit, this commit):**
+
+1. **§6 First Action locked as inviolable standing rule** per ARCHITECT_OPERATING_RULES Rule 3.20 — every new Architect session executes inheritance load + role confirmation + first-task statement + PO ratification BEFORE authoring
+2. **project_knowledge_search-FIRST locked** per ARCHITECT_OPERATING_RULES Rule 3.19 — strengthens NIR Rule 5
+3. **Inventory descriptions never canonical authority** per ARCHITECT_OPERATING_RULES Rule 3.18 (+ ANTI_PATTERN_CATALOG Observation 17)
+4. **Curator bundles SESSION_STATE refresh into every governance commit** per ARCHITECT_OPERATING_RULES Rule 3.21 — prevents handoff drift
+5. **Pre-commit citation verifier queued** as Phase 1B Curator-tool deliverable per ANTI_PATTERN_CATALOG §4 Category 5 — tool-level enforcement for variant 5g (empirically required per 6-cycle recurrence; human-discipline-only insufficient)
+6. **viyo-zcbr-architect skill v1.0.6 → v1.0.7** queued with mandatory Canonical Authority Audit + pre-flight checklist + quote-only-from-grep rule
+7. **B-0.02 v1.0 re-author** queued post-tools-landing — clean slate using new inheritance discipline + tool-level enforcement
+
+**Pattern conclusion:** 6-cycle variant 5g recurrence confirms human-discipline-only insufficient for this failure mode. Tool-level enforcement (Category 5) is the structural fix. Inheritance discipline (Rule 3.20) is the upstream substrate fix. Both required.
+
+**Cross-references:**
+- ANTI_PATTERN_CATALOG.md §1.4 Observation 16 (variant 5g 6-cycle meta-recurrence)
+- ANTI_PATTERN_CATALOG.md §1.4 Observation 17 (Inventory descriptions as canonical authority)
+- ANTI_PATTERN_CATALOG.md §3.5 Variant 5g (TWO-LAYER) + Variant 5k (Architect-tier work assigned to Manus without verbatim text)
+- ANTI_PATTERN_CATALOG.md §3 Category 5 (Tool-Level Pre-Commit Enforcement)
+- ARCHITECT_OPERATING_RULES.md §3 Rules 3.13-3.21 (this session's standing rules backfill)
+- ARCHITECT_OPERATING_RULES.md §4 Rule 4.6 (floor-enforced systemConfig pattern)
+- FOUNDATION_LOCK.md Lock 22 (Authority Hierarchy Time-Horizon Split — ratified 2026-05-18)
+- FOUNDATION_LOCK.md Lock 39 (CANDIDATE — Agentic-vs-Architectural Boundary, deferred)
+
+---
+
 *End of STATE_AUDIT.md*
