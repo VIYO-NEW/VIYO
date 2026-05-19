@@ -76,7 +76,8 @@ Largely shipped by Manus (25 features Done, 3 In Progress). Bullets cover remain
 - VVOW: §18.2 | R-spec: R22 | Features: AUTH-01/02/03, MFA-01/04/05, PERM-01 through PERM-05, P0-04, P0-05, P1-09
 - Locks: 13 | Skills: database-migration, hono-route-authoring, writing-behavioral-tests
 - Prereqs: B-0.01 | Parallel-safe with: B-0.03, B-0.04, B-0.05, B-0.06
-- Acceptance: All 83 brand-scoped tables have RLS, MFA gate exists, service-role bypass detection in CI, role tests pass for all 5 roles
+- Acceptance: All 83 brand-scoped tables have RLS, MFA gate exists, service-role bypass detection in CI, role tests pass for all 4 roles (owner/admin/member/viewer)
+- Migration Note: Phase 1 Image Studio = 4-role baseline per D89 ratified 2026-05-18. Klaviyo-style 5-role + brand-admin role customization scoped to Phase 2 Email Studio per PRD V8.1. Time-horizon split per Lock 22: MBS Phase 1 acceptance criteria stable during MVP execution; long-horizon 5-role model lands Phase 2.
 - Complexity: M | Open deps: None
 
 **B-0.03 — L2 Asset Model completion (Brand Vault contract)**
