@@ -31,6 +31,8 @@ while read local_ref local_sha remote_ref remote_sha; do
             [ "$file" = "$a" ] && ALLOWED=1 && break
         done
         [ $ALLOWED -eq 1 ] && continue
+        # Skip test fixtures: they contain intentional invalid citations for verifier tests.
+        [[ "$file" == scripts/verifier/test/pre-push-fixtures/* ]] && continue
         for pat in "${DRIFT_PATTERNS[@]}"; do
             if grep -q "$pat" "$file"; then
                 echo "ERROR pre-push: drift \`$pat\` in \`$file\` (not allowlisted)."
@@ -38,10 +40,59 @@ while read local_ref local_sha remote_ref remote_sha; do
                 FAIL=1
             fi
         done
+        # --- Citation verify (Phase 1 — variant 5g closure per Adversary Path D-1) ---
+        if [[ "$file" == *.md ]]; then
+            # Pattern 1: Lock N citations — BLOCK on miss in FOUNDATION_LOCK.md.
+            # Per Curator-call fix: exempt lines containing "candidate" or "placeholder"
+            # (e.g., Lock 39 candidate placeholder per Item 1 governance refresh).
+            LOCK_NUMS=$(grep -vE 'candidate|placeholder' "$file" 2>/dev/null | grep -ohE '\bLock [0-9]+' | grep -oE '[0-9]+' | sort -u || true)
+            for num in $LOCK_NUMS; do
+                if ! grep -qE "^## Lock $num[^0-9]|^### Lock $num[^0-9]" docs/governance/FOUNDATION_LOCK.md 2>/dev/null; then
+                    echo "ERROR pre-push: \`Lock $num\` in \`$file\` not found in FOUNDATION_LOCK.md"
+                    echo "  Variant 5g closure: Lock citations must verify."
+                    FAIL=1
+                fi
+            done
+            # Pattern 2: R-spec citations — BLOCK on missing file (any R{NUM}_* match).
+            RSPEC_NUMS=$(grep -ohE 'R[0-9]+ v[0-9]+|R-spec R[0-9]+|\bR[0-9]+_[A-Z_]+' "$file" 2>/dev/null | grep -oE 'R[0-9]+' | sort -u || true)
+            for rnum in $RSPEC_NUMS; do
+                if ! ls docs/research_specs/${rnum}_* 2>/dev/null | grep -q .; then
+                    echo "ERROR pre-push: R-spec \`$rnum\` cited in \`$file\` has no matching file in docs/research_specs/"
+                    echo "  Variant 5g closure: R-spec citations must verify."
+                    FAIL=1
+                fi
+            done
+            # Pattern 3: .md file path citations — BLOCK on missing file.
+            MD_CITES=$(grep -ohE '\b(docs|scripts|apps|packages|tests)/[A-Za-z0-9_/.-]+\.md\b' "$file" 2>/dev/null | sort -u || true)
+            for cite in $MD_CITES; do
+                if [ ! -f "$cite" ]; then
+                    echo "ERROR pre-push: Cited file path \`$cite\` in \`$file\` not found in repo."
+                    echo "  Variant 5g closure: file path citations must verify."
+                    FAIL=1
+                fi
+            done
+            # Pattern 4: Notion ID format-detect — INFO only (Phase 2 = MCP existence check).
+            # Per Curator-call fix 3: regex-match only; Notion does NOT issue RFC 4122 v4 UUIDs
+            # (variant 5c at directive-authoring layer, instance #8 in multi-day window).
+            UUID_DASHED=$(grep -ohE '\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b' "$file" 2>/dev/null | sort -u || true)
+            UUID_UNDASHED=$(grep -ohE '\b[0-9a-f]{32}\b' "$file" 2>/dev/null | sort -u || true)
+            UUID_COUNT=0
+            [ -n "$UUID_DASHED" ] && UUID_COUNT=$((UUID_COUNT + $(echo "$UUID_DASHED" | wc -l | tr -d ' ')))
+            [ -n "$UUID_UNDASHED" ] && UUID_COUNT=$((UUID_COUNT + $(echo "$UUID_UNDASHED" | wc -l | tr -d ' ')))
+            if [ "$UUID_COUNT" -gt 0 ]; then
+                echo "INFO pre-push: $UUID_COUNT Notion ID format candidate(s) in \`$file\` (Phase 2 will MCP-verify)."
+            fi
+            # Pattern 5: D-NN / OD-NNN / GAP-NNN — INFO only (Phase 2 = Notion MCP verify).
+            REF_CITES=$(grep -ohE '\b(D|OD|GAP)-?[0-9]+\b' "$file" 2>/dev/null | sort -u || true)
+            if [ -n "$REF_CITES" ]; then
+                REF_COUNT=$(echo "$REF_CITES" | wc -l | tr -d ' ')
+                echo "INFO pre-push: $REF_COUNT Decision/OD/GAP references in \`$file\` (Phase 2 will MCP-verify)."
+            fi
+        fi
     done
 done
 if [ $FAIL -ne 0 ]; then
-    echo "Pre-push blocked. Fix drift or add file to ALLOWLIST. --no-verify bypasses."
+    echo "Pre-push blocked. Fix drift, fix citation, or add file to ALLOWLIST. --no-verify bypasses."
     exit 1
 fi
 exit 0
