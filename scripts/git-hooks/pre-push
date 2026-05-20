@@ -46,7 +46,9 @@ while read local_ref local_sha remote_ref remote_sha; do
             # Pattern 1: Lock N citations — BLOCK on miss in FOUNDATION_LOCK.md.
             # Per Curator-call fix: exempt lines containing "candidate" or "placeholder"
             # (e.g., Lock 39 candidate placeholder per Item 1 governance refresh).
-            LOCK_NUMS=$(grep -vE 'candidate|placeholder' "$file" 2>/dev/null | grep -ohE '\bLock [0-9]+' | grep -oE '[0-9]+' | sort -u || true)
+            # Case-insensitive (-i) per PO ratification 2026-05-20: "Candidate"/"CANDIDATE"
+            # must exempt identically to "candidate" (D-1 case-sensitivity bug closure).
+            LOCK_NUMS=$(grep -viE 'candidate|placeholder' "$file" 2>/dev/null | grep -ohE '\bLock [0-9]+' | grep -oE '[0-9]+' | sort -u || true)
             for num in $LOCK_NUMS; do
                 if ! grep -qE "^## Lock $num[^0-9]|^### Lock $num[^0-9]" docs/governance/FOUNDATION_LOCK.md 2>/dev/null; then
                     echo "ERROR pre-push: \`Lock $num\` in \`$file\` not found in FOUNDATION_LOCK.md"
