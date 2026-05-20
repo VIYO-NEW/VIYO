@@ -7,6 +7,8 @@
 **Authority tier:** Below FOUNDATION_LOCK + FOUNDATION_AUTHORITY; above per-role behavior files. Operationalizes Lock 17 (Foundation-First) + Lock 21 (Governance Agnosticism) for the Notion canonical surface.
 **Update authority:** Curator authors drafts; PO ratifies; Cataloger commits.
 
+**Re-synced 2026-05-20** against live Notion state. The workspace was reorganized 2026-05-19 by Manus (VIYO_NOTION_CLEANUP_001) and hygiene-audited 2026-05-20 (audit found 41 duplicate Decision records + 7 floating sidebar pages, all cleaned). Verification pass per Rule E: `notion-fetch` against the live Standing Rules page, Decisions Database schema + views, and Governance Command Center structure — live Notion is the authority, not session memory or briefing summary. Sections updated: §1 (workspace two-page top-level structure), §2.1 (Decision ID ceiling D54→D96 / next D97; `Domain` multi-select property added), §2.1-V (five named Decisions DB views — NEW), §2.7 (Hygiene Rules H-1–H-6 reference — NEW). §1.3 child-page IDs corrected (prior entries carried unverified IDs — variant 5c in the repo doc itself). §5/§7 marked historical (drain + observation migration completed at commits 05717ff/ccf7209).
+
 ---
 
 ## RULE A — Paragraph summary
@@ -15,15 +17,28 @@ VIYO has 6 canonical Notion databases + 1 PO Inbox + multiple child pages under 
 
 ---
 
-## Section 1 — Canonical Notion Structure (verified 2026-05-18)
+## Section 1 — Canonical Notion Structure (re-verified 2026-05-20)
 
-### 1.1 Parent page (archived)
+### 1.0 Workspace top-level structure (Hygiene Rule H-1)
 
-| Item | URL |
+The VIYO Notion workspace has **exactly two top-level pages**. No agent may ever create a third — this is Hygiene Rule H-1, a hard constraint.
+
+| Top-level page | Page ID | Scope |
+|---|---|---|
+| 🏛️ VIYO Governance Command Center | `3659a84a-4679-81bd-9f32-d38326c1f6ed` | All decisions, locks, open questions, doc gaps, conflict resolutions, session logs, governance |
+| 🏗️ VIYO Product Build | `3659a84a-4679-812f-b925-c872f7fefe91` | All specs, build tracker, Airtable sync, product documentation |
+
+Before creating any page, ask: "Governance or Product Build?" — then create it as a child of the correct parent, **never at workspace root**. End-of-session sidebar hygiene check per H-5 verifies no stray top-level pages were created.
+
+The 🏛️ Governance Command Center was reorganized 2026-05-19 by Manus (VIYO_NOTION_CLEANUP_001). It is the parent for all 6 canonical databases + governance pages. All canonical Notion governance work happens under this page.
+
+### 1.1 Archived navigational parent (session-log host)
+
+| Item | Page ID |
 |---|---|
-| 📋 VIYO Decision Log and QA Tracker [ARCHIVED — See Child Databases] | `https://www.notion.so/3559a84a46798194946ef8fc5479e4c2` |
+| 📋 VIYO Decision Log and QA Tracker [ARCHIVED — See Child Databases] | `3559a84a-4679-8194-946e-f8fc5479e4c2` |
 
-**Status:** ARCHIVED. Houses all canonical DBs as children. Title indicates this is a navigational parent — NOT a content surface. Do not write directly to this page.
+**Status:** ARCHIVED, nested under 🏛️ Governance Command Center. NOT a content surface — do not write to this page directly. It still serves as the **parent for session-log child pages** (see §2.8) and hosts the ⚖️ Standing Rules + 👑 Authority Hierarchy reference pages.
 
 ### 1.2 Canonical Databases (6)
 
@@ -31,52 +46,74 @@ Each database has TWO URLs: the database PAGE URL (what you click in browser) an
 
 | Database | Database PAGE URL | Data Source URL |
 |---|---|---|
-| 📊 Decisions Database | `https://www.notion.so/7a769bf3c2914825aa42c1c8bc94ca30` | `collection://b886724c-aa03-432b-889e-e63d9cdb7de6` |
+| 🗄️ Decisions Database | `https://www.notion.so/7a769bf3c2914825aa42c1c8bc94ca30` | `collection://b886724c-aa03-432b-889e-e63d9cdb7de6` |
 | 🚧 Open PO Decisions | `https://www.notion.so/b31bfeb08108475eac7144295f36ff55` | (Cataloger fetches data source ID at first use) |
 | 🔒 Foundation Locks | `https://www.notion.so/59e623267f354320b7d428eb6df62901` | (Cataloger fetches data source ID at first use) |
 | ⚠️ Documentation Gaps | `https://www.notion.so/cc88a0025fc14528b4de4520ff271ea1` | (Cataloger fetches data source ID at first use) |
 | 📐 Conflict Resolutions | `https://www.notion.so/5ea24908fa424bcaa15d3a72b15b5f6d` | (Cataloger fetches data source ID at first use) |
 | 📥 PO Inbox | `https://www.notion.so/e54c3ffe84f940189086512ba1c1ec88` | `collection://be5f9696-b119-4f81-bb73-2599f5c1242b` |
 
-### 1.3 Child Pages
+### 1.3 Governance reference pages
 
-| Page | URL | Role |
+Stable reference pages — verified live 2026-05-20. Session-log child pages are NOT enumerated here: they grow every session and hard-coding them caused stale/invented IDs in the prior version of this file (variant 5c in the repo doc itself). Query the archived parent's children live rather than trusting a static list.
+
+| Page | Page ID | Role |
 |---|---|---|
-| 📅 Session Log: 2026-05-08 | `https://www.notion.so/3559a84a467981a5a99cf65c5f0c6a8c` | Session summary record |
-| 📅 Session Log: 2026-05-09 | `https://www.notion.so/3559a84a467981b1a3b1c0f5f1e3b7d2` | Session summary record |
-| 📅 Session Log: 2026-05-10 | `https://www.notion.so/3559a84a467981c4b8e2d1a6e2f4c8e3` | Session summary record |
-| ⚖️ Standing Rules | `https://www.notion.so/35c9a84a467981c7a1fcdb7556f572d4` | Permanent agent rules |
-| 👑 Authority Hierarchy | `https://www.notion.so/3559a84a467981e6daf4f3c8a4b6eaf5` | Reference page for the 12-tier hierarchy |
+| ⚖️ Standing Rules | `35c9a84a-4679-81c7-a1fc-db7556f572d4` | Permanent agent rules + Routing Guide + Hygiene Rules H-1–H-6 (see §2.7) |
+| 👑 Authority Hierarchy | `35c9a84a-4679-81a0-b935-c795c2078fd3` | Reference page for the authority hierarchy |
+| 📐 Decisions Database — View Setup Guide | `3669a84a-4679-81a1-b358-df1c5516f6b0` | Companion page documenting the 5 named Decisions DB views — §2.1-V is the authoritative verified-live config |
+| 📅 Decisions Database — Quarterly Triage Protocol | `3669a84a-4679-8105-8186-d85ff1b65092` | Quarterly Decisions DB cleanup protocol (Architect-run) |
+
+**Session-log child pages:** live under the archived parent (`3559a84a-4679-8194-946e-f8fc5479e4c2`). Naming convention: `📅 Session Log: YYYY-MM-DD`. Do not hard-enumerate — query live.
 
 ---
 
 ## Section 2 — What posts WHERE (per-DB rules)
 
-### 2.1 📊 Decisions Database (`b886724c-aa03-432b-889e-e63d9cdb7de6`)
+### 2.1 🗄️ Decisions Database (`b886724c-aa03-432b-889e-e63d9cdb7de6`)
 
 **Role:** Ratified architectural/product decisions. Permanent record.
 
-**ID format:** `D{N}` sequential. Current max: D54 + ID-1 through ID-6 reserved range. Next ID: D55. (Check `Decision ID` title field for current max before assigning.)
+**ID format:** `D{N}` sequential. **Current max: D96** (verified live 2026-05-20 — D96 = Redis isolation staging/production smoke-test decision). **Next ID: D97.** Per Hygiene Rule H-2, query the Decisions DB filtered by `Decision ID` before assigning OR creating — if a record is returned, UPDATE it; do not create a duplicate. The 2026-05-20 audit cleaned 41 duplicate stub records created by re-running creates without checking; do not recreate that condition. D-numeric only — no ID-series, B-series, or other format for new decisions.
 
-**Required schema fields:**
+**Required schema fields** (verified live against data source `b886724c-aa03-432b-889e-e63d9cdb7de6` on 2026-05-20):
 
 | Field | Type | Required | Notes |
 |---|---|---|---|
-| Decision ID | title | YES | Format `D{N}` e.g. "D55" |
-| Title | text | YES | Concise statement of the decision |
-| Category | select | YES | Architecture / Pricing / Infrastructure / Pattern / Skill / Webhook / Provider / Phase Plan / Competitive / Token Economics / Quality / Privacy / UX / Process |
+| Decision ID | title | YES | Format `D{N}` e.g. "D97" |
+| Title | text | YES | Human-readable description — NOT just the ID (Hygiene Rule H-3: `Title = "D80"` is a stub and gets trashed) |
+| Category | select | YES | One of 14: Architecture / Pricing / Infrastructure / Pattern / Skill / Webhook / Provider / Phase Plan / Competitive / Token Economics / Quality / Privacy / UX / Process |
+| Domain | multi-select | YES | One+ of 8 (added in 2026-05-19 reorg): Backend / Frontend / Infrastructure / AI / Multi-Agent / Pricing / Economics / Process / Governance / Design / UX / Integrations. Multi-select — records typically carry 2–3 tags (all 106 active records tagged by Manus 2026-05-20). |
 | Status | select | YES | Locked / Open / Deferred / Superseded |
 | Phase | select | YES | Phase 0 / Phase 1 / Phase 1B / Phase 2 / Phase 2.5 / Phase 3 / Phase 4+ / Cross-Phase |
 | Phase Relevance | multi-select | YES | One+ of: P0 / P1 / P1B / P2 / P2.5 / P3 / P4+ / XC / ANY |
 | Decision Date | date | YES | ISO-8601 |
 | Source Authority | select | YES | PRD V8 / PRD V8.1 / VVOW Architecture / Notion Decision / Foundation Lock / Build Tracker / PO Direct |
-| Session | select | OPT | Pre-populated values: May 2/3/10 2026, Pre-May 2026. New sessions (May 15/18 etc.) may need new option added — Cataloger does so at first use |
+| Session | select | OPT | Pre-populated values: May 2/3/10 2026, Pre-May 2026. Newer sessions need a new option added — Cataloger does so at first use |
 | Affected Specs | text | OPT | R-spec / governance file paths affected |
 | Migration Notes | text | OPT | Cross-references; supersession history; rollout details |
 
-**Write rule:** Cataloger ONLY. Must cite PO ratification statement verbatim in entry body (Markdown comment block at top of page content). Per-write PO ratification per Rule 3.4 transitional behavior.
+**`Category` vs `Domain`** — two distinct properties, do not conflate: `Category` is a single-select 14-option taxonomy (the legacy field); `Domain` is the multi-select 8-option field added in the 2026-05-19 reorg. Hygiene Rule H-3 refers to `Category` ("one of the 14 defined categories"); the 2026-05-20 briefing's "8 options" refers to `Domain`. Both are required on new records.
+
+**Write rule:** Cataloger ONLY. Must cite PO ratification statement verbatim in entry body (Markdown comment block at top of page content). Per-write PO ratification per Rule 3.4 transitional behavior. Per H-2: search-before-create. Per H-3: real Title + all required fields before save.
 
 **Does NOT post here:** Session summaries; pending decisions awaiting PO ratification (those go to Open PO Decisions); operational checklists; transient state.
+
+---
+
+### 2.1-V Decisions Database — five named views
+
+The Decisions DB has **five named views** (plus an unnamed `Default view` table). Hygiene Rule H-4 mandates agents use these views to locate records — never scroll the raw list. Configurations verified live 2026-05-20 against the database (`7a769bf3-c291-4825-aa42-c1c8bc94ca30`):
+
+| View | Type | Filter | Group / Sort |
+|---|---|---|---|
+| ✅ Active Decisions | Table | `Status = Locked` | Sort: Decision Date descending |
+| 📋 By Category | Board | `Status = Locked` | Group by: Category |
+| 🗂️ By Phase | Table | (none) | Group by: Phase; Sort: Decision Date descending |
+| 🔄 Open / Proposed | Table | `Status = Open` | Sort: Decision Date descending |
+| 🗃️ Archived / Superseded | Table | `Status = Superseded` | Sort: Decision Date descending |
+
+**Note — companion page corrected by Manus 2026-05-20 (artifacts resolved post-Curator verification):** the 📐 Decisions Database — View Setup Guide page (`3669a84a-4679-81a1-b358-df1c5516f6b0`) previously carried a stale Status vocabulary (`Accepted` / `Proposed` / `Deprecated`). Manus corrected it 2026-05-20. An initial find-replace left two residual artifacts (View 4 heading, View 5 filter); Manus resolved both after Curator verification — re-verified live clean 2026-05-20. **The §2.1-V table above remains the verified-live config and is authoritative.**
 
 ---
 
@@ -178,19 +215,20 @@ Each database has TWO URLs: the database PAGE URL (what you click in browser) an
 
 **Write rule:** Cataloger appends new rules when ratified into repo files. Per-commit sync: when a Curator commit lands new rules in `docs/governance/ARCHITECT_OPERATING_RULES.md` or `docs/governance/NIR_OPERATING_RULES.md`, Cataloger updates this page within 24h.
 
-**Pending writes from 2026-05-18 session (12 new rules):**
-- Rule 3.11 (REJECTED — number reserved)
-- Rule 3.12 (Cross-Relay Paste-Discipline)
-- Rule 3.13 (Lead with ONE clear recommendation)
-- Rule 3.14 (YES/NO answers without scroll)
-- Rule 3.15 (Test executor capability empirically)
-- Rule 3.16 (Never recommend session close)
-- Rule 3.17 (Always recommend BEST setup)
-- Rule 3.18 (Inventory descriptions NEVER canonical authority)
-- Rule 3.19 (project_knowledge_search FIRST)
-- Rule 3.20 (§6 First Action inviolable)
-- Rule 3.21 (Curator bundles SESSION_STATE refresh)
-- Rule 4.6 (Floor-enforced systemConfig pattern)
+**Page also hosts** (verified live 2026-05-20): the 🗺️ "What Goes Where: VIYO Routing Guide" (per-type routing table) and the 🧹 Notion Workspace Hygiene Rules H-1–H-6 (below). The 12 Architect-rule backfill entries (Rules 3.11–3.21 + 4.6) were appended during the Cataloger drain 2026-05-19 — no longer pending.
+
+**Hygiene Rules H-1 through H-6** (appended to the Standing Rules page 2026-05-20 after the workspace audit; hard constraint for all agents writing to Notion — the Standing Rules page is canonical text, this is a reference index):
+
+| Rule | Constraint |
+|---|---|
+| H-1 | Workspace structure is fixed — exactly two top-level pages (Governance Command Center + Product Build); never create a third. See §1.0. |
+| H-2 | Check before creating — search first. For Decisions DB, query by `Decision ID` before insert; if found, UPDATE not CREATE. |
+| H-3 | Decision records need a real human-readable `Title`, not just the ID. Required fields before save: Decision ID, Title, Status, Category, Decision Date, Source Authority. |
+| H-4 | Use the five named Decisions DB views (see §2.1-V) — never scroll the raw list. |
+| H-5 | Sidebar hygiene is the agent's responsibility — at session end verify no stray top-level pages, no blank "Untitled", no "New page" stubs. |
+| H-6 | Violations are self-correcting — if an agent finds it violated a rule, it corrects immediately, logs the correction, and does not wait for the PO. |
+
+Any agent writing to Notion this session MUST comply with H-1–H-6. The canonical text lives on the Standing Rules page; if it conflicts with this index, the page wins (re-verify via `notion-fetch`).
 
 ---
 
@@ -200,9 +238,11 @@ Each database has TWO URLs: the database PAGE URL (what you click in browser) an
 
 **ID format:** "Session Log: YYYY-MM-DD"
 
-**Write rule:** Architect (or Curator) may create a session-log child page at session end. **NOT a Cataloger surface.** No canonical write authority required. Lives as child page under the archived parent (`3559a84a-4679-8194-946e-f8fc5479e4c2`).
+**Write rule:** Architect (or Curator) may create a session-log child page at session end. **NOT a Cataloger surface.** No canonical write authority required. Lives as a child page under 📋 VIYO Decision Log [ARCHIVED] (`3559a84a-4679-8194-946e-f8fc5479e4c2`), which is itself nested inside the 🏛️ Governance Command Center. Per Hygiene Rule H-1, a session log is NEVER created at workspace root.
 
-**Pending action from 2026-05-18 session:** The session-summary page I created tonight (`3659a84a-4679-81c9-8300-f7e96a92a486` titled "Session 2026-05-18 — Item 1 Governance Refresh + B-0.02 PAUSE + 11 Standing Rules") is misplaced — it lives under the archived parent but should be renamed to "Session Log: 2026-05-18" for consistency with existing session log naming convention. Move + rename as part of Manus cleanup directive.
+**Naming convention:** `📅 Session Log: YYYY-MM-DD`.
+
+**Closed (Manus cleanup 2026-05-19):** the misplaced 2026-05-18 session-summary page (`3659a84a-4679-81c9-8300-f7e96a92a486`) was renamed to "Session Log: 2026-05-18" per convention — verified live 2026-05-20. No pending action.
 
 ---
 
@@ -289,7 +329,9 @@ When session-start sweep finds Inbox items older than 7 days with Status=Open:
 
 ---
 
-## Section 5 — Cataloger Action Items (pending 2026-05-18 session)
+## Section 5 — Cataloger Action Items (HISTORICAL — completed 2026-05-19)
+
+> **Status: COMPLETED.** The Cataloger drain session 2026-05-19 executed all §5 action items — 17 canonical writes (9 PO Inbox drains + 4 D-entries D55–D58 + Lock 22 + 3 GAP entries) + 1 Standing Rules page update + D70–D82 audit PASS. This section is retained as a historical record of the 2026-05-18-authored plan; it is no longer an active checklist.
 
 After Item 1 commit lands at next session, Cataloger executes the following in order. Each action requires per-write PO ratification surface per Rule 3.4 transitional behavior:
 
@@ -357,9 +399,11 @@ Append Rules 3.11 (REJECTED status) + 3.12-3.21 + 4.6 with cross-references to A
 
 ---
 
-## Section 7 — Anti-Pattern Updates from this discovery
+## Section 7 — Anti-Pattern Updates from this discovery (HISTORICAL — migrated 2026-05-19)
 
-To be added to ANTI_PATTERN_CATALOG.md §1.4 in next governance commit:
+> **Status: MIGRATED.** Observations 18 and 19 below were migrated to `docs/governance/ANTI_PATTERN_CATALOG.md` §1.4 in the follow-on governance commit `ccf7209` (2026-05-19). ANTI_PATTERN_CATALOG.md is the canonical home; this section is retained as the authoring record only.
+
+Migrated to ANTI_PATTERN_CATALOG.md §1.4 at commit `ccf7209`:
 
 **Observation 18 — Notion DB ID memory-citation without verify (2026-05-18).** Architect session memory carried Notion DB IDs from prior session compaction that did not match canonical structure. 6 of 7 IDs were wrong (only Conflict Resolutions matched). Mechanism: Notion's structure has database PAGE URLs (what humans see) AND data source URLs (what tools query) — Architect memory conflated these. Variant 5c (memory-citation universal) applied to Notion canonical structure. Closes via Rule 3.19 (project_knowledge_search FIRST applied to Notion structure verification) + this file as canonical reference. Architect must fetch the actual database via `notion-fetch` before any write — never rely on memory of IDs.
 
@@ -378,15 +422,15 @@ This file establishes the canonical Notion-side cataloging discipline that was m
 
 ...this completes the relay discipline across all canonical surfaces — repo (Curator commits) + Notion (Cataloger commits) + Drive (working folder) + memory_user_edits (PO surface only).
 
-**Phase 2.6 complete pending PO ratification + commit to `docs/governance/NOTION_CATALOGING_RULES.md` in next governance commit (post-Item 1 push).**
+**Phase 2.6 v1.0 landed** at commit `05717ff` (2026-05-19). Integration steps below all completed:
 
-After commit lands:
+- ✅ ARCHITECT_OPERATING_RULES.md Rule 3.20 extended with PO Inbox sweep step 2.5 (commit `ccf7209`)
+- ✅ VIYO_CURRENT_MAP.md §11 Active Governance row added (commit `ccf7209`)
+- ✅ CLAUDE.md v2 §2 Auto-Load Reading List expanded — NOTION_CATALOGING_RULES.md added as file #6 (commit `ccf7209`)
+- ✅ Cataloger §5 action items executed per-write (drain session 2026-05-19)
 
-- ARCHITECT_OPERATING_RULES.md Rule 3.20 strengthens with explicit PO Inbox sweep step (§6 First Action: read 4 inheritance files + sweep PO Inbox + confirm role + state first task + wait for PO ratification)
-- VIYO_CURRENT_MAP.md §11 Active Governance adds row for this file
-- CLAUDE.md v2 §2 Auto-Load Reading List expands from 4 files to 5 (this file added)
-- Cataloger executes §5 action items per-write PO ratification
+**2026-05-20 re-sync:** this file re-verified against the live workspace (reorganized 2026-05-19 by Manus; hygiene-audited 2026-05-20). See the re-sync note in the header for the scope of changes.
 
 ---
 
-*End of NOTION_CATALOGING_RULES.md — 2026-05-18*
+*Authored 2026-05-18. v1.0 landed 2026-05-19 (`05717ff`). Re-synced 2026-05-20 against live Notion state.*
