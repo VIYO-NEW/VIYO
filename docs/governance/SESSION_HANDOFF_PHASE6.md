@@ -299,21 +299,28 @@ What this means for buildability:
 
 **Summary for next architect:** T73 Slice 6 (Modes: detection & selection) is buildable as UI today. The mode taxonomy, Mode Gallery, auto-detect VIR path, and DB-resident pattern retrieval can all be implemented now. The two things that cannot be built yet: (1) differentiated per-mode model routing — waits for a future bullet directive after empirical experiments; (2) Milled pre-seeding — gated on OD-024 (ToS) + Lock 40 (source-never-shown code-review gate), both of which activate post-Image-Studio-launch. Do not block Slice 6 on either. Build the UI; wire to uniform routing; the seeding and routing matrix populate via future bullet work.
 
-### 9.5 — Pre-launch seeding requirement (NEW — confirmed 2026-05-22)
+### 9.5 — Pre-launch seeding workstream (confirmed 2026-05-23, per VIYO6)
 
-**The reverse-engineering pipeline must be built and run pre-launch to seed the library with at least a baseline set of pattern recipes per mode.**
+**Confirmed approach:** Internal generation as seed source. No legal blocker — OD-024 and Lock 40 do not apply to our own pipeline outputs.
 
-The Reverse-Engineering Pipeline (System Diagram §4): `source → Claude Vision → Pattern Recipe JSON → Pattern Library`. The source does NOT have to be Milled (licensed inspiration). It can be **our own validated test generations** — images we generate internally, run through Claude Vision, and store as seed patterns. This is:
-- **Legal** — our own outputs, no ToS issues, Lock 40 / OD-024 do not apply
-- **Feasible pre-launch** — ~22 modes × a small number of seeded recipes each
-- **Required** — without it, Mode Gallery example thumbnails (UI/UX Spec §9.2 specifies visual outcome cards with example thumbnails) have nothing to show, and every new brand on Day 1 gets zero-shot fallback with no pattern differentiation between modes
+**The workstream (one pipeline, two outputs):**
 
-**What this means for the build:**
-1. The Reverse-Engineering Pipeline (Claude Vision → Pattern Recipe JSON → DB insert) is a **pre-launch build requirement**, not just a post-launch automation concern.
-2. A pre-launch seeding sprint is needed: generate high-quality reference images for each of the 22 modes, run them through the pipeline, populate the library with seed recipes.
-3. Milled automation (post-launch, gated on OD-024 + Lock 40) scales this to hundreds of recipes per mode — but that comes after launch.
+For each of the 22 modes:
+1. Our pipeline generates a curated reference image for that mode
+2. Claude Vision extracts a Pattern Recipe JSON from it (System Diagram §4)
+3. The recipe is seeded into the Pattern Library (`image_prompt_patterns` table, pgvector)
 
-**This is an open architectural decision that needs a bullet directive.** The pre-launch seeding sprint is not currently sequenced in MBS v1.1. Surface to Architect for B-1.x bullet authoring before T73 Slice 6 ships.
+The same generation run that produces the seed pattern **also produces the Mode Gallery card thumbnail** (UI/UX Spec §9.2 requires visual outcome cards with example thumbnails per mode). One workstream delivers both: a seeded library AND a complete set of Mode Gallery thumbnails. No separate asset production step.
+
+**Why this works legally:** Source is our own pipeline output — not licensed inspiration. OD-024 (per-source ToS Review) and Lock 40 (Source-Never-Shown gate) govern the Milled post-launch automation path only. Internal generation is clean.
+
+**What needs to be built:**
+1. The Reverse-Engineering Pipeline (Claude Vision → Pattern Recipe JSON → DB insert) must be built pre-launch, not post-launch. It was assumed to be post-launch (Milled automation); that assumption is wrong — it is needed before T73 Slice 6 ships.
+2. A pre-launch seeding run: 22 modes × N curated generations each → Claude Vision extraction → library seed + thumbnail set.
+
+**Milled post-launch path** (gated on OD-024 + Lock 40) scales this to hundreds of recipes per mode — but that is additive, not foundational. The internal seeding sprint is what makes Day-1 mode differentiation real.
+
+**Status:** Confirmed direction. Not yet sequenced in MBS v1.1. Needs a B-1.x bullet directive from the Architect before T73 Slice 6 ships.
 
 ---
 
