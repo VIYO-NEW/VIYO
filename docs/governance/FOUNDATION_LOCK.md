@@ -48,7 +48,7 @@ Prior authority-hierarchy statements in FOUNDATION_AUTHORITY.md §1.3 (text stil
 
 ---
 
-## Section 1 — The 31 Foundation Locks (1–22 + 30–38) + 1 candidate placeholder (Lock 39)
+## Section 1 — The 32 Foundation Locks (1–22 + 30–40) + 1 candidate placeholder (Lock 39)
 
 Each lock uses format: **Number / Title / Statement / Scope / Rationale / Evidence / Date Locked / Authority Source.**
 
@@ -61,7 +61,7 @@ Lock taxonomy:
 - **Lock 38** = Universal Service Agnosticism / process-governance commitment generalizing Lock 19 (ratified 2026-05-14).
 - **Lock 39** = Agentic-vs-Architectural Boundary (CANDIDATE placeholder; deferred to Substrate Map work).
 
-Total: 29 ratified Locks + 2 RESERVED slots = 31 numbered Locks + 1 candidate placeholder (Lock 39). Lock 22 newly ratified 2026-05-18 per MBS Commit 2 operationalization (Authority Hierarchy Time-Horizon Split per D85 + A9 §4).
+Total: 30 ratified Locks + 2 RESERVED slots = 32 numbered Locks + 1 candidate placeholder (Lock 39). Lock 22 newly ratified 2026-05-18 per MBS Commit 2 operationalization (Authority Hierarchy Time-Horizon Split per D85 + A9 §4). Lock 40 ratified 2026-05-21 (Source-Never-Shown Invariant — Pattern Seeding gate).
 
 ---
 
@@ -651,6 +651,33 @@ Implementation choices belong to the agent doing the work, subject to ratificati
 **Substrate Map work (per ARCHITECT_OPERATING_RULES standing pending item #8):** Comprehensive matrix authored by Manus + viyo-zcbr-architect skill v1.0.7 enumerating every potential operational parameter and its agentic/architectural classification. Authored to `docs/governance/ARCHITECT_SUBSTRATE_MAP.md`. Result becomes Lock 39 ratification text OR PRD V8.1 §3.5 extension.
 
 **Deferred reason:** Not in current B-0.02 critical path. Closing the variant 5g pattern via pre-commit citation verifier + viyo-zcbr-architect skill v1.0.7 + B-0.02 v1.0 re-author is higher priority. Lock 39 lands when Substrate Map work is in scope (post-B-0.02 v1.0 dispatch).
+
+---
+
+### Lock 40 — Source-Never-Shown Invariant (Licensed-Inspiration Pattern Seeding)
+
+**Status:** RATIFIED 2026-05-21. Authority Source: PO Direct. Notion page: `3679a84a-4679-818c-bbf7-c73eea41907b`.
+
+**Statement:** No code path may return or transmit raw source-inspiration image bytes to a user-facing surface. Source-inspiration images are images ingested through the Licensed-Inspiration Pattern Seeding pipeline for reverse-engineering into pattern recipes — they are inputs to the system, not outputs.
+
+Only the following may flow to user-facing surfaces:
+- Reverse-engineered pattern recipe JSON (style system, shared principles, variants, doodles, negative prompts, replication prompt template)
+- Derived metadata extracted from the recipe (color harmony, mood classification, etc.)
+- Generated outputs from the model registry (the brand-aligned images the user sees as variants)
+
+User-facing surfaces include: Design Chat feed, Infinite Canvas, Brand Vault search results, asset detail panels, any API response consumed by client code, any export pipeline. Source attribution is retained in internal metadata for audit purposes only — never exposed in any user-reachable response.
+
+**Scope:** Applies when Pattern Seeding code first touches the repo. Does not activate during Phase 1 Image Studio launch (Pattern Seeding is post-launch). Paired with OD-024 (Licensed Inspiration Sources ToS Review) — both must close before Pattern Seeding ships.
+
+**Enforcement:** Code-review gate. Any PR containing a code path that returns raw source bytes to a user-facing surface fails the gate. Reviewers and CI check for: DB queries returning raw bytes from source-inspiration storage; API endpoints surfacing scraped originals; background jobs copying source bytes to user buckets; cache layers exposing source bytes via signed URLs; logs/errors including source byte previews.
+
+**Rationale:** Licensed inspiration is the legal scaffolding for the pattern-seeding moat. Source image leakage to a user-facing surface = republishing licensed work = legal jeopardy. Protection enforced at code review, not just in documentation.
+
+**Evidence:** PRD v1.4 §3.8 (product principle); UI/UX Spec v1.0 §18.3 (`PRD §3.8, Lock 40` citation); System Diagram §2 (cross-phase integration node — OD-024 + Lock 40 listed as preconditions for Pattern Seeding); System Diagram §4 (reverse-engineering pipeline — source → Claude Vision → Pattern Recipe JSON). System Diagram Drive ID: `1aJMKdIXgQ3VqhiDeLvgQXnyAlgLaZgYR`.
+
+**Date Locked:** 2026-05-21.
+
+**Cross-references:** OD-024 (paired ToS verification); Lock 19 (Provider Agnosticism — the agentic principle this lock complements per Lock 40 Notion page); System Diagram §2 + §4.
 
 ---
 
