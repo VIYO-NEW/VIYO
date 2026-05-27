@@ -573,6 +573,22 @@ If session prompt doesn't surface inheritance files, Architect ASKS PO for uploa
 - Variant 5g (memory-citation of fix-target — receiver-side catch)
 - Variant 5k (Architect-tier work without inline verbatim — partial; full closure requires verify-dispatch.sh A2 extension Phase 2)
 
+### Rule 3.24 — Design-intelligence tool usage: per-domain queries inline, no auto-baseline
+
+**Statement:** When an architect dispatch touches a design surface — typography, color, UI style, UX anti-patterns, chart choices — the architect MAY consult the local UI/UX Pro Max skill (`D:\Dropbox\Claude\ui-ux-pro-max-skill`) via per-domain queries and paste the relevant results INLINE in the dispatch text. The skill's whole-baseline aggregator mode (`--design-system` / `--persist`) is REJECTED for VIYO surfaces — empirically mis-categorizes VIYO Image Studio (Invoice/Billing, Marketing Agency) and produces landing-page-shaped patterns where app-shaped surfaces are needed. Any consolidated design system for a VIYO surface must be hand-curated from the canonical UI/UX Spec, not auto-generated.
+
+**Derived from:** PO ratification 2026-05-27 per architect recommendation after two empirical generation tests. Both test outputs were surfaced verbatim to PO 2026-05-27 (category + style + colors + typography) before pivot ratification — PO saw the actual mis-categorization, not just architect's claim of it. The skill's curated databases (161 palettes, 57 font pairings, 99 UX rules, 25 chart types) survive per-domain lookup; the aggregation layer is where it fails on VIYO.
+
+**Substrate:** ANTI_PATTERN_CATALOG §3 Category 1 (External Validation) — the skill's per-domain output IS an external validation surface for design recommendations that would otherwise come from architect memory. Rule 3.2 (Read before cite) — consult the skill before citing design choices.
+
+**External enforcement:** No tool-level enforcement; architect discipline. Skill runs locally (no network calls; CSV-backed; `uupm.cc` is a marketing site, not a runtime dependency per grep of `requests|urllib|http` in scripts/). Canon-first citation pattern in dispatches: *"UI/UX Spec §X (canon — overrides on any conflict). Design reference (per ui-ux-pro-max `<domain>` query): [pasted snippet]."* The label ordering makes layering explicit so Manus reads canon first.
+
+**Applies to:** Architect dispatch authoring when the slice touches any design surface in the canonical UI/UX Spec. Plan review (build loop step 6) when Manus's plan makes a visual/UX choice not pinned by the Spec — design choices that contradict the canonical UI/UX Spec are architecture drift regardless of skill output (flag per the canonical-drift discipline tracked in the Notion Foundation Locks DB). Live verification of deployed behavior when polish looks off and the architect can't immediately articulate why.
+
+**Does NOT apply to:** Backend / RLS / schema / persistence slices (no design surface — Karpathy §3 Surgical Changes). Architectural dispatches that don't touch UI. Slices where the canonical UI/UX Spec already pins the design choice fully (consult the Spec, not the skill).
+
+**Edge case:** If a future surface DOES warrant a full design-system artifact (multiple coordinated decisions across one surface), hand-curate from the canonical UI/UX Spec + selected per-domain query results — do NOT re-attempt `--design-system` mode. Pivot is settled 2026-05-27; reopening requires documented evidence that auto-categorization correctly identifies VIYO Image Studio as a B2B SaaS app/tool product type across 3+ independent queries — raw output, not architect opinion.
+
 ---
 
 ## Section 4 — Communication Discipline (5 rules)
